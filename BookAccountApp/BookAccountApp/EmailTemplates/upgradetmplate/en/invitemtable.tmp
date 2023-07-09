@@ -1,0 +1,134 @@
+     <div class="invoice" style="width: 100%; float: left; padding: 10px;">
+      <div class="invoice-header" style="border-top: 1px solid #dfdfdf; text-align: center; font-family:'Open Sans',sans-serif; font-size: 16px; font-weight: bold; color: #47484b;">
+        <div class="inv-code" style="color: #47484b; padding: 10px; margin: 0;">
+          <div style="float: left; width: 50%;">
+            <h2 style="text-align: left; font-family:'Open Sans',sans-serif; font-size: 22px; font-weight: bold; color: #178DD2; margin-bottom: 5px;">[[trpackagedetails]]</h2>
+          </div>
+          <div style="float: left; width: 50%;">
+            <h2 style="text-align: left; font-family:'Open Sans',sans-serif; font-size: 22px; font-weight: bold; color: #178DD2; margin-bottom: 5px;">[[trprogramdetails]]</h2>
+          </div>
+        </div>
+      </div>
+      <div style="clear: both;"></div>
+      <div class="invoice-header" style="text-align: left; font-family:'Open Sans',sans-serif; font-size: 16px; font-weight: bold; color: #47484b; margin-bottom: 15px;">
+        <div class="inv-code" style="color: #47484b; padding: 10px; margin: 0;">
+          <div style="float: left; width: 50%;">
+            <p style="font-family: 'Open Sans',sans-serif; font-size: 18px; font-weight: bold; padding: 0; margin: 0;">[[trcode]]:  <span style="font-weight: normal; color: #7d7d7d;">[[code]]</span></p>
+          </div>
+          <div style="float: left; width: 50%;">
+            <p style="font-family: 'Open Sans',sans-serif; font-size: 18px; font-weight: bold; padding: 0; margin: 0;">[[trprogram]]: <span style="font-weight: normal; color: #7d7d7d;">[[program]]</span></p>
+          </div>
+        </div>
+      </div>
+      <div style="clear: both;"></div>
+      <div class="invoice-header" style="text-align: left; font-family:'Open Sans',sans-serif; font-size: 16px; font-weight: bold; color: #47484b; margin-bottom: 15px;">
+        <div class="inv-code" style="color: #47484b; padding: 10px; margin: 0;">
+          <div style="float: left; width: 50%;">
+            <p style="font-family: 'Open Sans',sans-serif; font-size: 18px; font-weight: bold; padding: 0; margin: 0;">[[trname]]:  <span style="font-weight: normal; color: #7d7d7d;">[[name]]</span></p>
+          </div>
+          <div style="float: left; width: 50%;">
+            <p style="font-family: 'Open Sans',sans-serif; font-size: 18px; font-weight: bold; padding: 0; margin: 0;">[[trversion]]: <span style="font-weight: normal; color: #7d7d7d;">[[version]]</span></p>
+          </div>
+        </div>
+      </div>
+      <div style="clear: both;"></div>
+      <div class="invoice-header" style="text-align: left; font-family:'Open Sans',sans-serif; font-size: 16px; font-weight: bold; color: #47484b; margin-bottom: 15px;">
+        <div class="inv-code" style="color: #47484b; padding: 10px; margin: 0;">
+          <div style="float: left; width: 50%;">
+            <p style="font-family: 'Open Sans',sans-serif; font-size: 18px; font-weight: bold; padding: 0; margin: 0;">[[trprice]]:  <span style="font-weight: normal; color: #7d7d7d;">[[price]] [[currency]]</span></p>
+          </div>
+        </div>
+      </div>
+      <div style="clear: both;"></div>
+      <div class="invoice-header" style="text-align: left; font-family:'Open Sans',sans-serif; font-size: 16px; font-weight: bold; color: #47484b; margin-bottom: 15px;">
+        <div class="inv-code" style="color: #47484b; padding: 10px; margin: 0;">
+          <div style="float: left; width: 50%;">
+            <p style="font-family: 'Open Sans',sans-serif; font-size: 18px; font-weight: bold; padding: 0; margin: 0;">[[trstatus]]:  <span style="font-weight: normal; color: #7d7d7d;">[[status]]</span></p>
+          </div>
+        </div>
+      </div>
+      <div style="clear: both;"></div>
+      <div class="invoice-header" style="text-align: left; font-family:'Open Sans',sans-serif; font-size: 16px; font-weight: bold; color: #47484b; margin-bottom: 15px;">
+        <div class="inv-code" style="color: #47484b; padding: 10px; margin: 0;">
+          <div style="float: left; width: 50%;">
+            <p style="font-family: 'Open Sans',sans-serif; font-size: 18px; font-weight: bold; padding: 0; margin: 0;">[[trperiod]]:  <span style="font-weight: normal; color: #7d7d7d;">[[period]]</span></p>
+          </div>
+        </div>
+      </div>
+      <div style="clear: both;"></div>
+      <div class="invoice-header" style="text-align: left; font-family:'Open Sans',sans-serif; font-size: 16px; font-weight: bold; color: #47484b; margin-bottom: 15px;">
+        <div class="inv-code" style="color: #47484b; padding: 10px; margin: 0;">
+          <div style="float: left; width: 50%;">
+            <p style="font-family: 'Open Sans',sans-serif; font-size: 18px; font-weight: bold; padding: 0; margin: 0;">[[tractivationtype]]:  <span style="font-weight: normal; color: #7d7d7d;">[[activationtype]]</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="clear: both;"></div>
+    <div class="invoice" style="width: 100%; float: left; padding: 10px;">
+      <div class="invoice-header" style="border-top: 1px solid #dfdfdf; text-align: center; font-family:'Open Sans',sans-serif; font-size: 16px; font-weight: bold; color: #47484b;">
+        <div class="inv-code" style="color: #47484b; padding: 10px; margin: 0;">
+          <div>
+            <h2 style="text-align: center; font-family:'Open Sans',sans-serif; font-size: 22px; font-weight: bold; color: #178DD2; margin-bottom: 5px;">[[trpackagelimits]]</h2>
+          </div>
+        </div>
+      </div>
+      <div style="clear: both;"></div>
+      <div class="invoice-header" style="text-align: left; font-family:'Open Sans',sans-serif; font-size: 16px; font-weight: bold; color: #47484b; margin-bottom: 15px;">
+        <div class="inv-code" style="color: #47484b; padding: 10px; margin: 0;">
+          <div style="float: left; width: 50%;">
+            <p style="font-family: 'Open Sans',sans-serif; font-size: 18px; font-weight: bold; padding: 0; margin: 0;">[[trbranches]]:  <span style="font-weight: normal; color: #7d7d7d;">[[branches]]</span></p>
+          </div>
+          <div style="float: left; width: 50%;">
+            <p style="font-family: 'Open Sans',sans-serif; font-size: 18px; font-weight: bold; padding: 0; margin: 0;">[[trstores]]: <span style="font-weight: normal; color: #7d7d7d;">[[stores]]</span></p>
+          </div>
+        </div>
+      </div>
+      <div style="clear: both;"></div>
+      <div class="invoice-header" style="text-align: left; font-family:'Open Sans',sans-serif; font-size: 16px; font-weight: bold; color: #47484b; margin-bottom: 15px;">
+        <div class="inv-code" style="color: #47484b; padding: 10px; margin: 0;">
+          <div style="float: left; width: 50%;">
+            <p style="font-family: 'Open Sans',sans-serif; font-size: 18px; font-weight: bold; padding: 0; margin: 0;">[[trusers]]:  <span style="font-weight: normal; color: #7d7d7d;">[[users]]</span></p>
+          </div>
+          <div style="float: left; width: 50%;">
+            <p style="font-family: 'Open Sans',sans-serif; font-size: 18px; font-weight: bold; padding: 0; margin: 0;">[[trposs]]: <span style="font-weight: normal; color: #7d7d7d;">[[poss]]</span></p>
+          </div>
+        </div>
+      </div>
+      <div style="clear: both;"></div>
+      <div class="invoice-header" style="text-align: left; font-family:'Open Sans',sans-serif; font-size: 16px; font-weight: bold; color: #47484b; margin-bottom: 15px;">
+        <div class="inv-code" style="color: #47484b; padding: 10px; margin: 0;">
+          <div style="float: left; width: 50%;">
+            <p style="font-family: 'Open Sans',sans-serif; font-size: 18px; font-weight: bold; padding: 0; margin: 0;">[[trcustomers]]:  <span style="font-weight: normal; color: #7d7d7d;">[[customers]]</span></p>
+          </div>
+          <div style="float: left; width: 50%;">
+            <p style="font-family: 'Open Sans',sans-serif; font-size: 18px; font-weight: bold; padding: 0; margin: 0;">[[trvendors]]: <span style="font-weight: normal; color: #7d7d7d;">[[vendors]]</span></p>
+          </div>
+        </div>
+      </div>
+      <div style="clear: both;"></div>
+      <div class="invoice-header" style="text-align: left; font-family:'Open Sans',sans-serif; font-size: 16px; font-weight: bold; color: #47484b; margin-bottom: 15px;">
+        <div class="inv-code" style="color: #47484b; padding: 10px; margin: 0;">
+          <div style="float: left; width: 50%;">
+            <p style="font-family: 'Open Sans',sans-serif; font-size: 18px; font-weight: bold; padding: 0; margin: 0;">[[trinvoices]]:  <span style="font-weight: normal; color: #7d7d7d;">[[invoices]]</span></p>
+          </div>
+          <div style="float: left; width: 50%;">
+            <p style="font-family: 'Open Sans',sans-serif; font-size: 18px; font-weight: bold; padding: 0; margin: 0;">[[tritems]]: <span style="font-weight: normal; color: #7d7d7d;">[[items]]</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="clear: both;"></div>
+    <div class="invoice" style="width: 100%; float: left; padding: 10px;">
+      <div class="invoice-header" style="border-top: 1px solid #dfdfdf; text-align: center; font-family:'Open Sans',sans-serif; font-size: 16px; font-weight: bold; color: #47484b;">
+        <div class="inv-code" style="color: #47484b; padding: 10px; margin: 0;">
+          <div>
+            <h2 style="text-align: center; font-family:'Open Sans',sans-serif; font-size: 22px; font-weight: bold; color: #178DD2; margin-bottom: 5px;">[[trterms]]</h2>
+          </div>
+        </div>
+      </div>
+      <div style="clear: both;"></div>
+      <div class="invoice-header" style="text-align: center; font-family:'Open Sans',sans-serif; font-size: 16px; color: #7d7d7d; margin-bottom: 15px;">
+        <p style="margin: 0; text-align: left;">[[terms]]</p>
+      </div>
+    </div>

@@ -1,0 +1,5 @@
+        <div class="inv-row">
+          <div style="float: left; width: 50%;"><p>[[col1]]</p></div>
+          <div style="float: left; width: 50%;"><p>[[col2]]</p></div>
+        </div>
+		  <div style="clear: both;"></div>
