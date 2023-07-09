@@ -25,7 +25,7 @@ namespace BookAccountApp.ApiClasses
         public string lastName { get; set; }
         public string fullName { get; set; }
 
-        public string accountName { get; set; }
+        public string AccountName { get; set; }
         public string password { get; set; }
         public string email { get; set; }
         public string phone { get; set; }
@@ -62,89 +62,358 @@ namespace BookAccountApp.ApiClasses
         public async Task<List<Users>> GetAll()
         {
 
-            List<Users> list = new List<Users>();
-
-            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetAll");
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
+            List<Users> List = new List<Users>();
+            bool canDelete = false;
+                try
                 {
-                    list.Add(JsonConvert.DeserializeObject<Users>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                          List = (from S in entity.users
+                                    select new Users()
+                                    {
+                                        userId = S.userId,
+                                        name = S.name,
+                                        AccountName = S.AccountName,
+                                        lastName = S.lastName,
+                                        company = S.company,
+                                        email = S.email,
+                                        phone = S.phone,
+                                        mobile = S.mobile,
+                                        fax = S.fax,
+                                        address = S.address,
+                                        agentLevel = S.agentLevel,
+                                        createDate = S.createDate,
+                                        updateDate = S.updateDate,
+                                        code = S.code,
+                                        password = S.password,
+                                        type = S.type,
+                                        image = S.image,
+                                        notes = S.notes,
+                                        balance = S.balance,
+                                        createUserId = S.createUserId,
+                                        updateUserId = S.updateUserId,
+                                        isActive = S.isActive,
+                                        isAdmin = S.isAdmin,
+                                      //  groupId = S.groupId,
+                                        balanceType = S.balanceType,
+                                        job = S.job,
+                                       
+                                        countryId = S.countryId,
+                                    }).ToList();
+
+                        //if (List.Count > 0)
+                        //{
+                        //    for (int i = 0; i < List.Count; i++)
+                        //    {
+                        //        if (List[i].isActive == 1)
+                        //        {
+                        //            int userId = (int)List[i].userId;
+                        //            var itemsI = entity.packageUser.Where(x => x.userId == userId).Select(b => new { b.userId }).FirstOrDefault();
+
+                        //            if ((itemsI is null))
+                        //                canDelete = true;
+                        //        }
+                        //        List[i].canDelete = canDelete;
+                        //    }
+                        //}
+                        return List;
+                    }
+
                 }
-            }
-            return list;
-
-
+                catch
+                {
+                    return List;
+                }  
         }
         public async Task<List<Users>> GetUsersActive()
         {
-            List<Users> items = new List<Users>();
-            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetActive");
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
+            List<Users> List = new List<Users>();
+   
+          
+          
+                using (bookdbEntities entity = new bookdbEntities())
                 {
-                    items.Add(JsonConvert.DeserializeObject<Users>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                List = entity.users.Where(S => S.isActive == 1 && S.userId != 1)
+                    .Select(S => new Users
+                    {
+                        userId = S.userId,
+                        name = S.name,
+                        AccountName = S.AccountName,
+                        lastName = S.lastName,
+                        company = S.company,
+                        email = S.email,
+                        phone = S.phone,
+                        mobile = S.mobile,
+                        fax = S.fax,
+                        address = S.address,
+                        agentLevel = S.agentLevel,
+                        createDate = S.createDate,
+                        updateDate = S.updateDate,
+                        code = S.code,
+                        password = S.password,
+                        type = S.type,
+                        image = S.image,
+                        notes = S.notes,
+                        balance = S.balance,
+                        createUserId = S.createUserId,
+                        updateUserId = S.updateUserId,
+                        isActive = S.isActive,
+                        isAdmin = S.isAdmin,
+                        groupId = S.groupId,
+                        balanceType = S.balanceType,
+                        job = S.job,
+                        isOnline = S.isOnline,
+                        countryId = S.countryId,
+
+
+                    })
+                    .ToList();
+
+                    return List;
                 }
-            }
-            return items;
+            
+           
         }
         public async Task<Users> Getloginuser(string userName, string password)
         {
             Users user = new Users();
 
-            //########### to pass parameters (optional)
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("userName", userName); 
-            parameters.Add("password", password);
-            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "Getloginuser", parameters);
-            //#################
+           
+            List<Users> usersList = new List<Users>();
 
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
+
+
+
+            Users emptyuser = new Users();
+
+            emptyuser.createDate = DateTime.Now;
+            emptyuser.updateDate = DateTime.Now;
+                //emptyuser.username = userName;
+                emptyuser.createUserId = 0;
+                emptyuser.updateUserId = 0;
+                emptyuser.userId = 0;
+                emptyuser.isActive = 0;
+                emptyuser.isOnline = 0;
+                emptyuser.canDelete = false;
+                emptyuser.balance = 0;
+                emptyuser.balanceType = 0;
+                try
                 {
-                    user = JsonConvert.DeserializeObject<Users>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-                    break;
+
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        usersList = entity.users.Where(S => S.isActive == 1 && S.AccountName == userName)
+                        .Select(S => new Users
+                        {
+                            userId = S.userId,
+                            name = S.name,
+                            AccountName = S.AccountName,
+                            lastName = S.lastName,
+                            company = S.company,
+                            email = S.email,
+                            phone = S.phone,
+                            mobile = S.mobile,
+                            fax = S.fax,
+                            address = S.address,
+                            agentLevel = S.agentLevel,
+                            createDate = S.createDate,
+                            updateDate = S.updateDate,
+                            code = S.code,
+                            password = S.password,
+                            type = S.type,
+                            image = S.image,
+                            notes = S.notes,
+                            balance = S.balance,
+                            createUserId = S.createUserId,
+                            updateUserId = S.updateUserId,
+                            isActive = S.isActive,
+                            isAdmin = S.isAdmin,
+                            groupId = S.groupId,
+                            balanceType = S.balanceType,
+                            job = S.job,
+                            isOnline = S.isOnline,
+                            countryId = S.countryId,
+                        })
+                        .ToList();
+
+                        if (usersList == null || usersList.Count <= 0)
+                        {
+                            user = emptyuser;
+                            // rong user
+                            return user;
+                        }
+                        else
+                        {
+                            user = usersList.Where(i => i.AccountName == userName).FirstOrDefault();
+                            if (user.password.Equals(password))
+                            {
+                                // correct username and pasword
+                                return user;
+                            }
+                            else
+                            {
+                                // rong pass return just username
+                                user = emptyuser;
+                                user.AccountName = userName;
+                                return user;
+
+                            }
+                        }
+                    }
+
                 }
-            }
-            return user;
+                catch
+                {
+                return emptyuser;
+                }
+           
+
+             
         }
 
-        public async Task<decimal> Save(Users obj)
+        public async Task<decimal> Save(Users newitem)
         {
+            users newObject = new users();
+            newObject = JsonConvert.DeserializeObject<users>(JsonConvert.SerializeObject(newitem));
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string method = urimainpath + "Save";
+            decimal message = 0;
+                if (newObject != null)
+                {
+                    if (newObject.updateUserId == 0 || newObject.updateUserId == null)
+                    {
+                        Nullable<int> id = null;
+                        newObject.updateUserId = id;
+                    }
+                    if (newObject.createUserId == 0 || newObject.createUserId == null)
+                    {
+                        Nullable<int> id = null;
+                        newObject.createUserId = id;
+                    }
 
-            var myContent = JsonConvert.SerializeObject(obj);
-            parameters.Add("Object", myContent);
-            return await APIResult.post(method, parameters);
+
+                    try
+                    {
+                        using (bookdbEntities entity = new bookdbEntities())
+                        {
+                            var locationEntity = entity.Set<users>();
+                            if (newObject.userId == 0)
+                            {
+                            newObject.createDate = DateTime.Now;
+                                newObject.updateDate = newObject.createDate;
+                                newObject.updateUserId = newObject.createUserId;
 
 
+                                locationEntity.Add(newObject);
+                                entity.SaveChanges();
+                                message = newObject.userId ;
+                            }
+                            else
+                            {
+                                var tmpObject = entity.users.Where(p => p.userId == newObject.userId).FirstOrDefault();
+
+                            tmpObject.updateDate = DateTime.Now;
+                                tmpObject.userId = newObject.userId;
+                                tmpObject.name = newObject.name;
+                                tmpObject.AccountName = newObject.AccountName;
+                                tmpObject.lastName = newObject.lastName;
+                                tmpObject.company = newObject.company;
+                                tmpObject.email = newObject.email;
+                                tmpObject.phone = newObject.phone;
+                                tmpObject.mobile = newObject.mobile;
+                                tmpObject.fax = newObject.fax;
+                                tmpObject.address = newObject.address;
+                                tmpObject.agentLevel = newObject.agentLevel;
+                                //  tmpObject.createDate = newObject.createDate;
+
+                                tmpObject.code = newObject.code;
+                                tmpObject.password = newObject.password;
+                                tmpObject.type = newObject.type;
+                                tmpObject.image = newObject.image;
+                                tmpObject.notes = newObject.notes;
+                                tmpObject.balance = newObject.balance;
+                                //   tmpObject.createUserId = newObject.createUserId;
+                                tmpObject.updateUserId = newObject.updateUserId;
+                                tmpObject.isActive = newObject.isActive;
+                                tmpObject.isOnline = newObject.isOnline;
+                                tmpObject.countryId = newObject.countryId;
+
+
+                                entity.SaveChanges();
+
+                                message = tmpObject.userId ;
+                            }
+                        }
+                        return message;
+                    }
+                    catch
+                    {
+                        return 0;
+                    }
+                }
+                else
+                {
+                    return 0;
+                }
         }
         public async Task<Users> GetByID(int userId)
         {
 
 
             Users item = new Users();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("userId", userId.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByID", parameters);
+            string message = "";
 
-            foreach (Claim c in claims)
+            Users userrow = new Users();
+            try
             {
-                if (c.Type == "scopes")
+                using (bookdbEntities entity = new bookdbEntities())
                 {
-                    item = JsonConvert.DeserializeObject<Users>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-                    break;
+                    var userl = entity.users.ToList();
+                    userrow = userl.Where(u => u.userId == userId)
+                      .Select(S => new Users()
+                      {
+                          userId = S.userId,
+                          name = S.name,
+                          AccountName = S.AccountName,
+                          lastName = S.lastName,
+                          company = S.company,
+                          email = S.email,
+                          phone = S.phone,
+                          mobile = S.mobile,
+                          fax = S.fax,
+                          address = S.address,
+                          agentLevel = S.agentLevel,
+                          createDate = S.createDate,
+                          updateDate = S.updateDate,
+                          code = S.code,
+                          password = S.password,
+                          type = S.type,
+                          image = S.image,
+                          notes = S.notes,
+                          balance = S.balance,
+                          createUserId = S.createUserId,
+                          updateUserId = S.updateUserId,
+                          isActive = S.isActive,
+                          isAdmin = S.isAdmin,
+                          groupId = S.groupId,
+                          balanceType = S.balanceType,
+                          job = S.job,
+                          isOnline = S.isOnline,
+                          countryId = S.countryId,
+
+                      }).FirstOrDefault();
+                    return userrow;
                 }
+
+            }
+            catch (Exception ex)
+            {
+                userrow = new Users();
+                //userrow.name = ex.ToString();
+                return userrow;
             }
 
 
-            return item;
+
 
 
 
@@ -152,27 +421,53 @@ namespace BookAccountApp.ApiClasses
         public async Task<decimal> Delete(int userId, int signuserId, bool final)
         {
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("userId", userId.ToString());
-            parameters.Add("signuserId", signuserId.ToString());
-            parameters.Add("final", final.ToString());
+            decimal message = 0;
 
-            string method = urimainpath + "Delete";
-            return await APIResult.post(method, parameters);
+            
 
-            //HttpResponseMessage response = new HttpResponseMessage();
-            //using (var client = new HttpClient())
-            //{
-            //    Uri uri = new Uri(Global.APIUri + urimainpath + "Delete?userId=" + userId + "&signuserId=" + signuserId + "&final=" + final);
-            //    response = await ApiConnect.ApiPostConnect(uri);
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var message = await response.Content.ReadAsStringAsync();
-            //        message = JsonConvert.DeserializeObject<string>(message);
-            //        return message;
-            //    }
-            //    return "";
-            //}
+               
+                if (final)
+                {
+                    try
+                    {
+                        using (bookdbEntities entity = new bookdbEntities())
+                        {
+                            users objectDelete = entity.users.Find(userId);
+
+                            entity.users.Remove(objectDelete);
+                            message = entity.SaveChanges() ;
+                            return message;
+
+                        }
+                    }
+                    catch
+                    {
+                        return 0;
+
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        using (bookdbEntities entity = new bookdbEntities())
+                        {
+                            users objectDelete = entity.users.Find(userId);
+
+                            objectDelete.isActive = 0;
+                            objectDelete.updateUserId = signuserId;
+                        objectDelete.updateDate = DateTime.Now;
+                            message = entity.SaveChanges() ;
+
+                            return message;
+                        }
+                    }
+                    catch
+                    {
+                        return 0;
+                    }
+                }
+ 
         }
 
         public async Task<string> generateCodeNumber(string type)
@@ -189,40 +484,34 @@ namespace BookAccountApp.ApiClasses
        
         public async Task<int> GetLastNumOfCode(string type)
         {
-
-
-            int item = 0;
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("type", type);
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetLastNumOfCode", parameters);
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
+            
+                try
                 {
-                    item = int.Parse(c.Value);
-                    break;
+                    List<string> numberList;
+                    int lastNum = 0;
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        numberList = entity.users.Where(b => b.code.Contains(type + "-")).Select(b => b.code).ToList();
+
+                        for (int i = 0; i < numberList.Count; i++)
+                        {
+                            string code = numberList[i];
+                            string s = code.Substring(code.LastIndexOf("-") + 1);
+                            numberList[i] = s;
+                        }
+                        if (numberList.Count > 0)
+                        {
+                            numberList.Sort();
+                            lastNum = int.Parse(numberList[numberList.Count - 1]);
+                        }
+                    }
+
+                    return lastNum;
                 }
-            }
-
-            return item;
-
-            //HttpResponseMessage response = new HttpResponseMessage();
-            //using (var client = new HttpClient())
-            //{
-
-            //    Uri uri = new Uri(Global.APIUri + urimainpath + "GetLastNumOfCode?type=" + type);
-
-            //    response = await ApiConnect.ApiGetConnect(uri);
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        string message = await response.Content.ReadAsStringAsync();
-            //        message = JsonConvert.DeserializeObject<string>(message);
-            //        return int.Parse(message);
-            //    }
-            //    return 0;
-            //}
+                catch
+                {
+                    return 0;
+                }
         }
 
         public async Task<string> uploadImage(string imagePath, string imageName, int userId)

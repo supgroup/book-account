@@ -17,8 +17,8 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="accountName">
-          <DataField>accountName</DataField>
+        <Field Name="AccountName">
+          <DataField>AccountName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="address">

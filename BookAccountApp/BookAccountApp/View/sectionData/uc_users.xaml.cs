@@ -63,7 +63,7 @@ namespace BookAccountApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name", "lastName", "accountName",  "type", "mobile" , "country" };
+                requiredControlList = new List<string> { "name", "lastName", "AccountName",  "type", "mobile" , "country" };
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
@@ -117,7 +117,7 @@ namespace BookAccountApp.View.sectionData
             txt_workInformation.Text = MainWindow.resourcemanager.GetString("trWorkInformation");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_type, MainWindow.resourcemanager.GetString("trJobHint"));
             txt_loginInformation.Text = MainWindow.resourcemanager.GetString("trLoginInformation");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_accountName, MainWindow.resourcemanager.GetString("trUserNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_AccountName, MainWindow.resourcemanager.GetString("trUserNameHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
 
@@ -163,7 +163,7 @@ namespace BookAccountApp.View.sectionData
                     user.name = tb_name.Text;
                     user.lastName = tb_lastName.Text;
                     user.countryId = Convert.ToInt32(cb_country.SelectedValue);
-                    user.accountName = tb_accountName.Text;
+                    user.AccountName = tb_AccountName.Text;
                     user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password); ;
                     user.email = tb_email.Text;
                     user.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; ;
@@ -226,7 +226,7 @@ namespace BookAccountApp.View.sectionData
                     user.name = tb_name.Text;
                     user.lastName = tb_lastName.Text;
                     user.countryId = Convert.ToInt32(cb_country.SelectedValue);
-                    user.accountName = tb_accountName.Text;
+                    user.AccountName = tb_AccountName.Text;
                     //user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password); ;
                     user.email = tb_email.Text;
                     user.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; ;

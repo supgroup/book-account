@@ -429,7 +429,7 @@ namespace BookAccountApp.View.applications
         }
         async Task<IEnumerable<Programs>> RefreshProgramsList()
         {
-            programs = await program.GetAll();
+          //  programs = await program.GetAll();
             return programs;
         }
         void RefreshProgramsView()

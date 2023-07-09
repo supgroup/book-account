@@ -97,7 +97,7 @@ namespace BookAccountApp.View.reports
 
                     dpnl_agent.Visibility = Visibility.Collapsed;
                     bdr_agent.Visibility = Visibility.Visible;
-                    tb_agent.Text = MainWindow.userLogin.accountName;
+                    tb_agent.Text = MainWindow.userLogin.AccountName;
 
                     var typelist = new[] {
                                             new { Text  = MainWindow.userLogin.name+" "+ MainWindow.userLogin.lastName,

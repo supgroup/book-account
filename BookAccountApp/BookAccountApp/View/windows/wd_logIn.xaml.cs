@@ -157,7 +157,7 @@ namespace BookAccountApp.View.windows
 
                     user = await userModel.Getloginuser(userName, password);
 
-                    if (user.accountName == null)
+                    if (user.AccountName == null)
                     {
                         //user does not exist
                         HelpClass.SetValidate(p_errorUserName, "trUserNotFound");

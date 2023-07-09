@@ -66,6 +66,12 @@
     <Reference Include="DotNetKit.Wpf.AutoCompleteComboBox, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetKit.Wpf.AutoCompleteComboBox.1.4.0\lib\net45\DotNetKit.Wpf.AutoCompleteComboBox.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
     </Reference>
@@ -142,6 +148,7 @@
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -177,6 +184,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="agentCustomer.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bookModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>bookModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bookModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bookModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>bookModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="cities.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Classes\ApiClasses\AgentCustomer.cs" />
     <Compile Include="Classes\ApiClasses\CountryPackageDate.cs" />
     <Compile Include="Classes\ApiClasses\ApiConnect.cs" />
@@ -225,6 +253,30 @@
     <Compile Include="converters\permissionsNameConverter.cs" />
     <Compile Include="converters\unlimitedConverter.cs" />
     <Compile Include="converters\unlimitedCountConverter.cs" />
+    <Compile Include="countriesCodes.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="customers.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="error.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="payOp.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="setting.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="setValues.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="users.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="userSetValues.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="View\applications\uc_applications.xaml.cs">
       <DependentUpon>uc_applications.xaml</DependentUpon>
     </Compile>
@@ -525,6 +577,16 @@
     <Resource Include="pic\supclouds-logo.png" />
     <Resource Include="pic\supclouds-logo100.png" />
     <Resource Include="pic\supcloudsLogo.ico" />
+    <Content Include="bookModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>bookModel.Context.cs</LastGenOutput>
+      <DependentUpon>bookModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="bookModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>bookModel.edmx</DependentUpon>
+      <LastGenOutput>bookModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Reports\Sale\Payments\Ar\ArPayDetail.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -609,6 +671,13 @@
     <Resource Include="fonts\cairo-font\cairo bold.ttf" />
     <Resource Include="fonts\cairo-font\cairo-light.ttf" />
     <Resource Include="fonts\barcodeFont.ttf" />
+    <EntityDeploy Include="bookModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>bookModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="bookModel.edmx.diagram">
+      <DependentUpon>bookModel.edmx</DependentUpon>
+    </None>
     <None Include="EmailTemplates\ordertemplate\ar\invbody.tmp" />
     <None Include="EmailTemplates\ordertemplate\ar\invfooter.tmp" />
     <None Include="EmailTemplates\ordertemplate\ar\invheader.tmp" />
@@ -828,6 +897,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
