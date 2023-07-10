@@ -22,7 +22,7 @@ namespace BookAccountApp.ApiClasses
         public string name { get; set; }
         public byte isDefault { get; set; }
 
-        private string urimainpath = "Country/";
+       
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>
@@ -32,129 +32,94 @@ namespace BookAccountApp.ApiClasses
         {
 
             List<Country> list = new List<Country>();
-            //  Dictionary<string, string> parameters = new Dictionary<string, string>();
-            //parameters.Add("mainBranchId", mainBranchId.ToString());
-            //parameters.Add("userId", userId.ToString());
-            //parameters.Add("date", date.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList(urimainpath+ "GetAll");
-
-            foreach (Claim c in claims)
+            try
             {
-                if (c.Type == "scopes")
+                using (bookdbEntities entity = new bookdbEntities())
                 {
-                    list.Add(JsonConvert.DeserializeObject<Country>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                    list = entity.countriesCodes.ToList()
+                         .Select(c => new Country
+                         {
+                          countryId =  c.countryId,
+                         code  =  c.code,
+                           name = c.name,
+                           currency = c.currency,
+                         isDefault   = c.isDefault,
+                         }).ToList();
+
+                    return list;
                 }
             }
-            return list;
-
-            ////List<Country> memberships = null;
-
-            ////HttpResponseMessage response = new HttpResponseMessage();
-            ////using (var client = new HttpClient())
-            ////{
-            ////    Uri uri = new Uri(Global.APIUri + urimainpath + "GetAll");
-            ////    response = await ApiConnect.ApiGetConnect(uri);
-
-            ////    response = await ApiConnect.ApiGetConnect(uri);
-            ////    if (response.IsSuccessStatusCode)
-            ////    {
-            ////        var jsonString = await response.Content.ReadAsStringAsync();
-
-            ////        memberships = JsonConvert.DeserializeObject<List<Country>>(jsonString);
-
-            ////        return memberships;
-            ////    }
-            ////    else //web api sent error response 
-            ////    {
-            ////        memberships = new List<Country>();
-            ////    }
-            ////    return memberships;
-            ////}
-
+            catch
+            {
+                return list;
+            }
         }
 
         public async Task<List<Country>> GetAllRegion()
         {
             List<Country> list = new List<Country>();
-            //  Dictionary<string, string> parameters = new Dictionary<string, string>();
-            //parameters.Add("mainBranchId", mainBranchId.ToString());
-            //parameters.Add("userId", userId.ToString());
-            //parameters.Add("date", date.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetAllRegion");
-
-            foreach (Claim c in claims)
+            try
             {
-                if (c.Type == "scopes")
+                using (bookdbEntities entity = new bookdbEntities())
                 {
-                    list.Add(JsonConvert.DeserializeObject<Country>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                    list = entity.countriesCodes.ToList()
+                         .Select(c => new Country
+                         {
+                             countryId = c.countryId,
+                             code = c.code,
+                             name = c.name,
+                             currency = c.currency,
+                             isDefault = c.isDefault,
+                         }).ToList();
+                    return list;
+
                 }
+
             }
-            return list;
 
-            //List<Country> memberships = null;
-
-            //HttpResponseMessage response = new HttpResponseMessage();
-            //using (var client = new HttpClient())
-            //{
-            //    Uri uri = new Uri(Global.APIUri + urimainpath + "GetAllRegion");
-            //    response = await ApiConnect.ApiGetConnect(uri);
-
-            //    response = await ApiConnect.ApiGetConnect(uri);
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-
-            //        memberships = JsonConvert.DeserializeObject<List<Country>>(jsonString);
-
-            //        return memberships;
-            //    }
-            //    else //web api sent error response 
-            //    {
-            //        memberships = new List<Country>();
-            //    }
-            //    return memberships;
-            //}
+            catch
+            {
+                return list;
+            }
 
         }
 
        
-        public async Task<decimal> UpdateIsdefault(int countryId)
-        {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("countryId", countryId.ToString());
+        //public async Task<decimal> UpdateIsdefault(int countryId)
+        //{
+        //    Dictionary<string, string> parameters = new Dictionary<string, string>();
+        //    parameters.Add("countryId", countryId.ToString());
 
-            //parameters.Add("userId", userId.ToString());
-            //parameters.Add("final", final.ToString());
+        //    //parameters.Add("userId", userId.ToString());
+        //    //parameters.Add("final", final.ToString());
 
-            string method = urimainpath+ "UpdateIsdefault";
-            //  return await APIResult.post(method, parameters);
-            return await APIResult.post(method, parameters);
+        //    string method = urimainpath+ "UpdateIsdefault";
+        //    //  return await APIResult.post(method, parameters);
+        //    return await APIResult.post(method, parameters);
 
          
-        }
-        public async Task<TimeSpan> GetOffsetTime(int countryId)
-        {
-            TimeSpan item = new TimeSpan();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("countryId", countryId.ToString());
+        //}
+        //public async Task<TimeSpan> GetOffsetTime(int countryId)
+        //{
+        //    TimeSpan item = new TimeSpan();
+        //    Dictionary<string, string> parameters = new Dictionary<string, string>();
+        //    parameters.Add("countryId", countryId.ToString());
 
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("Country/GetOffsetTime", parameters);
+        //    //#################
+        //    IEnumerable<Claim> claims = await APIResult.getList("Country/GetOffsetTime", parameters);
 
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    item = TimeSpan.Parse(c.Value);
-                    break;
-                }
-            }
-            return item;
+        //    foreach (Claim c in claims)
+        //    {
+        //        if (c.Type == "scopes")
+        //        {
+        //            item = TimeSpan.Parse(c.Value);
+        //            break;
+        //        }
+        //    }
+        //    return item;
 
 
-        }
+        //}
 
     }
 }

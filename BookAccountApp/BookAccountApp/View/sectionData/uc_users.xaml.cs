@@ -63,8 +63,8 @@ namespace BookAccountApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name", "lastName", "AccountName",  "type", "mobile" , "country" };
-
+             //   requiredControlList = new List<string> { "name", "lastName", "AccountName",  "type", "mobile" , "country" };
+                requiredControlList = new List<string> { "name", "lastName", "AccountName", "type", "mobile"  };
                 #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
