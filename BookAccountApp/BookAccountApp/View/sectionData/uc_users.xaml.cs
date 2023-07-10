@@ -63,8 +63,8 @@ namespace BookAccountApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-             //   requiredControlList = new List<string> { "name", "lastName", "AccountName",  "type", "mobile" , "country" };
-                requiredControlList = new List<string> { "name", "lastName", "AccountName", "type", "mobile"  };
+                //   requiredControlList = new List<string> { "name", "lastName", "AccountName",  "type", "mobile" , "country" };
+                requiredControlList = new List<string> { "name", "lastName", "AccountName", "type", "mobile" };
                 #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
@@ -150,7 +150,7 @@ namespace BookAccountApp.View.sectionData
                 //chk password length
                 bool passLength = false;
                 passLength = chkPasswordLength(pb_password.Password);
-               
+
                 user = new Users();
                 if (HelpClass.validate(requiredControlList, this) && duplicateUserName && passLength && HelpClass.IsValidEmail(this))
                 {
@@ -185,10 +185,10 @@ namespace BookAccountApp.View.sectionData
                     else
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                       
+
                         if (isImgPressed)
                         {
-                            int userId =(int) s;
+                            int userId = (int)s;
                             string b = await user.uploadImage(imgFileName,
                                 Md5Encription.MD5Hash("Inc-m" + userId.ToString()), userId);
                             user.image = b;
@@ -219,56 +219,56 @@ namespace BookAccountApp.View.sectionData
                 {
                     //chk duplicate userName
                     bool duplicateUserName = false;
-                duplicateUserName = await chkIfUserNameIsExists(tb_name.Text, user.userId);
-                if (HelpClass.validate(requiredControlList, this) && duplicateUserName && HelpClass.IsValidEmail(this))
-                {
-                    //user.code = user.code;
-                    user.name = tb_name.Text;
-                    user.lastName = tb_lastName.Text;
-                    user.countryId = Convert.ToInt32(cb_country.SelectedValue);
-                    user.AccountName = tb_AccountName.Text;
-                    //user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password); ;
-                    user.email = tb_email.Text;
-                    user.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; ;
-                    if (!tb_phone.Text.Equals(""))
-                        user.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
-                    if (!tb_fax.Text.Equals(""))
-                        user.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
-                    if (cb_type.SelectedValue != null)
-                        user.type = cb_type.SelectedValue.ToString();
-                    user.address = tb_address.Text;
-                    user.notes = tb_notes.Text;
-                    //user.isActive = 1;
-                    user.createUserId = MainWindow.userLogin.userId;
-                    user.updateUserId = MainWindow.userLogin.userId;
+                    duplicateUserName = await chkIfUserNameIsExists(tb_name.Text, user.userId);
+                    if (HelpClass.validate(requiredControlList, this) && duplicateUserName && HelpClass.IsValidEmail(this))
+                    {
+                        //user.code = user.code;
+                        user.name = tb_name.Text;
+                        user.lastName = tb_lastName.Text;
+                        user.countryId = Convert.ToInt32(cb_country.SelectedValue);
+                        user.AccountName = tb_AccountName.Text;
+                        //user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password); ;
+                        user.email = tb_email.Text;
+                        user.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; ;
+                        if (!tb_phone.Text.Equals(""))
+                            user.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
+                        if (!tb_fax.Text.Equals(""))
+                            user.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
+                        if (cb_type.SelectedValue != null)
+                            user.type = cb_type.SelectedValue.ToString();
+                        user.address = tb_address.Text;
+                        user.notes = tb_notes.Text;
+                        //user.isActive = 1;
+                        user.createUserId = MainWindow.userLogin.userId;
+                        user.updateUserId = MainWindow.userLogin.userId;
 
                         decimal s = await user.Save(user);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
-                    {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        
-                        if (isImgPressed)
+                        if (s <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        else
                         {
-                            int userId =(int) s;
-                            string b = await user.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + userId.ToString()), userId);
-                            user.image = b;
-                            isImgPressed = false;
-                            if (!b.Equals(""))
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+
+                            if (isImgPressed)
                             {
-                                await getImg();
+                                int userId = (int)s;
+                                string b = await user.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + userId.ToString()), userId);
+                                user.image = b;
+                                isImgPressed = false;
+                                if (!b.Equals(""))
+                                {
+                                    await getImg();
+                                }
+                                else
+                                {
+                                    HelpClass.clearImg(btn_image);
+                                }
                             }
-                            else
-                            {
-                                HelpClass.clearImg(btn_image);
-                            }
-                        }
 
                             await RefreshUsersList();
                             await Search();
                         }
-                }
+                    }
                 }
                 else
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
@@ -387,7 +387,7 @@ namespace BookAccountApp.View.sectionData
             catch (Exception ex)
             {
                 HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
+                //HelpClass.ExceptionMessage(ex, this);
             }
         }
         private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
@@ -499,6 +499,7 @@ namespace BookAccountApp.View.sectionData
             s.name.ToLower().Contains(searchText) ||
             s.mobile.ToLower().Contains(searchText)
             ) && s.isActive == tgl_userState);
+
             RefreshUsersView();
         }
         async Task<IEnumerable<Users>> RefreshUsersList()
@@ -607,7 +608,7 @@ namespace BookAccountApp.View.sectionData
         {
             try
             {
-                HelpClass.validate(requiredControlList,this);
+                HelpClass.validate(requiredControlList, this);
                 p_error_password.Visibility = Visibility.Collapsed;
             }
             catch (Exception ex)
@@ -632,7 +633,7 @@ namespace BookAccountApp.View.sectionData
         {
             bool isValid = true;
             if (users == null)
-               await RefreshUsersList();
+                await RefreshUsersList();
             if (users.Any(i => i.name == username && i.userId != uId && i.type != "ag"))
                 isValid = false;
             if (!isValid)
@@ -703,14 +704,14 @@ namespace BookAccountApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                    if (cb_areaPhone.SelectedValue != null)
+                if (cb_areaPhone.SelectedValue != null)
+                {
+                    if (cb_areaPhone.SelectedIndex >= 0)
                     {
-                        if (cb_areaPhone.SelectedIndex >= 0)
-                        {
-                            countryid = int.Parse(cb_areaPhone.SelectedValue.ToString());
-                            await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid ,brd_areaPhoneLocal);
-                        }
+                        countryid = int.Parse(cb_areaPhone.SelectedValue.ToString());
+                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid, brd_areaPhoneLocal);
                     }
+                }
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -724,14 +725,14 @@ namespace BookAccountApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                    if (cb_areaFax.SelectedValue != null)
+                if (cb_areaFax.SelectedValue != null)
                 {
-                        if (cb_areaFax.SelectedIndex >= 0)
-                        {
-                            countryid = int.Parse(cb_areaFax.SelectedValue.ToString());
-                          await  FillCombo.fillCountriesLocal(cb_areaFaxLocal, (int)countryid ,brd_areaFaxLocal);
-                        }
+                    if (cb_areaFax.SelectedIndex >= 0)
+                    {
+                        countryid = int.Parse(cb_areaFax.SelectedValue.ToString());
+                        await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (int)countryid, brd_areaFaxLocal);
                     }
+                }
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -740,7 +741,7 @@ namespace BookAccountApp.View.sectionData
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-       
+
         #endregion
 
         #region Image
@@ -764,11 +765,11 @@ namespace BookAccountApp.View.sectionData
                 }
                 else
                 { }
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

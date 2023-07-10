@@ -20,36 +20,37 @@ namespace BookAccountApp.ApiClasses
     public class Users
     {
         public int userId { get; set; }
-        public string code { get; set; }
         public string name { get; set; }
-        public string lastName { get; set; }
-        public string fullName { get; set; }
-
         public string AccountName { get; set; }
-        public string password { get; set; }
+        public string lastName { get; set; }
+        public string company { get; set; }
         public string email { get; set; }
         public string phone { get; set; }
         public string mobile { get; set; }
         public string fax { get; set; }
-        public string company { get; set; }
+        public string address { get; set; }
         public string agentLevel { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
+        public string password { get; set; }
         public string type { get; set; }
         public string image { get; set; }
-        public string address { get; set; }
         public string notes { get; set; }
         public decimal balance { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public Nullable<int> isActive { get; set; }
-        public bool canDelete { get; set; }
+        public string code { get; set; }
         public Nullable<bool> isAdmin { get; set; }
         public Nullable<int> groupId { get; set; }
         public Nullable<byte> balanceType { get; set; }
         public string job { get; set; }
         public Nullable<byte> isOnline { get; set; }
         public Nullable<int> countryId { get; set; }
+       
+        public string fullName { get; set; }       
+        public bool canDelete { get; set; }
+      
 
 
         private string urimainpath = "users/";
@@ -68,38 +69,38 @@ namespace BookAccountApp.ApiClasses
                 {
                     using (bookdbEntities entity = new bookdbEntities())
                     {
-                          List = (from S in entity.users
-                                    select new Users()
-                                    {
-                                        userId = S.userId,
-                                        name = S.name,
-                                        AccountName = S.AccountName,
-                                        lastName = S.lastName,
-                                        company = S.company,
-                                        email = S.email,
-                                        phone = S.phone,
-                                        mobile = S.mobile,
-                                        fax = S.fax,
-                                        address = S.address,
-                                        agentLevel = S.agentLevel,
-                                        createDate = S.createDate,
-                                        updateDate = S.updateDate,
-                                        code = S.code,
-                                        password = S.password,
-                                        type = S.type,
-                                        image = S.image,
-                                        notes = S.notes,
-                                        balance = S.balance,
-                                        createUserId = S.createUserId,
-                                        updateUserId = S.updateUserId,
-                                        isActive = S.isActive,
-                                        isAdmin = S.isAdmin,
-                                      //  groupId = S.groupId,
-                                        balanceType = S.balanceType,
-                                        job = S.job,
-                                       
+                    List = (from S in entity.users
+                            select new Users()
+                            {
+                                userId = S.userId,
+                                name = S.name,
+                                AccountName = S.AccountName,
+                                lastName = S.lastName,
+                                company = S.company,
+                                email = S.email,
+                                phone = S.phone,
+                                mobile = S.mobile,
+                                fax = S.fax,
+                                address = S.address,
+                                agentLevel = S.agentLevel,
+                                createDate = S.createDate,
+                                updateDate = S.updateDate,
+                                code = S.code,
+                                password = S.password,
+                                type = S.type,
+                                image = S.image,
+                                notes = S.notes,
+                                balance = S.balance,
+                                createUserId = S.createUserId,
+                                updateUserId = S.updateUserId,
+                                isActive = S.isActive,
+                                isAdmin = S.isAdmin,
+                                groupId = S.groupId,
+                                balanceType = S.balanceType,
+                                job = S.job,
+                                canDelete = true,
                                         countryId = S.countryId,
-                                    }).ToList();
+                            }).ToList();
 
                         //if (List.Count > 0)
                         //{
