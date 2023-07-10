@@ -65,7 +65,7 @@ namespace BookAccountApp.View.windows
                 {
                     txtUserName.Clear();
                     txtPassword.Clear();
-                    MainWindow.lang = "en";
+                    MainWindow.lang = "ar";
                     //menuIsOpen = "close";
                     cbxRemmemberMe.IsChecked = false;
                 }
@@ -324,46 +324,7 @@ namespace BookAccountApp.View.windows
         }
 
         #region get language from database
-        /*
-        List<UserSetValues> usValues = new List<UserSetValues>();
-        private async Task<string> getUserLanguage(int userId)
-        {
-            SettingCls setModel = new SettingCls();
-            SettingCls set = new SettingCls();
-            SetValues valueModel = new SetValues();
-            List<SetValues> languages = new List<SetValues>();
-            UserSetValues usValueModel = new UserSetValues();
-            var lanSettings = await setModel.GetAll();
-            set = lanSettings.Where(l => l.name == "language").FirstOrDefault<SettingCls>();
-            var lanValues = await valueModel.GetAll();
-
-            if (lanValues.Count > 0)
-            {
-                languages = lanValues.Where(vl => vl.settingId == set.settingId).ToList<SetValues>();
-
-                usValues = await usValueModel.GetAll();
-                if (usValues.Count > 0)
-                {
-                    var curUserValues = usValues.Where(c => c.userId == userId);
-
-                    if (curUserValues.Count() > 0)
-                    {
-                        foreach (var l in curUserValues)
-                            if (languages.Any(c => c.valId == l.valId))
-                            {
-                                usLanguage = l;
-                            }
-
-                        var lan = await valueModel.GetByID(usLanguage.valId.Value);
-                        return lan.value;
-                    }
-                    else return "en";
-                }
-                else return "en";
-            }
-            else return "en";
-        }
-        */
+       
         #endregion
 
         #endregion

@@ -37,8 +37,8 @@ namespace BookAccountApp
         public static ResourceManager resourcemanager;
         public static ResourceManager resourcemanagerreport;
         static public MainWindow mainWindow;
-        public static string lang = "en";
-        public static string Reportlang = "en";
+        public static string lang = "ar";
+        public static string Reportlang = "ar";
         internal static Users userLogin = new Users();
         public static int userID=1;
         //public static CountryCode Region;
@@ -83,6 +83,7 @@ namespace BookAccountApp
         }
         void windowFlowDirection()
         {
+            lang = "ar";
             #region
             if (lang.Equals("en"))
             {
@@ -127,7 +128,7 @@ namespace BookAccountApp
             {
                 case "us":    job = "Employee"; break;
                 case "ad":    job = "Admin";    break;
-                case "ag":    job = "Agent";    break;
+              //  case "ag":    job = "Agent";    break;
             }
             txt_userJob.Text = job;
             try
@@ -455,149 +456,6 @@ namespace BookAccountApp
             }
         }
 
-        #region notifications
-        /*
-        public static string GetUntilOrEmpty(string text, string stopAt)
-        {
-            if (!String.IsNullOrWhiteSpace(text))
-            {
-                int charLocation = text.IndexOf(stopAt, StringComparison.Ordinal);
-
-                if (charLocation > 0)
-                {
-                    return text.Substring(0, charLocation);
-                }
-            }
-
-            return String.Empty;
-        }
-        List<NotificationUser> notifications;
-        private async void BTN_notifications_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (bdrMain.Visibility == Visibility.Collapsed)
-                {
-                    bdrMain.Visibility = Visibility.Visible;
-                    bdrMain.RenderTransform = Animations.borderAnimation(-25, bdrMain, true);
-                    notifications = await notificationUser.GetByUserId(userID.Value, "alert", posID.Value);
-                    IEnumerable<NotificationUser> orderdNotifications = notifications.OrderByDescending(x => x.createDate);
-                    await notificationUser.setAsRead(userID.Value, posID.Value, "alert");
-                    md_notificationCount.Badge = "";
-                    if (notifications.Count == 0)
-                    {
-                        grd_notifications.Visibility = Visibility.Collapsed;
-                        txt_noNoti.Visibility = Visibility.Visible;
-                    }
-
-                    else
-                    {
-                        grd_notifications.Visibility = Visibility.Visible;
-                        txt_noNoti.Visibility = Visibility.Collapsed;
-
-                        txt_firstNotiTitle.Text = resourcemanager.GetString(orderdNotifications.Select(obj => obj.title).FirstOrDefault());
-
-                        txt_firstNotiContent.Text = GetUntilOrEmpty(orderdNotifications.Select(obj => obj.ncontent).FirstOrDefault(), ":")
-                          + " : " +
-                          resourcemanager.GetString(orderdNotifications.Select(obj => obj.ncontent).FirstOrDefault().Substring(orderdNotifications.Select(obj => obj.ncontent).FirstOrDefault().LastIndexOf(':') + 1));
-
-                        txt_firstNotiDate.Text = orderdNotifications.Select(obj => obj.createDate).FirstOrDefault().ToString();
-
-                        if (notifications.Count > 1)
-                        {
-                            txt_2NotiTitle.Text = resourcemanager.GetString(orderdNotifications.Select(obj => obj.title).Skip(1).FirstOrDefault());
-                            txt_2NotiContent.Text = GetUntilOrEmpty(orderdNotifications.Select(obj => obj.ncontent).Skip(1).FirstOrDefault(), ":")
-                          + " : " + resourcemanager.GetString(orderdNotifications.Select(obj => obj.ncontent).Skip(1).FirstOrDefault().Substring(orderdNotifications.Select(obj => obj.ncontent).Skip(1).FirstOrDefault().LastIndexOf(':') + 1));
-
-                            txt_2NotiDate.Text = orderdNotifications.Select(obj => obj.createDate).Skip(1).FirstOrDefault().ToString();
-
-                        }
-                        if (notifications.Count > 2)
-                        {
-                            txt_3NotiTitle.Text = resourcemanager.GetString(orderdNotifications.Select(obj => obj.title).Skip(2).FirstOrDefault());
-                            txt_3NotiContent.Text = GetUntilOrEmpty(orderdNotifications.Select(obj => obj.ncontent).Skip(2).FirstOrDefault(), ":")
-                          + " : " + resourcemanager.GetString(orderdNotifications.Select(obj => obj.ncontent).Skip(2).FirstOrDefault().Substring(orderdNotifications.Select(obj => obj.ncontent).Skip(2).FirstOrDefault().LastIndexOf(':') + 1));
-
-                            txt_3NotiDate.Text = orderdNotifications.Select(obj => obj.createDate).Skip(2).FirstOrDefault().ToString();
-
-                        }
-                        if (notifications.Count > 3)
-                        {
-                            txt_4NotiTitle.Text = resourcemanager.GetString(orderdNotifications.Select(obj => obj.title).Skip(3).FirstOrDefault());
-                            txt_4NotiContent.Text = GetUntilOrEmpty(orderdNotifications.Select(obj => obj.ncontent).Skip(3).FirstOrDefault(), ":")
-                          + " : " + resourcemanager.GetString(orderdNotifications.Select(obj => obj.ncontent).Skip(3).FirstOrDefault().Substring(orderdNotifications.Select(obj => obj.ncontent).Skip(3).FirstOrDefault().LastIndexOf(':') + 1));
-
-                            txt_4NotiDate.Text = orderdNotifications.Select(obj => obj.createDate).Skip(3).FirstOrDefault().ToString();
-
-                        }
-                        if (notifications.Count > 4)
-                        {
-                            txt_5NotiTitle.Text = resourcemanager.GetString(orderdNotifications.Select(obj => obj.title).Skip(4).FirstOrDefault());
-                            txt_5NotiContent.Text = GetUntilOrEmpty(orderdNotifications.Select(obj => obj.ncontent).Skip(4).FirstOrDefault(), ":")
-                          + " : " + resourcemanager.GetString(orderdNotifications.Select(obj => obj.ncontent).Skip(4).FirstOrDefault().Substring(orderdNotifications.Select(obj => obj.ncontent).Skip(4).FirstOrDefault().LastIndexOf(':') + 1));
-
-                            txt_5NotiDate.Text = orderdNotifications.Select(obj => obj.createDate).Skip(4).FirstOrDefault().ToString();
-
-                        }
-                    }
-
-                }
-                else
-                {
-                    bdrMain.Visibility = Visibility.Collapsed;
-                }
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void Btn_showAll_Click(object sender, RoutedEventArgs e)
-        {
-            Window.GetWindow(this).Opacity = 0.2;
-            wd_notifications w = new wd_notifications();
-            w.notifications = notifications;
-            w.ShowDialog();
-            Window.GetWindow(this).Opacity = 1;
-        }
-        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
-        {
-            try
-            {
-
-                bdr_showAll.Visibility = Visibility.Visible;
-
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
-        {
-            try
-            {
-
-                bdr_showAll.Visibility = Visibility.Hidden;
-
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                bdrMain.Visibility = Visibility.Collapsed;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        */
-        #endregion
+       
     }
 }
