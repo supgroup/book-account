@@ -33,385 +33,350 @@ namespace BookAccountApp.Classes
         {
 
             List<SetValues> list = new List<SetValues>();
-            //  Dictionary<string, string> parameters = new Dictionary<string, string>();
-            //parameters.Add("mainBranchId", mainBranchId.ToString());
-            //parameters.Add("userId", userId.ToString());
-            //parameters.Add("date", date.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("setValues/Get");
-
-            foreach (Claim c in claims)
+            try
             {
-                if (c.Type == "scopes")
+
+
+                using (bookdbEntities entity = new bookdbEntities())
                 {
-                    list.Add(JsonConvert.DeserializeObject<SetValues>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+
+
+                   list = entity.setValues
+
+               .Select(c => new SetValues
+               {
+                valId =  c.valId,
+                 value = c.value,
+                  isDefault= c.isDefault,
+                 isSystem = c.isSystem,
+                notes  = c.notes,
+                settingId =  c.settingId,
+
+               })
+                           .ToList();
+
+                    return list;
+
                 }
+
             }
-            return list;
+            catch
+            {
+                return list;
+            }
 
-            //List<SetValues> list = null;
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "setValues/Get");
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    HttpResponseMessage response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-            //        jsonString = jsonString.Replace("\\", string.Empty);
-            //        jsonString = jsonString.Trim('"');
-            //        // fix date format
-            //        JsonSerializerSettings settings = new JsonSerializerSettings
-            //        {
-            //            Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-            //            DateParseHandling = DateParseHandling.None
-            //        };
-            //        list = JsonConvert.DeserializeObject<List<SetValues>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-            //        return list;
-            //    }
-            //    else //web api sent error response 
-            //    {
-            //        list = new List<SetValues>();
-            //    }
-            //    return list;
-            //}
         }
 
 
         //print
-       
+
         public async Task<List<SetValues>> GetBySetvalNote(string setvalnote)
         {
             List<SetValues> list = new List<SetValues>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("setvalnote", setvalnote);
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("setValues/GetBySetvalNote", parameters);
+         
 
+             
 
-
-            foreach (Claim c in claims)
+            // DateTime cmpdate = DateTime.Now.AddDays(newdays);
+            try
             {
-                if (c.Type == "scopes")
+
+
+                using (bookdbEntities entity = new bookdbEntities())
                 {
-                    list.Add(JsonConvert.DeserializeObject<SetValues>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                    // setting sett = entity.setting.Where(s => s.name == name).FirstOrDefault();
+                     list = entity.setValues.ToList().Where(x => x.notes == setvalnote)
+                         .Select(X => new SetValues
+                         {
+                            valId= X.valId,
+                           value=  X.value,
+                          isDefault  = X.isDefault,
+                            isSystem =X.isSystem,
+                          settingId =  X.settingId,
+                          notes =  X.notes,
+                             name = entity.setting.ToList().Where(s => s.settingId == X.settingId).FirstOrDefault().name,
+
+                         })
+                         .ToList();
+
+                    return list;
+
                 }
+
             }
-            return list;
+            catch
+            {
+                return list;
+            }
 
-
-
-            //List<SetValues> list = null;
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "setValues/GetBySetvalNote?setvalnote=" + setvalnote);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    HttpResponseMessage response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-            //        jsonString = jsonString.Replace("\\", string.Empty);
-            //        jsonString = jsonString.Trim('"');
-            //        // fix date format
-            //        JsonSerializerSettings settings = new JsonSerializerSettings
-            //        {
-            //            Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-            //            DateParseHandling = DateParseHandling.None
-            //        };
-            //        list = JsonConvert.DeserializeObject<List<SetValues>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-            //        return list;
-            //    }
-            //    else //web api sent error response 
-            //    {
-            //        // SetValues sv = new SetValues();
-            //        //    sv.notes =  await response.Content.ReadAsStringAsync();
-            //        list = new List<SetValues>();
-            //        //  list.Add(sv);
-
-            //    }
-            //    return list;
-            //}
         }
         // email
         public async Task<List<SetValues>> GetBySetName(string name)
         {
 
             List<SetValues> list = new List<SetValues>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("name", name);
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("setValues/GetBySetName", parameters);
-
-
-
-            foreach (Claim c in claims)
+            try
             {
-                if (c.Type == "scopes")
+
+
+                using (bookdbEntities entity = new bookdbEntities())
                 {
-                    list.Add(JsonConvert.DeserializeObject<SetValues>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                    setting sett = entity.setting.Where(s => s.name == name).FirstOrDefault();
+                     list = entity.setValues.Where(x => sett.settingId == x.settingId)
+                         .Select(X => new SetValues
+                         {
+                          
+                                valId= X.valId,
+                           value=  X.value,
+                          isDefault  = X.isDefault,
+                            isSystem =X.isSystem,
+                          settingId =  X.settingId,
+                          notes =  X.notes,
+
+                         })
+                         .ToList();
+                    return list;
+
                 }
+
             }
-            return list;
+            catch
+            {
+                return list;
+            }
 
-
-            //List<SetValues> list = null;
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "setValues/GetBySetName?name=" + name);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    HttpResponseMessage response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-            //        jsonString = jsonString.Replace("\\", string.Empty);
-            //        jsonString = jsonString.Trim('"');
-            //        // fix date format
-            //        JsonSerializerSettings settings = new JsonSerializerSettings
-            //        {
-            //            Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-            //            DateParseHandling = DateParseHandling.None
-            //        };
-            //        list = JsonConvert.DeserializeObject<List<SetValues>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-            //        return list;
-            //    }
-            //    else //web api sent error response 
-            //    {
-            //       // SetValues sv = new SetValues();
-            //    //    sv.notes =  await response.Content.ReadAsStringAsync();
-            //       list = new List<SetValues>();
-            //      //  list.Add(sv);
-
-            //    }
-            //    return list;
-            //}
         }
         // email
         public async Task<decimal> SaveValueByNotes(SetValues obj)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string method = "setValues/SaveValueByNotes";
 
-            var myContent = JsonConvert.SerializeObject(obj);
-            parameters.Add("Object", myContent);
-           return await APIResult.post(method, parameters);
+            decimal message = 0;
+            setValues newObject = new setValues();
+            newObject = JsonConvert.DeserializeObject<setValues>(JsonConvert.SerializeObject(obj));
+
+            if (newObject != null)
+            {
+
+
+                setValues tmpObject = null;
+
+
+                try
+                {
+                    if (newObject.settingId == 0 || newObject.settingId == null)
+                    {
+                        Nullable<int> id = null;
+                        newObject.settingId = id;
+                    }
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        setValues defItem = new setValues();
+                        var sEntity = entity.Set<setValues>();
+
+                        defItem = entity.setValues.Where(p => p.settingId == newObject.settingId).FirstOrDefault();
 
 
 
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //// 
-            //var myContent = JsonConvert.SerializeObject(newObject);
+                        if (newObject.valId == 0)
+                        {
+                            if (newObject.isDefault == 1)
+                            {
+                                // get the row with same settingId of newObject
+                                if (defItem != null)
+                                {
+                                    defItem.isDefault = 0;
+                                    entity.SaveChanges();
+                                }
+                            }
+                            else //newObject.isDefault ==0 
+                            {
+                                if (defItem == null)//other values isDefault not 1 
+                                {
+                                    newObject.isDefault = 1;
+                                }
 
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    // encoding parameter to get special characters
-            //    myContent = HttpUtility.UrlEncode(myContent);
-            //    request.RequestUri = new Uri(Global.APIUri
-            //                                 + "setValues/SaveValueByNotes?newObject="
-            //                                 + myContent);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Post;
-            //    //set content type
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    var response = await client.SendAsync(request);
+                            }
+                            sEntity.Add(newObject);
+                            message = newObject.valId ;
+                            entity.SaveChanges();
+                        }
+                        else
+                        {
+                            if (newObject.isDefault == 1)
+                            {
+                                defItem.isDefault = 0;//reset the other default to 0 if exist
+                            }
+                            var tmps1 = sEntity.ToList();
+                            tmpObject = tmps1.Where(p => p.notes == newObject.notes && p.settingId == newObject.settingId && p.valId == newObject.valId).FirstOrDefault();
+                            //   tmpObject.valId = newObject.valId;
+                            // tmpObject.notes = newObject.notes;
+                            tmpObject.value = newObject.value;
+                            tmpObject.isDefault = newObject.isDefault;
+                            tmpObject.isSystem = newObject.isSystem;
 
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var message = await response.Content.ReadAsStringAsync();
-            //        message = JsonConvert.DeserializeObject<string>(message);
-            //        return message;
-            //    }
-            //    return "";
-            //}
+                            tmpObject.settingId = newObject.settingId;
+                            entity.SaveChanges();
+                            message = tmpObject.valId ;
+                        }
+
+
+                    }
+
+
+                    return message;
+
+                }
+                catch
+                {
+             
+                    return 0;
+                }
+
+
+            }
+
+            return message;
+
         }
 
         public async Task<decimal> Save(SetValues obj)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string method = "setValues/Save";
+            decimal message = 0;
+            setValues newObject = new setValues();
+            newObject = JsonConvert.DeserializeObject<setValues>(JsonConvert.SerializeObject(obj));
 
-            var myContent = JsonConvert.SerializeObject(obj);
-            parameters.Add("Object", myContent);
-           return await APIResult.post(method, parameters);
-
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //// 
-            //var myContent = JsonConvert.SerializeObject(newObject);
-
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    // encoding parameter to get special characters
-            //    myContent = HttpUtility.UrlEncode(myContent);
-            //    request.RequestUri = new Uri(Global.APIUri
-            //                                 + "setValues/Save?newObject="
-            //                                 + myContent);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Post;
-            //    //set content type
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    var response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var message = await response.Content.ReadAsStringAsync();
-            //        message = JsonConvert.DeserializeObject<string>(message);
-            //        return message;
-            //    }
-            //    return "";
-            //}
-        }
-
-
-        public async Task<SetValues> GetByID(int valId)
-        {
-
-            SetValues item = new SetValues();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("Id", valId.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("setValues/GetByID", parameters);
-
-            foreach (Claim c in claims)
+            if (newObject != null)
             {
-                if (c.Type == "scopes")
+                setValues tmpObject = null;
+                try
                 {
-                    item = JsonConvert.DeserializeObject<SetValues>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-                    break;
+                    if (newObject.settingId == 0 || newObject.settingId == null)
+                    {
+                        Nullable<int> id = null;
+                        newObject.settingId = id;
+                    }
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        var sEntity = entity.Set<setValues>();
+                        setValues defItem = entity.setValues.Where(p => p.settingId == newObject.settingId && p.isDefault == 1).FirstOrDefault();
+
+                        if (newObject.valId == 0)
+                        {
+                            if (newObject.isDefault == 1)
+                            { // get the row with same settingId of newObject
+                                if (defItem != null)
+                                {
+                                    defItem.isDefault = 0;
+                                    entity.SaveChanges();
+                                }
+                            }
+                            else //Object.isDefault ==0 
+                            {
+                                if (defItem == null)//other values isDefault not 1 
+                                {
+                                    newObject.isDefault = 1;
+                                }
+
+                            }
+                            sEntity.Add(newObject);
+                            message = newObject.valId;
+                            entity.SaveChanges();
+                        }
+                        else
+                        {
+                            if (newObject.isDefault == 1)
+                            {
+                                defItem.isDefault = 0;//reset the other default to 0 if exist
+                            }
+                            tmpObject = entity.setValues.Where(p => p.valId == newObject.valId).FirstOrDefault();
+                            tmpObject.valId = newObject.valId;
+                            tmpObject.notes = newObject.notes;
+                            tmpObject.value = newObject.value;
+                            tmpObject.isDefault = newObject.isDefault;
+                            tmpObject.isSystem = newObject.isSystem;
+
+                            tmpObject.settingId = newObject.settingId;
+                            entity.SaveChanges();
+                            message = tmpObject.valId;
+                        }
+                    }
+                    return message;
+                }
+                catch
+                {
+
+                    return 0;
                 }
             }
-            return item;
+            else
+            {
+                return 0;
+            }
 
-
-            //SetValues Object = new SetValues();
-
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "setValues/GetByID");
-            //    request.Headers.Add("Id", valId.ToString());
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    var response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-
-            //        Object = JsonConvert.DeserializeObject<SetValues>(jsonString);
-
-            //        return Object;
-            //    }
-
-            //    return Object;
-            //}
-        }
-
-      
-
-
-
-        public async Task<decimal> Delete(int Id, int userId)
+            }
+            public async Task<SetValues> GetByID(int valId)
         {
+            SetValues item = new SetValues();
+                int Id = 0;
+                try
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("Id", Id.ToString());
-            parameters.Add("userId", userId.ToString());
+                       item = entity.setValues 
+                   .Where(c => c.valId == Id)
+                   .Select(c => new SetValues
+                   {
+                      
+                            valId =  c.valId,
+                 value = c.value,
+                  isDefault= c.isDefault,
+                 isSystem = c.isSystem,
+                notes  = c.notes,
+                settingId =  c.settingId,
 
-            string method = "setValue/Delete";
-           return await APIResult.post(method, parameters);
+                   }).FirstOrDefault();
+                        return item;
+
+                    }
+
+                }
+                catch
+                {
+                    return item;
+                }
+
+            }
+
+            public async Task<decimal> Delete(int Id, int userId)
+        {
+            decimal message = 0;
+            try
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        setValues sObj = entity.setValues.Find(Id);
+
+                        entity.setValues.Remove(sObj);
+                        message = entity.SaveChanges() ;
+
+                    }
+                    return message;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
 
 
+            // get is exist
 
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "setValue/Delete?Id=" + Id + "&userId=" + userId );
-
-            //    request.Headers.Add("APIKey", Global.APIKey);
-
-            //    request.Method = HttpMethod.Post;
-
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    var response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        return true;
-            //    }
-            //    return false;
-            //}
-        }
+            //image part
+            #region image
 
 
-        // get is exist
-
-        //image part
-        #region image
-
-
-        public async Task<string> uploadImage(string imagePath, string imageName, int valId)
+            public async Task<string> uploadImage(string imagePath, string imageName, int valId)
         //public async Task<Boolean> uploadImage(string imagePath, int userId)
         {
             if (imagePath != "")

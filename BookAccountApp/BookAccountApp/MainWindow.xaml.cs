@@ -132,26 +132,26 @@ namespace BookAccountApp
             txt_userJob.Text = job;
             try
             {
-                if (!string.IsNullOrEmpty(userLogin.image))
-                {
-                    byte[] imageBuffer = await userModel.downloadImage(userLogin.image); // read this as BLOB from your DB
+                //if (!string.IsNullOrEmpty(userLogin.image))
+                //{
+                //    byte[] imageBuffer = await userModel.downloadImage(userLogin.image); // read this as BLOB from your DB
 
-                    var bitmapImage = new BitmapImage();
+                //    var bitmapImage = new BitmapImage();
 
-                    using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
-                    {
-                        bitmapImage.BeginInit();
-                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                        bitmapImage.StreamSource = memoryStream;
-                        bitmapImage.EndInit();
-                    }
+                //    using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
+                //    {
+                //        bitmapImage.BeginInit();
+                //        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                //        bitmapImage.StreamSource = memoryStream;
+                //        bitmapImage.EndInit();
+                //    }
 
-                    img_userLogin.Fill = new ImageBrush(bitmapImage);
-                }
-                else
-                {
+                //    img_userLogin.Fill = new ImageBrush(bitmapImage);
+                //}
+                //else
+                //{
                     clearImg();
-                }
+                //}
             }
             catch
             {
@@ -192,25 +192,25 @@ namespace BookAccountApp
               await  FillCombo.loading_getDefaultSystemInfo();
              await FillCombo.Getprintparameter();
                 //loading_getGroupObjects();
-               await FillCombo.RefreshCountry();
-                FillCombo.fillRegion();
+              // await FillCombo.RefreshCountry();
+              //  FillCombo.fillRegion();
                 await loading_getUserPersonalInfo();
                
                 
                 #endregion
 
-                if (MainWindow.userLogin.type == "ag")
-                {
-                    btn_applications.Visibility = Visibility.Collapsed;
-                    btn_sectionData.Visibility = Visibility.Collapsed;
-                    btn_settings.Visibility = Visibility.Collapsed;
+                //if (MainWindow.userLogin.type == "ag")
+                //{
+                //    btn_applications.Visibility = Visibility.Collapsed;
+                //    btn_sectionData.Visibility = Visibility.Collapsed;
+                //    btn_settings.Visibility = Visibility.Collapsed;
 
-                    Btn_sales_Click(btn_sales , null);
-                }
-                else
-                {
+                //    Btn_sales_Click(btn_sales , null);
+                //}
+                //else
+                //{
                     Btn_applications_Click(btn_applications, null);
-                }
+                //}
                 if (sender != null)
                     HelpClass.EndAwait(grid_mainGrid);
             }

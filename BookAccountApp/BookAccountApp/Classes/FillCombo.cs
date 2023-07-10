@@ -216,7 +216,7 @@ namespace BookAccountApp.Classes
 
         static public async Task<IEnumerable<Country>> RefreshCountry()
         {
-           countrynum = await countrycodes.GetAll();
+           //countrynum = await countrycodes.GetAll();
             return countrynum;
         }
         static public async Task<IEnumerable<City>> RefreshCity()

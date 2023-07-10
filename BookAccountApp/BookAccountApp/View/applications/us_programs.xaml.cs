@@ -419,13 +419,13 @@ namespace BookAccountApp.View.applications
         async Task Search()
         {
             //search
-            if (programs is null)
-                await RefreshProgramsList();
-            searchText = tb_search.Text.ToLower();
-            programsQuery = programs.Where(s => (s.programCode.ToLower().Contains(searchText) ||
-            s.name.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_programState);
-            RefreshProgramsView();
+            //if (programs is null)
+            //    await RefreshProgramsList();
+            //searchText = tb_search.Text.ToLower();
+            //programsQuery = programs.Where(s => (s.programCode.ToLower().Contains(searchText) ||
+            //s.name.ToLower().Contains(searchText)
+            //) && s.isActive == tgl_programState);
+            //RefreshProgramsView();
         }
         async Task<IEnumerable<Programs>> RefreshProgramsList()
         {
