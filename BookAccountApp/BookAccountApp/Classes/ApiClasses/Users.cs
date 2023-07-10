@@ -423,10 +423,6 @@ namespace BookAccountApp.ApiClasses
         {
 
             decimal message = 0;
-
-            
-
-               
                 if (final)
                 {
                     try

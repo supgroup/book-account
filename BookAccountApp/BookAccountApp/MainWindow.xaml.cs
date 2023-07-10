@@ -47,7 +47,7 @@ namespace BookAccountApp
 
         internal static string dateFormat;
         internal static string accuracy;
-        static public GroupObject groupObject = new GroupObject();
+       // static public GroupObject groupObject = new GroupObject();
         //static public List<GroupObject> groupObjects = new List<GroupObject>();
         Users userModel = new Users();
         ImageBrush myBrush = new ImageBrush();
@@ -100,8 +100,8 @@ namespace BookAccountApp
 
         private void translate()
         {
-            txt_applications.Text = resourcemanager.GetString("trApplications");
-            txt_sales.Text = resourcemanager.GetString("trSales");
+            txt_applications.Text = resourcemanager.GetString("trServices");
+            txt_sales.Text = resourcemanager.GetString("trPayments");
             txt_reports.Text = resourcemanager.GetString("trReports");
             txt_sectionData.Text = resourcemanager.GetString("trSectionData");
             txt_settings.Text = resourcemanager.GetString("trSettings");
@@ -335,13 +335,13 @@ namespace BookAccountApp
         {//sales
             try
             {
-                Button button = sender as Button;
-                colorTextRefreash(button.Tag.ToString());
-                ColorIconRefreash(button.Tag.ToString());
-                openVisible(button.Tag.ToString());
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_sales.Instance);
-                uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale , null);
+                //Button button = sender as Button;
+                //colorTextRefreash(button.Tag.ToString());
+                //ColorIconRefreash(button.Tag.ToString());
+                //openVisible(button.Tag.ToString());
+                //grid_main.Children.Clear();
+                //grid_main.Children.Add(uc_sales.Instance);
+                //uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale , null);
             }
             catch (Exception ex)
             {

@@ -16,31 +16,19 @@ namespace BookAccountApp.ApiClasses
 {
     public class PayOp
     {
-
         public int payOpId { get; set; }
-        public decimal Price { get; set; }
         public string code { get; set; }
-        public string type { get; set; }
-        public Nullable<int> packageUserId { get; set; }
+        public Nullable<decimal> cash { get; set; }
+        public string opType { get; set; }
+        public string side { get; set; }
+        public Nullable<int> serviceId { get; set; }
+        public string opStatus { get; set; }
+        public Nullable<System.DateTime> opDate { get; set; }
+        public string notes { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public string notes { get; set; }
-        public bool canDelete { get; set; }
-        public decimal discountValue { get; set; }
-        public Nullable<int> agentId { get; set; }
-        public Nullable<int> customerId { get; set; }
-        public Nullable<int> countryPackageId { get; set; }
-        public decimal totalnet { get; set; }
-        public string packageNumber { get; set; }//bookNum
-        public Nullable<System.DateTime> expireDate { get; set; }//expireDate
-        public string currency { get; set; }
-        public Nullable<int> packageId { get; set; }
-
-        public string packageName { get; set; }
-
-        private string urimainpath = "PayOp/";
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>
@@ -48,79 +36,181 @@ namespace BookAccountApp.ApiClasses
         /// 
         public async Task<List<PayOp>> GetAll()
         {
-            List<PayOp> list = new List<PayOp>();
-            //  Dictionary<string, string> parameters = new Dictionary<string, string>();
-            //parameters.Add("mainBranchId", mainBranchId.ToString());
-            //parameters.Add("userId", userId.ToString());
-            //parameters.Add("date", date.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetAll");
 
-            foreach (Claim c in claims)
+            List<PayOp> List = new List<PayOp>();
+            bool canDelete = false;
+            try
             {
-                if (c.Type == "scopes")
+                using (bookdbEntities entity = new bookdbEntities())
                 {
-                    list.Add(JsonConvert.DeserializeObject<PayOp>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return list;
+                    List = (from S in entity.payOp
+                            select new PayOp()
+                            {
+                                payOpId = S.payOpId,
+                                code = S.code,
+                                cash = S.cash,
+                                opType = S.opType,
+                                side = S.side,
+                                serviceId = S.serviceId,
+                                opStatus = S.opStatus,
+                                opDate = S.opDate,
+                                notes = S.notes,
+                                createUserId = S.createUserId,
+                                updateUserId = S.updateUserId,
+                                createDate = S.createDate,
+                                updateDate = S.updateDate,
 
+                            }).ToList();
+
+                    return List;
+                }
+
+            }
+            catch
+            {
+                return List;
+            }
 
         }
 
-        public async Task<decimal> Save(PayOp obj)
+        public async Task<decimal> Save(PayOp newitem)
         {
+            payOp newObject = new payOp();
+            newObject = JsonConvert.DeserializeObject<payOp>(JsonConvert.SerializeObject(newitem));
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string method = urimainpath + "Save";
+            decimal message = 0;
+            if (newObject != null)
+            {
+                if (newObject.updateUserId == 0 || newObject.updateUserId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.updateUserId = id;
+                }
+                if (newObject.createUserId == 0 || newObject.createUserId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.createUserId = id;
+                }
+                if (newObject.serviceId == 0 || newObject.serviceId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.serviceId = id;
+                }
 
-            var myContent = JsonConvert.SerializeObject(obj);
-            parameters.Add("Object", myContent);
-            return await APIResult.post(method, parameters);
+                try
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        var locationEntity = entity.Set<payOp>();
+                        if (newObject.serviceId == 0)
+                        {
+                            newObject.createDate = DateTime.Now;
+                            newObject.updateDate = newObject.createDate;
+                            newObject.updateUserId = newObject.createUserId;
 
-  
+
+                            locationEntity.Add(newObject);
+                            entity.SaveChanges();
+                            message = newObject.payOpId;
+                        }
+                        else
+                        {
+                            var tmpObject = entity.payOp.Where(p => p.payOpId == newObject.payOpId).FirstOrDefault();
+
+                            tmpObject.updateDate = DateTime.Now;
+                            //   tmpObject.payOpId = newObject.payOpId;
+                            tmpObject.code = newObject.code;
+                            tmpObject.cash = newObject.cash;
+                            tmpObject.opType = newObject.opType;
+                            tmpObject.side = newObject.side;
+                            tmpObject.serviceId = newObject.serviceId;
+                            tmpObject.opStatus = newObject.opStatus;
+                            tmpObject.opDate = newObject.opDate;
+                            tmpObject.notes = newObject.notes;
+                            tmpObject.createUserId = newObject.createUserId;
+                            tmpObject.updateUserId = newObject.updateUserId;
+                            // tmpObject.createDate = newObject.createDate;
+                            tmpObject.updateDate = DateTime.Now;
+                            entity.SaveChanges();
+
+                            message = tmpObject.payOpId;
+                        }
+                    }
+                    return message;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                return 0;
+            }
+
+
         }
 
         public async Task<PayOp> GetByID(int payOpId)
         {
-            PayOp item = new PayOp();
-       
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("payOpId", payOpId.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByID", parameters);
 
-            foreach (Claim c in claims)
+            string message = "";
+
+            PayOp row = new PayOp();
+            try
             {
-                if (c.Type == "scopes")
+                using (bookdbEntities entity = new bookdbEntities())
                 {
-                    item = JsonConvert.DeserializeObject<PayOp>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-                    break;
+                    var list = entity.payOp.ToList();
+                    row = list.Where(u => u.payOpId == payOpId)
+                      .Select(S => new PayOp()
+                      {
+                          payOpId = S.payOpId,
+                          code = S.code,
+                          cash = S.cash,
+                          opType = S.opType,
+                          side = S.side,
+                          serviceId = S.serviceId,
+                          opStatus = S.opStatus,
+                          opDate = S.opDate,
+                          notes = S.notes,
+                          createUserId = S.createUserId,
+                          updateUserId = S.updateUserId,
+                          createDate = S.createDate,
+                          updateDate = S.updateDate,
+
+
+                      }).FirstOrDefault();
+                    return row;
                 }
+
+            }
+            catch (Exception ex)
+            {
+                row = new PayOp();
+                //userrow.name = ex.ToString();
+                return row;
             }
 
-            return item;
-
-           
         }
 
         public async Task<PayOp> getLastPayOp(int packageUserId)
         {
             PayOp item = new PayOp();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("packageUserId", packageUserId.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "getLastPayOp", parameters);
+            //Dictionary<string, string> parameters = new Dictionary<string, string>();
+            //parameters.Add("packageUserId", packageUserId.ToString());
+            ////#################
+            //IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "getLastPayOp", parameters);
 
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    item = JsonConvert.DeserializeObject<PayOp>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-                    break;
-                }
-            }
+            //foreach (Claim c in claims)
+            //{
+            //    if (c.Type == "scopes")
+            //    {
+            //        item = JsonConvert.DeserializeObject<PayOp>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+            //        break;
+            //    }
+            //}
 
             return item;
 
@@ -129,68 +219,143 @@ namespace BookAccountApp.ApiClasses
 
         public async Task<List<PayOp>> GetByCustomerId(int customerId)
         {
-           List<PayOp> list = new List<PayOp>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("customerId", customerId.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByCustomerId", parameters);
+            List<PayOp> list = new List<PayOp>();
+            //Dictionary<string, string> parameters = new Dictionary<string, string>();
+            //parameters.Add("customerId", customerId.ToString());
+            ////#################
+            //IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByCustomerId", parameters);
 
-            foreach (Claim c in claims)
+            //foreach (Claim c in claims)
+            //{
+            //    if (c.Type == "scopes")
+            //    {
+            //        list.Add(JsonConvert.DeserializeObject<PayOp>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+            //    }
+            //}
+            return list;
+
+        }
+        public async Task<List<PayOp>> GetByOfficeId(int officeId)
+        {
+            List<PayOp> list = new List<PayOp>();
+            using (bookdbEntities entity = new bookdbEntities())
             {
-                if (c.Type == "scopes")
-                {
-                    list.Add(JsonConvert.DeserializeObject<PayOp>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
+                list = (from S in entity.payOp
+                        where (S.serviceData.officeId == officeId)
+                        select new PayOp()
+                        {
+                            payOpId = S.payOpId,
+                            code = S.code,
+                            cash = S.cash,
+                            opType = S.opType,
+                            side = S.side,
+                            serviceId = S.serviceId,
+                            opStatus = S.opStatus,
+                            opDate = S.opDate,
+                            notes = S.notes,
+                            createUserId = S.createUserId,
+                            updateUserId = S.updateUserId,
+                            createDate = S.createDate,
+                            updateDate = S.updateDate,
+
+
+                        }).ToList();
             }
             return list;
 
         }
 
-        public async Task<decimal> Delete(int packageId, int userId, bool final)
+        public async Task<decimal> Delete(int id, int userId, bool final)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("packageId", packageId.ToString());
-            parameters.Add("userId", userId.ToString());
-            parameters.Add("final", final.ToString());
-
-            string method = urimainpath + "Delete";
-            return await APIResult.post(method, parameters);
-        }
-
-        public async Task<int> GetLastNum(string Code)
-        {
-            int count = 0;
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("payOpCode", Code);
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("PayOp/GetLastNum", parameters);
-
-            foreach (Claim c in claims)
+            decimal message = 0;
+            if (final)
             {
-                if (c.Type == "scopes")
+                try
                 {
-                    count = int.Parse(c.Value);
-                    break;
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        payOp objectDelete = entity.payOp.Find(id);
+
+                        entity.payOp.Remove(objectDelete);
+                        message = entity.SaveChanges();
+                        return message;
+
+                    }
+                }
+                catch
+                {
+                    return 0;
+
                 }
             }
-            return count;
+            return message;
+            //else
+            //{
+            //    try
+            //    {
+            //        using (bookdbEntities entity = new bookdbEntities())
+            //        {
+            //            payOp objectDelete = entity.payOp.Find(userId);
+
+            //            objectDelete.isActive = 0;
+            //            objectDelete.updateUserId = signuserId;
+            //            objectDelete.updateDate = DateTime.Now;
+            //            message = entity.SaveChanges();
+
+            //            return message;
+            //        }
+            //    }
+            //    catch
+            //    {
+            //        return 0;
+            //    }
+            //}
+
         }
 
-        public async Task<string> generateNumber(string payOpCode)
+        public async Task<int> GetLastNum(string payOpCode)
         {
-            int sequence = await GetLastNum(payOpCode);
-            sequence++;
-            string strSeq = sequence.ToString();
-            if (sequence <= 999999)
-                strSeq = sequence.ToString().PadLeft(6, '0');
-            string payOpNum = payOpCode + "-" + strSeq;
-            return payOpNum;
+           
+
+            List<string> numberList;
+            int lastNum = 0;
+            using (bookdbEntities entity = new bookdbEntities())
+            {
+                numberList = entity.payOp.Where(b => b.code.Contains(payOpCode + "-")).Select(b => b.code).ToList();
+
+                for (int i = 0; i < numberList.Count; i++)
+                {
+                    string code = numberList[i];
+                    string s = code.Substring(code.LastIndexOf("-") + 1);
+                    numberList[i] = s;
+                }
+                if (numberList.Count > 0)
+                {
+                    numberList.Sort();
+                    lastNum = int.Parse(numberList[numberList.Count - 1]);
+                }
+            }
+            return lastNum;
         }
 
+           
+       
 
-        /// ////
-
-
-
+    public async Task<string> generateNumber(string payOpCode)
+    {
+        int sequence = await GetLastNum(payOpCode);
+        sequence++;
+        string strSeq = sequence.ToString();
+        if (sequence <= 999999)
+            strSeq = sequence.ToString().PadLeft(6, '0');
+        string payOpNum = payOpCode + "-" + strSeq;
+        return payOpNum;
     }
+
+
+    /// ////
+
+
+
+}
 }

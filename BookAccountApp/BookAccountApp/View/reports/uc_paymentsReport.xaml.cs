@@ -322,6 +322,7 @@ namespace BookAccountApp.View.reports
         {//select agent
             try
             {
+                /*
                 if (cb_agents.SelectedIndex != -1)
                 {
                     dpnl_customer.IsEnabled = true;
@@ -337,6 +338,7 @@ namespace BookAccountApp.View.reports
                 }
 
                 await Search();
+                */
             }
             catch (Exception ex)
             {
@@ -852,7 +854,7 @@ namespace BookAccountApp.View.reports
             try
             {
                // HelpClass.StartAwait(grid_main);
-
+               /*
                 PaymentsSts payment = dg_book.SelectedItem as PaymentsSts;
                 if (payment.packageUserId > 0)
                 {
@@ -874,11 +876,13 @@ namespace BookAccountApp.View.reports
                         uc_payment.Instance.discount_ = payment.discountValue;
                         uc_payment.Instance.UserControl_Loaded(null, null);
                     }
+
                 }
                 //Clear();
                 //ClearPackageUser();
 
                 //HelpClass.EndAwait(grid_main);
+                */
             }
             catch (Exception ex)
             {

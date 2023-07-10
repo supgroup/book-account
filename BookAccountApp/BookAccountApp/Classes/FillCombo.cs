@@ -18,24 +18,24 @@ namespace BookAccountApp.Classes
         /// <summary>
         /// Packages
         /// </summary>
-        static Packages package = new Packages();
-        static IEnumerable<Packages> packages;
+        //static Packages package = new Packages();
+        //static IEnumerable<Packages> packages;
 
-        static PackageUser packageUser = new PackageUser();
-        static IEnumerable<PackageUser> packageUsers;
+        //static PackageUser packageUser = new PackageUser();
+        //static IEnumerable<PackageUser> packageUsers;
 
-        static IEnumerable<Packages> agentPackages;
+        //static IEnumerable<Packages> agentPackages;
 
-        static CountryPackageDate cpd = new CountryPackageDate();
-        static IEnumerable<CountryPackageDate> countryPackageDates;
-        static public async Task fillPackageUser(ComboBox combo)
-        {
-            packageUsers = await packageUser.GetAll();
-            combo.ItemsSource = packageUsers.Where(x => x.isActive == 1);
-            combo.SelectedValuePath = "packageUserId";
-            combo.DisplayMemberPath = "packageSaleCode";
-        }
-
+        //static CountryPackageDate cpd = new CountryPackageDate();
+        //static IEnumerable<CountryPackageDate> countryPackageDates;
+        //static public async Task fillPackageUser(ComboBox combo)
+        //{
+        //    packageUsers = await packageUser.GetAll();
+        //    combo.ItemsSource = packageUsers.Where(x => x.isActive == 1);
+        //    combo.SelectedValuePath = "packageUserId";
+        //    combo.DisplayMemberPath = "packageSaleCode";
+        //}
+        /*
         static public async Task fillBookNum(ComboBox combo , int customerId)
         {
             packageUsers = await packageUser.GetByCustomerId(customerId);
@@ -48,6 +48,8 @@ namespace BookAccountApp.Classes
             combo.DisplayMemberPath = "packageNumber";
             //combo.SelectedIndex = -1;
         }
+        */
+        /*
         static public async Task fillBookNumAgent(ComboBox combo, int customerId , int agentId)
         {
             packageUsers = await packageUser.GetByCustomerId(customerId);
@@ -61,7 +63,8 @@ namespace BookAccountApp.Classes
             combo.DisplayMemberPath = "packageNumber";
             //combo.SelectedIndex = -1;
         }
-
+        */
+        /*
         static public async Task fillPackage(ComboBox combo)
         {
             packages = await package.GetAll();
@@ -70,7 +73,8 @@ namespace BookAccountApp.Classes
             combo.DisplayMemberPath = "packageName";
             combo.SelectedIndex = -1;
         }
-
+        */
+        /*
         static public async Task fillPackageByCustomer(ComboBox combo , int customerId)
         {
             packages = await package.GetByCustomerCountry(customerId);
@@ -79,12 +83,15 @@ namespace BookAccountApp.Classes
             combo.DisplayMemberPath = "packageName";
             combo.SelectedIndex = -1;
         }
+        */
+        /*
         static public void fillRegion( )
         {
             MainWindow.Region = countrynum.Where(C=> C.isDefault==1).FirstOrDefault();
            
         }
-
+        */
+        /*
         static public async Task fillPeriod(ComboBox combo, int customerId, int packageId)
         {
             countryPackageDates = await cpd.GetByCustomerPackId(customerId , packageId);
@@ -102,6 +109,8 @@ namespace BookAccountApp.Classes
             combo.DisplayMemberPath = "notes";
             combo.SelectedIndex = -1;
         }
+        */
+        /*
         static public async Task fillAgentPackage(ComboBox combo , int agentId)
         {
             agentPackages = await package.GetPackagesByAgent(agentId);
@@ -109,10 +118,12 @@ namespace BookAccountApp.Classes
             combo.SelectedValuePath = "packageId";
             combo.DisplayMemberPath = "packageName";
         }
-
+        */
         /// <summary>
         /// Programs
         /// </summary>
+        /// 
+        /*
         static Programs program = new Programs();
         static IEnumerable<Programs> programs;
         static public async Task fillProgram(ComboBox combo)
@@ -122,7 +133,8 @@ namespace BookAccountApp.Classes
             combo.SelectedValuePath = "programId";
             combo.DisplayMemberPath = "name";
         }
-
+        */
+        /*
         /// <summary>
         /// Version
         /// </summary>
@@ -135,6 +147,7 @@ namespace BookAccountApp.Classes
             combo.SelectedValuePath = "verId";
             combo.DisplayMemberPath = "name";
         }
+
         static public async Task fillVersionByProgram(ComboBox combo, int programId)
         {
             versions = await version.GetAll();
@@ -142,7 +155,7 @@ namespace BookAccountApp.Classes
             combo.SelectedValuePath = "verId";
             combo.DisplayMemberPath = "name";
         }
-
+        */
         /// <summary>
         /// User & Agent 
         /// </summary>
@@ -171,6 +184,7 @@ namespace BookAccountApp.Classes
             combo.SelectedValuePath = "userId";
             combo.DisplayMemberPath = "name";
         }
+        /*
         /// <summary>
         /// Customer
         /// </summary>
@@ -200,7 +214,7 @@ namespace BookAccountApp.Classes
             //combo.DisplayMemberPath = "custname";
             combo.DisplayMemberPath = "company";
         }
-
+        */
         #region Countries
         /// <summary>
         /// area code methods
@@ -598,7 +612,7 @@ namespace BookAccountApp.Classes
 
             return value;
         }
-
+        /*
         public static string PeriodConv(CountryPackageDate CountryPackageDateModel)
         {
             string period = "";
@@ -631,6 +645,7 @@ namespace BookAccountApp.Classes
 
             return value;
         }
+        */
         public static string UnlimitedConvert(int count)
         {
             string value = "";

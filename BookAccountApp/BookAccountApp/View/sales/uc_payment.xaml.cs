@@ -56,9 +56,9 @@ namespace BookAccountApp.View.sales
         }
 
         public static List<string> requiredControlList;
-        PackageUser packageUserModel = new PackageUser();
-        PackageUser packageUser = new PackageUser();
-        Packages package = new Packages();
+        //PackageUser packageUserModel = new PackageUser();
+        //PackageUser packageUser = new PackageUser();
+        //Packages package = new Packages();
         IEnumerable<PayOp> payOps;
         IEnumerable<PayOp> payOpQuery;
         PayOp payOp = new PayOp();
@@ -90,18 +90,19 @@ namespace BookAccountApp.View.sales
                 }
                 translate();
                 #endregion
-
+                /*
                 if (MainWindow.userLogin.type.Equals("ag"))
                     try { await FillCombo.fillCustomerByAgent(cb_customer, MainWindow.userLogin.userId); }
                     catch { await FillCombo.fillCustomerByAgent(cb_customer, MainWindow.userLogin.userId); }
                 else
                     try { await FillCombo.fillCustomer(cb_customer); }
                     catch { await FillCombo.fillCustomer(cb_customer); }
-
+                */
                 if (isFirstTime)
                     Clear();
                 else
                 {
+                    /*
                     cb_customer.SelectedValue = cusID;
                     if (!MainWindow.userLogin.type.Equals("ag"))
                         try { await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue); }
@@ -115,32 +116,33 @@ namespace BookAccountApp.View.sales
 
                     btn_upgrade.IsEnabled = true;
 
-                    packageUser = cb_packageNumber.SelectedItem as PackageUser;
+                    //packageUser = cb_packageNumber.SelectedItem as PackageUser;
 
                     txt_period.Visibility = Visibility.Visible;
 
-                    int index = packageUser.packageNumber.IndexOf("     ");
-                    string s = packageUser.packageNumber.Substring(0, index);
-                    txt_packageNumberTitle.Text = s;
+                    //int index = packageUser.packageNumber.IndexOf("     ");
+                    //string s = packageUser.packageNumber.Substring(0, index);
+                    //txt_packageNumberTitle.Text = s;
 
-                    grid_packageDetails.DataContext = packageUser;
-                    grid_payDetails.DataContext = packageUser;
+                    //grid_packageDetails.DataContext = packageUser;
+                    //grid_payDetails.DataContext = packageUser;
 
                     tb_discount.Text = discount_.ToString();
 
 
                     #region fill Package details
-                    if (packageUser != null)
-                    {
-                        try
-                        {
-                            txt_total.Text = (decimal.Parse(txt_price.Text) - discount_).ToString();
-                        }
-                        catch { }
-                    }
+                    //if (packageUser != null)
+                    //{
+                    //    try
+                    //    {
+                    //        txt_total.Text = (decimal.Parse(txt_price.Text) - discount_).ToString();
+                    //    }
+                    //    catch { }
+                    //}
                     #endregion
 
                     isFirstTime = true;
+                    */
                 }
                 if(sender != null)
                     HelpClass.EndAwait(grid_main);
@@ -226,8 +228,8 @@ namespace BookAccountApp.View.sales
 
             txt_period.Visibility = Visibility.Hidden;
 
-            grid_packageDetails.DataContext = new PackageUser();
-            grid_payDetails.DataContext = new PackageUser();
+            //grid_packageDetails.DataContext = new PackageUser();
+            //grid_payDetails.DataContext = new PackageUser();
 
             clearValidate();
         }
@@ -560,10 +562,10 @@ namespace BookAccountApp.View.sales
 
         public async void  printOnPay()
         {
-            if (packageUser.packageUserId > 0)
-            {
+            //if (packageUser.packageUserId > 0)
+            //{
                 
-                    packUserRep =await  packUserRep.GetByID(packageUser.packageUserId);
+            //        packUserRep =await  packUserRep.GetByID(packageUser.packageUserId);
 
                  await GetPrintdata();
                 
@@ -576,11 +578,11 @@ namespace BookAccountApp.View.sales
                 });
               //  return "1";
                 #endregion
-            }
-            else
-            {
-                //return "0";
-            }
+            //}
+            //else
+            //{
+            //    //return "0";
+            //}
         }
         public async void Previewpayoprow(int payOpId)
         {
@@ -660,25 +662,25 @@ namespace BookAccountApp.View.sales
             paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trPackage")));//
             paramarr.Add(new ReportParameter("trPrice", MainWindow.resourcemanagerreport.GetString("trPrice")));//
             paramarr.Add(new ReportParameter("trExpirationDate", MainWindow.resourcemanagerreport.GetString("trExpirationDate")));//
-            paramarr.Add(new ReportParameter("packageNumber", packUserRep.packageNumber.ToString()));//
+            //paramarr.Add(new ReportParameter("packageNumber", packUserRep.packageNumber.ToString()));//
             paramarr.Add(new ReportParameter("Agent", FillCombo.AgentNameConv(agentmodel)));//
-            paramarr.Add(new ReportParameter("Customer", cumstomerModel.company));//
-            paramarr.Add(new ReportParameter("Period", FillCombo.PeriodConv(CountryPackageDateModel)));//
-            paramarr.Add(new ReportParameter("Name", PackagesModel.packageName));//
-            paramarr.Add(new ReportParameter("Price", CountryPackageDateModel.price.ToString()));//
+            //paramarr.Add(new ReportParameter("Customer", cumstomerModel.company));//
+            //paramarr.Add(new ReportParameter("Period", FillCombo.PeriodConv(CountryPackageDateModel)));//
+            //paramarr.Add(new ReportParameter("Name", PackagesModel.packageName));//
+            //paramarr.Add(new ReportParameter("Price", CountryPackageDateModel.price.ToString()));//
       
-            paramarr.Add(new ReportParameter("ExpirationDate", FillCombo.DateConvert(PayOpModel.expireDate)));//
+           // paramarr.Add(new ReportParameter("ExpirationDate", FillCombo.DateConvert(PayOpModel.expireDate)));//
 
             paramarr.Add(new ReportParameter("trProcessNumTooltip", MainWindow.resourcemanagerreport.GetString("trProcessNumTooltip")));//
             paramarr.Add(new ReportParameter("PayNo", PayOpModel.code));//
             paramarr.Add(new ReportParameter("trSoftware", MainWindow.resourcemanagerreport.GetString("trSoftware")));//
-            paramarr.Add(new ReportParameter("software", PackagesModel.programName + " " + PackagesModel.verName));//
+            //paramarr.Add(new ReportParameter("software", PackagesModel.programName + " " + PackagesModel.verName));//
             paramarr.Add(new ReportParameter("trDiscount", MainWindow.resourcemanagerreport.GetString("trDiscount")));//
             paramarr.Add(new ReportParameter("trTotal", MainWindow.resourcemanagerreport.GetString("trTotal")));//
             paramarr.Add(new ReportParameter("trPaid", MainWindow.resourcemanagerreport.GetString("trPaid")));//
-            paramarr.Add(new ReportParameter("Discount", reportclass.DecTostring(PayOpModel.discountValue)));//
-            paramarr.Add(new ReportParameter("Total", reportclass.DecTostring(PayOpModel.totalnet)));//
-            paramarr.Add(new ReportParameter("currency", CountryPackageDateModel.currency));//
+            //paramarr.Add(new ReportParameter("Discount", reportclass.DecTostring(PayOpModel.discountValue)));//
+            //paramarr.Add(new ReportParameter("Total", reportclass.DecTostring(PayOpModel.totalnet)));//
+            //paramarr.Add(new ReportParameter("currency", CountryPackageDateModel.currency));//
 
             paramarr.Add(new ReportParameter("Notes", PayOpModel.notes));
 
@@ -690,28 +692,28 @@ namespace BookAccountApp.View.sales
 
         #region email
 
-        PackageUser packUserRep = new PackageUser();
+        //PackageUser packUserRep = new PackageUser();
         Users agentmodel = new Users();
-        Customers cumstomerModel = new Customers();
-        CountryPackageDate CountryPackageDateModel = new CountryPackageDate();
+        //Customers cumstomerModel = new Customers();
+        //CountryPackageDate CountryPackageDateModel = new CountryPackageDate();
         // Country CountryModel = new Country();
-        Packages PackagesModel = new Packages();
+        //Packages PackagesModel = new Packages();
         PayOp PayOpModel = new PayOp();
         List<SetValues> SetValuesList = new List<SetValues>();
         SetValues terms = new SetValues();
         string result = "0";
-        PosSerials posSerialModel = new PosSerials();
+        //PosSerials posSerialModel = new PosSerials();
         SysEmails email = new SysEmails();
-        EmailClass mailtosend = new EmailClass();
+        //EmailClass mailtosend = new EmailClass();
 
         SetValues setvmodel = new SetValues();
         List<SetValues> setvlist = new List<SetValues>();
         List<SetValues> setvUpgradelist = new List<SetValues>();
-        List<PosSerials> repserialList = new List<PosSerials>();
+        //List<PosSerials> repserialList = new List<PosSerials>();
         public async Task<string> getdata()
         {
             PayOpModel = new PayOp();
-            PayOpModel = await PayOpModel.getLastPayOp(packUserRep.packageUserId);
+            //PayOpModel = await PayOpModel.getLastPayOp(packUserRep.packageUserId);
             if (PayOpModel.payOpId <= 0)
             {
                 return "0";
@@ -719,18 +721,18 @@ namespace BookAccountApp.View.sales
             else
             {
 
-                agentmodel = await agentmodel.GetByID((int)packUserRep.userId);
+                //agentmodel = await agentmodel.GetByID((int)packUserRep.userId);
 
-                cumstomerModel = await cumstomerModel.GetByID((int)packUserRep.customerId);
+                //cumstomerModel = await cumstomerModel.GetByID((int)packUserRep.customerId);
 
-                CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
-                PackagesModel = await PackagesModel.GetByID((int)CountryPackageDateModel.packageId);
+                ////CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
+                //PackagesModel = await PackagesModel.GetByID((int)CountryPackageDateModel.packageId);
                 SetValuesList = await terms.GetBySetName("sale_note");
                 terms = SetValuesList.FirstOrDefault();
                 email = await email.GetByBranchIdandSide("sales");
                 setvlist = await setvmodel.GetBySetName("sale_email_temp");
                 setvUpgradelist = await setvmodel.GetBySetName("upgrade_email_temp");
-                repserialList = await posSerialModel.GetByPackUserId(packUserRep.packageUserId);
+                //repserialList = await posSerialModel.GetByPackUserId(packUserRep.packageUserId);
                 //  CountryPackageDateModel.monthCount;
                 return "1";
             }
@@ -739,7 +741,7 @@ namespace BookAccountApp.View.sales
         public async Task<string> GetPrintdata()
         {
             PayOpModel = new PayOp();
-            PayOpModel = await PayOpModel.getLastPayOp(packUserRep.packageUserId);
+            //PayOpModel = await PayOpModel.getLastPayOp(packUserRep.packageUserId);
             if (PayOpModel.payOpId <= 0)
             {
                 return "0";
@@ -747,12 +749,12 @@ namespace BookAccountApp.View.sales
             else
             {
 
-                agentmodel = await agentmodel.GetByID((int)packUserRep.userId);
+                //agentmodel = await agentmodel.GetByID((int)packUserRep.userId);
 
-                cumstomerModel = await cumstomerModel.GetByID((int)packUserRep.customerId);
+                //cumstomerModel = await cumstomerModel.GetByID((int)packUserRep.customerId);
 
-                CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
-                PackagesModel = await PackagesModel.GetByID((int)CountryPackageDateModel.packageId);
+                ////CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
+                //PackagesModel = await PackagesModel.GetByID((int)CountryPackageDateModel.packageId);
         
               //  terms = SetValuesList.FirstOrDefault();
 
@@ -763,27 +765,28 @@ namespace BookAccountApp.View.sales
         }
         public async Task<string> GetPayrowdata()
         {
-            if (PayOpModel.packageUserId > 0)
-            {
-                packUserRep = await packUserRep.GetByID((int)PayOpModel.packageUserId);
-                agentmodel = await agentmodel.GetByID((int)packUserRep.userId);
+            //if (PayOpModel.packageUserId > 0)
+            //{
+            //    //packUserRep = await packUserRep.GetByID((int)PayOpModel.packageUserId);
+            //    agentmodel = await agentmodel.GetByID((int)packUserRep.userId);
 
-                cumstomerModel = await cumstomerModel.GetByID((int)packUserRep.customerId);
+            //    cumstomerModel = await cumstomerModel.GetByID((int)packUserRep.customerId);
 
-                CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
-                PackagesModel = await PackagesModel.GetByID((int)CountryPackageDateModel.packageId);
-            }
+            //    CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
+            //    PackagesModel = await PackagesModel.GetByID((int)CountryPackageDateModel.packageId);
+            //}
 
             //  CountryPackageDateModel.monthCount;
             return "1";
         }
+        /*
         public async void   sendsaleEmail(int packageUserId)
         {
             try
             {
                 if ((packageUserId > 0))
                 {
-                    packUserRep = await packUserRep.GetByID(packageUser.packageUserId);
+                    //packUserRep = await packUserRep.GetByID(packageUser.packageUserId);
                     await getdata();
                     //
 
@@ -826,32 +829,32 @@ namespace BookAccountApp.View.sales
                                         {
                                             string msg = "";
 
-                                            if (PayOpModel.type == "np" || PayOpModel.type == "chpr" || PayOpModel.type == "chpk")
-                                            {
-                                                //send upgrade email
+                                            //if (PayOpModel.type == "np" || PayOpModel.type == "chpr" || PayOpModel.type == "chpk")
+                                            //{
+                                            //    //send upgrade email
 
-                                                string pdfpath = "";
-                                                pdfpath =  Saveupgradepdf();
+                                            //    string pdfpath = "";
+                                            //    pdfpath =  Saveupgradepdf();
 
-                                                mailtosend = mailtosend.fillUpgradeTempData(packUserRep, PayOpModel, CountryPackageDateModel, PackagesModel, agentmodel, email, cumstomerModel, setvUpgradelist, terms);
+                                            //    mailtosend = mailtosend.fillUpgradeTempData(packUserRep, PayOpModel, CountryPackageDateModel, PackagesModel, agentmodel, email, cumstomerModel, setvUpgradelist, terms);
 
-                                                mailtosend.AddAttachTolist(pdfpath);
+                                            //    mailtosend.AddAttachTolist(pdfpath);
 
-                                                this.Dispatcher.Invoke(() =>
-                                                {
-                                                    msg = mailtosend.Sendmail();// temp comment
-                                                    if (msg == "Failure sending mail.")
-                                                    {
-                                                        // msg = "No Internet connection";
+                                            //    this.Dispatcher.Invoke(() =>
+                                            //    {
+                                            //        msg = mailtosend.Sendmail();// temp comment
+                                            //        if (msg == "Failure sending mail.")
+                                            //        {
+                                            //            // msg = "No Internet connection";
 
-                                                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoMailConnection"), animation: ToasterAnimation.FadeIn);
-                                                    }
-                                                    else if (msg == "mailsent")
-                                                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMailSent"), animation: ToasterAnimation.FadeIn);
-                                                    else
-                                                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMailNotSent"), animation: ToasterAnimation.FadeIn);
-                                                });
-                                            }
+                                            //            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoMailConnection"), animation: ToasterAnimation.FadeIn);
+                                            //        }
+                                            //        else if (msg == "mailsent")
+                                            //            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMailSent"), animation: ToasterAnimation.FadeIn);
+                                            //        else
+                                            //            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMailNotSent"), animation: ToasterAnimation.FadeIn);
+                                            //    });
+                                            //}
                                             /////
                                             mailtosend = mailtosend.fillSaleTempData(packUserRep, PayOpModel, CountryPackageDateModel, PackagesModel, agentmodel, email, cumstomerModel, setvlist);
 
@@ -902,10 +905,10 @@ namespace BookAccountApp.View.sales
             }
            
         }
-
+        */
         public  void  BuildupgradeReport()
         {
-
+            /*
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
             string addpath = "";
@@ -940,7 +943,7 @@ namespace BookAccountApp.View.sales
             paramarr.Add(new ReportParameter("Agent", agentname));
             paramarr.Add(new ReportParameter("Customer", cuModel.company));
             paramarr.Add(new ReportParameter("serverKey", serkey));
-            paramarr.Add(new ReportParameter("ExpirationDate", FillCombo.DateConvert(PayOpModel.expireDate)));
+            //paramarr.Add(new ReportParameter("ExpirationDate", FillCombo.DateConvert(PayOpModel.expireDate)));
             paramarr.Add(new ReportParameter("packageNumber", packUserRep.packageNumber.ToString()));
             paramarr.Add(new ReportParameter("trExpirationDate", MainWindow.resourcemanagerreport.GetString("trExpirationDate")));
             paramarr.Add(new ReportParameter("trBookNum", MainWindow.resourcemanagerreport.GetString("trBookNum")));
@@ -955,10 +958,13 @@ namespace BookAccountApp.View.sales
             rep.SetParameters(paramarr);
 
             rep.Refresh();
+            */
              
         }
+        /*
         public  string Saveupgradepdf()
         {
+            
             //for email
             List<ReportParameter> paramarr = new List<ReportParameter>();
             string pdfpath = "";
@@ -987,7 +993,9 @@ namespace BookAccountApp.View.sales
 
             }
             return pdfpath;
-        }
+           
+    }
+     */
         #endregion
 
         PayOp payOpModel = new PayOp();
@@ -996,7 +1004,7 @@ namespace BookAccountApp.View.sales
             try
             {
                 HelpClass.StartAwait(grid_main);
-
+                /*
                 if (cb_customer.SelectedIndex != -1)
                 {
                     if (isFirstTime)
@@ -1018,7 +1026,7 @@ namespace BookAccountApp.View.sales
                     await RefreshPayOpList();
                     await Search();
                 }
-
+                */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -1026,6 +1034,7 @@ namespace BookAccountApp.View.sales
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+          
         }
 
 
@@ -1046,10 +1055,11 @@ namespace BookAccountApp.View.sales
 
             searchText = tb_search.Text.ToLower();
             payOpQuery = payOps.Where(s => (s.code.ToLower().Contains(searchText) ||
-                                            s.packageNumber.ToLower().Contains(searchText) ||
-                                            s.updateDate.ToString().ToLower().Contains(searchText) ||
-                                            s.expireDate.ToString().ToLower().Contains(searchText) ||
-                                            s.totalnet.ToString().ToLower().Contains(searchText)
+                                          //  s.packageNumber.ToLower().Contains(searchText) ||
+                                            s.updateDate.ToString().ToLower().Contains(searchText) 
+                                            //||
+                                            //s.expireDate.ToString().ToLower().Contains(searchText) ||
+                                            //s.totalnet.ToString().ToLower().Contains(searchText)
             ));
 
             RefreshPayOpView();
@@ -1061,7 +1071,7 @@ namespace BookAccountApp.View.sales
             try
             {
                 HelpClass.StartAwait(grid_main);
-
+/*
                 if ((cb_packageNumber.SelectedIndex != -1) && (isFirstTime))
                 {
                     tb_discount.Text = "0";
@@ -1114,7 +1124,7 @@ namespace BookAccountApp.View.sales
                     #endregion
                 }
 
-
+                */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -1129,7 +1139,7 @@ namespace BookAccountApp.View.sales
             try
             {
                 HelpClass.StartAwait(grid_main);
-
+                /*
                 if (packageUser.packageId > 0)
                 {
                     MainWindow.mainWindow.Btn_sales_Click(MainWindow.mainWindow.btn_sales, null);
@@ -1148,7 +1158,7 @@ namespace BookAccountApp.View.sales
                     uc_sale.Instance.isOnline = packageUser.isOnlineServer.Value;
                     HelpClass.clearValidate(uc_sale.requiredControlList, this);
                 }
-
+                */
                 Clear();
                 ClearPackageUser();
 
@@ -1169,23 +1179,23 @@ namespace BookAccountApp.View.sales
                 decimal msg = 0;
                 if (HelpClass.validate(requiredControlList, this))
                 {
-                    payOp.Price = decimal.Parse(txt_price.Text);
+                    //payOp.Price = decimal.Parse(txt_price.Text);
                     payOp.code = await payOpModel.generateNumber("po");//auto po-000000
-                    payOp.type = packageUser.type;
-                    payOp.packageUserId = packageUser.packageUserId;
+                    //payOp.type = packageUser.type;
+                    //payOp.packageUserId = packageUser.packageUserId;
                     payOp.createUserId = MainWindow.userID;
                     payOp.notes = "";
-                    payOp.discountValue = discount;
-                    if (MainWindow.userLogin.type.Equals("ag"))
-                        payOp.agentId = MainWindow.userID;
-                    else payOp.agentId = 3;
-                    payOp.customerId = (int)cb_customer.SelectedValue;
-                    payOp.countryPackageId = packageUser.countryPackageId;
-                    payOp.expireDate = packageUser.expireDate;
+                    //payOp.discountValue = discount;
+                    //if (MainWindow.userLogin.type.Equals("ag"))
+                    //    payOp.agentId = MainWindow.userID;
+                    //else payOp.agentId = 3;
+                    //payOp.customerId = (int)cb_customer.SelectedValue;
+                    //payOp.countryPackageId = packageUser.countryPackageId;
+                    //payOp.expireDate = packageUser.expireDate;
                     totalNet = decimal.Parse(txt_price.Text) - discount;
-                    payOp.totalnet = totalNet;
+                    //payOp.totalnet = totalNet;
 
-                    msg = await packageUserModel.packagePay(packageUser, payOp);
+                //    msg = await packageUserModel.packagePay(packageUser, payOp);
                     if (msg <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
@@ -1206,7 +1216,7 @@ namespace BookAccountApp.View.sales
                         {
                             //Thread t1 = new Thread(() =>
                             //{
-                           sendsaleEmail(packageUser.packageUserId);
+                        //   sendsaleEmail(packageUser.packageUserId);
                             //});
                             //t1.Start();
                        
@@ -1242,7 +1252,7 @@ namespace BookAccountApp.View.sales
                     ////
                     Thread t1 = new Thread(() =>
                     {
-                        sendsaleEmail(packageUser.packageUserId);
+                       // sendsaleEmail(packageUser.packageUserId);
                     });
                     t1.Start();
                     ////
@@ -1267,6 +1277,7 @@ namespace BookAccountApp.View.sales
                 HelpClass.StartAwait(grid_main);
 
                 #region
+                /*
                 if (packageUser.packageUserId > 0)
                 {
                     packUserRep = await packUserRep.GetByID(packageUser.packageUserId);
@@ -1287,6 +1298,7 @@ namespace BookAccountApp.View.sales
                     }
                     Window.GetWindow(this).Opacity = 1;
                 }
+                */
                 #endregion
 
                 HelpClass.EndAwait(grid_main);

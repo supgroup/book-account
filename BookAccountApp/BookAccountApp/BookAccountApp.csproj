@@ -202,32 +202,21 @@
     <Compile Include="cities.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Classes\ApiClasses\AgentCustomer.cs" />
-    <Compile Include="Classes\ApiClasses\CountryPackageDate.cs" />
     <Compile Include="Classes\ApiClasses\ApiConnect.cs" />
     <Compile Include="Classes\ApiClasses\APIResult.cs" />
     <Compile Include="Classes\ApiClasses\City.cs" />
     <Compile Include="Classes\ApiClasses\Country.cs" />
-    <Compile Include="Classes\ApiClasses\Customers.cs" />
-    <Compile Include="Classes\ApiClasses\Group.cs" />
-    <Compile Include="Classes\ApiClasses\GroupObject.cs" />
-    <Compile Include="Classes\ApiClasses\Object.cs" />
-    <Compile Include="Classes\ApiClasses\Packages.cs" />
     <Compile Include="Classes\ApiClasses\ErrorClass.cs" />
-    <Compile Include="Classes\ApiClasses\AgentPackage.cs" />
-    <Compile Include="Classes\ApiClasses\PackageUser.cs" />
     <Compile Include="Classes\ApiClasses\PayOp.cs" />
-    <Compile Include="Classes\ApiClasses\PosSerials.cs" />
-    <Compile Include="Classes\ApiClasses\Programs.cs" />
+    <Compile Include="Classes\ApiClasses\Office.cs" />
     <Compile Include="Classes\ApiClasses\SettingCls.cs" />
     <Compile Include="Classes\ApiClasses\setValues.cs" />
     <Compile Include="Classes\ApiClasses\Statistics.cs" />
     <Compile Include="Classes\ApiClasses\SysEmails.cs" />
+    <Compile Include="Classes\ApiClasses\ServiceData.cs" />
     <Compile Include="Classes\ApiClasses\Users.cs" />
     <Compile Include="Classes\ApiClasses\UsersLogs.cs" />
-    <Compile Include="Classes\ApiClasses\versions.cs" />
     <Compile Include="Classes\DynamicallyClass.cs" />
-    <Compile Include="Classes\EmailClass.cs" />
     <Compile Include="Classes\FillCombo.cs" />
     <Compile Include="Classes\HelpClass.cs" />
     <Compile Include="Classes\ImageProcess.cs" />
@@ -283,12 +272,6 @@
     <Compile Include="View\applications\uc_applications.xaml.cs">
       <DependentUpon>uc_applications.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\applications\uc_packages.xaml.cs">
-      <DependentUpon>uc_packages.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\applications\uc_versions.xaml.cs">
-      <DependentUpon>uc_versions.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\applications\us_programs.xaml.cs">
       <DependentUpon>us_programs.xaml</DependentUpon>
     </Compile>
@@ -301,41 +284,14 @@
     <Compile Include="View\reports\uc_reports.xaml.cs">
       <DependentUpon>uc_reports.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\sales\uc_packageUser.xaml.cs">
-      <DependentUpon>uc_packageUser.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\sales\uc_payment.xaml.cs">
       <DependentUpon>uc_payment.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\sales\uc_posSerials.xaml.cs">
-      <DependentUpon>uc_posSerials.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\sales\uc_sale.xaml.cs">
-      <DependentUpon>uc_sale.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\sales\uc_sales.xaml.cs">
-      <DependentUpon>uc_sales.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\sectionData\uc_agents.xaml.cs">
-      <DependentUpon>uc_agents.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\sectionData\uc_customers.xaml.cs">
-      <DependentUpon>uc_customers.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sectionData\uc_sectionData.xaml.cs">
       <DependentUpon>uc_sectionData.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sectionData\uc_users.xaml.cs">
       <DependentUpon>uc_users.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\settings\emailGeneral\uc_emailGeneral.xaml.cs">
-      <DependentUpon>uc_emailGeneral.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\settings\emailGeneral\uc_emailsSetting.xaml.cs">
-      <DependentUpon>uc_emailsSetting.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\settings\emailGeneral\uc_emailTemplates.xaml.cs">
-      <DependentUpon>uc_emailTemplates.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\settings\uc_general.xaml.cs">
       <DependentUpon>uc_general.xaml</DependentUpon>
@@ -349,32 +305,17 @@
     <Compile Include="View\windows\wd_acceptCancelPopup.xaml.cs">
       <DependentUpon>wd_acceptCancelPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\windows\wd_agentPackages.xaml.cs">
-      <DependentUpon>wd_agentPackages.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\windows\wd_changePassword.xaml.cs">
       <DependentUpon>wd_changePassword.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_companyInfo.xaml.cs">
       <DependentUpon>wd_companyInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\windows\wd_countryPackageDate.xaml.cs">
-      <DependentUpon>wd_countryPackageDate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\windows\wd_customers.xaml.cs">
-      <DependentUpon>wd_customers.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\windows\wd_logIn.xaml.cs">
       <DependentUpon>wd_logIn.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_messageBoxWithIcon.xaml.cs">
       <DependentUpon>wd_messageBoxWithIcon.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\windows\wd_newCustomer.xaml.cs">
-      <DependentUpon>wd_newCustomer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\windows\wd_offlineActivation.xaml.cs">
-      <DependentUpon>wd_offlineActivation.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_previewPdf.xaml.cs">
       <DependentUpon>wd_previewPdf.xaml</DependentUpon>
@@ -384,12 +325,6 @@
     </Compile>
     <Compile Include="View\windows\wd_saleNote.xaml.cs">
       <DependentUpon>wd_saleNote.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\windows\wd_seialsList.xaml.cs">
-      <DependentUpon>wd_seialsList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\windows\wd_usersList.xaml.cs">
-      <DependentUpon>wd_usersList.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -418,17 +353,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\applications\uc_packages.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\applications\uc_versions.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\applications\us_programs.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="View\reports\uc_bookReport.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -442,31 +369,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\sales\uc_packageUser.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\sales\uc_payment.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\sales\uc_posSerials.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\sales\uc_sale.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\sales\uc_sales.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\sectionData\uc_agents.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\sectionData\uc_customers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -475,18 +378,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\sectionData\uc_users.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\settings\emailGeneral\uc_emailGeneral.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\settings\emailGeneral\uc_emailsSetting.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\settings\emailGeneral\uc_emailTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -506,10 +397,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\windows\wd_agentPackages.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="View\windows\wd_changePassword.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -518,27 +405,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\windows\wd_countryPackageDate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\windows\wd_customers.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="View\windows\wd_logIn.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_messageBoxWithIcon.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\windows\wd_newCustomer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\windows\wd_offlineActivation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -553,14 +424,6 @@
     <Page Include="View\windows\wd_saleNote.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\windows\wd_seialsList.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\windows\wd_usersList.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -873,6 +736,7 @@
     <Folder Include="Reports\SectionData\Ar\" />
     <Folder Include="Thumb\customers\" />
     <Folder Include="Thumb\users\" />
+    <Folder Include="View\settings\emailGeneral\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="pic\no-image-icon-125x125.png" />

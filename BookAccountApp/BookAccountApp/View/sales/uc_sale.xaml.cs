@@ -687,8 +687,8 @@ namespace BookAccountApp.View.sales
 
                 cumstomerModel = await cumstomerModel.GetByID((int)packUserRep.customerId);
 
-                CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
-                PackagesModel = await PackagesModel.GetByID((int)PayOpModel.packageId);
+              //  CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
+               // PackagesModel = await PackagesModel.GetByID((int)PayOpModel.packageId);
                 SetValuesList = await terms.GetBySetName("sale_note");
                 terms = SetValuesList.FirstOrDefault();
                 //  CountryPackageDateModel.monthCount;
@@ -784,7 +784,7 @@ namespace BookAccountApp.View.sales
             paramarr.Add(new ReportParameter("Name", PackagesModel.packageName));
             paramarr.Add(new ReportParameter("Price", CountryPackageDateModel.price.ToString() +" "+ CountryPackageDateModel.currency));
             paramarr.Add(new ReportParameter("Status", FillCombo.serverActiveConv(packUserRep.isActive)));
-            paramarr.Add(new ReportParameter("ExpirationDate",FillCombo.DateConvert(PayOpModel.expireDate)));
+        //    paramarr.Add(new ReportParameter("ExpirationDate",FillCombo.DateConvert(PayOpModel.expireDate)));
           //  paramarr.Add(new ReportParameter("Active", ));
             paramarr.Add(new ReportParameter("Program", PackagesModel.programName));
             paramarr.Add(new ReportParameter("Version", PackagesModel.verName));

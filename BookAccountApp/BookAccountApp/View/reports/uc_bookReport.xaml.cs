@@ -328,6 +328,7 @@ namespace BookAccountApp.View.reports
         {//select agent
             try
             {
+                /*
                 if (cb_agents.SelectedIndex != -1)
                 {
                     dpnl_customer.IsEnabled = true;
@@ -342,6 +343,7 @@ namespace BookAccountApp.View.reports
                     cb_customers.SelectedIndex = -1;
                 }
                 await Search();
+                */
             }
             catch (Exception ex)
             {
@@ -424,8 +426,10 @@ namespace BookAccountApp.View.reports
                 //HelpClass.StartAwait(grid_main);
 
                 BookSts book = dg_book.SelectedItem as BookSts;
+                /*
                 if (book.packageUserId > 0)
                 {
+
                     PackageUser puModel = new PackageUser();
                     PackageUser packageUser = await puModel.GetByID(book.packageUserId);
 
@@ -451,6 +455,7 @@ namespace BookAccountApp.View.reports
                         HelpClass.clearValidate(uc_sale.requiredControlList, this);
                     }
                 }
+                */
                 //Clear();
                 //ClearPackageUser();
 
