@@ -17,15 +17,15 @@ namespace BookAccountApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public users()
         {
-            this.agentCustomer = new HashSet<agentCustomer>();
-            this.agentCustomer1 = new HashSet<agentCustomer>();
-            this.agentCustomer2 = new HashSet<agentCustomer>();
             this.customers = new HashSet<customers>();
             this.customers1 = new HashSet<customers>();
             this.error = new HashSet<error>();
+            this.office = new HashSet<office>();
+            this.office1 = new HashSet<office>();
             this.payOp = new HashSet<payOp>();
             this.payOp1 = new HashSet<payOp>();
-            this.payOp2 = new HashSet<payOp>();
+            this.serviceData = new HashSet<serviceData>();
+            this.serviceData1 = new HashSet<serviceData>();
         }
     
         public int userId { get; set; }
@@ -57,12 +57,6 @@ namespace BookAccountApp
         public Nullable<byte> isOnline { get; set; }
         public Nullable<int> countryId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<agentCustomer> agentCustomer { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<agentCustomer> agentCustomer1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<agentCustomer> agentCustomer2 { get; set; }
         public virtual countriesCodes countriesCodes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<customers> customers { get; set; }
@@ -71,10 +65,16 @@ namespace BookAccountApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<error> error { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<office> office { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<office> office1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<payOp> payOp { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<payOp> payOp1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<payOp> payOp2 { get; set; }
+        public virtual ICollection<serviceData> serviceData { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<serviceData> serviceData1 { get; set; }
     }
 }

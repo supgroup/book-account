@@ -12,32 +12,32 @@ namespace BookAccountApp
     using System;
     using System.Collections.Generic;
     
-    public partial class customers
+    public partial class office
     {
-        public int custId { get; set; }
-        public string custname { get; set; }
-        public string lastName { get; set; }
-        public string company { get; set; }
-        public string email { get; set; }
-        public string phone { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public office()
+        {
+            this.serviceData = new HashSet<serviceData>();
+        }
+    
+        public int officeId { get; set; }
+        public string name { get; set; }
+        public string agentName { get; set; }
+        public Nullable<System.DateTime> joinDate { get; set; }
         public string mobile { get; set; }
-        public string fax { get; set; }
         public string address { get; set; }
-        public string custlevel { get; set; }
+        public string userName { get; set; }
+        public string passwordSY { get; set; }
+        public string PasswordSoto { get; set; }
+        public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public string custCode { get; set; }
-        public string image { get; set; }
-        public string notes { get; set; }
-        public decimal balance { get; set; }
-        public byte balanceType { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> isActive { get; set; }
-        public Nullable<int> countryId { get; set; }
     
-        public virtual countriesCodes countriesCodes { get; set; }
         public virtual users users { get; set; }
         public virtual users users1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<serviceData> serviceData { get; set; }
     }
 }

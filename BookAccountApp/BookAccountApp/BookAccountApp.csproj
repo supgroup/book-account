@@ -184,9 +184,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="agentCustomer.cs">
-      <DependentUpon>bookModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="bookModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -262,7 +259,13 @@
     <Compile Include="error.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="office.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="payOp.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="serviceData.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="setting.cs">
@@ -579,8 +582,8 @@
     <Resource Include="pic\supcloudsLogo.ico" />
     <Content Include="bookModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>bookModel.Context.cs</LastGenOutput>
       <DependentUpon>bookModel.edmx</DependentUpon>
+      <LastGenOutput>bookModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="bookModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -15,26 +15,21 @@ namespace BookAccountApp
     public partial class payOp
     {
         public int payOpId { get; set; }
-        public decimal Price { get; set; }
         public string code { get; set; }
-        public string type { get; set; }
-        public Nullable<int> packageUserId { get; set; }
+        public Nullable<decimal> cash { get; set; }
+        public string opType { get; set; }
+        public string side { get; set; }
+        public Nullable<int> serviceId { get; set; }
+        public string opStatus { get; set; }
+        public Nullable<System.DateTime> opDate { get; set; }
+        public string notes { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public string notes { get; set; }
-        public decimal discountValue { get; set; }
-        public Nullable<int> agentId { get; set; }
-        public Nullable<int> customerId { get; set; }
-        public Nullable<int> countryPackageId { get; set; }
-        public decimal totalnet { get; set; }
-        public Nullable<int> packageId { get; set; }
-        public Nullable<System.DateTime> expireDate { get; set; }
     
-        public virtual customers customers { get; set; }
+        public virtual serviceData serviceData { get; set; }
         public virtual users users { get; set; }
         public virtual users users1 { get; set; }
-        public virtual users users2 { get; set; }
     }
 }
