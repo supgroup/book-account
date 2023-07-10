@@ -176,22 +176,7 @@ namespace BookAccountApp.View.windows
                             MainWindow.userID = user.userId;
                             MainWindow.userLogin = user;
 
-                            #region check if menu is open
-                            //try
-                            //{
-                            //    string m = await SectionData.getUserMenuIsOpen(user.userId);
-                            //    if (!m.Equals("-1"))
-                            //        MainWindow.menuIsOpen = m;
-                            //    else
-                            //        MainWindow.menuIsOpen = "close";
-                            //    menuIsOpen = MainWindow.menuIsOpen;
-                            //}
-                            //catch
-                            //{
-                            //    MainWindow.menuIsOpen = "close";
-                            //    menuIsOpen = MainWindow.menuIsOpen;
-                            //}
-                            #endregion
+                             
 
                             //make user online
                             user.isOnline = 1;
@@ -202,9 +187,10 @@ namespace BookAccountApp.View.windows
                             if (cbxRemmemberMe.IsChecked.Value)
                             {
                                 Properties.Settings.Default.userName = txtUserName.Text;
-                                Properties.Settings.Default.password = txtPassword.Password;
+                               // Properties.Settings.Default.password = txtPassword.Password;
                                 Properties.Settings.Default.Lang = MainWindow.lang;
                                 //Properties.Settings.Default.menuIsOpen = menuIsOpen;
+                                 Properties.Settings.Default.password ="";
                             }
                             else
                             {
