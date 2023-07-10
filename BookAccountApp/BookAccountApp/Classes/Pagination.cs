@@ -27,6 +27,7 @@ namespace BookAccountApp.Classes
             btn.Content = indexContent.ToString();
 
         }
+        /*
         public IEnumerable<PosSerials> refrishPagination(IEnumerable<PosSerials> _items, int pageIndex, Button[] btns,int countItems = 10)
         {
             try
@@ -181,5 +182,6 @@ namespace BookAccountApp.Classes
             }
 
         }
+        */
     }
 }

@@ -27,8 +27,8 @@ namespace BookAccountApp.Classes
         public static ImageBrush imageBrush = new ImageBrush();
 
         static Users userModel = new Users();
-        static Customers customerModel = new Customers();
-        static Packages packageModel = new Packages();
+        //static Customers customerModel = new Customers();
+        //static Packages packageModel = new Packages();
 
         public static async Task<string> generateRandomString(int length, string type, string _class, int id)
         {
@@ -60,6 +60,7 @@ namespace BookAccountApp.Classes
                     else
                         iscodeExist = false;
                 }
+                /*
                 else if (_class.Equals("Customers"))
                 {
                     List<Customers> customers = await customerModel.GetAll();
@@ -78,6 +79,7 @@ namespace BookAccountApp.Classes
                     else
                         iscodeExist = false;
                 }
+                */
 
             }
             catch { }
@@ -774,7 +776,7 @@ namespace BookAccountApp.Classes
             }
 
         }
-
+        /*
         public static string getPeriod(CountryPackageDate cpd)
         {
             string period = "";
@@ -793,7 +795,7 @@ namespace BookAccountApp.Classes
             }
             return period;
         }
-
+        */
         public static string translate(string str)
         {
             string _str = "";

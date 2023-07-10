@@ -118,10 +118,10 @@ namespace BookAccountApp.View.sectionData
         {
             try
             {
-                Button button = sender as Button;
-                colorButtonRefreash(button.Tag.ToString());
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_agents.Instance);
+                //Button button = sender as Button;
+                //colorButtonRefreash(button.Tag.ToString());
+                //grid_main.Children.Clear();
+                //grid_main.Children.Add(uc_agents.Instance);
             }
             catch (Exception ex)
             {
@@ -133,10 +133,10 @@ namespace BookAccountApp.View.sectionData
         {
             try
             {
-                Button button = sender as Button;
-                colorButtonRefreash(button.Tag.ToString());
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_customers.Instance);
+                //Button button = sender as Button;
+                //colorButtonRefreash(button.Tag.ToString());
+                //grid_main.Children.Clear();
+                //grid_main.Children.Add(uc_customers.Instance);
             }
             catch (Exception ex)
             {

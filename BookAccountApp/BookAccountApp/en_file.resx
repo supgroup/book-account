@@ -2812,4 +2812,7 @@ Please add Email in setting</value>
   <data name="trLevelHint" xml:space="preserve">
     <value>Level...</value>
   </data>
+  <data name="trServices" xml:space="preserve">
+    <value>Services</value>
+  </data>
 </root>

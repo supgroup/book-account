@@ -2794,4 +2794,7 @@
   <data name="trLevelHint" xml:space="preserve">
     <value>المستوى...</value>
   </data>
+  <data name="trServices" xml:space="preserve">
+    <value>الخدمات</value>
+  </data>
 </root>

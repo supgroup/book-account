@@ -1,5 +1,5 @@
 ﻿using BookAccountApp.Classes;
-using BookAccountApp.View.settings.emailGeneral;
+ 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -117,12 +117,12 @@ namespace BookAccountApp.View.settings
         {
             try
             {
-                Button button = sender as Button;
-                colorButtonRefreash(button.Tag.ToString());
-                grid_main.Children.Clear();
-                //grid_main.Children.Add(uc_emailGeneral.Instance);
-                uc_emailGeneral uc = new uc_emailGeneral();
-                grid_main.Children.Add(uc);
+                //Button button = sender as Button;
+                //colorButtonRefreash(button.Tag.ToString());
+                //grid_main.Children.Clear();
+                
+                //uc_emailGeneral uc = new uc_emailGeneral();
+                //grid_main.Children.Add(uc);
             }
             catch (Exception ex)
             {

@@ -52,11 +52,13 @@ namespace BookAccountApp.View.applications
                 return _instance;
             }
         }
+        /*
         Programs program = new Programs();
 
 
         IEnumerable<Programs> programsQuery;
         IEnumerable<Programs> programs;
+        */
         byte tgl_programState;
         string searchText = "";
         public static List<string> requiredControlList;
@@ -78,11 +80,11 @@ namespace BookAccountApp.View.applications
                 }
                 translate();
                 Keyboard.Focus(tb_code);
-
+                /*
                 await RefreshProgramsList();
                 await Search();
                 Clear();
-
+                */
                 HelpClass.EndAwait(grid_main, "main_loaded");
             }
             catch (Exception ex)
@@ -145,8 +147,10 @@ namespace BookAccountApp.View.applications
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
+                /*
                 await RefreshProgramsList();
                 await Search();
+                */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -175,10 +179,10 @@ namespace BookAccountApp.View.applications
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (programs is null)
-                    await RefreshProgramsList();
-                tgl_programState = 1;
-                await Search();
+                //if (programs is null)
+                //    await RefreshProgramsList();
+                //tgl_programState = 1;
+                //await Search();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -192,10 +196,10 @@ namespace BookAccountApp.View.applications
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (programs is null)
-                    await RefreshProgramsList();
-                tgl_programState = 0;
-                await Search();
+                //if (programs is null)
+                //    await RefreshProgramsList();
+                //tgl_programState = 0;
+                //await Search();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -210,9 +214,9 @@ namespace BookAccountApp.View.applications
             try
             {
                 HelpClass.StartAwait(grid_main);
-
+                /*
                 Clear();
-
+                */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -228,7 +232,7 @@ namespace BookAccountApp.View.applications
             {
                 HelpClass.StartAwait(grid_main);
                 //selection
-
+                /*
                 if (dg_program.SelectedIndex != -1)
                 {
                     program = dg_program.SelectedItem as Programs;
@@ -251,6 +255,7 @@ namespace BookAccountApp.View.applications
                 }
 
                 clearValidate();
+                */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -265,6 +270,7 @@ namespace BookAccountApp.View.applications
             try
             {
                 HelpClass.StartAwait(grid_main);
+                /*
                 program = new Programs();
                 if (validate())
                 {
@@ -294,7 +300,7 @@ namespace BookAccountApp.View.applications
                         MessageBox.Show("exist ");
                     }
                 }
-
+                */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -309,6 +315,7 @@ namespace BookAccountApp.View.applications
             try
             {
                 HelpClass.StartAwait(grid_main);
+                /*
                 if (program.programId > 0)
                 {
                     if (validate())
@@ -331,6 +338,7 @@ namespace BookAccountApp.View.applications
                 }
                 else
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+                */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -345,6 +353,7 @@ namespace BookAccountApp.View.applications
             {//delete
 
                 HelpClass.StartAwait(grid_main);
+                /*
                 if (program.programId != 0)
                 {
                     if ((!program.canDelete) && (program.isActive == 0))
@@ -394,6 +403,7 @@ namespace BookAccountApp.View.applications
                     }
 
                 }
+                */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -404,6 +414,7 @@ namespace BookAccountApp.View.applications
         }
         private async Task activate()
         {//activate
+            /*
             program.isActive = 1;
             decimal s = await program.Save(program);
             if (s <= 0)
@@ -414,6 +425,7 @@ namespace BookAccountApp.View.applications
                 await RefreshProgramsList();
                 await Search();
             }
+            */
         }
         #region Refresh & Search
         async Task Search()
@@ -427,23 +439,23 @@ namespace BookAccountApp.View.applications
             //) && s.isActive == tgl_programState);
             //RefreshProgramsView();
         }
-        async Task<IEnumerable<Programs>> RefreshProgramsList()
-        {
-          //  programs = await program.GetAll();
-            return programs;
-        }
-        void RefreshProgramsView()
-        {
-            dg_program.ItemsSource = programsQuery;
-            txt_count.Text = programsQuery.Count().ToString();
-        }
+        //async Task<IEnumerable<Programs>> RefreshProgramsList()
+        //{
+        //  //  programs = await program.GetAll();
+        //    return programs;
+        //}
+        //void RefreshProgramsView()
+        //{
+        //    dg_program.ItemsSource = programsQuery;
+        //    txt_count.Text = programsQuery.Count().ToString();
+        //}
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
-        void Clear()
-        {
-            this.DataContext = new Programs();
-            clearValidate();
-        }
+        //void Clear()
+        //{
+        //    this.DataContext = new Programs();
+        //    clearValidate();
+        //}
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             try
@@ -567,10 +579,7 @@ namespace BookAccountApp.View.applications
         public void BuildReport()
         {
 
-            //string firstTitle = "paymentsReport";
-            ////string secondTitle = "";
-            ////string subTitle = "";
-            //string Title = "";
+             
 
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
@@ -585,12 +594,12 @@ namespace BookAccountApp.View.applications
             {
                 addpath = @"\Reports\Applications\En\EnPrograms.rdlc";
             }
-            //D:\myproj\posproject3\BookAccountApp\BookAccountApp\Reports\statisticReports\En\EnBook.rdlc
+          
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-            //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-            //  Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport");
+   
+           
 
-            clsReports.programsReport(programsQuery, rep, reppath, paramarr);
+            //clsReports.programsReport(programsQuery, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
