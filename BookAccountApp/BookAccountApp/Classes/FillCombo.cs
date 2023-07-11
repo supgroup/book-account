@@ -550,7 +550,7 @@ namespace BookAccountApp.Classes
                 if (setV != null)
                 {
                     logoImage = setV.value;
-                    await setV.getImg(logoImage);
+                    //await setV.getImg(logoImage);
                 }
              
                 return 1;

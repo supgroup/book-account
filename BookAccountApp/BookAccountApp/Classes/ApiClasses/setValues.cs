@@ -376,15 +376,86 @@ namespace BookAccountApp.Classes
             #region image
 
 
-            public async Task<string> uploadImage(string imagePath, string imageName, int valId)
-        //public async Task<Boolean> uploadImage(string imagePath, int userId)
+        //    public async Task<string> uploadImage(string imagePath, string imageName, int valId)
+         
+        //{
+        //    if (imagePath != "")
+        //    {
+        //        //string imageName = userId.ToString();
+        //        MultipartFormDataContent form = new MultipartFormDataContent();
+        //        // get file extension
+        //        var ext = imagePath.Substring(imagePath.LastIndexOf('.'));
+        //        var extension = ext.ToLower();
+        //        try
+        //        {
+        //            // configure trmporery path
+        //            //string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+        //            string dir = Directory.GetCurrentDirectory();
+        //            string tmpPath = Path.Combine(dir, Global.TMPSettingFolder);
+        //            tmpPath = Path.Combine(tmpPath, imageName + extension);
+        //            if (System.IO.File.Exists(tmpPath))
+        //            {
+        //                System.IO.File.Delete(tmpPath);
+        //            }
+        //            // resize image
+        //            ImageProcess imageP = new ImageProcess(150, imagePath);
+        //            imageP.ScaleImage(tmpPath);
+        //            Image newimg=Image.FromFile(tmpPath);
+                  
+        //            newimg.Save(tmpPath);
+        //            File.Copy(tmpPath, fileSavePath, true);
+        //            // read image file
+        //            var stream = new FileStream(tmpPath, FileMode.Open, FileAccess.Read);
+
+        //            // create http client request
+        //            using (var client = new HttpClient())
+        //            {
+        //                client.BaseAddress = new Uri(Global.APIUri);
+        //                client.Timeout = System.TimeSpan.FromSeconds(3600);
+        //                string boundary = string.Format("----WebKitFormBoundary{0}", DateTime.Now.Ticks.ToString("x"));
+        //                HttpContent content = new StreamContent(stream);
+        //                content.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
+        //                content.Headers.Add("client", "true");
+
+        //                string fileName = imageName + extension;
+        //                content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+        //                {
+        //                    Name = imageName,
+        //                    FileName = fileName
+        //                };
+        //                form.Add(content, "fileToUpload");
+
+        //                var response = await client.PostAsync(@"setValues/PostImage", form);
+        //                if (response.IsSuccessStatusCode)
+        //                {
+        //                    // save image name in DB
+        //                    SetValues setValues = new SetValues();
+        //                    setValues.valId = valId;
+        //                    setValues.value = fileName;
+        //                    await updateImage(setValues);
+        //                    return fileName;
+        //                }
+        //            }
+        //            stream.Dispose();
+        //            //delete tmp image
+        //            if (System.IO.File.Exists(tmpPath))
+        //            {
+        //                System.IO.File.Delete(tmpPath);
+        //            }
+        //        }
+        //        catch
+        //        { return ""; }
+        //    }
+        //    return "";
+        //}
+        public async Task<string> saveImage(string imageSource, string imageName )
+
         {
-            if (imagePath != "")
+            if ( imageSource != "")
             {
-                //string imageName = userId.ToString();
-                MultipartFormDataContent form = new MultipartFormDataContent();
+              //  Image newimg = Image.FromFile("");
                 // get file extension
-                var ext = imagePath.Substring(imagePath.LastIndexOf('.'));
+                var ext = imageSource.Substring(imageSource.LastIndexOf('.'));
                 var extension = ext.ToLower();
                 try
                 {
@@ -392,53 +463,19 @@ namespace BookAccountApp.Classes
                     //string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
                     string dir = Directory.GetCurrentDirectory();
                     string tmpPath = Path.Combine(dir, Global.TMPSettingFolder);
-                    tmpPath = Path.Combine(tmpPath, imageName + extension);
+                    string imageext = imageName + extension;
+                    tmpPath = Path.Combine(tmpPath, imageext);
                     if (System.IO.File.Exists(tmpPath))
                     {
                         System.IO.File.Delete(tmpPath);
                     }
+                    File.Copy(imageSource, tmpPath, true);
                     // resize image
-                    ImageProcess imageP = new ImageProcess(150, imagePath);
+                    ImageProcess imageP = new ImageProcess(150, imageSource);
                     imageP.ScaleImage(tmpPath);
-
-                    // read image file
-                    var stream = new FileStream(tmpPath, FileMode.Open, FileAccess.Read);
-
-                    // create http client request
-                    using (var client = new HttpClient())
-                    {
-                        client.BaseAddress = new Uri(Global.APIUri);
-                        client.Timeout = System.TimeSpan.FromSeconds(3600);
-                        string boundary = string.Format("----WebKitFormBoundary{0}", DateTime.Now.Ticks.ToString("x"));
-                        HttpContent content = new StreamContent(stream);
-                        content.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
-                        content.Headers.Add("client", "true");
-
-                        string fileName = imageName + extension;
-                        content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-                        {
-                            Name = imageName,
-                            FileName = fileName
-                        };
-                        form.Add(content, "fileToUpload");
-
-                        var response = await client.PostAsync(@"setValues/PostImage", form);
-                        if (response.IsSuccessStatusCode)
-                        {
-                            // save image name in DB
-                            SetValues setValues = new SetValues();
-                            setValues.valId = valId;
-                            setValues.value = fileName;
-                            await updateImage(setValues);
-                            return fileName;
-                        }
-                    }
-                    stream.Dispose();
-                    //delete tmp image
-                    if (System.IO.File.Exists(tmpPath))
-                    {
-                        System.IO.File.Delete(tmpPath);
-                    }
+                    //vallogo.value = imageext;
+                    //vallogo.Save(vallogo);
+                    return imageext;
                 }
                 catch
                 { return ""; }
@@ -549,34 +586,55 @@ namespace BookAccountApp.Classes
                 }
                 else
                 {
-                    byte[] imageBuffer = await this.downloadImage(imageName); // read this as BLOB from your DB
-
-                   var bitmapImage = new BitmapImage();
-                 
-                    if (imageBuffer != null)
-                    {
-                        using (var memoryStream = new MemoryStream(imageBuffer))
-                        {
-                            bitmapImage.BeginInit();
-                            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                            bitmapImage.StreamSource = memoryStream;
-                            bitmapImage.EndInit();
-                         Bitmap serial_bitmap = new Bitmap(memoryStream);
-                         //string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                            string dir = Directory.GetCurrentDirectory();
-                            string tmpPath = System.IO.Path.Combine(dir, Global.TMPSettingFolder);
-                         tmpPath = System.IO.Path.Combine(tmpPath, imageName);
-                         serial_bitmap.Save(tmpPath);
-                        }
-                      
+                  
                        
-                    }
+                           
+                       
+                       
+                   
                 
                 }
             }
             catch { }
         }
+        //public async Task getImg(string imageName)
+        //{
 
+        //    try
+        //    {
+        //        if (string.IsNullOrEmpty(imageName))
+        //        {
+        //            // SectionData.clearImg(img_customer);
+        //        }
+        //        else
+        //        {
+        //            byte[] imageBuffer = await this.downloadImage(imageName); // read this as BLOB from your DB
+
+        //            var bitmapImage = new BitmapImage();
+
+        //            if (imageBuffer != null)
+        //            {
+        //                using (var memoryStream = new MemoryStream(imageBuffer))
+        //                {
+        //                    bitmapImage.BeginInit();
+        //                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+        //                    bitmapImage.StreamSource = memoryStream;
+        //                    bitmapImage.EndInit();
+        //                    Bitmap serial_bitmap = new Bitmap(memoryStream);
+        //                    //string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+        //                    string dir = Directory.GetCurrentDirectory();
+        //                    string tmpPath = System.IO.Path.Combine(dir, Global.TMPSettingFolder);
+        //                    tmpPath = System.IO.Path.Combine(tmpPath, imageName);
+        //                    serial_bitmap.Save(tmpPath);
+        //                }
+
+
+        //            }
+
+        //        }
+        //    }
+        //    catch { }
+        //}
         #endregion
 
         //

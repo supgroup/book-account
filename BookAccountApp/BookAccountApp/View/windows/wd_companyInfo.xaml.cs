@@ -22,6 +22,12 @@ using System.Text.RegularExpressions;
 using netoaster;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Controls.Primitives;
+
+
+using System.Drawing;
+
+using System.Windows.Media.Imaging;
+
 using BookAccountApp.ApiClasses;
 namespace BookAccountApp.View.windows
 {
@@ -35,7 +41,7 @@ namespace BookAccountApp.View.windows
         IEnumerable<Country> countrynum;
         IEnumerable<City> citynum;
         IEnumerable<City> citynumofcountry;
-        string imgFileName = "pic/no-image-icon-125x125.png";
+        string imgFileName = "";
         bool isImgPressed = false;
 
         int? countryid;
@@ -412,24 +418,25 @@ namespace BookAccountApp.View.windows
                     // image
                     //  string sLogo = "";
                     decimal sLogo =0;
-                    if (isImgPressed)
+                    if (isImgPressed && imgFileName!="")
                     {
                         isImgPressed = false;
 
-                        setVLogo.value = sLogo.ToString();
+                       // setVLogo.value = sLogo.ToString();
                         setVLogo.isSystem = 1;
                         setVLogo.isDefault = 1;
                         setVLogo.settingId = logoId;
-                        sLogo = await valueModel.Save(setVLogo);
-                        if (!sLogo.Equals(0))
-                        {
-                            FillCombo.logoImage = setVLogo.value;
-                            string b = await setVLogo.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + sLogo), (int)sLogo);
+                    //    sLogo = await valueModel.Save(setVLogo);
+                        //if (!sLogo.Equals(0))
+                        //{
+                            string tmp = "pic/no-image-icon-125x125.png";
+                        
+                            string b = await setVLogo.saveImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + logoId));
                             setVLogo.value = b;
                             FillCombo.logoImage = b;
                             sLogo = await valueModel.Save(setVLogo);
-                            await valueModel.getImg(setVLogo.value);
-                        }
+                           // await valueModel.getImg(setVLogo.value);
+                        //}
                     }
 
                     #endregion
@@ -464,9 +471,15 @@ namespace BookAccountApp.View.windows
                 }
                 else
                 {
-                    byte[] imageBuffer = await setVLogo.downloadImage(setVLogo.value); // read this as BLOB from your DB
+                    //byte[] imageBuffer = await setVLogo.downloadImage(setVLogo.value); // read this as BLOB from your DB
 
                     var bitmapImage = new BitmapImage();
+                    //   BitmapImage img= Bitma;
+
+                    string dir = Directory.GetCurrentDirectory();
+                    string tmpPath = System.IO.Path.Combine(dir, Global.TMPSettingFolder);
+                    tmpPath = System.IO.Path.Combine(tmpPath, setVLogo.value);
+                    byte[] imageBuffer = System.IO.File.ReadAllBytes(tmpPath);
                     if (imageBuffer != null)
                     {
                         using (var memoryStream = new MemoryStream(imageBuffer))
@@ -476,20 +489,27 @@ namespace BookAccountApp.View.windows
                             bitmapImage.StreamSource = memoryStream;
                             bitmapImage.EndInit();
                         }
-
-                        img_customer.Background = new ImageBrush(bitmapImage);
-                        // configure trmporary path
-                       // string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                        string dir = Directory.GetCurrentDirectory();
-                        string tmpPath = System.IO.Path.Combine(dir, Global.TMPSettingFolder);
-                        tmpPath = System.IO.Path.Combine(tmpPath, setVLogo.value);
-                        openFileDialog.FileName = tmpPath;
                     }
-                    else
-                        HelpClass.clearImg(img_customer);
+
+                        // configure trmporary path
+                        // string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+
+
+                        //   bitmapImage.BeginInit();
+                        //   bitmapImage.UriSource = new Uri(tmpPath);
+                        //bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        // //  bitmapImage.StreamSource = memoryStream;
+                        //   bitmapImage.EndInit();
+                        img_customer.Background = new ImageBrush(bitmapImage);
+                     //   openFileDialog.FileName = tmpPath;
+
+
+                    //}
+                    //    else
+                    //        HelpClass.clearImg(img_customer);
                 }
             }
-            catch { }
+            catch(Exception ex) { }
          
         }
         #region Phone
