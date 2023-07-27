@@ -202,8 +202,6 @@
     <Compile Include="cities.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Classes\ApiClasses\ApiConnect.cs" />
-    <Compile Include="Classes\ApiClasses\APIResult.cs" />
     <Compile Include="Classes\ApiClasses\City.cs" />
     <Compile Include="Classes\ApiClasses\Country.cs" />
     <Compile Include="Classes\ApiClasses\ErrorClass.cs" />
@@ -212,10 +210,8 @@
     <Compile Include="Classes\ApiClasses\SettingCls.cs" />
     <Compile Include="Classes\ApiClasses\setValues.cs" />
     <Compile Include="Classes\ApiClasses\Statistics.cs" />
-    <Compile Include="Classes\ApiClasses\SysEmails.cs" />
     <Compile Include="Classes\ApiClasses\ServiceData.cs" />
     <Compile Include="Classes\ApiClasses\Users.cs" />
-    <Compile Include="Classes\ApiClasses\UsersLogs.cs" />
     <Compile Include="Classes\DynamicallyClass.cs" />
     <Compile Include="Classes\FillCombo.cs" />
     <Compile Include="Classes\HelpClass.cs" />
@@ -274,12 +270,6 @@
     </Compile>
     <Compile Include="View\applications\us_programs.xaml.cs">
       <DependentUpon>us_programs.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\reports\uc_bookReport.xaml.cs">
-      <DependentUpon>uc_bookReport.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\reports\uc_paymentsReport.xaml.cs">
-      <DependentUpon>uc_paymentsReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\reports\uc_reports.xaml.cs">
       <DependentUpon>uc_reports.xaml</DependentUpon>
@@ -356,14 +346,6 @@
     <Page Include="View\applications\us_programs.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
-    </Page>
-    <Page Include="View\reports\uc_bookReport.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\reports\uc_paymentsReport.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\reports\uc_reports.xaml">
       <Generator>MSBuild:Compile</Generator>

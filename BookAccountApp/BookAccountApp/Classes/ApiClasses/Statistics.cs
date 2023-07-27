@@ -224,92 +224,92 @@ namespace BookAccountApp.ApiClasses
 
     
 
-        private string urimainpath = "Statistics/";
-        /// <summary>
-        /// ///////////////////////////////////////
-        /// </summary>
-        /// <returns></returns>
-        /// 
+        //private string urimainpath = "Statistics/";
+        ///// <summary>
+        ///// ///////////////////////////////////////
+        ///// </summary>
+        ///// <returns></returns>
+        ///// 
       
 
-        public async Task<List<BookSts>> GetByAgentId(int agentId)
-        {
-           List<BookSts> list = new List<BookSts>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("agentId", agentId.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByAgentId", parameters);
+        //public async Task<List<BookSts>> GetByAgentId(int agentId)
+        //{
+        //   List<BookSts> list = new List<BookSts>();
+        //    Dictionary<string, string> parameters = new Dictionary<string, string>();
+        //    parameters.Add("agentId", agentId.ToString());
+        //    //#################
+        //    IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByAgentId", parameters);
 
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    list.Add(JsonConvert.DeserializeObject<BookSts>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return list;
+        //    foreach (Claim c in claims)
+        //    {
+        //        if (c.Type == "scopes")
+        //        {
+        //            list.Add(JsonConvert.DeserializeObject<BookSts>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+        //        }
+        //    }
+        //    return list;
 
-        }
+        //}
 
-        public async Task<List<BookSts>> GetAllBooks()
-        {
-            List<BookSts> list = new List<BookSts>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-           // parameters.Add("agentId", agentId.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetAllBooks");
+        //public async Task<List<BookSts>> GetAllBooks()
+        //{
+        //    List<BookSts> list = new List<BookSts>();
+        //    Dictionary<string, string> parameters = new Dictionary<string, string>();
+        //   // parameters.Add("agentId", agentId.ToString());
+        //    //#################
+        //    IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetAllBooks");
 
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    list.Add(JsonConvert.DeserializeObject<BookSts>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return list;
+        //    foreach (Claim c in claims)
+        //    {
+        //        if (c.Type == "scopes")
+        //        {
+        //            list.Add(JsonConvert.DeserializeObject<BookSts>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+        //        }
+        //    }
+        //    return list;
 
-        }
+        //}
 
-        //payments
-        public async Task<List<PaymentsSts>> GetPaymentsByAgentId(int agentId)
-        {
-            List<PaymentsSts> list = new List<PaymentsSts>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("agentId", agentId.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetPaymentsByAgentId", parameters);
+        ////payments
+        //public async Task<List<PaymentsSts>> GetPaymentsByAgentId(int agentId)
+        //{
+        //    List<PaymentsSts> list = new List<PaymentsSts>();
+        //    Dictionary<string, string> parameters = new Dictionary<string, string>();
+        //    parameters.Add("agentId", agentId.ToString());
+        //    //#################
+        //    IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetPaymentsByAgentId", parameters);
 
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    list.Add(JsonConvert.DeserializeObject<PaymentsSts>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return list;
+        //    foreach (Claim c in claims)
+        //    {
+        //        if (c.Type == "scopes")
+        //        {
+        //            list.Add(JsonConvert.DeserializeObject<PaymentsSts>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+        //        }
+        //    }
+        //    return list;
 
-        }
+        //}
 
-        public async Task<List<PaymentsSts>> GetAllPayments()
-        {
-            List<PaymentsSts> list = new List<PaymentsSts>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            // parameters.Add("agentId", agentId.ToString());
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetAllPayments");
+        //public async Task<List<PaymentsSts>> GetAllPayments()
+        //{
+        //    List<PaymentsSts> list = new List<PaymentsSts>();
+        //    Dictionary<string, string> parameters = new Dictionary<string, string>();
+        //    // parameters.Add("agentId", agentId.ToString());
+        //    //#################
+        //    IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetAllPayments");
 
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    list.Add(JsonConvert.DeserializeObject<PaymentsSts>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return list;
+        //    foreach (Claim c in claims)
+        //    {
+        //        if (c.Type == "scopes")
+        //        {
+        //            list.Add(JsonConvert.DeserializeObject<PaymentsSts>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+        //        }
+        //    }
+        //    return list;
 
-        }
+        //}
 
-        /// ////
+        ///// ////
 
 
 

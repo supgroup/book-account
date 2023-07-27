@@ -584,48 +584,14 @@ namespace BookAccountApp.ApiClasses
         {
 
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string method = urimainpath + "UpdateImage";
+            //Dictionary<string, string> parameters = new Dictionary<string, string>();
+            //string method = urimainpath + "UpdateImage";
 
-            var myContent = JsonConvert.SerializeObject(user);
-            parameters.Add("Object", myContent);
-            return await APIResult.post(method, parameters);
+            //var myContent = JsonConvert.SerializeObject(user);
+            //parameters.Add("Object", myContent);
+            //return await APIResult.post(method, parameters);
+            return 1;
 
-
-            //    string message = "";
-
-            //    // ... Use HttpClient.
-            //    ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-
-            //    string myContent = JsonConvert.SerializeObject(user);
-
-            //    using (var client = new HttpClient())
-            //    {
-            //        ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //        client.BaseAddress = new Uri(Global.APIUri);
-            //        client.DefaultRequestHeaders.Clear();
-            //        client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //        client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-
-            //        HttpRequestMessage request = new HttpRequestMessage();
-
-            //        // encoding parameter to get special characters
-            //        myContent = HttpUtility.UrlEncode(myContent);
-
-            //        request.RequestUri = new Uri(Global.APIUri + "Users/UpdateImage?userObject=" + myContent);
-            //        request.Headers.Add("APIKey", Global.APIKey);
-            //        request.Method = HttpMethod.Post;
-            //        //set content type
-            //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //        var response = await client.SendAsync(request);
-
-            //        if (response.IsSuccessStatusCode)
-            //        {
-            //            message = await response.Content.ReadAsStringAsync();
-            //            message = JsonConvert.DeserializeObject<string>(message);
-            //        }
-            //        return message;
-            //    }
         }
         public async Task<byte[]> downloadImage(string imageName)
 

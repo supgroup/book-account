@@ -118,7 +118,7 @@ namespace BookAccountApp.View.reports
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
                 grid_main.Children.Clear();
-                grid_main.Children.Add(uc_bookReport.Instance);
+               // grid_main.Children.Add(uc_bookReport.Instance);
             }
             catch (Exception ex)
             {
@@ -133,7 +133,7 @@ namespace BookAccountApp.View.reports
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
                 grid_main.Children.Clear();
-                grid_main.Children.Add(uc_paymentsReport.Instance);
+              //  grid_main.Children.Add(uc_paymentsReport.Instance);
             }
             catch (Exception ex)
             {

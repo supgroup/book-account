@@ -703,7 +703,7 @@ namespace BookAccountApp.View.sales
         SetValues terms = new SetValues();
         string result = "0";
         //PosSerials posSerialModel = new PosSerials();
-        SysEmails email = new SysEmails();
+      //  SysEmails email = new SysEmails();
         //EmailClass mailtosend = new EmailClass();
 
         SetValues setvmodel = new SetValues();
@@ -729,7 +729,7 @@ namespace BookAccountApp.View.sales
                 //PackagesModel = await PackagesModel.GetByID((int)CountryPackageDateModel.packageId);
                 SetValuesList = await terms.GetBySetName("sale_note");
                 terms = SetValuesList.FirstOrDefault();
-                email = await email.GetByBranchIdandSide("sales");
+              //  email = await email.GetByBranchIdandSide("sales");
                 setvlist = await setvmodel.GetBySetName("sale_email_temp");
                 setvUpgradelist = await setvmodel.GetBySetName("upgrade_email_temp");
                 //repserialList = await posSerialModel.GetByPackUserId(packUserRep.packageUserId);
