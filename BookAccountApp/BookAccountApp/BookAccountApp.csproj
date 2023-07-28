@@ -422,6 +422,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Thumb\users\tmp.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\supclouds-logo.png" />
     <Resource Include="pic\supclouds-logo100.png" />
     <Resource Include="pic\supcloudsLogo.ico" />
@@ -717,7 +720,6 @@
     <Folder Include="Reports\Applications\Ar\" />
     <Folder Include="Reports\SectionData\Ar\" />
     <Folder Include="Thumb\customers\" />
-    <Folder Include="Thumb\users\" />
     <Folder Include="View\settings\emailGeneral\" />
   </ItemGroup>
   <ItemGroup>

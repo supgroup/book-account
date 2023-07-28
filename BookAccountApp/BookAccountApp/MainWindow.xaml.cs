@@ -118,7 +118,44 @@ namespace BookAccountApp
 
         #region loading
         List<keyValueBool> loadingList;
-       
+        private async Task getImg(string imagename, Ellipse img_userLogin)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(imagename))
+                {
+                   clearImg();
+                }
+                else
+                {
+                    //byte[] imageBuffer = await setVLogo.downloadImage(setVLogo.value); // read this as BLOB from your DB
+
+                    var bitmapImage = new BitmapImage();
+                    //   BitmapImage img= Bitma;
+
+                    string dir =System.IO.Directory.GetCurrentDirectory();
+                    string tmpPath = System.IO.Path.Combine(dir, Global.TMPUsersFolder);
+                    tmpPath = System.IO.Path.Combine(tmpPath,imagename);
+                    byte[] imageBuffer = System.IO.File.ReadAllBytes(tmpPath);
+                    if (imageBuffer != null)
+                    {
+                        using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
+                        {
+                            bitmapImage.BeginInit();
+                            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmapImage.StreamSource = memoryStream;
+                            bitmapImage.EndInit();
+                        }
+                    }
+
+                  
+                    img_userLogin.Fill = new ImageBrush(bitmapImage);
+                 
+                }
+            }
+            catch (Exception ex) { }
+
+        }
         async Task loading_getUserPersonalInfo()
         {
             #region user personal info
@@ -133,6 +170,7 @@ namespace BookAccountApp
             txt_userJob.Text = job;
             try
             {
+               await getImg(userLogin.image, img_userLogin);
                 //if (!string.IsNullOrEmpty(userLogin.image))
                 //{
                 //    byte[] imageBuffer = await userModel.downloadImage(userLogin.image); // read this as BLOB from your DB
@@ -151,7 +189,7 @@ namespace BookAccountApp
                 //}
                 //else
                 //{
-                    clearImg();
+                 //   clearImg();
                 //}
             }
             catch
@@ -175,6 +213,7 @@ namespace BookAccountApp
         {//load
             try
             {
+              
                 if (sender != null)
                     HelpClass.StartAwait(grid_mainGrid);
                 //windowFlowDirection();

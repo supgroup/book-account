@@ -773,37 +773,81 @@ namespace BookAccountApp.View.sectionData
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        //private async Task getImg()
+        //{
+        //    if (string.IsNullOrEmpty(user.image))
+        //    {
+        //        HelpClass.clearImg(btn_image);
+        //    }
+        //    else
+        //    {
+        //        byte[] imageBuffer = await user.downloadImage(user.image); // read this as BLOB from your DB
+
+        //        var bitmapImage = new BitmapImage();
+        //        if (imageBuffer != null)
+        //        {
+        //            using (var memoryStream = new MemoryStream(imageBuffer))
+        //            {
+        //                bitmapImage.BeginInit();
+        //                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+        //                bitmapImage.StreamSource = memoryStream;
+        //                bitmapImage.EndInit();
+        //            }
+
+        //            btn_image.Background = new ImageBrush(bitmapImage);
+        //            // configure trmporary path
+        //            string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+        //            string tmpPath = System.IO.Path.Combine(dir, Global.TMPUsersFolder);
+        //            tmpPath = System.IO.Path.Combine(tmpPath, user.image);
+        //            openFileDialog.FileName = tmpPath;
+        //        }
+        //        else
+        //            HelpClass.clearImg(btn_image);
+        //    }
+        //}
+
         private async Task getImg()
         {
-            if (string.IsNullOrEmpty(user.image))
-            {
-                HelpClass.clearImg(btn_image);
-            }
-            else
-            {
-                byte[] imageBuffer = await user.downloadImage(user.image); // read this as BLOB from your DB
 
-                var bitmapImage = new BitmapImage();
-                if (imageBuffer != null)
+            try
+            {
+                if (string.IsNullOrEmpty(user.image))
                 {
-                    using (var memoryStream = new MemoryStream(imageBuffer))
-                    {
-                        bitmapImage.BeginInit();
-                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                        bitmapImage.StreamSource = memoryStream;
-                        bitmapImage.EndInit();
-                    }
-
-                    btn_image.Background = new ImageBrush(bitmapImage);
-                    // configure trmporary path
-                    string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                    string tmpPath = System.IO.Path.Combine(dir, Global.TMPUsersFolder);
-                    tmpPath = System.IO.Path.Combine(tmpPath, user.image);
-                    openFileDialog.FileName = tmpPath;
+                    HelpClass.clearImg(btn_image);
                 }
                 else
-                    HelpClass.clearImg(btn_image);
+                {
+                     
+                    var bitmapImage = new BitmapImage();
+                    
+
+                    string dir = Directory.GetCurrentDirectory();
+                    string tmpPath = System.IO.Path.Combine(dir, Global.TMPUsersFolder);
+                    tmpPath = System.IO.Path.Combine(tmpPath, user.image);
+                    byte[] imageBuffer = System.IO.File.ReadAllBytes(tmpPath);
+                    if (imageBuffer != null)
+                    {
+                        using (var memoryStream = new MemoryStream(imageBuffer))
+                        {
+                            bitmapImage.BeginInit();
+                            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmapImage.StreamSource = memoryStream;
+                            bitmapImage.EndInit();
+                        }
+                    }
+
+                     
+                    btn_image.Background = new ImageBrush(bitmapImage);
+                    //   openFileDialog.FileName = tmpPath;
+
+
+                    //}
+                    //    else
+                    //        HelpClass.clearImg(img_customer);
+                }
             }
+            catch (Exception ex) { }
+
         }
         #endregion
 
