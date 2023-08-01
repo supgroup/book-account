@@ -18,7 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 using System.Windows.Shapes;
 using Tulpep.NotificationWindow;
-
+using System.Configuration;
 namespace BookAccountApp.Classes
 {
     class HelpClass
@@ -1013,7 +1013,62 @@ namespace BookAccountApp.Classes
         }
 
 
+        public static string AddNewConnectionString(string servername, string dbName = "bookdb")
+        {
+            string messg = "ok";
 
+            /* This code provides access to configuration files using OpenMappedExeConfiguration,method. You can use the OpenExeConfiguration method instead. For further informatons,consult the MSDN, it gives you more inforamtions about config files access methods*/
+
+            ExeConfigurationFileMap oConfigFile = new ExeConfigurationFileMap();
+
+            oConfigFile.ExeConfigFilename = System.IO.Directory.GetCurrentDirectory() + "\\BookAccountApp.exe.config";
+
+            Configuration oConfiguration = ConfigurationManager.OpenMappedExeConfiguration(oConfigFile, ConfigurationUserLevel.None);
+
+            //Define a connection string settings incuding the name and the connection string
+            //string server = ".\\SQLEXPRESS";
+            ////string dbName = "bookdb";
+            string connstr = "metadata = res://*/bookModel.csdl|res://*/bookModel.ssdl|res://*/bookModel.msl;provider=System.Data.SqlClient;provider connection string='data source=[[servername]];initial catalog=[[dbname]];integrated security=True;MultipleActiveResultSets=True;App=EntityFramework'";
+            connstr = connstr.Replace("[[servername]]", servername);
+            connstr = connstr.Replace("[[dbname]]", dbName);
+            ConnectionStringSettings oConnectionSettings = new ConnectionStringSettings("bookdbEntities", connstr, "System.Data.EntityClient");
+
+            //Adding the connection string to the oConfiguration object
+
+            oConfiguration.ConnectionStrings.ConnectionStrings.Remove(oConnectionSettings);
+            oConfiguration.ConnectionStrings.ConnectionStrings.Add(oConnectionSettings);
+
+            //Save the new connection string settings
+
+            oConfiguration.Save(ConfigurationSaveMode.Full);
+
+            MessageBox.Show(string.Format("Connection {0} is added", oConnectionSettings.Name));
+
+            //Restart the application to be sure that connection is restored in the config file
+
+            // Application.st();
+            return messg;
+        }
+        public static bool checkConnectionString()
+        {
+            using (bookdbEntities entity = new bookdbEntities())
+            {
+                if (entity.Database.Exists())
+                {
+                    //MessageBox.Show("ok");
+                    //string db = entity.Database.Connection.Database;
+                    //string ds = entity.Database.Connection.DataSource;
+                    return true;
+                }
+                else
+                {
+                    // AddNewConnectionString(".\\SQLEXPRESS", "bookdb");
+                //    MessageBox.Show("not exist");
+                    return false;
+                   
+                }
+            }
+        }
     }
 
 }
