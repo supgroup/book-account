@@ -131,22 +131,22 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" x:Name="btnLogIn" Background="{StaticResource MainColor}" Foreground="White" Margin="0,0,10,0" Click="btnLogIn_Click" 
-                                IsDefault="True"  materialDesign:ButtonAssist.CornerRadius="7"  BorderThickness="0">
+                    <Button Grid.Column="0" x:Name="btnLogIn" Background="{StaticResource MainColor}" Foreground="White" Margin="0,9,86,9" Click="btnLogIn_Click" 
+                                IsDefault="True"  materialDesign:ButtonAssist.CornerRadius="7"  BorderThickness="0" Grid.ColumnSpan="2">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0">
-                                        <materialDesign:PackIcon FlowDirection="LeftToRight" Kind="Login"></materialDesign:PackIcon>
+                                        <materialDesign:PackIcon FlowDirection="LeftToRight" Kind="Login" RenderTransformOrigin="-0.625,0.406"></materialDesign:PackIcon>
                             </TextBlock>
-                            <TextBlock x:Name="txt_logIn" Text="Log In"></TextBlock>
+                            <TextBlock x:Name="txt_logIn" Text="Log In" Width="88"></TextBlock>
                         </StackPanel>
                     </Button>
                     <Button Grid.Column="1"  x:Name="btnClose" Background="{StaticResource MainColor}" Foreground="White" Click="btnClose_Click"  
-                     IsCancel="true" materialDesign:ButtonAssist.CornerRadius="7" BorderThickness="0" >
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0">
-                                        <materialDesign:PackIcon Kind="Close"></materialDesign:PackIcon>
-                            </TextBlock>
-                            <TextBlock x:Name="txt_close" Text="CLose"></TextBlock>
+                     IsCancel="true" materialDesign:ButtonAssist.CornerRadius="7" BorderThickness="0" Margin="35,9,-6,9" >
+                        <StackPanel Orientation="Horizontal" Width="49">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0"><InlineUIContainer>
+                                    <materialDesign:PackIcon Kind="Close"/>
+                                </InlineUIContainer></TextBlock>
+                            <TextBlock x:Name="txt_close" Width="42"><Run Text="CLose"/></TextBlock>
                         </StackPanel>
                     </Button>
 
