@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
+using System.Reflection; 
 using System.Resources;
 using System.Text;
 using System.Threading;
@@ -17,7 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BookAccountApp.ApiClasses;
 using BookAccountApp.Classes;
-
+ 
 namespace BookAccountApp.View.windows
 {
     /// <summary>
@@ -72,6 +72,7 @@ namespace BookAccountApp.View.windows
                 #endregion
 
                 #region translate
+                MainWindow.lang = "ar";
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("BookAccountApp.en_file", Assembly.GetExecutingAssembly());
@@ -135,14 +136,30 @@ namespace BookAccountApp.View.windows
             { }
         }
 
-       
+     
+
         private async void btnLogIn_Click(object sender, RoutedEventArgs e)
         {//log in
             try
             {
+             // AddNewConnectionString();
+               
+                //using (bookdbEntities entity = new bookdbEntities())
+                //{
+                //    if (entity.Database.Exists())
+                //    {
+                //        MessageBox.Show("ok");
+                //        //string db = entity.Database.Connection.Database;
+                //        //string ds = entity.Database.Connection.DataSource;
+                //    }
+                //    else
+                //    {
+                //        AddNewConnectionString(".\\SQLEXPRESS", "bookdb");
+                  
+                //        MessageBox.Show("not exist");
+                //    }
+                //}
                 if (!logInProcessing)
-
-
                 {
                     logInProcessing = true;
                     

@@ -100,8 +100,8 @@ namespace BookAccountApp
 
         private void translate()
         {
-            txt_applications.Text = resourcemanager.GetString("trServices");
-            txt_sales.Text = resourcemanager.GetString("trPayments");
+            txt_book_sales.Text = resourcemanager.GetString("book_sales");
+            txt_accounting.Text = resourcemanager.GetString("accounting");
             txt_reports.Text = resourcemanager.GetString("trReports");
             txt_sectionData.Text = resourcemanager.GetString("trSectionData");
             txt_settings.Text = resourcemanager.GetString("trSettings");
@@ -217,9 +217,11 @@ namespace BookAccountApp
                 if (sender != null)
                     HelpClass.StartAwait(grid_mainGrid);
                 //windowFlowDirection();
-                menuList = new List<string> { "applications", "sales", "reports",
+                menuList = new List<string> { "booksales", "accounting", "reports",
                    "sectionData","settings"};
-
+                //menuList = new List<string> { "applications", "sales", "reports",
+                //   "sectionData","settings"};
+                
                 translate();
 
                 #region loading
@@ -249,7 +251,7 @@ namespace BookAccountApp
                 //}
                 //else
                 //{
-                    Btn_applications_Click(btn_applications, null);
+                    Btn_book_sales_Click(btn_book_sales, null);
                 //}
                 if (sender != null)
                     HelpClass.EndAwait(grid_mainGrid);
@@ -353,8 +355,24 @@ namespace BookAccountApp
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_applications_Click(object sender, RoutedEventArgs e)
-        {//application
+        //private void Btn_applications_Click(object sender, RoutedEventArgs e)
+        //{//application
+        //    try
+        //    {
+        //        Button button = sender as Button;
+        //        colorTextRefreash(button.Tag.ToString());
+        //        ColorIconRefreash(button.Tag.ToString());
+        //        openVisible(button.Tag.ToString());
+        //        grid_main.Children.Clear();
+        //        grid_main.Children.Add(uc_applications.Instance);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
+        private void Btn_book_sales_Click(object sender, RoutedEventArgs e)
+        {
             try
             {
                 Button button = sender as Button;
@@ -369,23 +387,40 @@ namespace BookAccountApp
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-       
-        public  void Btn_sales_Click(object sender, RoutedEventArgs e)
-        {//sales
+        //public  void Btn_sales_Click(object sender, RoutedEventArgs e)
+        //{//sales
+        //    try
+        //    {
+        //        //Button button = sender as Button;
+        //        //colorTextRefreash(button.Tag.ToString());
+        //        //ColorIconRefreash(button.Tag.ToString());
+        //        //openVisible(button.Tag.ToString());
+        //        //grid_main.Children.Clear();
+        //        //grid_main.Children.Add(uc_sales.Instance);
+        //        //uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale , null);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
+        private void Btn_accounting_Click(object sender, RoutedEventArgs e)
+        { 
             try
             {
-                //Button button = sender as Button;
-                //colorTextRefreash(button.Tag.ToString());
-                //ColorIconRefreash(button.Tag.ToString());
-                //openVisible(button.Tag.ToString());
-                //grid_main.Children.Clear();
+                Button button = sender as Button;
+                colorTextRefreash(button.Tag.ToString());
+                ColorIconRefreash(button.Tag.ToString());
+                openVisible(button.Tag.ToString());
+                grid_main.Children.Clear();
                 //grid_main.Children.Add(uc_sales.Instance);
-                //uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale , null);
+                //uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale, null);
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
+
         }
 
         private void Btn_sectionData_Click(object sender, RoutedEventArgs e)
@@ -495,6 +530,6 @@ namespace BookAccountApp
             }
         }
 
-       
+     
     }
 }

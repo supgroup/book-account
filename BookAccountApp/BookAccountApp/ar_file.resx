@@ -2797,4 +2797,16 @@
   <data name="trServices" xml:space="preserve">
     <value>الخدمات</value>
   </data>
+  <data name="trOffice" xml:space="preserve">
+    <value>المكتب</value>
+  </data>
+  <data name="trOffices" xml:space="preserve">
+    <value>المكاتب</value>
+  </data>
+  <data name="accounting" xml:space="preserve">
+    <value>المحاسبة</value>
+  </data>
+  <data name="book_sales" xml:space="preserve">
+    <value>مبيعات انظمة الحجز</value>
+  </data>
 </root>

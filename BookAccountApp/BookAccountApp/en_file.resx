@@ -2674,9 +2674,6 @@ Please add Email in setting</value>
   <data name="trUpload" xml:space="preserve">
     <value>Upload</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="trExpireDate" xml:space="preserve">
     <value>Expired Date</value>
   </data>
@@ -2814,5 +2811,17 @@ Please add Email in setting</value>
   </data>
   <data name="trServices" xml:space="preserve">
     <value>Services</value>
+  </data>
+  <data name="trOffice" xml:space="preserve">
+    <value>Office</value>
+  </data>
+  <data name="trOffices" xml:space="preserve">
+    <value>Offices</value>
+  </data>
+  <data name="accounting" xml:space="preserve">
+    <value>Accounting</value>
+  </data>
+  <data name="book_sales" xml:space="preserve">
+    <value>Book Systems Sales</value>
   </data>
 </root>

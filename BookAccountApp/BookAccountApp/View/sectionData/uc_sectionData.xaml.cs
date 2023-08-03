@@ -74,7 +74,7 @@ namespace BookAccountApp.View.sectionData
         private void translate()
         {
             btn_users.Content = MainWindow.resourcemanager.GetString("trUsers");
-            btn_agents.Content = MainWindow.resourcemanager.GetString("trAgents");
+            btn_office.Content = MainWindow.resourcemanager.GetString("trOffices");
             btn_customers.Content = MainWindow.resourcemanager.GetString("trCustomers");
         }
 
@@ -116,17 +116,17 @@ namespace BookAccountApp.View.sectionData
 
         private void Btn_agents_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                //Button button = sender as Button;
-                //colorButtonRefreash(button.Tag.ToString());
-                //grid_main.Children.Clear();
-                //grid_main.Children.Add(uc_agents.Instance);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //try
+            //{
+            //    Button button = sender as Button;
+            //    colorButtonRefreash(button.Tag.ToString());
+            //    grid_main.Children.Clear();
+            //    grid_main.Children.Add(uc_office.Instance);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void Btn_customers_Click(object sender, RoutedEventArgs e)
@@ -148,6 +148,11 @@ namespace BookAccountApp.View.sectionData
         {
             // Collect all generations of memory.
             GC.Collect();
+        }
+
+        private void Btn_office_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

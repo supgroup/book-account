@@ -25,8 +25,8 @@
                       x:Name="btn_users" Click="Btn_users_Click" Tag="users"/>
             <Button   Grid.Column="1"
              Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
-                 Content="Agents" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
-                       x:Name="btn_agents" Click="Btn_agents_Click" Tag="agents"/>
+                 Content="Office" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
+                       x:Name="btn_office" Click="Btn_office_Click" Tag="office"/>
             <Button   Grid.Column="2"
              Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
                  Content="Customers" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"   
