@@ -45,11 +45,17 @@ namespace BookAccountApp
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
+        public Nullable<int> passengerId { get; set; }
+        public Nullable<int> flightId { get; set; }
+        public Nullable<int> operationId { get; set; }
     
         public virtual office office { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<payOp> payOp { get; set; }
         public virtual users users { get; set; }
         public virtual users users1 { get; set; }
+        public virtual flights flights { get; set; }
+        public virtual operations operations { get; set; }
+        public virtual passengers passengers { get; set; }
     }
 }

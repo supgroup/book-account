@@ -36,5 +36,8 @@ namespace BookAccountApp
         public virtual DbSet<setValues> setValues { get; set; }
         public virtual DbSet<users> users { get; set; }
         public virtual DbSet<userSetValues> userSetValues { get; set; }
+        public virtual DbSet<flights> flights { get; set; }
+        public virtual DbSet<operations> operations { get; set; }
+        public virtual DbSet<passengers> passengers { get; set; }
     }
 }

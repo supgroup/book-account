@@ -27,9 +27,15 @@ namespace BookAccountApp
         public Nullable<int> updateUserId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
+        public Nullable<int> officeId { get; set; }
+        public Nullable<int> passengerId { get; set; }
+        public Nullable<int> userId { get; set; }
     
         public virtual serviceData serviceData { get; set; }
         public virtual users users { get; set; }
         public virtual users users1 { get; set; }
+        public virtual office office { get; set; }
+        public virtual passengers passengers { get; set; }
+        public virtual users users2 { get; set; }
     }
 }

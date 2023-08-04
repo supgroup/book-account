@@ -63,6 +63,21 @@
           <Property Name="createDate" Type="datetime2" Precision="7" />
           <Property Name="createUserId" Type="int" />
         </EntityType>
+        <EntityType Name="flights">
+          <Key>
+            <PropertyRef Name="flightId" />
+          </Key>
+          <Property Name="flightId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="airline" Type="nvarchar" MaxLength="500" />
+          <Property Name="flight" Type="nvarchar" MaxLength="500" />
+          <Property Name="flightFrom" Type="nvarchar" MaxLength="500" />
+          <Property Name="flightTo" Type="nvarchar" MaxLength="500" />
+          <Property Name="notes" Type="nvarchar(max)" />
+          <Property Name="createDate" Type="datetime2" Precision="7" />
+          <Property Name="updateDate" Type="datetime2" Precision="7" />
+          <Property Name="createUserId" Type="int" />
+          <Property Name="updateUserId" Type="int" />
+        </EntityType>
         <EntityType Name="office">
           <Key>
             <PropertyRef Name="officeId" />
@@ -76,6 +91,35 @@
           <Property Name="userName" Type="nvarchar" MaxLength="500" />
           <Property Name="passwordSY" Type="nvarchar" MaxLength="500" />
           <Property Name="PasswordSoto" Type="nvarchar" MaxLength="500" />
+          <Property Name="notes" Type="nvarchar(max)" />
+          <Property Name="createDate" Type="datetime2" Precision="7" />
+          <Property Name="updateDate" Type="datetime2" Precision="7" />
+          <Property Name="createUserId" Type="int" />
+          <Property Name="updateUserId" Type="int" />
+        </EntityType>
+        <EntityType Name="operations">
+          <Key>
+            <PropertyRef Name="operationId" />
+          </Key>
+          <Property Name="operationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="operation" Type="nvarchar" MaxLength="500" />
+          <Property Name="opStatement" Type="nvarchar" MaxLength="500" />
+          <Property Name="duration" Type="nvarchar" MaxLength="500" />
+          <Property Name="notes" Type="nvarchar(max)" />
+          <Property Name="createDate" Type="datetime2" Precision="7" />
+          <Property Name="updateDate" Type="datetime2" Precision="7" />
+          <Property Name="createUserId" Type="int" />
+          <Property Name="updateUserId" Type="int" />
+        </EntityType>
+        <EntityType Name="passengers">
+          <Key>
+            <PropertyRef Name="passengerId" />
+          </Key>
+          <Property Name="passengerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="500" />
+          <Property Name="father" Type="nvarchar" MaxLength="500" />
+          <Property Name="mother" Type="nvarchar" MaxLength="500" />
           <Property Name="notes" Type="nvarchar(max)" />
           <Property Name="createDate" Type="datetime2" Precision="7" />
           <Property Name="updateDate" Type="datetime2" Precision="7" />
@@ -99,6 +143,9 @@
           <Property Name="updateUserId" Type="int" />
           <Property Name="createDate" Type="datetime2" Precision="7" />
           <Property Name="updateDate" Type="datetime2" Precision="7" />
+          <Property Name="officeId" Type="int" />
+          <Property Name="passengerId" Type="int" />
+          <Property Name="userId" Type="int" />
         </EntityType>
         <EntityType Name="serviceData">
           <Key>
@@ -129,6 +176,9 @@
           <Property Name="updateDate" Type="datetime2" Precision="7" />
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
+          <Property Name="passengerId" Type="int" />
+          <Property Name="flightId" Type="int" />
+          <Property Name="operationId" Type="int" />
         </EntityType>
         <EntityType Name="setting">
           <Key>
@@ -279,6 +329,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_payOp_office">
+          <End Role="office" Type="Self.office" Multiplicity="0..1" />
+          <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="office">
+              <PropertyRef Name="officeId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="officeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_passengers">
+          <End Role="passengers" Type="Self.passengers" Multiplicity="0..1" />
+          <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="passengers">
+              <PropertyRef Name="passengerId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="passengerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_payOp_serviceData">
           <End Role="serviceData" Type="Self.serviceData" Multiplicity="0..1" />
           <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
@@ -315,6 +389,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_payOp_users2">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_serviceData_flights">
+          <End Role="flights" Type="Self.flights" Multiplicity="0..1" />
+          <End Role="serviceData" Type="Self.serviceData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="flights">
+              <PropertyRef Name="flightId" />
+            </Principal>
+            <Dependent Role="serviceData">
+              <PropertyRef Name="flightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_serviceData_office">
           <End Role="office" Type="Self.office" Multiplicity="0..1" />
           <End Role="serviceData" Type="Self.serviceData" Multiplicity="*" />
@@ -324,6 +422,30 @@
             </Principal>
             <Dependent Role="serviceData">
               <PropertyRef Name="officeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_serviceData_operations">
+          <End Role="operations" Type="Self.operations" Multiplicity="0..1" />
+          <End Role="serviceData" Type="Self.serviceData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="operations">
+              <PropertyRef Name="operationId" />
+            </Principal>
+            <Dependent Role="serviceData">
+              <PropertyRef Name="operationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_serviceData_passengers">
+          <End Role="passengers" Type="Self.passengers" Multiplicity="0..1" />
+          <End Role="serviceData" Type="Self.serviceData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="passengers">
+              <PropertyRef Name="passengerId" />
+            </Principal>
+            <Dependent Role="serviceData">
+              <PropertyRef Name="passengerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -392,7 +514,10 @@
           <EntitySet Name="countriesCodes" EntityType="Self.countriesCodes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="customers" EntityType="Self.customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="error" EntityType="Self.error" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="flights" EntityType="Self.flights" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="office" EntityType="Self.office" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="operations" EntityType="Self.operations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="passengers" EntityType="Self.passengers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="payOp" EntityType="Self.payOp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="serviceData" EntityType="Self.serviceData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="setting" EntityType="Self.setting" Schema="dbo" store:Type="Tables" />
@@ -427,6 +552,14 @@
             <End Role="users" EntitySet="users" />
             <End Role="office" EntitySet="office" />
           </AssociationSet>
+          <AssociationSet Name="FK_payOp_office" Association="Self.FK_payOp_office">
+            <End Role="office" EntitySet="office" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_passengers" Association="Self.FK_payOp_passengers">
+            <End Role="passengers" EntitySet="passengers" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
           <AssociationSet Name="FK_payOp_serviceData" Association="Self.FK_payOp_serviceData">
             <End Role="serviceData" EntitySet="serviceData" />
             <End Role="payOp" EntitySet="payOp" />
@@ -439,8 +572,24 @@
             <End Role="users" EntitySet="users" />
             <End Role="payOp" EntitySet="payOp" />
           </AssociationSet>
+          <AssociationSet Name="FK_payOp_users2" Association="Self.FK_payOp_users2">
+            <End Role="users" EntitySet="users" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_serviceData_flights" Association="Self.FK_serviceData_flights">
+            <End Role="flights" EntitySet="flights" />
+            <End Role="serviceData" EntitySet="serviceData" />
+          </AssociationSet>
           <AssociationSet Name="FK_serviceData_office" Association="Self.FK_serviceData_office">
             <End Role="office" EntitySet="office" />
+            <End Role="serviceData" EntitySet="serviceData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_serviceData_operations" Association="Self.FK_serviceData_operations">
+            <End Role="operations" EntitySet="operations" />
+            <End Role="serviceData" EntitySet="serviceData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_serviceData_passengers" Association="Self.FK_serviceData_passengers">
+            <End Role="passengers" EntitySet="passengers" />
             <End Role="serviceData" EntitySet="serviceData" />
           </AssociationSet>
           <AssociationSet Name="FK_serviceData_users" Association="Self.FK_serviceData_users">
@@ -555,6 +704,7 @@
           <NavigationProperty Name="users" Relationship="bookModel.FK_office_users" FromRole="office" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="bookModel.FK_office_users1" FromRole="office" ToRole="users" />
           <NavigationProperty Name="serviceData" Relationship="bookModel.FK_serviceData_office" FromRole="office" ToRole="serviceData" />
+          <NavigationProperty Name="payOp" Relationship="bookModel.FK_payOp_office" FromRole="office" ToRole="payOp" />
         </EntityType>
         <EntityType Name="payOp">
           <Key>
@@ -576,6 +726,12 @@
           <NavigationProperty Name="serviceData" Relationship="bookModel.FK_payOp_serviceData" FromRole="payOp" ToRole="serviceData" />
           <NavigationProperty Name="users" Relationship="bookModel.FK_payOp_users" FromRole="payOp" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="bookModel.FK_payOp_users1" FromRole="payOp" ToRole="users" />
+          <Property Name="officeId" Type="Int32" />
+          <Property Name="passengerId" Type="Int32" />
+          <Property Name="userId" Type="Int32" />
+          <NavigationProperty Name="office" Relationship="bookModel.FK_payOp_office" FromRole="payOp" ToRole="office" />
+          <NavigationProperty Name="passengers" Relationship="bookModel.FK_payOp_passengers" FromRole="payOp" ToRole="passengers" />
+          <NavigationProperty Name="users2" Relationship="bookModel.FK_payOp_users2" FromRole="payOp" ToRole="users" />
         </EntityType>
         <EntityType Name="serviceData">
           <Key>
@@ -610,6 +766,12 @@
           <NavigationProperty Name="payOp" Relationship="bookModel.FK_payOp_serviceData" FromRole="serviceData" ToRole="payOp" />
           <NavigationProperty Name="users" Relationship="bookModel.FK_serviceData_users" FromRole="serviceData" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="bookModel.FK_serviceData_users1" FromRole="serviceData" ToRole="users" />
+          <Property Name="passengerId" Type="Int32" />
+          <Property Name="flightId" Type="Int32" />
+          <Property Name="operationId" Type="Int32" />
+          <NavigationProperty Name="flights" Relationship="bookModel.FK_serviceData_flights" FromRole="serviceData" ToRole="flights" />
+          <NavigationProperty Name="operations" Relationship="bookModel.FK_serviceData_operations" FromRole="serviceData" ToRole="operations" />
+          <NavigationProperty Name="passengers" Relationship="bookModel.FK_serviceData_passengers" FromRole="serviceData" ToRole="passengers" />
         </EntityType>
         <EntityType Name="setting">
           <Key>
@@ -675,6 +837,7 @@
           <NavigationProperty Name="payOp1" Relationship="bookModel.FK_payOp_users1" FromRole="users" ToRole="payOp" />
           <NavigationProperty Name="serviceData" Relationship="bookModel.FK_serviceData_users" FromRole="users" ToRole="serviceData" />
           <NavigationProperty Name="serviceData1" Relationship="bookModel.FK_serviceData_users1" FromRole="users" ToRole="serviceData" />
+          <NavigationProperty Name="payOp2" Relationship="bookModel.FK_payOp_users2" FromRole="users" ToRole="payOp" />
         </EntityType>
         <EntityType Name="userSetValues">
           <Key>
@@ -862,6 +1025,33 @@
             <End Role="users" EntitySet="users" />
             <End Role="serviceData" EntitySet="serviceData" />
           </AssociationSet>
+          <EntitySet Name="flights" EntityType="bookModel.flights" />
+          <EntitySet Name="operations" EntityType="bookModel.operations" />
+          <EntitySet Name="passengers" EntityType="bookModel.passengers" />
+          <AssociationSet Name="FK_serviceData_flights" Association="bookModel.FK_serviceData_flights">
+            <End Role="flights" EntitySet="flights" />
+            <End Role="serviceData" EntitySet="serviceData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_office" Association="bookModel.FK_payOp_office">
+            <End Role="office" EntitySet="office" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_serviceData_operations" Association="bookModel.FK_serviceData_operations">
+            <End Role="operations" EntitySet="operations" />
+            <End Role="serviceData" EntitySet="serviceData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_passengers" Association="bookModel.FK_payOp_passengers">
+            <End Role="passengers" EntitySet="passengers" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_serviceData_passengers" Association="bookModel.FK_serviceData_passengers">
+            <End Role="passengers" EntitySet="passengers" />
+            <End Role="serviceData" EntitySet="serviceData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_users2" Association="bookModel.FK_payOp_users2">
+            <End Role="users" EntitySet="users" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_office_users">
           <End Type="bookModel.users" Role="users" Multiplicity="0..1" />
@@ -959,6 +1149,126 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="flights">
+          <Key>
+            <PropertyRef Name="flightId" />
+          </Key>
+          <Property Name="flightId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="airline" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="flight" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="flightFrom" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="flightTo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="7" />
+          <Property Name="updateDate" Type="DateTime" Precision="7" />
+          <Property Name="createUserId" Type="Int32" />
+          <Property Name="updateUserId" Type="Int32" />
+          <NavigationProperty Name="serviceData" Relationship="bookModel.FK_serviceData_flights" FromRole="flights" ToRole="serviceData" />
+        </EntityType>
+        <EntityType Name="operations">
+          <Key>
+            <PropertyRef Name="operationId" />
+          </Key>
+          <Property Name="operationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="operation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="opStatement" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="duration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="7" />
+          <Property Name="updateDate" Type="DateTime" Precision="7" />
+          <Property Name="createUserId" Type="Int32" />
+          <Property Name="updateUserId" Type="Int32" />
+          <NavigationProperty Name="serviceData" Relationship="bookModel.FK_serviceData_operations" FromRole="operations" ToRole="serviceData" />
+        </EntityType>
+        <EntityType Name="passengers">
+          <Key>
+            <PropertyRef Name="passengerId" />
+          </Key>
+          <Property Name="passengerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="father" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="mother" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="7" />
+          <Property Name="updateDate" Type="DateTime" Precision="7" />
+          <Property Name="createUserId" Type="Int32" />
+          <Property Name="updateUserId" Type="Int32" />
+          <NavigationProperty Name="payOp" Relationship="bookModel.FK_payOp_passengers" FromRole="passengers" ToRole="payOp" />
+          <NavigationProperty Name="serviceData" Relationship="bookModel.FK_serviceData_passengers" FromRole="passengers" ToRole="serviceData" />
+        </EntityType>
+        <Association Name="FK_serviceData_flights">
+          <End Type="bookModel.flights" Role="flights" Multiplicity="0..1" />
+          <End Type="bookModel.serviceData" Role="serviceData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="flights">
+              <PropertyRef Name="flightId" />
+            </Principal>
+            <Dependent Role="serviceData">
+              <PropertyRef Name="flightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_office">
+          <End Type="bookModel.office" Role="office" Multiplicity="0..1" />
+          <End Type="bookModel.payOp" Role="payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="office">
+              <PropertyRef Name="officeId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="officeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_serviceData_operations">
+          <End Type="bookModel.operations" Role="operations" Multiplicity="0..1" />
+          <End Type="bookModel.serviceData" Role="serviceData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="operations">
+              <PropertyRef Name="operationId" />
+            </Principal>
+            <Dependent Role="serviceData">
+              <PropertyRef Name="operationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_passengers">
+          <End Type="bookModel.passengers" Role="passengers" Multiplicity="0..1" />
+          <End Type="bookModel.payOp" Role="payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="passengers">
+              <PropertyRef Name="passengerId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="passengerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_serviceData_passengers">
+          <End Type="bookModel.passengers" Role="passengers" Multiplicity="0..1" />
+          <End Type="bookModel.serviceData" Role="serviceData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="passengers">
+              <PropertyRef Name="passengerId" />
+            </Principal>
+            <Dependent Role="serviceData">
+              <PropertyRef Name="passengerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_users2">
+          <End Type="bookModel.users" Role="users" Multiplicity="0..1" />
+          <End Type="bookModel.payOp" Role="payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1050,6 +1360,9 @@
           <EntitySetMapping Name="payOp">
             <EntityTypeMapping TypeName="bookModel.payOp">
               <MappingFragment StoreEntitySet="payOp">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="passengerId" ColumnName="passengerId" />
+                <ScalarProperty Name="officeId" ColumnName="officeId" />
                 <ScalarProperty Name="payOpId" ColumnName="payOpId" />
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="cash" ColumnName="cash" />
@@ -1069,6 +1382,9 @@
           <EntitySetMapping Name="serviceData">
             <EntityTypeMapping TypeName="bookModel.serviceData">
               <MappingFragment StoreEntitySet="serviceData">
+                <ScalarProperty Name="operationId" ColumnName="operationId" />
+                <ScalarProperty Name="flightId" ColumnName="flightId" />
+                <ScalarProperty Name="passengerId" ColumnName="passengerId" />
                 <ScalarProperty Name="serviceId" ColumnName="serviceId" />
                 <ScalarProperty Name="serviceNum" ColumnName="serviceNum" />
                 <ScalarProperty Name="type" ColumnName="type" />
@@ -1163,6 +1479,53 @@
                 <ScalarProperty Name="updateDate" ColumnName="updateDate" />
                 <ScalarProperty Name="createUserId" ColumnName="createUserId" />
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="flights">
+            <EntityTypeMapping TypeName="bookModel.flights">
+              <MappingFragment StoreEntitySet="flights">
+                <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="flightTo" ColumnName="flightTo" />
+                <ScalarProperty Name="flightFrom" ColumnName="flightFrom" />
+                <ScalarProperty Name="flight" ColumnName="flight" />
+                <ScalarProperty Name="airline" ColumnName="airline" />
+                <ScalarProperty Name="flightId" ColumnName="flightId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="operations">
+            <EntityTypeMapping TypeName="bookModel.operations">
+              <MappingFragment StoreEntitySet="operations">
+                <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="opStatement" ColumnName="opStatement" />
+                <ScalarProperty Name="operation" ColumnName="operation" />
+                <ScalarProperty Name="operationId" ColumnName="operationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="passengers">
+            <EntityTypeMapping TypeName="bookModel.passengers">
+              <MappingFragment StoreEntitySet="passengers">
+                <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="mother" ColumnName="mother" />
+                <ScalarProperty Name="father" ColumnName="father" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="passengerId" ColumnName="passengerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
