@@ -205,6 +205,9 @@
     <Compile Include="Classes\ApiClasses\City.cs" />
     <Compile Include="Classes\ApiClasses\Country.cs" />
     <Compile Include="Classes\ApiClasses\ErrorClass.cs" />
+    <Compile Include="Classes\ApiClasses\Operations.cs" />
+    <Compile Include="Classes\ApiClasses\Passengers.cs" />
+    <Compile Include="Classes\ApiClasses\Flights.cs" />
     <Compile Include="Classes\ApiClasses\PayOp.cs" />
     <Compile Include="Classes\ApiClasses\Office.cs" />
     <Compile Include="Classes\ApiClasses\SettingCls.cs" />

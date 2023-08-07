@@ -25,6 +25,9 @@ namespace BookAccountApp.ApiClasses
         public string opStatus { get; set; }
         public Nullable<System.DateTime> opDate { get; set; }
         public string notes { get; set; }
+        public Nullable<int> officeId { get; set; }
+        public Nullable<int> passengerId { get; set; }
+        public Nullable<int> userId { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
@@ -59,6 +62,9 @@ namespace BookAccountApp.ApiClasses
                                 updateUserId = S.updateUserId,
                                 createDate = S.createDate,
                                 updateDate = S.updateDate,
+                                officeId = S.officeId,
+                                passengerId = S.passengerId,
+                                userId = S.userId,
 
                             }).ToList();
 
@@ -130,7 +136,11 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.createUserId = newObject.createUserId;
                             tmpObject.updateUserId = newObject.updateUserId;
                             // tmpObject.createDate = newObject.createDate;
-                            tmpObject.updateDate = DateTime.Now;
+                      
+                            tmpObject.officeId = newObject.officeId;
+                            tmpObject.passengerId = newObject.passengerId;
+                            tmpObject.userId = newObject.userId;
+
                             entity.SaveChanges();
 
                             message = tmpObject.payOpId;
@@ -178,6 +188,9 @@ namespace BookAccountApp.ApiClasses
                           updateUserId = S.updateUserId,
                           createDate = S.createDate,
                           updateDate = S.updateDate,
+                          officeId = S.officeId,
+                          passengerId = S.passengerId,
+                          userId = S.userId,
 
 
                       }).FirstOrDefault();

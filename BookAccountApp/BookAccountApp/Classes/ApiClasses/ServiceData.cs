@@ -44,7 +44,9 @@ namespace BookAccountApp.ApiClasses
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-
+        public Nullable<int> passengerId { get; set; }
+        public Nullable<int> flightId { get; set; }
+        public Nullable<int> operationId { get; set; }
         public bool canDelete { get; set; }
 
         /// <summary>
@@ -89,6 +91,9 @@ namespace BookAccountApp.ApiClasses
                                 updateDate = S.updateDate,
                                 createUserId = S.createUserId,
                                 updateUserId = S.updateUserId,
+                                passengerId = S.passengerId,
+                                flightId = S.flightId,
+                                operationId = S.operationId,
 
                                 canDelete = true,
                                       
@@ -189,6 +194,9 @@ namespace BookAccountApp.ApiClasses
                        
                             tmpObject.createUserId = newObject.createUserId;
                             tmpObject.updateUserId = newObject.updateUserId;
+                            tmpObject.passengerId = newObject.passengerId;
+                            tmpObject.flightId = newObject.flightId;
+                            tmpObject.operationId = newObject.operationId;
 
 
                             entity.SaveChanges();
@@ -249,6 +257,9 @@ namespace BookAccountApp.ApiClasses
                           updateDate = S.updateDate,
                           createUserId = S.createUserId,
                           updateUserId = S.updateUserId,
+                          passengerId = S.passengerId,
+                          flightId = S.flightId,
+                          operationId = S.operationId,
 
 
                       }).FirstOrDefault();
