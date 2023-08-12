@@ -100,7 +100,7 @@ namespace BookAccountApp
 
         private void translate()
         {
-            txt_book_sales.Text = resourcemanager.GetString("book_sales");
+            txt_bookSales.Text = resourcemanager.GetString("book_sales");
             txt_accounting.Text = resourcemanager.GetString("accounting");
             txt_reports.Text = resourcemanager.GetString("trReports");
             txt_sectionData.Text = resourcemanager.GetString("trSectionData");
@@ -217,7 +217,7 @@ namespace BookAccountApp
                 if (sender != null)
                     HelpClass.StartAwait(grid_mainGrid);
                 //windowFlowDirection();
-                menuList = new List<string> { "booksales", "accounting", "reports",
+                menuList = new List<string> { "bookSales", "accounting", "reports",
                    "sectionData","settings"};
                 //menuList = new List<string> { "applications", "sales", "reports",
                 //   "sectionData","settings"};
@@ -237,8 +237,8 @@ namespace BookAccountApp
               // await FillCombo.RefreshCountry();
               //  FillCombo.fillRegion();
                 await loading_getUserPersonalInfo();
-               
-                
+
+
                 #endregion
 
                 //if (MainWindow.userLogin.type == "ag")
@@ -251,7 +251,7 @@ namespace BookAccountApp
                 //}
                 //else
                 //{
-                    Btn_book_sales_Click(btn_book_sales, null);
+                Btn_sectionData_Click(btn_sectionData, null);
                 //}
                 if (sender != null)
                     HelpClass.EndAwait(grid_mainGrid);
@@ -263,9 +263,28 @@ namespace BookAccountApp
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-       
 
-        void colorTextRefreash(string str)
+        void ColorButtonRefresh(string str)
+        {
+            foreach (Button button in FindControls.FindVisualChildren<Button>(this))
+            {
+                if (button.Tag != null)
+                {
+                    foreach (var item in menuList)
+                    {
+                        if (item == button.Tag.ToString())
+                        {
+                            if (item == str)
+                                button.Background = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                            else
+                                button.Background = null;
+
+                        }
+                    }
+                }
+            }
+        }
+        void colorTextRefresh(string str)
         {
             foreach (TextBlock textBlock in FindControls.FindVisualChildren<TextBlock>(this))
             {
@@ -276,7 +295,7 @@ namespace BookAccountApp
                         if (item == textBlock.Tag.ToString())
                         {
                             if (item == str)
-                            textBlock.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                            textBlock.Foreground = Application.Current.Resources["White"] as SolidColorBrush;
                                 else
                             textBlock.Foreground = Application.Current.Resources["LightGrey"] as SolidColorBrush;
 
@@ -285,7 +304,7 @@ namespace BookAccountApp
                 }
             }
         }
-        void ColorIconRefreash(string str)
+        void ColorIconRefresh(string str)
         {
             foreach (Path path in FindControls.FindVisualChildren<Path>(this))
             {
@@ -296,7 +315,7 @@ namespace BookAccountApp
                         if (item == path.Tag.ToString())
                         {
                             if (item == str)
-                                path.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                                path.Fill = Application.Current.Resources["White"] as SolidColorBrush;
                             else
                                 path.Fill = Application.Current.Resources["LightGrey"] as SolidColorBrush;
 
@@ -305,6 +324,7 @@ namespace BookAccountApp
                 }
             }
         }
+        /*
         void openVisible(string str)
         {
             foreach (Rectangle rectangle in FindControls.FindVisualChildren<Rectangle>(this))
@@ -325,7 +345,7 @@ namespace BookAccountApp
                 }
             }
         }
-       
+       */
         private void BTN_Close_Click(object sender, RoutedEventArgs e)
         {//close
             try
@@ -371,14 +391,14 @@ namespace BookAccountApp
         //        HelpClass.ExceptionMessage(ex, this);
         //    }
         //}
-        private void Btn_book_sales_Click(object sender, RoutedEventArgs e)
+        private void Btn_bookSales_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 Button button = sender as Button;
-                colorTextRefreash(button.Tag.ToString());
-                ColorIconRefreash(button.Tag.ToString());
-                openVisible(button.Tag.ToString());
+                colorTextRefresh(button.Tag.ToString());
+                ColorIconRefresh(button.Tag.ToString());
+                ColorButtonRefresh(button.Tag.ToString());
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_applications.Instance);
             }
@@ -409,9 +429,9 @@ namespace BookAccountApp
             try
             {
                 Button button = sender as Button;
-                colorTextRefreash(button.Tag.ToString());
-                ColorIconRefreash(button.Tag.ToString());
-                openVisible(button.Tag.ToString());
+                colorTextRefresh(button.Tag.ToString());
+                ColorIconRefresh(button.Tag.ToString());
+                ColorButtonRefresh(button.Tag.ToString());
                 grid_main.Children.Clear();
                 //grid_main.Children.Add(uc_sales.Instance);
                 //uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale, null);
@@ -428,9 +448,9 @@ namespace BookAccountApp
             try
             {
                 Button button = sender as Button;
-                colorTextRefreash(button.Tag.ToString());
-                ColorIconRefreash(button.Tag.ToString());
-                openVisible(button.Tag.ToString());
+                colorTextRefresh(button.Tag.ToString());
+                ColorIconRefresh(button.Tag.ToString());
+                ColorButtonRefresh(button.Tag.ToString());
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_sectionData.Instance);
             }
@@ -445,9 +465,9 @@ namespace BookAccountApp
             try
             {
                 Button button = sender as Button;
-                colorTextRefreash(button.Tag.ToString());
-                ColorIconRefreash(button.Tag.ToString());
-                openVisible(button.Tag.ToString());
+                colorTextRefresh(button.Tag.ToString());
+                ColorIconRefresh(button.Tag.ToString());
+                ColorButtonRefresh(button.Tag.ToString());
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_reports.Instance);
             }
@@ -461,9 +481,9 @@ namespace BookAccountApp
             try
             {
                 Button button = sender as Button;
-                colorTextRefreash(button.Tag.ToString());
-                ColorIconRefreash(button.Tag.ToString());
-                openVisible(button.Tag.ToString());
+                colorTextRefresh(button.Tag.ToString());
+                ColorIconRefresh(button.Tag.ToString());
+                ColorButtonRefresh(button.Tag.ToString());
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_settings.Instance);
             }
