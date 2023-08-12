@@ -292,6 +292,9 @@
     <Compile Include="View\sectionData\uc_office.xaml.cs">
       <DependentUpon>uc_office.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\sectionData\uc_passengers.xaml.cs">
+      <DependentUpon>uc_passengers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\sectionData\uc_sectionData.xaml.cs">
       <DependentUpon>uc_sectionData.xaml</DependentUpon>
     </Compile>
@@ -373,6 +376,10 @@
     <Page Include="View\sectionData\uc_office.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\sectionData\uc_passengers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\sectionData\uc_sectionData.xaml">
       <SubType>Designer</SubType>
