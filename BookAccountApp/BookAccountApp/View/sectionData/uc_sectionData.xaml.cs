@@ -44,7 +44,7 @@ namespace BookAccountApp.View.sectionData
             {
                 HelpClass.StartAwait(grid_mainGrid);
 
-                menuList = new List<string> { "users", "agents", "customers" };
+                menuList = new List<string> { "passengers", "agents", };
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
@@ -60,7 +60,7 @@ namespace BookAccountApp.View.sectionData
                 translate();
                 #endregion
 
-                Btn_users_Click(btn_users , null);
+                Btn_passengers_Click(btn_passengers, null);
 
                 HelpClass.EndAwait(grid_mainGrid);
             }
@@ -73,9 +73,9 @@ namespace BookAccountApp.View.sectionData
 
         private void translate()
         {
-            btn_users.Content = MainWindow.resourcemanager.GetString("trUsers");
+            //btn_users.Content = MainWindow.resourcemanager.GetString("trUsers");
             btn_office.Content = MainWindow.resourcemanager.GetString("trOffices");
-            btn_customers.Content = MainWindow.resourcemanager.GetString("trCustomers");
+            //btn_customers.Content = MainWindow.resourcemanager.GetString("trCustomers");
         }
 
         void colorButtonRefreash(string str)
@@ -143,16 +143,30 @@ namespace BookAccountApp.View.sectionData
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void Btn_passengers_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+                colorButtonRefreash(button.Tag.ToString());
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_passengers.Instance);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_office_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             // Collect all generations of memory.
             GC.Collect();
         }
 
-        private void Btn_office_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+       
     }
 }
