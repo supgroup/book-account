@@ -448,11 +448,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="pic\logo.png" />
     <Content Include="Thumb\users\tmp.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="pic\supclouds-logo.png" />
-    <Resource Include="pic\supclouds-logo100.png" />
     <Resource Include="pic\supcloudsLogo.ico" />
     <Content Include="bookModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -633,6 +632,7 @@
     <Content Include="EmailTemplates\upgradetmplate\en\invitemtable.tmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="fonts\cairo-font\Cairo Regular 400.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.BookSts.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.Customers.datasource" />
