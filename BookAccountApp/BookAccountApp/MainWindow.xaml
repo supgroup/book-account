@@ -10,7 +10,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowStartupLocation="CenterScreen"  WindowStyle="None"
         WindowState="Maximized" d:DesignWidth="1200" d:DesignHeight="800"   >
-    <Grid Margin="0" x:Name="grid_mainGrid" >
+    <Grid Margin="0" x:Name="grid_mainGrid"  >
         <Grid Background="{StaticResource background}"  >
             <Grid.RowDefinitions>
                 <RowDefinition Height="75" />
@@ -57,11 +57,13 @@
                              Width="auto" Height="100"
                              FlowDirection="LeftToRight" >
                         <Border.Background>
-                            <ImageBrush x:Name="img_mainLogo"  Stretch="Uniform"  ImageSource="/pic/supclouds-logo100.png"/>
+                            <ImageBrush x:Name="img_mainLogo"  Stretch="Uniform"  ImageSource="/pic/logo.png"/>
                         </Border.Background>
                     </Border>
 
-                    <Border  Grid.Row="1"   Height="1"  BorderBrush="{StaticResource LightGrey}" BorderThickness="1" Opacity="0.2" Margin="0,0,0,5"  ></Border>
+                    <Border  Grid.Row="1"   Height="1"  BorderBrush="{StaticResource LightGrey}" 
+                             BorderThickness="1" Opacity="0.2"
+                             Margin="0,0,0,25"  ></Border>
 
                    
                     <Button  Width="200" Height="40" Grid.Row="2"
@@ -81,7 +83,7 @@
                                   Stretch="Fill" 
                               HorizontalAlignment="Left" Grid.Column="0"  
                          VerticalAlignment="Center" Width="20" Height="20" Tag="bookSales" 
-                              Data="{StaticResource shoppingCart}" 
+                              Data="{StaticResource passportTicket}" 
                                   Margin="10,0,10,0"/>
                             <TextBlock Text="book sales" Foreground="{StaticResource LightGrey}" x:Name="txt_bookSales"
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
@@ -207,6 +209,7 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <!--<StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="5">
                     <TextBlock Name="txtTime" HorizontalAlignment="Center" Foreground="White"  FontSize="12" ></TextBlock>
@@ -217,7 +220,7 @@
 
 
 
-                    <materialDesign:Badged       Height="auto" Grid.Column="6"  Name="md_notificationCount" Margin="10,10,10,10" VerticalAlignment="Center"   
+                    <!--<materialDesign:Badged       Height="auto" Grid.Column="5"  Name="md_notificationCount" Margin="10,10,10,10" VerticalAlignment="Center"   
                       BadgeBackground="{StaticResource Red}"  BadgeForeground="White"  >
                         <Button Grid.Column="5" x:Name="BTN_notifications"
                     Background="{x:Null}" BorderBrush="{x:Null}" Width="25" Height="25"  
@@ -225,7 +228,7 @@
                             <materialDesign:PackIcon Foreground="{StaticResource SecondColor}" Kind="Bell" 
                                          Width="25" Height="25"/>
                         </Button>
-                    </materialDesign:Badged>
+                    </materialDesign:Badged>-->
 
                     <StackPanel  Margin="0,25,0,0"   Grid.Column="6" VerticalAlignment="Center">
                         <Menu Background="{StaticResource background}"  Padding="0" VerticalAlignment="Center">
@@ -243,6 +246,7 @@
                             </MenuItem>
                         </Menu>
                     </StackPanel>
+                    
                    
 
                     <Ellipse Grid.Column="7" Margin="5,5,5,5" x:Name="img_userLogin"
@@ -253,19 +257,19 @@
                             <ImageBrush Stretch="UniformToFill"  x:Name="IMG_userPic" ImageSource="pic/no-image-icon-40x40.png"   />
                         </Ellipse.Fill>
                     </Ellipse>
-                    <StackPanel VerticalAlignment="Center" Orientation="Vertical" Grid.Column="8" Margin="5,5,5,5">
+                    <StackPanel VerticalAlignment="Center" Orientation="Vertical" Grid.Column="8" Margin="10">
                         <TextBlock x:Name="txt_userName"  Text="admin" FontSize="12" Foreground="{StaticResource MainColor}" HorizontalAlignment="Center" />
                         <TextBlock x:Name="txt_userJob"  Text="admin"   FontSize="12" FontWeight="Light" Foreground="{StaticResource LightGrey}" HorizontalAlignment="Left" />
                     </StackPanel>
                     <Button Grid.Column="10" x:Name="BTN_Minimize" Click="BTN_Minimize_Click"
-                Margin="5,10,5,10" ToolTip="Minimize" 
+                Margin="10" ToolTip="Minimize" 
                     Background="{x:Null}" BorderBrush="{x:Null}" Width="25" Height="25" 
                     Padding="0" >
                         <materialDesign:PackIcon Foreground="{StaticResource SecondColor}" Kind="Minus" 
                                          Width="25" Height="25"/>
                     </Button>
                     <Button Grid.Column="11" x:Name="BTN_Close" Click="BTN_Close_Click"  
-                Margin="5,10,5,10" ToolTip="Close" 
+                Margin="10" ToolTip="Close" 
                     Background="{x:Null}" BorderBrush="{x:Null}" Width="25" Height="25" 
                     Padding="0" >
                         <materialDesign:PackIcon Foreground="{StaticResource SecondColor}" Kind="Close" 
@@ -276,6 +280,45 @@
             </Grid>
 
             <Grid   x:Name="grid_main" Grid.Row="1" Grid.Column="1"/>
+            <Grid    Grid.Row="2" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Row="0" Grid.ColumnSpan="2"  Height="1"  BorderBrush="{StaticResource LightGrey}" 
+                    BorderThickness="1" Opacity="0.5" Margin="10,5,10,0"  />
+                <StackPanel Orientation="Horizontal" Grid.Row="1"
+                             HorizontalAlignment="Left" VerticalAlignment="Center" >
+                    <TextBlock Foreground="{StaticResource LightGrey}"
+                               x:Name="txt_firstPath"
+                               FontSize="14"
+                                Text="section data"
+                             Margin="10 10 0 10"/>
+                    <TextBlock Foreground="{StaticResource MainColor}"
+                               x:Name="txt_secondPath"
+                               FontSize="14"
+                                Text=">passengers"
+                             Margin="5 10 10 10"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1"
+                            FlowDirection="LeftToRight"
+                             HorizontalAlignment="Right" VerticalAlignment="Center" >
+                    <TextBlock Foreground="{StaticResource LightGrey}"
+                               FontSize="14"
+                                Text="Powerd - "
+                             Margin="10 10 0 10"/>
+                    <TextBlock Foreground="{StaticResource MainColor}"
+                               FontSize="14"
+                                Text="Jellyfish"
+                             Margin="5 10 10 10"/>
+                </StackPanel>
+            </Grid>
+
         </Grid>
     </Grid>
 </Window>
