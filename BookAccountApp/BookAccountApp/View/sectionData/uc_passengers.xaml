@@ -13,14 +13,14 @@
             <ColumnDefinition  Width="350"  />
         </Grid.ColumnDefinitions>
         <Border Margin="15,0,10,15" Grid.Row="1"  Background="White" CornerRadius="10">
-            <Border.Effect>
+            <!--<Border.Effect>
                 <DropShadowEffect
                           ShadowDepth="1"
                           Direction="360"
                           Color="Gray"
                           Opacity="0.3"
                          BlurRadius="10"/>
-            </Border.Effect>
+            </Border.Effect>-->
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
@@ -29,7 +29,8 @@
 
                 <Grid   >
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition  Width="auto"  />
                         <ColumnDefinition  Width="auto"  />
                         <ColumnDefinition  Width="auto"  />
@@ -40,7 +41,7 @@
                                 <ColumnDefinition  Width="auto"  />
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Border  Width="50" CornerRadius="7.5,0,0,7.5"  
+                            <Border  Width="40" CornerRadius="7.5,0,0,7.5"  
                            Background="#178DD2" >
                                 <Path Fill="#E8E8E8" Stretch="Fill"
                               HorizontalAlignment="Center" Grid.Column="0"  
@@ -52,23 +53,23 @@
 	c0-1.4,0.2-2.8,0.6-4.2C68,27.3,58.3,36.5,57.9,48.2C57.5,60,66.7,69.7,78.5,70.1c11.7,0.4,21.5-8.8,21.9-20.6c0.1-2-0.2-4-0.7-5.9
 	C97.6,44.8,95.2,45.5,92.7,45.5z"/>
                             </Border>
-                            <TextBox x:Name="tb_search" Grid.Column="1"    Padding="10,5,0,0" 
+                            <TextBox x:Name="tb_search" Grid.Column="1"    Padding="10,0,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
                                      Foreground="#4E4E4E"  TextChanged="Tb_search_TextChanged"
                                       MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="0,0,4,0" />
+                                     Height="30"   Margin="0,0,4,0" />
                         </Grid>
                     </Border>
-                    <TextBlock    x:Name="txt_active" Grid.Column="1"
+                    <TextBlock    x:Name="txt_active" Grid.Column="2"
                                    Margin="5,0,5,0" Text="Active" Foreground="#6e6e6e"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"
                                    FontSize="12"/>
-                    <ToggleButton Grid.Column="2"    x:Name="tgl_isActive"   Checked="Tgl_isActive_Checked" Unchecked="Tgl_isActive_Unchecked"
+                    <ToggleButton Grid.Column="3"    x:Name="tgl_isActive"   Checked="Tgl_isActive_Checked" Unchecked="Tgl_isActive_Unchecked"
                              VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
-                                          Margin="0" Height="13" Width="28" />
-                    <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" Click="Btn_refresh_Click" Grid.Row="0" Grid.Column="3" Padding="0" 
+                                          Margin="0 0 10 0" Height="13" Width="28" />
+                    <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" Click="Btn_refresh_Click" Grid.Row="0" Grid.Column="4" Padding="0" 
                             materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
                           Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
                              Margin="0,11,5,11"     RenderTransformOrigin="0.5,0.5"
@@ -105,18 +106,23 @@
                 <Grid  Grid.Row="1" >
                     <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
-                    <DataGrid  Margin="5,5,5,45" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
-                       x:Name="dg_passenger" SelectionChanged="Dg_passenger_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
-                        ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
+                    <DataGrid  Margin="5,5,5,45" Grid.Row="1" 
+                               IsReadOnly="True"   HeadersVisibility="Column"
+                       x:Name="dg_passenger" SelectionChanged="Dg_passenger_SelectionChanged" 
+                               AutoGenerateColumns="False" 
+                               Background="White"
+                        ColumnWidth="SizeToHeader"  
+                               AlternatingRowBackground="#f3f3f3" AlternationCount="2">
                         <DataGrid.OpacityMask>
                             <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                         </DataGrid.OpacityMask>
                         <DataGrid.Resources>
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"></SolidColorBrush>
                             <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-                                <Setter Property="Background" Value="#e7f3fa" />
+                                <Setter Property="Background" Value="{StaticResource MainColor}" />
                                 <Setter Property="BorderBrush" Value="White"/>
                                 <Setter Property="BorderThickness" Value="0 0 1 0"/>
+                                <Setter Property="Foreground" Value="{StaticResource White}"/>
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
@@ -198,6 +204,84 @@
                                 </materialDesign:PackIcon.ToolTip>
                             </materialDesign:PackIcon>
                         </Button>
+                       
+                        <Button   Background="{x:Null}"    Margin="5,0,5,0"
+                          Padding="0" Height="35"  x:Name="btn_print"
+                          BorderBrush="{x:Null}" Click="Btn_print_Click"  >
+                            <materialDesign:PackIcon Foreground="#313131" Kind="Printer"  
+                      Width="22" Height="22">
+                                <materialDesign:PackIcon.ToolTip>
+                                    <ToolTip x:Name="tt_print" 
+                                              Placement="left" 
+                                              HorizontalOffset="5"
+                                              PlacementRectangle="50,0,0,0"
+                                              VerticalOffset="-10"/>
+                                </materialDesign:PackIcon.ToolTip>
+                            </materialDesign:PackIcon>
+                        </Button>
+                        <Button FlowDirection="LeftToRight"   Background="{x:Null}"    Grid.Column="2" Margin="2.5,0,2.5,0" 
+                            Padding="0" Height="20" Width="25"   x:Name="btn_pieChart"   
+                                       BorderBrush="{x:Null}" Click="Btn_pieChart_Click"  >
+                            <Grid Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Path Width="8.8" Height="9.6" Stretch="Fill" Data="M27.7,8.3l-10.2,7.8l9.1,9.1c2.1-2.5,3.4-5.7,3.4-9.2C30,13.1,29.1,10.5,27.7,8.3z" Fill="#DD191B"
+                              RenderTransformOrigin="5,5" >
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform />
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="0"/>
+                                            <TranslateTransform  X="6.5" Y="0.2"/>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+                                <Path Width="7.2" Height="7.2" Stretch="Fill" Data="M17,14l9.4-7.3c-2.4-2.6-5.7-4.4-9.4-4.7V14z" Fill="#F74110" RenderTransformOrigin="0,0">
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform />
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform  X="6.2" Y="-6"/>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+                                <Path Fill="#377EB8" Width="16" Height="17" Stretch="Fill" Data="M15.3,16.7C15.3,16.7,15.3,16.7,15.3,16.7C15.2,16.6,15.2,16.6,15.3,16.7c-0.1-0.1-0.1-0.2-0.1-0.2c0-0.1-0.1-0.1-0.1-0.2
+   s0-0.1,0-0.2c0,0,0-0.1,0-0.1V2.1C7.7,2.6,2,8.6,2,16c0,7.7,6.3,14,14,14c3.5,0,6.7-1.3,9.2-3.4L15.3,16.7z" RenderTransformOrigin="0,0">
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="1"/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                    <Path.ToolTip>
+                                        <ToolTip x:Name="tt_pieChart" Content="Pie Chart"
+                                              Placement="left" 
+                                              HorizontalOffset="35"
+                                              PlacementRectangle="50,0,0,0"
+                                              VerticalOffset="-35"/>
+                                    </Path.ToolTip>
+                                </Path>
+                            </Grid>
+                        </Button>
+                        <Button   Background="{x:Null}" Margin="5,0,5,0" 
+                            Padding="0" Height="35"   x:Name="btn_exportToExcel" 
+                                       BorderBrush="{x:Null}" Click="Btn_exportToExcel_Click">
+                            <Path Fill="#378500" Stretch="Fill"
+                          Width="20" Height="20" 
+                           FlowDirection="LeftToRight" Data="M25.162,3H16v2.984h3.031v2.031H16V10h3v2h-3v2h3v2h-3v2h3v2h-3v3h9.162   C25.623,23,26,22.609,26,22.13V3.87C26,3.391,25.623,3,25.162,3z M24,20h-4v-2h4V20z M24,16h-4v-2h4V16z M24,12h-4v-2h4V12z M24,8   h-4V6h4V8z 
+	                     M0,2.889v20.223L15,26V0L0,2.889z M9.488,18.08l-1.745-3.299c-0.066-0.123-0.134-0.349-0.205-0.678   H7.511C7.478,14.258,7.4,14.494,7.277,14.81l-1.751,3.27H2.807l3.228-5.064L3.082,7.951h2.776l1.448,3.037   c0.113,0.24,0.214,0.525,0.304,0.854h0.028c0.057-0.198,0.163-0.492,0.318-0.883l1.61-3.009h2.542l-3.037,5.022l3.122,5.107 
+                          L9.488,18.08L9.488,18.08z"  >
+                                <Path.ToolTip>
+                                    <ToolTip x:Name="tt_excel"  
+                                              Placement="left" 
+                                              HorizontalOffset="35"
+                                              PlacementRectangle="50,0,0,0"
+                                              VerticalOffset="-10"/>
+                                </Path.ToolTip>
+                            </Path>
+                        </Button>
+
                         <Button   Background="{x:Null}" Margin="0,0,5,0" 
                             Padding="0" Height="35"   x:Name="btn_preview"  
                                        BorderBrush="{x:Null}" Click="Btn_preview_Click">
@@ -219,38 +303,7 @@
                                 </Path>
                             </Grid>
                         </Button>
-                        <Button   Background="{x:Null}"    Margin="5,0,5,0"
-                          Padding="0" Height="35"  x:Name="btn_print"
-                          BorderBrush="{x:Null}" Click="Btn_print_Click"  >
-                            <materialDesign:PackIcon Foreground="#313131" Kind="Printer"  
-                      Width="22" Height="22">
-                                <materialDesign:PackIcon.ToolTip>
-                                    <ToolTip x:Name="tt_print" 
-                                              Placement="left" 
-                                              HorizontalOffset="5"
-                                              PlacementRectangle="50,0,0,0"
-                                              VerticalOffset="-10"/>
-                                </materialDesign:PackIcon.ToolTip>
-                            </materialDesign:PackIcon>
-                        </Button>
-                        <Button   Background="{x:Null}" Margin="5,0,5,0" 
-                            Padding="0" Height="35"   x:Name="btn_exportToExcel" 
-                                       BorderBrush="{x:Null}" Click="Btn_exportToExcel_Click">
-                            <Path Fill="#378500" Stretch="Fill"
-                          Width="20" Height="20" 
-                           FlowDirection="LeftToRight" Data="M25.162,3H16v2.984h3.031v2.031H16V10h3v2h-3v2h3v2h-3v2h3v2h-3v3h9.162   C25.623,23,26,22.609,26,22.13V3.87C26,3.391,25.623,3,25.162,3z M24,20h-4v-2h4V20z M24,16h-4v-2h4V16z M24,12h-4v-2h4V12z M24,8   h-4V6h4V8z 
-	                     M0,2.889v20.223L15,26V0L0,2.889z M9.488,18.08l-1.745-3.299c-0.066-0.123-0.134-0.349-0.205-0.678   H7.511C7.478,14.258,7.4,14.494,7.277,14.81l-1.751,3.27H2.807l3.228-5.064L3.082,7.951h2.776l1.448,3.037   c0.113,0.24,0.214,0.525,0.304,0.854h0.028c0.057-0.198,0.163-0.492,0.318-0.883l1.61-3.009h2.542l-3.037,5.022l3.122,5.107 
-                          L9.488,18.08L9.488,18.08z"  >
-                                <Path.ToolTip>
-                                    <ToolTip x:Name="tt_excel"  
-                                              Placement="left" 
-                                              HorizontalOffset="35"
-                                              PlacementRectangle="50,0,0,0"
-                                              VerticalOffset="-10"/>
-                                </Path.ToolTip>
-                            </Path>
-                        </Button>
-                        <TextBlock   Background="{x:Null}" x:Name="txt_count"    Margin="0,0,0,0" 
+                        <!--<TextBlock   Background="{x:Null}" x:Name="txt_count"    Margin="0,0,0,0" 
                             Padding="10"   Text="0" Foreground="#378500"  >
                             <TextBlock.ToolTip>
                                 <ToolTip x:Name="tt_count" 
@@ -259,7 +312,7 @@
                                               PlacementRectangle="50,25,0,0"
                                               VerticalOffset="-20"/>
                             </TextBlock.ToolTip>
-                        </TextBlock>
+                        </TextBlock>-->
 
                     </StackPanel >
                 </Border>
@@ -269,14 +322,14 @@
         <Border Margin="10,0,15,15"
                 CornerRadius="15"
             Grid.Column="1" Background="White">
-            <Border.Effect>
+            <!--<Border.Effect>
                 <DropShadowEffect
                           ShadowDepth="1"
                           Direction="360"
                           Color="Gray"
                           Opacity="0.3"
                          BlurRadius="10"/>
-            </Border.Effect>
+            </Border.Effect>-->
             <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
@@ -295,9 +348,9 @@
             </Border>
            
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                <StackPanel>
+                <StackPanel >
                     <DockPanel LastChildFill="True"  >
-                        <TextBlock x:Name="txt_baseInformation" Text="Base Infomation" Foreground="#737373" FontSize="10" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                        <!--<TextBlock x:Name="txt_baseInformation" Text="Base Infomation" Foreground="#737373" FontSize="10" VerticalAlignment="Center" Margin="5,5,5,5"/>-->
                         <Button DockPanel.Dock="Right" x:Name="btn_clear" Click="Btn_clear_Click" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5,1" >
                             <materialDesign:PackIcon Foreground="#178DD2" Kind="RefreshCircle"   Width="30" Height="30">
                                 <materialDesign:PackIcon.ToolTip>
@@ -306,7 +359,7 @@
                                 </materialDesign:PackIcon.ToolTip>
                             </materialDesign:PackIcon>
                         </Button>
-                        <Separator Background="#999999" VerticalAlignment="Center" Width="auto" />
+                        <Separator Background="#999999" VerticalAlignment="Center" Width="auto" Margin="10 0 0 0" />
                     </DockPanel>
                        
                        <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
@@ -402,7 +455,7 @@
                 </StackPanel>
             </ScrollViewer>
             <Border Grid.Row="2"  Height="1"  BorderBrush="{StaticResource LightGrey}" 
-                    BorderThickness="1" Opacity="0.2" Margin="5,5,5,0"  />
+                    BorderThickness="1" Opacity="0.5" Margin="10,5,10,0"  />
                 <Grid  Grid.Row="3"   >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -417,12 +470,12 @@
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
                             <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
-                           Width="35" Height="35" FlowDirection="LeftToRight"
+                           Width="50" Height="50" FlowDirection="LeftToRight"
                            Data="{StaticResource fileUploadExport}"/>
                             <TextBlock x:Name="txt_exportDataButton"
                                     Text="exportData"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
-                                                    Foreground="{StaticResource MainColor}"
+                                                    Foreground="{StaticResource SecondColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
                         </Grid>
                     </Button>
@@ -435,12 +488,12 @@
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
                             <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
-                           Width="35" Height="35" FlowDirection="LeftToRight"
+                           Width="50" Height="50" FlowDirection="LeftToRight"
                            Data="{StaticResource fileDownloadImport}"/>
                             <TextBlock x:Name="txt_importDataButton"
                                     Text="importData"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
-                                                    Foreground="{StaticResource MainColor}"
+                                                    Foreground="{StaticResource SecondColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
                         </Grid>
                     </Button>

@@ -507,7 +507,7 @@ namespace BookAccountApp.View.sectionData
         void RefreshPassengersView()
         {
             dg_passenger.ItemsSource = passengersQuery;
-            txt_count.Text = passengersQuery.Count().ToString();
+            //txt_count.Text = passengersQuery.Count().ToString();
         }
         #endregion
 
@@ -767,6 +767,11 @@ namespace BookAccountApp.View.sectionData
             */
         }
 
+        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
 
 
         #endregion
@@ -780,5 +785,7 @@ namespace BookAccountApp.View.sectionData
         {
 
         }
+
+        
     }
 }
