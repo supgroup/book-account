@@ -448,6 +448,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Reports\SectionData\Ar\ArPassenger.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\logo.png" />
     <Content Include="Thumb\users\tmp.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -472,7 +475,7 @@
     <Content Include="Reports\SectionData\En\EnAgents.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\SectionData\En\EnCustomers.rdlc">
+    <Content Include="Reports\SectionData\En\EnPassenger.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\SectionData\En\EnUsers.rdlc">
@@ -645,6 +648,7 @@
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.Users.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.Versions.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.Properties.Resources.datasource" />
+    <None Include="Properties\DataSources\BookAccountApp.ApiClasses.Passengers.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonObjectId.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonReader.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonWriter.datasource" />
@@ -744,7 +748,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reports\Applications\Ar\" />
-    <Folder Include="Reports\SectionData\Ar\" />
     <Folder Include="Thumb\customers\" />
     <Folder Include="View\settings\emailGeneral\" />
   </ItemGroup>

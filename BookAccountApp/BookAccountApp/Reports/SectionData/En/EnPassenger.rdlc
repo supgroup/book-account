@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -147,7 +147,7 @@
                                 <TextRun>
                                   <Value>No.</Value>
                                   <Style>
-                                    <FontFamily>Montserrat</FontFamily>
+                                    <FontFamily>Cairo</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -183,7 +183,7 @@
                                 <TextRun>
                                   <Value>=Parameters!trCode.Value</Value>
                                   <Style>
-                                    <FontFamily>Montserrat</FontFamily>
+                                    <FontFamily>Cairo</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -219,7 +219,7 @@
                                 <TextRun>
                                   <Value>=Parameters!trName.Value</Value>
                                   <Style>
-                                    <FontFamily>Montserrat</FontFamily>
+                                    <FontFamily>Cairo</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -255,7 +255,7 @@
                                 <TextRun>
                                   <Value>=Parameters!trCompanyName.Value</Value>
                                   <Style>
-                                    <FontFamily>Montserrat</FontFamily>
+                                    <FontFamily>Cairo</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -291,7 +291,7 @@
                                 <TextRun>
                                   <Value>=Parameters!trMobile.Value</Value>
                                   <Style>
-                                    <FontFamily>Montserrat</FontFamily>
+                                    <FontFamily>Cairo</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -332,7 +332,7 @@
                                 <TextRun>
                                   <Value>=rownumber(nothing)</Value>
                                   <Style>
-                                    <FontFamily>Montserrat</FontFamily>
+                                    <FontFamily>Cairo</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -366,7 +366,7 @@
                                 <TextRun>
                                   <Value>=Fields!custCode.Value</Value>
                                   <Style>
-                                    <FontFamily>Montserrat</FontFamily>
+                                    <FontFamily>Cairo</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -400,7 +400,7 @@
                                 <TextRun>
                                   <Value>=Fields!custname.Value.ToString()+" " +Fields!lastName.Value</Value>
                                   <Style>
-                                    <FontFamily>Montserrat</FontFamily>
+                                    <FontFamily>Cairo</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -434,7 +434,7 @@
                                 <TextRun>
                                   <Value>=Fields!company.Value</Value>
                                   <Style>
-                                    <FontFamily>Montserrat</FontFamily>
+                                    <FontFamily>Cairo</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -468,7 +468,7 @@
                                 <TextRun>
                                   <Value>=Fields!mobile.Value</Value>
                                   <Style>
-                                    <FontFamily>Montserrat</FontFamily>
+                                    <FontFamily>Cairo</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -535,7 +535,7 @@
                   <TextRun>
                     <Value>=Parameters!trTitle.Value</Value>
                     <Style>
-                      <FontFamily>Montserrat</FontFamily>
+                      <FontFamily>Cairo</FontFamily>
                       <FontSize>20pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>#178dd2</Color>
@@ -614,7 +614,7 @@
                     <TextRun>
                       <Value>=Parameters!companyName.Value</Value>
                       <Style>
-                        <FontFamily>Montserrat</FontFamily>
+                        <FontFamily>Cairo</FontFamily>
                         <FontSize>16pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <Color>DimGray</Color>
@@ -649,7 +649,7 @@
                     <TextRun>
                       <Value>Address: </Value>
                       <Style>
-                        <FontFamily>Montserrat</FontFamily>
+                        <FontFamily>Cairo</FontFamily>
                         <FontWeight>Bold</FontWeight>
                         <Color>DimGray</Color>
                       </Style>
@@ -657,7 +657,7 @@
                     <TextRun>
                       <Value>=Parameters!Address.Value</Value>
                       <Style>
-                        <FontFamily>Montserrat</FontFamily>
+                        <FontFamily>Cairo</FontFamily>
                         <FontWeight>Bold</FontWeight>
                         <Color>DimGray</Color>
                       </Style>
@@ -693,7 +693,7 @@
                     <TextRun>
                       <Value>Tel: </Value>
                       <Style>
-                        <FontFamily>Montserrat</FontFamily>
+                        <FontFamily>Cairo</FontFamily>
                         <FontWeight>Bold</FontWeight>
                         <Color>DimGray</Color>
                       </Style>
@@ -701,7 +701,7 @@
                     <TextRun>
                       <Value>=Parameters!Tel.Value</Value>
                       <Style>
-                        <FontFamily>Montserrat</FontFamily>
+                        <FontFamily>Cairo</FontFamily>
                         <FontWeight>Bold</FontWeight>
                         <Color>DimGray</Color>
                       </Style>
@@ -737,7 +737,7 @@
                     <TextRun>
                       <Value>Fax: </Value>
                       <Style>
-                        <FontFamily>Montserrat</FontFamily>
+                        <FontFamily>Cairo</FontFamily>
                         <FontWeight>Bold</FontWeight>
                         <Color>DimGray</Color>
                       </Style>
@@ -745,7 +745,7 @@
                     <TextRun>
                       <Value>=Parameters!Fax.Value</Value>
                       <Style>
-                        <FontFamily>Montserrat</FontFamily>
+                        <FontFamily>Cairo</FontFamily>
                         <FontWeight>Bold</FontWeight>
                         <Color>DimGray</Color>
                       </Style>
@@ -781,7 +781,7 @@
                     <TextRun>
                       <Value>Email: </Value>
                       <Style>
-                        <FontFamily>Montserrat</FontFamily>
+                        <FontFamily>Cairo</FontFamily>
                         <FontWeight>Bold</FontWeight>
                         <Color>DimGray</Color>
                       </Style>
@@ -789,7 +789,7 @@
                     <TextRun>
                       <Value>=Parameters!Email.Value</Value>
                       <Style>
-                        <FontFamily>Montserrat</FontFamily>
+                        <FontFamily>Cairo</FontFamily>
                         <FontWeight>Bold</FontWeight>
                         <Color>DimGray</Color>
                       </Style>
@@ -1043,11 +1043,35 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="trNo">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="trLastName">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="father">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="mother">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>7</NumberOfRows>
+      <NumberOfRows>8</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
@@ -1123,6 +1147,26 @@
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>6</RowIndex>
           <ParameterName>trCompanyName</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>6</RowIndex>
+          <ParameterName>trNo</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>7</RowIndex>
+          <ParameterName>trLastName</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>7</RowIndex>
+          <ParameterName>father</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>7</RowIndex>
+          <ParameterName>mother</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

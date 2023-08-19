@@ -47,16 +47,16 @@ namespace BookAccountApp.View.sectionData
                 menuList = new List<string> { "passengers", "agents", };
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
-                {
-                    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.en_file", Assembly.GetExecutingAssembly());
-                    grid_main.FlowDirection = FlowDirection.LeftToRight;
-                }
-                else
-                {
-                    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.ar_file", Assembly.GetExecutingAssembly());
-                    grid_main.FlowDirection = FlowDirection.RightToLeft;
-                }
+                //if (MainWindow.lang.Equals("en"))
+                //{
+                //    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.en_file", Assembly.GetExecutingAssembly());
+                //    grid_main.FlowDirection = FlowDirection.LeftToRight;
+                //}
+                //else
+                //{
+                //    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.ar_file", Assembly.GetExecutingAssembly());
+                //    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                //}
                 translate();
                 #endregion
 
@@ -75,6 +75,7 @@ namespace BookAccountApp.View.sectionData
         {
             //btn_users.Content = MainWindow.resourcemanager.GetString("trUsers");
             btn_office.Content = MainWindow.resourcemanager.GetString("trOffices");
+            btn_passengers.Content = MainWindow.resourcemanager.GetString("passengers");
             //btn_customers.Content = MainWindow.resourcemanager.GetString("trCustomers");
         }
 

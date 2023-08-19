@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BookAccountApp.ApiClasses;
+using Newtonsoft.Json;
 //using POS.View.storage;
 namespace BookAccountApp.Classes
 {
@@ -125,6 +126,25 @@ namespace BookAccountApp.Classes
 
 
             DateFormConv(paramarr);
+        }
+        public static void PassengersReport(IEnumerable<Passengers> QueryList, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            List<Passengers> Query = JsonConvert.DeserializeObject<List<Passengers>>(JsonConvert.SerializeObject(QueryList));
+            rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+            //title
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("passenger")));
+            //table columns
+            paramarr.Add(new ReportParameter("trNo", MainWindow.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trLastName", MainWindow.resourcemanagerreport.GetString("trLastName")));
+            paramarr.Add(new ReportParameter("father", MainWindow.resourcemanagerreport.GetString("father")));
+            paramarr.Add(new ReportParameter("mother", MainWindow.resourcemanagerreport.GetString("mother")));
+            
+
+            //DateFormConv(paramarr);
         }
         //public static void CustomersReport(IEnumerable<Customers> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         //{

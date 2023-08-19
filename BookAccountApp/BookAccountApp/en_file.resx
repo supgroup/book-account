@@ -2824,4 +2824,25 @@ Please add Email in setting</value>
   <data name="book_sales" xml:space="preserve">
     <value>Book Systems Sales</value>
   </data>
+  <data name="father" xml:space="preserve">
+    <value>Father</value>
+  </data>
+  <data name="fatherHint" xml:space="preserve">
+    <value>Father...</value>
+  </data>
+  <data name="mother" xml:space="preserve">
+    <value>Mother</value>
+  </data>
+  <data name="motherHint" xml:space="preserve">
+    <value>Mother...</value>
+  </data>
+  <data name="passenger" xml:space="preserve">
+    <value>Passenger</value>
+  </data>
+  <data name="passengers" xml:space="preserve">
+    <value>Passengers</value>
+  </data>
+  <data name="cannotdelete" xml:space="preserve">
+    <value>Can not delete this record!</value>
+  </data>
 </root>
