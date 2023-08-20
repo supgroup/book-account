@@ -451,6 +451,9 @@
     <Content Include="Reports\SectionData\Ar\ArPassenger.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\SectionData\Ar\ArOffice.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\logo.png" />
     <Content Include="Thumb\users\tmp.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -648,6 +651,7 @@
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.Users.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.Versions.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.Properties.Resources.datasource" />
+    <None Include="Properties\DataSources\BookAccountApp.ApiClasses.Office.datasource" />
     <None Include="Properties\DataSources\BookAccountApp.ApiClasses.Passengers.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonObjectId.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonReader.datasource" />

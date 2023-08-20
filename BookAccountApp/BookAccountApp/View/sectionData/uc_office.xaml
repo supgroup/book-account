@@ -149,7 +149,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="joinDate" Binding="{Binding Path=joinDate}">
+                            <DataGridTextColumn Width="*"  Header="joinDate" Binding="{Binding joinDate, Converter={StaticResource dateFrameConverter }}">  
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>

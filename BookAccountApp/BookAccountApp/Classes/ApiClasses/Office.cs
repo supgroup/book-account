@@ -33,7 +33,7 @@ namespace BookAccountApp.ApiClasses
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-
+        public string strjoinDate { get; set; }
         public bool canDelete { get; set; }
 
 

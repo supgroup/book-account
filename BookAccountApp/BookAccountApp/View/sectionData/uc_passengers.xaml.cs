@@ -716,7 +716,7 @@ motherHint
                 BuildReport();
                 this.Dispatcher.Invoke(() =>
                 {
-                    saveFileDialog2.Filter = "EXCEL|*.xls;";
+                    saveFileDialog.Filter = "EXCEL|*.xls;";
                     if (saveFileDialog.ShowDialog() == true)
                     {
                         string filepath = saveFileDialog.FileName;
