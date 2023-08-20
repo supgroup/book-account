@@ -160,7 +160,17 @@ namespace BookAccountApp.View.sectionData
         }
         private void Btn_office_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                Button button = sender as Button;
+                colorButtonRefreash(button.Tag.ToString());
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_office.Instance);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {

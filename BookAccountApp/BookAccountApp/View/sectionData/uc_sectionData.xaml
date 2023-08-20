@@ -28,7 +28,7 @@
                        x:Name="btn_passengers" Click="Btn_passengers_Click" Tag="passengers"/>
             <Button   Grid.Column="1"
              Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
-                 Content="Office" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
+                 Content="office" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
                        x:Name="btn_office" Click="Btn_office_Click" Tag="office"/>
             
 
