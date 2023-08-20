@@ -30,6 +30,14 @@
              Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
                  Content="office" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
                        x:Name="btn_office" Click="Btn_office_Click" Tag="office"/>
+            <Button   Grid.Column="2"
+             Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
+                 Content="flights" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
+                       x:Name="btn_flights" Click="Btn_flights_Click" Tag="flights"/>
+            <Button   Grid.Column="3"
+             Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
+                 Content="operations" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
+                       x:Name="btn_operations" Click="Btn_operations_Click" Tag="operations"/>
             
 
         </Grid>

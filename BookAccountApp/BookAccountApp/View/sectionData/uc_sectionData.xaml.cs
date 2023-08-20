@@ -172,12 +172,43 @@ namespace BookAccountApp.View.sectionData
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private void Btn_flights_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+                colorButtonRefreash(button.Tag.ToString());
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_flights.Instance);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_operations_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+                colorButtonRefreash(button.Tag.ToString());
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_operations.Instance);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             // Collect all generations of memory.
             GC.Collect();
         }
 
-       
+        
     }
 }
