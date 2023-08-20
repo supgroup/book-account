@@ -146,6 +146,64 @@ namespace BookAccountApp.Classes
 
             //DateFormConv(paramarr);
         }
+
+        public static void OfficesReport(IEnumerable<Office> QueryList, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            List<Office> Query = JsonConvert.DeserializeObject<List<Office>>(JsonConvert.SerializeObject(QueryList));
+            foreach (Office row in Query)
+            {
+                row.strjoinDate = dateFrameConverter(row.joinDate);
+                
+            }
+
+            rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+            //title
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trOffices")));
+            //table columns
+            paramarr.Add(new ReportParameter("trNo", MainWindow.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("officeName", MainWindow.resourcemanagerreport.GetString("officeName")));
+            paramarr.Add(new ReportParameter("joinDate", MainWindow.resourcemanagerreport.GetString("joinDate")));
+            paramarr.Add(new ReportParameter("mobileNum", MainWindow.resourcemanagerreport.GetString("mobileNum")));
+            paramarr.Add(new ReportParameter("trUserName", MainWindow.resourcemanagerreport.GetString("trUserName")));
+            paramarr.Add(new ReportParameter("passwordSyr", MainWindow.resourcemanagerreport.GetString("passwordSyr")));
+            paramarr.Add(new ReportParameter("passwordSoto", MainWindow.resourcemanagerreport.GetString("passwordSoto")));
+
+            /*
+             * joinDate
+mobileNum
+trUserName
+passwordSyr
+passwordSoto
+
+             * */
+            //DateFormConv(paramarr);
+        }
+        public static string dateFrameConverter(DateTime? date)
+        {
+            DateTime dateval;
+            if (date is DateTime)
+                dateval = (DateTime)date;
+            else return date.ToString();
+
+            switch (MainWindow.dateFormat)
+            {
+                case "ShortDatePattern":
+                    return dateval.ToString(@"dd/MM/yyyy");
+                case "LongDatePattern":
+                    return dateval.ToString(@"dddd, MMMM d, yyyy");
+                case "MonthDayPattern":
+                    return dateval.ToString(@"MMMM dd");
+                case "YearMonthPattern":
+                    return dateval.ToString(@"MMMM yyyy");
+                default:
+                    return dateval.ToString(@"dd/MM/yyyy");
+            }
+
+        }
+
         //public static void CustomersReport(IEnumerable<Customers> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         //{
         //    rep.ReportPath = reppath;

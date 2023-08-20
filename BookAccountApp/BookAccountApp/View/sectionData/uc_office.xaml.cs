@@ -592,7 +592,7 @@ motherHint
             ////string secondTitle = "";
             ////string subTitle = "";
             //string Title = "";
-            /*
+          
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
             string addpath;
@@ -618,7 +618,7 @@ motherHint
             rep.SetParameters(paramarr);
 
             rep.Refresh();
-            */
+             
         }
 
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
@@ -728,7 +728,7 @@ motherHint
                 BuildReport();
                 this.Dispatcher.Invoke(() =>
                 {
-                    saveFileDialog2.Filter = "EXCEL|*.xls;";
+                    saveFileDialog.Filter = "EXCEL|*.xls;";
                     if (saveFileDialog.ShowDialog() == true)
                     {
                         string filepath = saveFileDialog.FileName;
