@@ -67,7 +67,7 @@ namespace BookAccountApp.View.sectionData
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "name", "lastName" };
+                requiredControlList = new List<string> { "name", "userName" };
 
                 #region translate
                 //if (MainWindow.lang.Equals("en"))
@@ -110,8 +110,18 @@ namespace BookAccountApp.View.sectionData
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
             txt_title.Text = MainWindow.resourcemanager.GetString("office");
+            txt_exportDocsButton.Text = MainWindow.resourcemanager.GetString("docExport");
+            txt_uploadDocsButton.Text = MainWindow.resourcemanager.GetString("docUpload");
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_custCode, MainWindow.resourcemanager.GetString("trCodeHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("officeNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_joinDate, MainWindow.resourcemanager.GetString("joinDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, MainWindow.resourcemanager.GetString("mobileNumHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_userName, MainWindow.resourcemanager.GetString("trUserNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_passwordSY, MainWindow.resourcemanager.GetString("passwordSyrHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_PasswordSoto, MainWindow.resourcemanager.GetString("passwordSotoHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+       
+            //docUpload docExport
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_lastName, MainWindow.resourcemanager.GetString("trLastNameHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_father, MainWindow.resourcemanager.GetString("fatherHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mother, MainWindow.resourcemanager.GetString("motherHint"));
@@ -130,13 +140,15 @@ mother
 motherHint  
 */
             //   offices
-            /*
+            
             dg_office.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
-            dg_office.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
-            dg_office.Columns[2].Header = MainWindow.resourcemanager.GetString("trLastName");
-            dg_office.Columns[3].Header = MainWindow.resourcemanager.GetString("father");
-            dg_office.Columns[4].Header = MainWindow.resourcemanager.GetString("mother");
-            */
+            dg_office.Columns[1].Header = MainWindow.resourcemanager.GetString("officeName");
+            dg_office.Columns[2].Header = MainWindow.resourcemanager.GetString("joinDate");
+            dg_office.Columns[3].Header = MainWindow.resourcemanager.GetString("mobileNum");
+            dg_office.Columns[4].Header = MainWindow.resourcemanager.GetString("trUserName");
+            dg_office.Columns[5].Header = MainWindow.resourcemanager.GetString("passwordSyr");
+            dg_office.Columns[6].Header = MainWindow.resourcemanager.GetString("passwordSoto");
+
 
             //dg_office.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
@@ -157,25 +169,21 @@ motherHint
         {//add
             try
             {
-                //Country coumod = new Country();
-                //TimeSpan ts = new TimeSpan();
-                //ts = await coumod.GetOffsetTime(int.Parse(tb_custname.Text));
-                //tb_lastName.Text = ts.ToString();
+         
 
                 HelpClass.StartAwait(grid_main);
-                /*
+             
                 office = new Office();
                 if (HelpClass.validate(requiredControlList, this))
                 {
                     //tb_custCode.Text = await office.generateCodeNumber("cu");
 
                     office.name = tb_name.Text;
-                    office.lastName = tb_lastName.Text.Trim();
-
-
-
-                    office.father = tb_father.Text.Trim();
-                    office.mother = tb_mother.Text;
+                    office.joinDate = dp_joinDate.SelectedDate;
+                    office.mobile =tb_mobile.Text.Trim();
+                    office.userName = tb_userName.Text;
+                    office.passwordSY = tb_passwordSY.Text;
+                    office.PasswordSoto = tb_PasswordSoto.Text;
                     office.notes = tb_notes.Text;
 
                     office.createUserId = MainWindow.userLogin.userId;
@@ -195,7 +203,7 @@ motherHint
                         await Search();
                     }
                 }
-                */
+              
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -209,16 +217,18 @@ motherHint
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
+              
                 if (office.officeId > 0)
                 {
                     if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
                         //office.custname = tb_custname.Text;
                         office.name = tb_name.Text;
-                        office.lastName = tb_lastName.Text;
-                        office.father = tb_father.Text;
-                        office.mother = tb_mother.Text;
+                        office.joinDate = dp_joinDate.SelectedDate;
+                        office.mobile = tb_mobile.Text.Trim();
+                        office.userName = tb_userName.Text;
+                        office.passwordSY = tb_passwordSY.Text;
+                        office.PasswordSoto = tb_PasswordSoto.Text;
                         office.notes = tb_notes.Text;
                         office.updateUserId = MainWindow.userLogin.userId;
                         //office.countryId = Convert.ToInt32(cb_country.SelectedValue);
@@ -267,7 +277,7 @@ motherHint
                 }
                 else
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
-                */
+                
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -458,19 +468,19 @@ motherHint
             //search
             if (offices is null)
                 await RefreshOfficesList();
-            /*
+          
             searchText = tb_search.Text.ToLower();
             officesQuery = offices.Where(s =>
             (s.officeId.ToString().Contains(searchText) ||
             s.name.ToLower().Contains(searchText) ||
-            s.lastName.ToLower().Contains(searchText) ||
-            s.father.ToLower().Contains(searchText)
+            s.userName.ToLower().Contains(searchText) ||
+            s.joinDate.ToString().Contains(searchText)
             ||
-            s.mother.ToLower().Contains(searchText)
+            s.mobile.ToLower().Contains(searchText)
             ));
             //&& s.isActive == tgl_officestate
             //);
-            */
+            
             RefreshOfficesView();
         }
         async Task<IEnumerable<Office>> RefreshOfficesList()
@@ -481,7 +491,7 @@ motherHint
         void RefreshOfficesView()
         {
             dg_office.ItemsSource = officesQuery;
-            //txt_count.Text = officesQuery.Count().ToString();
+          // txt_count.Text = officesQuery.Count().ToString();
         }
         #endregion
 
@@ -760,6 +770,14 @@ motherHint
 
         }
 
+        private void Btn_uploadDocs_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
+
+        private void Btn_exportDocs_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

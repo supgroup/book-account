@@ -2830,4 +2830,46 @@
   <data name="cannotdelete" xml:space="preserve">
     <value>لايمكن حذف هذا السجل</value>
   </data>
+  <data name="docExport" xml:space="preserve">
+    <value>تصدير المستندات</value>
+  </data>
+  <data name="docUpload" xml:space="preserve">
+    <value>رفع المستندات</value>
+  </data>
+  <data name="joinDate" xml:space="preserve">
+    <value>تاريخ الانضمام</value>
+  </data>
+  <data name="joinDateHint" xml:space="preserve">
+    <value>تاريخ الانضمام ...</value>
+  </data>
+  <data name="mobileNum" xml:space="preserve">
+    <value>رقم الجوال</value>
+  </data>
+  <data name="mobileNumHint" xml:space="preserve">
+    <value>رقم الجوال ...</value>
+  </data>
+  <data name="officeInfo" xml:space="preserve">
+    <value>بيانات المكتب</value>
+  </data>
+  <data name="officeName" xml:space="preserve">
+    <value>اسم المكتب</value>
+  </data>
+  <data name="officeNameHint" xml:space="preserve">
+    <value>اسم المكتب ...</value>
+  </data>
+  <data name="offices" xml:space="preserve">
+    <value>المكاتب</value>
+  </data>
+  <data name="passwordSoto" xml:space="preserve">
+    <value>كلمة السر / سوتو</value>
+  </data>
+  <data name="passwordSotoHint" xml:space="preserve">
+    <value>كلمة السر / سوتو ...</value>
+  </data>
+  <data name="passwordSyr" xml:space="preserve">
+    <value>كلمة السر/ سوري</value>
+  </data>
+  <data name="passwordSyrHint" xml:space="preserve">
+    <value>كلمة السر/ سوري ...</value>
+  </data>
 </root>

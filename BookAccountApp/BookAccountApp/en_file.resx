@@ -2845,4 +2845,40 @@ Please add Email in setting</value>
   <data name="cannotdelete" xml:space="preserve">
     <value>Can not delete this record!</value>
   </data>
+  <data name="docExport" xml:space="preserve">
+    <value>Export Documents</value>
+  </data>
+  <data name="docUpload" xml:space="preserve">
+    <value>Upload Documents</value>
+  </data>
+  <data name="joinDate" xml:space="preserve">
+    <value>Join Date</value>
+  </data>
+  <data name="joinDateHint" xml:space="preserve">
+    <value>Join Date...</value>
+  </data>
+  <data name="officeInfo" xml:space="preserve">
+    <value>Office Info</value>
+  </data>
+  <data name="officeName" xml:space="preserve">
+    <value>office Name</value>
+  </data>
+  <data name="officeNameHint" xml:space="preserve">
+    <value>Office Name...</value>
+  </data>
+  <data name="offices" xml:space="preserve">
+    <value>Offices</value>
+  </data>
+  <data name="passwordSoto" xml:space="preserve">
+    <value>Password/Soto</value>
+  </data>
+  <data name="passwordSotoHint" xml:space="preserve">
+    <value>Password/Soto ...</value>
+  </data>
+  <data name="passwordSyr" xml:space="preserve">
+    <value>Password/Sy</value>
+  </data>
+  <data name="passwordSyrHint" xml:space="preserve">
+    <value>Password /Sy ...</value>
+  </data>
 </root>
