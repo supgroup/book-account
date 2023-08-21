@@ -2881,6 +2881,12 @@
   <data name="airlinesFlight" xml:space="preserve">
     <value>شركات الطيران / رحلات</value>
   </data>
+  <data name="duration" xml:space="preserve">
+    <value>المدة</value>
+  </data>
+  <data name="durationHint" xml:space="preserve">
+    <value>المدة ...</value>
+  </data>
   <data name="flight" xml:space="preserve">
     <value>الرحلة</value>
   </data>
@@ -2899,8 +2905,26 @@
   <data name="fromHint" xml:space="preserve">
     <value>من ...</value>
   </data>
+  <data name="operation" xml:space="preserve">
+    <value>العملية</value>
+  </data>
+  <data name="operationInfo" xml:space="preserve">
+    <value>بيانات العملية</value>
+  </data>
+  <data name="operationName" xml:space="preserve">
+    <value>اسم العملية</value>
+  </data>
+  <data name="operationNameHint" xml:space="preserve">
+    <value>اسم العملية ...</value>
+  </data>
   <data name="operations" xml:space="preserve">
     <value>العمليات</value>
+  </data>
+  <data name="opStatement" xml:space="preserve">
+    <value>بيان العملية</value>
+  </data>
+  <data name="opStatementHint" xml:space="preserve">
+    <value>بيان العملية ...</value>
   </data>
   <data name="to" xml:space="preserve">
     <value>الى</value>

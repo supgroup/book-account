@@ -66,7 +66,7 @@ namespace BookAccountApp.View.sectionData
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "name", "lastName" };
+                requiredControlList = new List<string> { "operation" };
 
                 #region translate
                 //if (MainWindow.lang.Equals("en"))
@@ -108,13 +108,11 @@ namespace BookAccountApp.View.sectionData
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            txt_title.Text = MainWindow.resourcemanager.GetString("operations");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_custCode, MainWindow.resourcemanager.GetString("trCodeHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_lastName, MainWindow.resourcemanager.GetString("trLastNameHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_father, MainWindow.resourcemanager.GetString("fatherHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mother, MainWindow.resourcemanager.GetString("motherHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            txt_title.Text = MainWindow.resourcemanager.GetString("operationInfo");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_operation, MainWindow.resourcemanager.GetString("operationNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_opStatement, MainWindow.resourcemanager.GetString("opStatementHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_duration, MainWindow.resourcemanager.GetString("durationHint"));            
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
             //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
 
@@ -122,20 +120,19 @@ namespace BookAccountApp.View.sectionData
             //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
-                        /*
-                        father  
-            fatherHint  	
-            mother  
-            motherHint  
-                */
-            //   operationss
             /*
-            dg_operations.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
-            dg_operations.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
-            dg_operations.Columns[2].Header = MainWindow.resourcemanager.GetString("trLastName");
-            dg_operations.Columns[3].Header = MainWindow.resourcemanager.GetString("father");
-            dg_operations.Columns[4].Header = MainWindow.resourcemanager.GetString("mother");
-            */
+            father  
+fatherHint  	
+mother  
+motherHint  
+    */
+            //   operationss
+           
+            dg_operations.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");        
+            dg_operations.Columns[1].Header = MainWindow.resourcemanager.GetString("operationName");
+            dg_operations.Columns[2].Header = MainWindow.resourcemanager.GetString("opStatement");
+            dg_operations.Columns[3].Header = MainWindow.resourcemanager.GetString("duration");
+          
 
             //dg_operations.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
@@ -162,19 +159,15 @@ namespace BookAccountApp.View.sectionData
                 //tb_lastName.Text = ts.ToString();
 
                 HelpClass.StartAwait(grid_main);
-                /*
+            
                 operations = new Operations();
                 if (HelpClass.validate(requiredControlList, this))
                 {
                     //tb_custCode.Text = await operations.generateCodeNumber("cu");
 
-                    operations.name = tb_name.Text;
-                    operations.lastName = tb_lastName.Text.Trim();
-
-
-
-                    operations.father = tb_father.Text.Trim();
-                    operations.mother = tb_mother.Text;
+                    operations.operation = tb_operation.Text;
+                    operations.opStatement =cb_opStatement.Text;
+                    operations.duration = cb_duration.Text;                   
                     operations.notes = tb_notes.Text;
 
                     operations.createUserId = MainWindow.userLogin.userId;
@@ -194,7 +187,7 @@ namespace BookAccountApp.View.sectionData
                         await Search();
                     }
                 }
-                */
+                
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -208,33 +201,15 @@ namespace BookAccountApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
+              
                 if (operations.operationId > 0)
                 {
                     if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
-                        //operations.custname = tb_custname.Text;
-                        operations.name = tb_name.Text;
-                        operations.lastName = tb_lastName.Text;
-                        operations.father = tb_father.Text;
-                        operations.mother = tb_mother.Text;
+                        operations.operation = tb_operation.Text;
+                        operations.opStatement = cb_opStatement.Text;
+                        operations.duration = cb_duration.Text;
                         operations.notes = tb_notes.Text;
-                        operations.updateUserId = MainWindow.userLogin.userId;
-                        //operations.countryId = Convert.ToInt32(cb_country.SelectedValue);
-                        //operations.email = tb_email.Text;
-                        //operations.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; ;
-                        //if (!tb_phone.Text.Equals(""))
-                        //    operations.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
-                        //if (!tb_fax.Text.Equals(""))
-                        //    operations.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
-                        //if (cb_custlevel.SelectedValue != null)
-                        //    operations.custlevel = cb_custlevel.SelectedValue.ToString();
-                        //operations.company = tb_company.Text.Trim();
-                        //operations.address = tb_address.Text;
-
-                        //operations.createUserId = MainWindow.userLogin.userId;
-
-                        //operations.balance = 0;
 
                         decimal s = await operations.Save(operations);
                         if (s <= 0)
@@ -266,7 +241,7 @@ namespace BookAccountApp.View.sectionData
                 }
                 else
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
-                */
+                 
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -457,19 +432,18 @@ namespace BookAccountApp.View.sectionData
             //search
             if (operationss is null)
                 await RefreshOperationssList();
-            /*
+          
             searchText = tb_search.Text.ToLower();
             operationssQuery = operationss.Where(s =>
             (s.operationId.ToString().Contains(searchText) ||
-            s.name.ToLower().Contains(searchText) ||
-            s.lastName.ToLower().Contains(searchText) ||
-            s.father.ToLower().Contains(searchText)
-            ||
-            s.mother.ToLower().Contains(searchText)
+            s.operation.ToLower().Contains(searchText) ||
+            s.opStatement.ToLower().Contains(searchText) ||
+            s.duration.ToLower().Contains(searchText)
+            
             ));
             //&& s.isActive == tgl_operationsstate
             //);
-            */
+            
             RefreshOperationssView();
         }
         async Task<IEnumerable<Operations>> RefreshOperationssList()
@@ -581,14 +555,14 @@ namespace BookAccountApp.View.sectionData
             ////string secondTitle = "";
             ////string subTitle = "";
             //string Title = "";
-            /*
+           
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
             string addpath;
             bool isArabic = ReportCls.checkLang();
             //if (isArabic)
             //{
-            addpath = @"\Reports\SectionData\Ar\ArOperations.rdlc";
+            addpath = @"\Reports\SectionData\Ar\ArOperation.rdlc";
 
             //}
             //else
@@ -600,14 +574,14 @@ namespace BookAccountApp.View.sectionData
             //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
             //  Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport");
 
-            clsReports.OperationssReport(operationssQuery, rep, reppath, paramarr);
+            clsReports.OperationReport(operationssQuery, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
             rep.SetParameters(paramarr);
 
             rep.Refresh();
-            */
+           
         }
 
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)

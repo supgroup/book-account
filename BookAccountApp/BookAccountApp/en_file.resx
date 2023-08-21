@@ -2890,6 +2890,12 @@ Please add Email in setting</value>
   <data name="airlinesFlight" xml:space="preserve">
     <value>Airlines / Flight</value>
   </data>
+  <data name="duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="durationHint" xml:space="preserve">
+    <value>Duration ...</value>
+  </data>
   <data name="flight" xml:space="preserve">
     <value>Flight</value>
   </data>
@@ -2908,8 +2914,26 @@ Please add Email in setting</value>
   <data name="fromHint" xml:space="preserve">
     <value>From ...</value>
   </data>
+  <data name="operation" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="operationInfo" xml:space="preserve">
+    <value>Operation Info</value>
+  </data>
+  <data name="operationName" xml:space="preserve">
+    <value>Operation Name</value>
+  </data>
+  <data name="operationNameHint" xml:space="preserve">
+    <value>Operation Name ...</value>
+  </data>
   <data name="operations" xml:space="preserve">
     <value>Operations</value>
+  </data>
+  <data name="opStatement" xml:space="preserve">
+    <value>Operation Statement</value>
+  </data>
+  <data name="opStatementHint" xml:space="preserve">
+    <value>Operation Statement ...</value>
   </data>
   <data name="to" xml:space="preserve">
     <value>To</value>

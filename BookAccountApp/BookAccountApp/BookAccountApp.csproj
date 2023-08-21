@@ -471,6 +471,9 @@
     <Content Include="Reports\SectionData\Ar\ArFlight.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\SectionData\Ar\ArOperation.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\logo.png" />
     <Content Include="Thumb\users\tmp.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -670,6 +673,7 @@
     <None Include="Properties\DataSources\AdministratorApp.Properties.Resources.datasource" />
     <None Include="Properties\DataSources\BookAccountApp.ApiClasses.Flights.datasource" />
     <None Include="Properties\DataSources\BookAccountApp.ApiClasses.Office.datasource" />
+    <None Include="Properties\DataSources\BookAccountApp.ApiClasses.Operations.datasource" />
     <None Include="Properties\DataSources\BookAccountApp.ApiClasses.Passengers.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonObjectId.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonReader.datasource" />
