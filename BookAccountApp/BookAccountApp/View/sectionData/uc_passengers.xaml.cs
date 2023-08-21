@@ -123,11 +123,11 @@ namespace BookAccountApp.View.sectionData
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
             /*
-            father  
-fatherHint  	
-mother  
-motherHint  
-*/
+                        father  
+            fatherHint  	
+            mother  
+            motherHint  
+            */
          //   passengers
             dg_passenger.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
             dg_passenger.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
@@ -748,12 +748,12 @@ motherHint
 
         #endregion
 
-        private void Btn_exportData_Click(object sender, RoutedEventArgs e)
+        private void Btn_uploadDocs_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void Btn_importData_Click(object sender, RoutedEventArgs e)
+        private void Btn_exportDocs_Click(object sender, RoutedEventArgs e)
         {
 
         }

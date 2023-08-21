@@ -461,9 +461,9 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="btn_exportData" Grid.Column="0" BorderBrush="{x:Null}" Padding="0" 
+                    <Button x:Name="btn_uploadDocs" Grid.Column="0" BorderBrush="{x:Null}" Padding="0" 
                                   Margin="5 5 2.5 5 " Height="auto" 
-                                Background="{x:Null}" VerticalAlignment="Top" Click="Btn_exportData_Click" >
+                                Background="{x:Null}" VerticalAlignment="Top" Click="Btn_uploadDocs_Click" >
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -472,15 +472,15 @@
                             <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="50" Height="50" FlowDirection="LeftToRight"
                            Data="{StaticResource fileUploadExport}"/>
-                            <TextBlock x:Name="txt_exportDataButton"
-                                    Text="exportData"  Grid.Row="1" 
+                            <TextBlock x:Name="txt_uploadDocsButton"
+                                    Text="uploadDocs"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource SecondColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
                         </Grid>
                     </Button>
                     <Button Grid.Column="1" BorderBrush="{x:Null}" Padding="0" 
-                                Name="btn_importData"  Margin="5 5 2.5 5 " Height="auto" Click="Btn_importData_Click"
+                                Name="btn_exportDocs"  Margin="5 5 2.5 5 " Height="auto" Click="Btn_exportDocs_Click"
                                 Background="{x:Null}" VerticalAlignment="Top" >
                         <Grid>
                             <Grid.RowDefinitions>
@@ -490,8 +490,8 @@
                             <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="50" Height="50" FlowDirection="LeftToRight"
                            Data="{StaticResource fileDownloadImport}"/>
-                            <TextBlock x:Name="txt_importDataButton"
-                                    Text="importData"  Grid.Row="1" 
+                            <TextBlock x:Name="txt_exportDocsButton"
+                                    Text="exportDocs"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource SecondColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
