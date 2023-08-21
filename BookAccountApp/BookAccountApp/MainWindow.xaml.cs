@@ -21,7 +21,7 @@ using WPFTabTip;
 using BookAccountApp.ApiClasses;
 using System.Threading;
 using BookAccountApp.View.sectionData;
-using BookAccountApp.View.sales;
+//using BookAccountApp.View.sales;
 using BookAccountApp.View.settings;
 using System.Windows.Resources;
 using BookAccountApp.View.windows;
@@ -263,7 +263,7 @@ namespace BookAccountApp
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
+        /*
         void ColorButtonRefresh(string str)
         {
             foreach (Button button in FindControls.FindVisualChildren<Button>(this))
@@ -278,6 +278,27 @@ namespace BookAccountApp
                                 button.Background = Application.Current.Resources["MainColor"] as SolidColorBrush;
                             else
                                 button.Background = null;
+
+                        }
+                    }
+                }
+            }
+        }
+        */
+        void ColorBorderRefresh(string str)
+        {
+            foreach (Border border in FindControls.FindVisualChildren<Border>(this))
+            {
+                if (border.Tag != null)
+                {
+                    foreach (var item in menuList)
+                    {
+                        if (item == border.Tag.ToString())
+                        {
+                            if (item == str)
+                                border.Background = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                            else
+                                border.Background = null;
 
                         }
                     }
@@ -398,7 +419,8 @@ namespace BookAccountApp
                 Button button = sender as Button;
                 colorTextRefresh(button.Tag.ToString());
                 ColorIconRefresh(button.Tag.ToString());
-                ColorButtonRefresh(button.Tag.ToString());
+                //ColorButtonRefresh(button.Tag.ToString());
+                ColorBorderRefresh(button.Tag.ToString());
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_applications.Instance);
             }
@@ -431,7 +453,8 @@ namespace BookAccountApp
                 Button button = sender as Button;
                 colorTextRefresh(button.Tag.ToString());
                 ColorIconRefresh(button.Tag.ToString());
-                ColorButtonRefresh(button.Tag.ToString());
+                //ColorButtonRefresh(button.Tag.ToString());
+                ColorBorderRefresh(button.Tag.ToString());
                 grid_main.Children.Clear();
                 //grid_main.Children.Add(uc_sales.Instance);
                 //uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale, null);
@@ -450,7 +473,8 @@ namespace BookAccountApp
                 Button button = sender as Button;
                 colorTextRefresh(button.Tag.ToString());
                 ColorIconRefresh(button.Tag.ToString());
-                ColorButtonRefresh(button.Tag.ToString());
+                //ColorButtonRefresh(button.Tag.ToString());
+                ColorBorderRefresh(button.Tag.ToString());
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_sectionData.Instance);
             }
@@ -467,7 +491,8 @@ namespace BookAccountApp
                 Button button = sender as Button;
                 colorTextRefresh(button.Tag.ToString());
                 ColorIconRefresh(button.Tag.ToString());
-                ColorButtonRefresh(button.Tag.ToString());
+                //ColorButtonRefresh(button.Tag.ToString());
+                ColorBorderRefresh(button.Tag.ToString());
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_reports.Instance);
             }
@@ -483,7 +508,8 @@ namespace BookAccountApp
                 Button button = sender as Button;
                 colorTextRefresh(button.Tag.ToString());
                 ColorIconRefresh(button.Tag.ToString());
-                ColorButtonRefresh(button.Tag.ToString());
+                //ColorButtonRefresh(button.Tag.ToString());
+                ColorBorderRefresh(button.Tag.ToString());
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_settings.Instance);
             }

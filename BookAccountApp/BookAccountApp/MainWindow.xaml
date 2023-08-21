@@ -74,6 +74,7 @@
                     Background="{x:Null}" BorderBrush="{x:Null}"   
                     materialDesign:ShadowAssist.ShadowDepth="Depth0"
                     Padding="0" Click="Btn_bookSales_Click" >
+                        <Border x:Name="brd_bookSales" Tag="bookSales">
                         <Grid Width="200" Height="40" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
@@ -89,6 +90,7 @@
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
                               Grid.Column="1"  Tag="bookSales"     Margin="10,0,0,0"/>
                         </Grid>
+                        </Border>
                     </Button>
                     <Button  Width="200" Height="40" Grid.Row="3"
                              Margin="10 5"
@@ -98,7 +100,9 @@
                     Background="{x:Null}" BorderBrush="{x:Null}"   
                     materialDesign:ShadowAssist.ShadowDepth="Depth0"
                     Padding="0" Click="Btn_accounting_Click" >
-                        <Grid Width="200" Height="40" >
+                        <Border x:Name="brd_accounting" Tag="accounting">
+
+                            <Grid Width="200" Height="40" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -113,6 +117,8 @@
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
                               Grid.Column="1"  Tag="accounting"     Margin="10,0,0,0"/>
                         </Grid>
+
+                        </Border>
                     </Button>
                     <Button  Width="200" Height="40" Grid.Row="4"
                              Margin="10 5"
@@ -122,7 +128,9 @@
                     Background="{x:Null}" BorderBrush="{x:Null}"   
                     materialDesign:ShadowAssist.ShadowDepth="Depth0"
                     Padding="0" Click="Btn_reports_Click" >
-                        <Grid Width="200" Height="40" >
+                        <Border x:Name="brd_reports" Tag="reports">
+
+                            <Grid Width="200" Height="40" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -137,6 +145,8 @@
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
                               Grid.Column="1"  Tag="reports"     Margin="10,0,0,0"/>
                         </Grid>
+
+                        </Border>
                     </Button>
                     <Button  Width="200" Height="40" Grid.Row="5"
                              Margin="10 5"
@@ -146,7 +156,9 @@
                     Background="{StaticResource White}" BorderBrush="{x:Null}"   
                     materialDesign:ShadowAssist.ShadowDepth="Depth0"
                     Padding="0" Click="Btn_sectionData_Click">
-                        <Grid Width="200" Height="40" >
+                        <Border x:Name="brd_sectionData" Tag="sectionData">
+
+                            <Grid Width="200" Height="40" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -161,6 +173,8 @@
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
                               Grid.Column="1"  Tag="sectionData"     Margin="10,0,0,0"/>
                         </Grid>
+
+                        </Border>
                     </Button>
                     <Button  Width="200" Height="40" Grid.Row="6"
                              Margin="10 5"
@@ -170,21 +184,24 @@
                     Background="{x:Null}" BorderBrush="{x:Null}"   
                     materialDesign:ShadowAssist.ShadowDepth="Depth0"
                     Padding="0" Click="Btn_settings_Click" >
-                        <Grid Width="200" Height="40" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Path Fill="{StaticResource LightGrey}" x:Name="path_iconSettings"
+                        <Border x:Name="brd_settings" Tag="settings">
+
+                            <Grid Width="200" Height="40" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Path Fill="{StaticResource LightGrey}" x:Name="path_iconSettings"
                                   Stretch="Fill" 
                               HorizontalAlignment="Left" Grid.Column="0"  
                          VerticalAlignment="Center" Width="20" Height="20" Tag="settings" 
                               Data="{StaticResource settings}" 
                                   Margin="10,0,10,0"/>
-                            <TextBlock Text="settings" Foreground="{StaticResource LightGrey}" x:Name="txt_settings"
+                                <TextBlock Text="settings" Foreground="{StaticResource LightGrey}" x:Name="txt_settings"
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
                               Grid.Column="1"  Tag="settings"     Margin="10,0,0,0"/>
-                        </Grid>
+                            </Grid>
+                        </Border>
                     </Button>
                     
                 </Grid>
