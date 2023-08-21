@@ -181,6 +181,8 @@ passwordSoto
              * */
             //DateFormConv(paramarr);
         }
+
+
         public static string dateFrameConverter(DateTime? date)
         {
             DateTime dateval;
@@ -203,6 +205,32 @@ passwordSoto
             }
 
         }
+
+        public static void FlightReport(IEnumerable<Flights> QueryList, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            List<Flights> Query = JsonConvert.DeserializeObject<List<Flights>>(JsonConvert.SerializeObject(QueryList));
+            //foreach (Office row in Query)
+            //{
+            //    row.strjoinDate = dateFrameConverter(row.joinDate);
+
+            //}
+
+            rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+            //title
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("flights")));
+            //table columns
+            paramarr.Add(new ReportParameter("trNo", MainWindow.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("airline", MainWindow.resourcemanagerreport.GetString("airline")));
+            paramarr.Add(new ReportParameter("flight", MainWindow.resourcemanagerreport.GetString("flight")));
+            paramarr.Add(new ReportParameter("from", MainWindow.resourcemanagerreport.GetString("from")));
+            paramarr.Add(new ReportParameter("to", MainWindow.resourcemanagerreport.GetString("to")));
+      
+         
+        }
+
 
         //public static void CustomersReport(IEnumerable<Customers> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         //{

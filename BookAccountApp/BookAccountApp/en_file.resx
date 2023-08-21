@@ -2881,4 +2881,40 @@ Please add Email in setting</value>
   <data name="passwordSyrHint" xml:space="preserve">
     <value>Password /Sy ...</value>
   </data>
+  <data name="airline" xml:space="preserve">
+    <value>Airline</value>
+  </data>
+  <data name="airlineHint" xml:space="preserve">
+    <value>Airline ...</value>
+  </data>
+  <data name="airlinesFlight" xml:space="preserve">
+    <value>Airlines / Flight</value>
+  </data>
+  <data name="flight" xml:space="preserve">
+    <value>Flight</value>
+  </data>
+  <data name="flightHint" xml:space="preserve">
+    <value>Flight ...</value>
+  </data>
+  <data name="flightInfo" xml:space="preserve">
+    <value>Flight Info</value>
+  </data>
+  <data name="flights" xml:space="preserve">
+    <value>Flights</value>
+  </data>
+  <data name="from" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="fromHint" xml:space="preserve">
+    <value>From ...</value>
+  </data>
+  <data name="operations" xml:space="preserve">
+    <value>Operations</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="toHint" xml:space="preserve">
+    <value>To ...</value>
+  </data>
 </root>

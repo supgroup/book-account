@@ -2872,4 +2872,40 @@
   <data name="passwordSyrHint" xml:space="preserve">
     <value>كلمة السر/ سوري ...</value>
   </data>
+  <data name="airline" xml:space="preserve">
+    <value>شركة الطيران</value>
+  </data>
+  <data name="airlineHint" xml:space="preserve">
+    <value>شركة الطيران ...</value>
+  </data>
+  <data name="airlinesFlight" xml:space="preserve">
+    <value>شركات الطيران / رحلات</value>
+  </data>
+  <data name="flight" xml:space="preserve">
+    <value>الرحلة</value>
+  </data>
+  <data name="flightHint" xml:space="preserve">
+    <value>الرحلة ...</value>
+  </data>
+  <data name="flightInfo" xml:space="preserve">
+    <value>بيانات الرحلة</value>
+  </data>
+  <data name="flights" xml:space="preserve">
+    <value>الرحلات</value>
+  </data>
+  <data name="from" xml:space="preserve">
+    <value>من</value>
+  </data>
+  <data name="fromHint" xml:space="preserve">
+    <value>من ...</value>
+  </data>
+  <data name="operations" xml:space="preserve">
+    <value>العمليات</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>الى</value>
+  </data>
+  <data name="toHint" xml:space="preserve">
+    <value>الى ...</value>
+  </data>
 </root>

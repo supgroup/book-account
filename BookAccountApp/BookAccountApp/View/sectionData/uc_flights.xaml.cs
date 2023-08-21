@@ -66,7 +66,7 @@ namespace BookAccountApp.View.sectionData
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "name", "lastName" };
+                requiredControlList = new List<string> { "airline" };
 
                 #region translate
                 //if (MainWindow.lang.Equals("en"))
@@ -108,13 +108,14 @@ namespace BookAccountApp.View.sectionData
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            txt_title.Text = MainWindow.resourcemanager.GetString("flights");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_custCode, MainWindow.resourcemanager.GetString("trCodeHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_lastName, MainWindow.resourcemanager.GetString("trLastNameHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_father, MainWindow.resourcemanager.GetString("fatherHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mother, MainWindow.resourcemanager.GetString("motherHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            txt_title.Text = MainWindow.resourcemanager.GetString("flightInfo");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_airline, MainWindow.resourcemanager.GetString("airlineHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flight, MainWindow.resourcemanager.GetString("flightHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightFrom ,MainWindow.resourcemanager.GetString("fromHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightTo, MainWindow.resourcemanager.GetString("toHint"));
+            
+           MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
             //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
 
@@ -129,13 +130,13 @@ mother
 motherHint  
     */
             //   flightss
-            /*
+             
             dg_flights.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
-            dg_flights.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
-            dg_flights.Columns[2].Header = MainWindow.resourcemanager.GetString("trLastName");
-            dg_flights.Columns[3].Header = MainWindow.resourcemanager.GetString("father");
-            dg_flights.Columns[4].Header = MainWindow.resourcemanager.GetString("mother");
-            */
+            dg_flights.Columns[1].Header = MainWindow.resourcemanager.GetString("airline");
+            dg_flights.Columns[2].Header = MainWindow.resourcemanager.GetString("flight");
+            dg_flights.Columns[3].Header = MainWindow.resourcemanager.GetString("from");
+            dg_flights.Columns[4].Header = MainWindow.resourcemanager.GetString("to");
+          
 
             //dg_flights.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
@@ -162,19 +163,16 @@ motherHint
                 //tb_lastName.Text = ts.ToString();
 
                 HelpClass.StartAwait(grid_main);
-                /*
+               
                 flights = new Flights();
                 if (HelpClass.validate(requiredControlList, this))
                 {
                     //tb_custCode.Text = await flights.generateCodeNumber("cu");
 
-                    flights.name = tb_name.Text;
-                    flights.lastName = tb_lastName.Text.Trim();
-
-
-
-                    flights.father = tb_father.Text.Trim();
-                    flights.mother = tb_mother.Text;
+                    flights.airline = tb_airline.Text;
+                    flights.flight = cb_flight.Text;
+                    flights.flightFrom = cb_flightFrom.Text.Trim();
+                    flights.flightTo = cb_flightTo.Text;
                     flights.notes = tb_notes.Text;
 
                     flights.createUserId = MainWindow.userLogin.userId;
@@ -194,7 +192,7 @@ motherHint
                         await Search();
                     }
                 }
-                */
+              
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -208,34 +206,16 @@ motherHint
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
+                
                 if (flights.flightId > 0)
                 {
                     if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
-                        //flights.custname = tb_custname.Text;
-                        flights.name = tb_name.Text;
-                        flights.lastName = tb_lastName.Text;
-                        flights.father = tb_father.Text;
-                        flights.mother = tb_mother.Text;
-                        flights.notes = tb_notes.Text;
-                        flights.updateUserId = MainWindow.userLogin.userId;
-                        //flights.countryId = Convert.ToInt32(cb_country.SelectedValue);
-                        //flights.email = tb_email.Text;
-                        //flights.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; ;
-                        //if (!tb_phone.Text.Equals(""))
-                        //    flights.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
-                        //if (!tb_fax.Text.Equals(""))
-                        //    flights.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
-                        //if (cb_custlevel.SelectedValue != null)
-                        //    flights.custlevel = cb_custlevel.SelectedValue.ToString();
-                        //flights.company = tb_company.Text.Trim();
-                        //flights.address = tb_address.Text;
-
-                        //flights.createUserId = MainWindow.userLogin.userId;
-
-                        //flights.balance = 0;
-
+                        flights.airline = tb_airline.Text;
+                    flights.flight = cb_flight.Text;
+                    flights.flightFrom = cb_flightFrom.Text.Trim();
+                    flights.flightTo = cb_flightTo.Text;
+                    flights.notes = tb_notes.Text;
                         decimal s = await flights.Save(flights);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -243,21 +223,7 @@ motherHint
                         {
                             Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
 
-                            //if (isImgPressed)
-                            //{
-                            //    int flightId = (int)s;
-                            //    string b = await flights.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + flightId.ToString()), flightId);
-                            //    flights.image = b;
-                            //    isImgPressed = false;
-                            //    if (!b.Equals(""))
-                            //    {
-                            //        await getImg();
-                            //    }
-                            //    else
-                            //    {
-                            //        HelpClass.clearImg(btn_image);
-                            //    }
-                            //}
+                 
 
                             await RefreshFlightssList();
                             await Search();
@@ -266,7 +232,7 @@ motherHint
                 }
                 else
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
-                */
+               
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -457,19 +423,19 @@ motherHint
             //search
             if (flightss is null)
                 await RefreshFlightssList();
-            /*
+            
             searchText = tb_search.Text.ToLower();
             flightssQuery = flightss.Where(s =>
             (s.flightId.ToString().Contains(searchText) ||
-            s.name.ToLower().Contains(searchText) ||
-            s.lastName.ToLower().Contains(searchText) ||
-            s.father.ToLower().Contains(searchText)
+            s.airline.ToLower().Contains(searchText) ||
+            s.flight.ToLower().Contains(searchText) ||
+            s.flightFrom.ToLower().Contains(searchText)
             ||
-            s.mother.ToLower().Contains(searchText)
+            s.flightTo.ToLower().Contains(searchText)
             ));
             //&& s.isActive == tgl_flightsstate
             //);
-            */
+           
             RefreshFlightssView();
         }
         async Task<IEnumerable<Flights>> RefreshFlightssList()
@@ -581,14 +547,14 @@ motherHint
             ////string secondTitle = "";
             ////string subTitle = "";
             //string Title = "";
-            /*
+      
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
             string addpath;
             bool isArabic = ReportCls.checkLang();
             //if (isArabic)
             //{
-            addpath = @"\Reports\SectionData\Ar\ArFlights.rdlc";
+            addpath = @"\Reports\SectionData\Ar\ArFlight.rdlc";
 
             //}
             //else
@@ -600,14 +566,14 @@ motherHint
             //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
             //  Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport");
 
-            clsReports.FlightssReport(flightssQuery, rep, reppath, paramarr);
+            clsReports.FlightReport(flightssQuery, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
             rep.SetParameters(paramarr);
 
             rep.Refresh();
-            */
+           
         }
 
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
@@ -749,16 +715,7 @@ motherHint
 
         #endregion
 
-        private void Btn_exportData_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Btn_importData_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+    
 
     }
 }
