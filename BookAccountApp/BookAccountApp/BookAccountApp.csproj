@@ -286,9 +286,6 @@
     <Compile Include="View\reports\uc_reports.xaml.cs">
       <DependentUpon>uc_reports.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\sales\uc_payment.xaml.cs">
-      <DependentUpon>uc_payment.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\sectionData\uc_flights.xaml.cs">
       <DependentUpon>uc_flights.xaml</DependentUpon>
     </Compile>
@@ -374,10 +371,6 @@
     <Page Include="View\reports\uc_reports.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\sales\uc_payment.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\sectionData\uc_flights.xaml">
       <SubType>Designer</SubType>
@@ -775,6 +768,7 @@
   <ItemGroup>
     <Folder Include="Reports\Applications\Ar\" />
     <Folder Include="Thumb\customers\" />
+    <Folder Include="View\sales\" />
     <Folder Include="View\settings\emailGeneral\" />
   </ItemGroup>
   <ItemGroup>
