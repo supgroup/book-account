@@ -303,8 +303,14 @@
     <Compile Include="View\applications\us_programs.xaml.cs">
       <DependentUpon>us_programs.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\bookSales\uc_bookSales.xaml.cs">
+      <DependentUpon>uc_bookSales.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\reports\uc_reports.xaml.cs">
       <DependentUpon>uc_reports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\bookSales\uc_salesSyria.xaml.cs">
+      <DependentUpon>uc_salesSyria.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sectionData\uc_flights.xaml.cs">
       <DependentUpon>uc_flights.xaml</DependentUpon>
@@ -341,6 +347,9 @@
     </Compile>
     <Compile Include="View\windows\wd_companyInfo.xaml.cs">
       <DependentUpon>wd_companyInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_flight.xaml.cs">
+      <DependentUpon>wd_flight.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_logIn.xaml.cs">
       <DependentUpon>wd_logIn.xaml</DependentUpon>
@@ -388,9 +397,17 @@
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
+    <Page Include="View\bookSales\uc_bookSales.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\reports\uc_reports.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\bookSales\uc_salesSyria.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\sectionData\uc_flights.xaml">
       <SubType>Designer</SubType>
@@ -439,6 +456,10 @@
     <Page Include="View\windows\wd_companyInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_flight.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_logIn.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -788,7 +809,6 @@
   <ItemGroup>
     <Folder Include="Reports\Applications\Ar\" />
     <Folder Include="Thumb\customers\" />
-    <Folder Include="View\sales\" />
     <Folder Include="View\settings\emailGeneral\" />
   </ItemGroup>
   <ItemGroup>
