@@ -26,6 +26,7 @@ using BookAccountApp.View.settings;
 using System.Windows.Resources;
 using BookAccountApp.View.windows;
 using BookAccountApp.View.reports;
+using BookAccountApp.View.bookSales;
 
 namespace BookAccountApp
 {
@@ -488,7 +489,7 @@ namespace BookAccountApp
                 second = "";
                 setMainPath();
                 grid_main.Children.Clear();
-                grid_main.Children.Add(uc_applications.Instance);
+                grid_main.Children.Add(uc_bookSales.Instance);
             }
             catch (Exception ex)
             {
