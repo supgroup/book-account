@@ -28,16 +28,21 @@ namespace BookAccountApp
         public virtual DbSet<cities> cities { get; set; }
         public virtual DbSet<countriesCodes> countriesCodes { get; set; }
         public virtual DbSet<customers> customers { get; set; }
+        public virtual DbSet<durationsTable> durationsTable { get; set; }
         public virtual DbSet<error> error { get; set; }
+        public virtual DbSet<flights> flights { get; set; }
+        public virtual DbSet<flightTable> flightTable { get; set; }
+        public virtual DbSet<fromTable> fromTable { get; set; }
         public virtual DbSet<office> office { get; set; }
+        public virtual DbSet<operations> operations { get; set; }
+        public virtual DbSet<passengers> passengers { get; set; }
         public virtual DbSet<payOp> payOp { get; set; }
         public virtual DbSet<serviceData> serviceData { get; set; }
         public virtual DbSet<setting> setting { get; set; }
         public virtual DbSet<setValues> setValues { get; set; }
+        public virtual DbSet<statementsTable> statementsTable { get; set; }
+        public virtual DbSet<toTable> toTable { get; set; }
         public virtual DbSet<users> users { get; set; }
         public virtual DbSet<userSetValues> userSetValues { get; set; }
-        public virtual DbSet<flights> flights { get; set; }
-        public virtual DbSet<operations> operations { get; set; }
-        public virtual DbSet<passengers> passengers { get; set; }
     }
 }

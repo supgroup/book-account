@@ -28,7 +28,8 @@ namespace BookAccountApp.ApiClasses
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-
+        public Nullable<int> opStatementId { get; set; }
+        public Nullable<int> durationId { get; set; }
         public bool canDelete { get; set; }
 
 
@@ -52,14 +53,16 @@ namespace BookAccountApp.ApiClasses
                             {
                                 operationId = S.operationId,
                                 operation = S.operation,
-                                opStatement = S.opStatement,
-                                duration = S.duration,
+                                opStatement = S.statementsTable.name==null?"" : S.statementsTable.name,
+                                duration = S.durationsTable.name == null ? "" : S.durationsTable.name,
+
                                 notes = S.notes,
                                 createDate = S.createDate,
                                 updateDate = S.updateDate,
                                 createUserId = S.createUserId,
                                 updateUserId = S.updateUserId,
-
+                                opStatementId=S.opStatementId == null ?0: S.opStatementId,
+                                durationId =S.durationId == null ? 0 : S.durationId,
                                 canDelete = true,
 
                             }).ToList();
@@ -134,8 +137,8 @@ namespace BookAccountApp.ApiClasses
 
                             //tmpObject.operationId = newObject.operationId;
                             tmpObject.operation = newObject.operation;
-                            tmpObject.opStatement = newObject.opStatement;
-                            tmpObject.duration = newObject.duration;
+                            tmpObject.opStatementId = newObject.opStatementId;
+                            tmpObject.durationId = newObject.durationId;
                             tmpObject.notes = newObject.notes;
                           //  tmpObject.createDate = newObject.createDate;
                          //   tmpObject.updateDate = newObject.updateDate;
@@ -177,13 +180,15 @@ namespace BookAccountApp.ApiClasses
                      {
                          operationId = S.operationId,
                          operation = S.operation,
-                         opStatement = S.opStatement,
-                         duration = S.duration,
+                         opStatement = S.statementsTable.name == null ? "" : S.statementsTable.name,
+                         duration = S.durationsTable.name == null ? "" : S.durationsTable.name,
                          notes = S.notes,
                          createDate = S.createDate,
                          updateDate = S.updateDate,
                          createUserId = S.createUserId,
                          updateUserId = S.updateUserId,
+                         opStatementId = S.opStatementId == null ? 0 : S.opStatementId,
+                         durationId = S.durationId == null ? 0 : S.durationId,
 
                      }).FirstOrDefault();
                     return row;

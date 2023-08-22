@@ -29,6 +29,9 @@ namespace BookAccountApp.ApiClasses
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
+        public Nullable<int> flightTableId { get; set; }
+        public Nullable<int> fromTableId { get; set; }
+        public Nullable<int> toTableId { get; set; }
         public bool canDelete { get; set; }
 
 
@@ -52,15 +55,17 @@ namespace BookAccountApp.ApiClasses
                             {
                                 flightId = S.flightId,
                                 airline = S.airline,
-                                flight = S.flight,
-                                flightFrom = S.flightFrom,
-                                flightTo = S.flightTo,
+                                flight = S.flightTable.name==null?"": S.flightTable.name,
+                                flightFrom = S.fromTable.name == null ? "" : S.fromTable.name,
+                                flightTo = S.toTable.name,
                                 notes = S.notes,
                                 createDate = S.createDate,
                                 updateDate = S.updateDate,
                                 createUserId = S.createUserId,
                                 updateUserId = S.updateUserId,
-
+                                flightTableId=S.flightTableId==null?0: S.flightTableId,
+                                fromTableId=S.fromTableId == null ? 0 : S.fromTableId,
+                                toTableId =S.toTableId == null ? 0 : S.toTableId,
 
                                 canDelete = true,
 
@@ -136,9 +141,9 @@ namespace BookAccountApp.ApiClasses
 
                         //    tmpObject.flightId = newObject.flightId;
                             tmpObject.airline = newObject.airline;
-                            tmpObject.flight = newObject.flight;
-                            tmpObject.flightFrom = newObject.flightFrom;
-                            tmpObject.flightTo = newObject.flightTo;
+                            tmpObject.flightTableId = newObject.flightTableId;
+                            tmpObject.fromTableId = newObject.fromTableId;
+                            tmpObject.toTableId = newObject.toTableId;
                             tmpObject.notes = newObject.notes;
                             tmpObject.createDate = newObject.createDate;
                            
@@ -181,14 +186,18 @@ namespace BookAccountApp.ApiClasses
                      {
                          flightId = S.flightId,
                          airline = S.airline,
-                         flight = S.flight,
-                         flightFrom = S.flightFrom,
-                         flightTo = S.flightTo,
+                         flight = S.flightTable.name == null ? "" : S.flightTable.name,
+                         flightFrom = S.fromTable.name == null ? "" : S.fromTable.name,
+                         flightTo = S.toTable.name,
                          notes = S.notes,
                          createDate = S.createDate,
                          updateDate = S.updateDate,
                          createUserId = S.createUserId,
                          updateUserId = S.updateUserId,
+                         flightTableId = S.flightTableId == null ? 0 : S.flightTableId,
+                         fromTableId = S.fromTableId == null ? 0 : S.fromTableId,
+                         toTableId = S.toTableId == null ? 0 : S.toTableId,
+
 
 
                      }).FirstOrDefault();

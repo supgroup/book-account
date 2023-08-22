@@ -22,15 +22,18 @@ namespace BookAccountApp
     
         public int flightId { get; set; }
         public string airline { get; set; }
-        public string flight { get; set; }
-        public string flightFrom { get; set; }
-        public string flightTo { get; set; }
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
+        public Nullable<int> flightTableId { get; set; }
+        public Nullable<int> fromTableId { get; set; }
+        public Nullable<int> toTableId { get; set; }
     
+        public virtual flightTable flightTable { get; set; }
+        public virtual fromTable fromTable { get; set; }
+        public virtual toTable toTable { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<serviceData> serviceData { get; set; }
     }

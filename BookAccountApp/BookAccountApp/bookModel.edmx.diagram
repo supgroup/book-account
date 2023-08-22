@@ -4,43 +4,53 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3b8cbab30b21443fbea3587e6cbdb055" Name="Diagram1">
-        <EntityTypeShape EntityType="bookModel.cities" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookModel.countriesCodes" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookModel.customers" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookModel.error" Width="1.5" PointX="5.25" PointY="16" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookModel.office" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookModel.payOp" Width="1.5" PointX="7.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookModel.serviceData" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="3909f816cb544a05a7962d729d4c6160" Name="Diagram1">
+        <EntityTypeShape EntityType="bookModel.cities" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookModel.countriesCodes" Width="1.5" PointX="0.75" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookModel.customers" Width="1.5" PointX="8.25" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookModel.durationsTable" Width="1.5" PointX="6" PointY="29.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookModel.error" Width="1.5" PointX="5.25" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookModel.flights" Width="1.5" PointX="8.25" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookModel.flightTable" Width="1.5" PointX="6" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookModel.fromTable" Width="1.5" PointX="6" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookModel.office" Width="1.5" PointX="5.25" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookModel.operations" Width="1.5" PointX="8.25" PointY="30.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookModel.passengers" Width="1.5" PointX="8.25" PointY="34.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookModel.payOp" Width="1.5" PointX="7.5" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookModel.serviceData" Width="1.5" PointX="10.5" PointY="18.875" IsExpanded="true" />
         <EntityTypeShape EntityType="bookModel.setting" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="bookModel.setValues" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="bookModel.users" Width="1.5" PointX="3" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookModel.statementsTable" Width="1.5" PointX="6" PointY="32.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookModel.toTable" Width="1.5" PointX="6" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookModel.users" Width="1.5" PointX="3" PointY="18.5" IsExpanded="true" />
         <EntityTypeShape EntityType="bookModel.userSetValues" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="bookModel.FK_cities_countriesCodes" ManuallyRouted="false" />
         <AssociationConnector Association="bookModel.FK_customers_countriesCodes" ManuallyRouted="false" />
         <AssociationConnector Association="bookModel.FK_users_countriesCodes" ManuallyRouted="false" />
         <AssociationConnector Association="bookModel.FK_customers_users" ManuallyRouted="false" />
         <AssociationConnector Association="bookModel.FK_customers_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_operations_durationsTable" ManuallyRouted="false" />
         <AssociationConnector Association="bookModel.FK_error_users" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_flights_flightTable" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_flights_fromTable" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_flights_toTable" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_serviceData_flights" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_office_users" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_office_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_payOp_office" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_serviceData_office" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_operations_statementsTable" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_serviceData_operations" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_payOp_passengers" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_serviceData_passengers" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_payOp_serviceData" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_payOp_users" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_payOp_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_payOp_users2" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_serviceData_users" ManuallyRouted="false" />
+        <AssociationConnector Association="bookModel.FK_serviceData_users1" ManuallyRouted="false" />
         <AssociationConnector Association="bookModel.FK_setValues_setting" ManuallyRouted="false" />
         <AssociationConnector Association="bookModel.FK_userSetValues_setValues" ManuallyRouted="false" />
-        <AssociationConnector Association="bookModel.FK_office_users" />
-        <AssociationConnector Association="bookModel.FK_office_users1" />
-        <AssociationConnector Association="bookModel.FK_serviceData_office" />
-        <AssociationConnector Association="bookModel.FK_payOp_serviceData" />
-        <AssociationConnector Association="bookModel.FK_payOp_users" />
-        <AssociationConnector Association="bookModel.FK_payOp_users1" />
-        <AssociationConnector Association="bookModel.FK_serviceData_users" />
-        <AssociationConnector Association="bookModel.FK_serviceData_users1" />
-        <EntityTypeShape EntityType="bookModel.flights" Width="1.5" PointX="7.5" PointY="15.875" />
-        <EntityTypeShape EntityType="bookModel.operations" Width="1.5" PointX="7.5" PointY="12.25" />
-        <EntityTypeShape EntityType="bookModel.passengers" Width="1.5" PointX="10.375" PointY="10" />
-        <AssociationConnector Association="bookModel.FK_serviceData_flights" />
-        <AssociationConnector Association="bookModel.FK_payOp_office" />
-        <AssociationConnector Association="bookModel.FK_serviceData_operations" />
-        <AssociationConnector Association="bookModel.FK_payOp_passengers" />
-        <AssociationConnector Association="bookModel.FK_serviceData_passengers" />
-        <AssociationConnector Association="bookModel.FK_payOp_users2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -17,8 +17,8 @@ namespace BookAccountApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public office()
         {
-            this.serviceData = new HashSet<serviceData>();
             this.payOp = new HashSet<payOp>();
+            this.serviceData = new HashSet<serviceData>();
         }
     
         public int officeId { get; set; }
@@ -39,8 +39,8 @@ namespace BookAccountApp
         public virtual users users { get; set; }
         public virtual users users1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<serviceData> serviceData { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<payOp> payOp { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<serviceData> serviceData { get; set; }
     }
 }

@@ -12,27 +12,21 @@ namespace BookAccountApp
     using System;
     using System.Collections.Generic;
     
-    public partial class operations
+    public partial class durationsTable
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public operations()
+        public durationsTable()
         {
-            this.serviceData = new HashSet<serviceData>();
+            this.operations = new HashSet<operations>();
         }
     
-        public int operationId { get; set; }
-        public string operation { get; set; }
+        public int durationId { get; set; }
+        public string name { get; set; }
+        public Nullable<bool> isActive { get; set; }
         public string notes { get; set; }
-        public Nullable<System.DateTime> createDate { get; set; }
-        public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> opStatementId { get; set; }
-        public Nullable<int> durationId { get; set; }
-    
-        public virtual durationsTable durationsTable { get; set; }
-        public virtual statementsTable statementsTable { get; set; }
+        public bool canDelete { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<serviceData> serviceData { get; set; }
+        public virtual ICollection<operations> operations { get; set; }
     }
 }

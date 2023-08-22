@@ -204,8 +204,13 @@
     </Compile>
     <Compile Include="Classes\ApiClasses\City.cs" />
     <Compile Include="Classes\ApiClasses\Country.cs" />
+    <Compile Include="Classes\ApiClasses\FlightTable.cs" />
+    <Compile Include="Classes\ApiClasses\FromTable.cs" />
+    <Compile Include="Classes\ApiClasses\StatementsTable.cs" />
+    <Compile Include="Classes\ApiClasses\ToTable.cs" />
     <Compile Include="Classes\ApiClasses\ErrorClass.cs" />
     <Compile Include="Classes\ApiClasses\Operations.cs" />
+    <Compile Include="Classes\ApiClasses\DurationsTable.cs" />
     <Compile Include="Classes\ApiClasses\Passengers.cs" />
     <Compile Include="Classes\ApiClasses\Flights.cs" />
     <Compile Include="Classes\ApiClasses\PayOp.cs" />
@@ -244,10 +249,19 @@
     <Compile Include="customers.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="durationsTable.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="error.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="flights.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="flightTable.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fromTable.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="office.cs">
@@ -269,6 +283,12 @@
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="setValues.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="statementsTable.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="toTable.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="users.cs">
@@ -455,6 +475,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="bookModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>bookModel.edmx</DependentUpon>
+      <LastGenOutput>bookModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="bookModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>bookModel.edmx</DependentUpon>
+      <LastGenOutput>bookModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Reports\SectionData\Ar\ArPassenger.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -472,16 +502,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="pic\supcloudsLogo.ico" />
-    <Content Include="bookModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>bookModel.edmx</DependentUpon>
-      <LastGenOutput>bookModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="bookModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>bookModel.edmx</DependentUpon>
-      <LastGenOutput>bookModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Reports\Sale\Payments\Ar\ArPayDetail.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

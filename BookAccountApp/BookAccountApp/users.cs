@@ -24,9 +24,9 @@ namespace BookAccountApp
             this.office1 = new HashSet<office>();
             this.payOp = new HashSet<payOp>();
             this.payOp1 = new HashSet<payOp>();
+            this.payOp2 = new HashSet<payOp>();
             this.serviceData = new HashSet<serviceData>();
             this.serviceData1 = new HashSet<serviceData>();
-            this.payOp2 = new HashSet<payOp>();
         }
     
         public int userId { get; set; }
@@ -74,10 +74,10 @@ namespace BookAccountApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<payOp> payOp1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<payOp> payOp2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<serviceData> serviceData { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<serviceData> serviceData1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<payOp> payOp2 { get; set; }
     }
 }

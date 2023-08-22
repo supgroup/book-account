@@ -78,7 +78,7 @@ namespace BookAccountApp.ApiClasses
                                 type = S.type,
                                 passenger = P.name+" "+P.lastName,
                                 ticketNum = S.ticketNum,
-                                airline = F.airline+"/"+F.flight,
+                                 airline = F.airline+"/"+F.flightTable.name,
                                 officeId = S.officeId,
                                 serviceDate = S.serviceDate,
                                 pnr = S.pnr,

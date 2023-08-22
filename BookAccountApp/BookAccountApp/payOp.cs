@@ -31,11 +31,11 @@ namespace BookAccountApp
         public Nullable<int> passengerId { get; set; }
         public Nullable<int> userId { get; set; }
     
+        public virtual office office { get; set; }
+        public virtual passengers passengers { get; set; }
         public virtual serviceData serviceData { get; set; }
         public virtual users users { get; set; }
         public virtual users users1 { get; set; }
-        public virtual office office { get; set; }
-        public virtual passengers passengers { get; set; }
         public virtual users users2 { get; set; }
     }
 }
