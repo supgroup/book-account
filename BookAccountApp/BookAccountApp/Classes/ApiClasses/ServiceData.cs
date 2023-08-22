@@ -46,6 +46,7 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> updateUserId { get; set; }
         public Nullable<int> passengerId { get; set; }
         public Nullable<int> flightId { get; set; }
+        public string officeName  { get; set; }
         public Nullable<int> operationId { get; set; }
         public bool canDelete { get; set; }
 
@@ -64,14 +65,20 @@ namespace BookAccountApp.ApiClasses
                     using (bookdbEntities entity = new bookdbEntities())
                     {
                     List = (from S in entity.serviceData
+                            join fl in entity.flights on S.flightId equals fl.flightId into JFL
+                            join of in entity.office on S.officeId equals of.officeId into JOF
+                            join ps in entity.passengers on S.passengerId equals ps.passengerId into JP
+                            from F in JFL.DefaultIfEmpty()
+                            from OFF in JOF.DefaultIfEmpty()
+                            from P in JP.DefaultIfEmpty()
                             select new ServiceData()
                             {
                                 serviceId = S.serviceId,
                                 serviceNum = S.serviceNum,
                                 type = S.type,
-                                passenger = S.passenger,
+                                passenger = P.name+" "+P.lastName,
                                 ticketNum = S.ticketNum,
-                                airline = S.airline,
+                                airline = F.airline+"/"+F.flight,
                                 officeId = S.officeId,
                                 serviceDate = S.serviceDate,
                                 pnr = S.pnr,
@@ -94,7 +101,7 @@ namespace BookAccountApp.ApiClasses
                                 passengerId = S.passengerId,
                                 flightId = S.flightId,
                                 operationId = S.operationId,
-
+                               officeName=OFF.name,
                                 canDelete = true,
                                       
                             }).ToList();
