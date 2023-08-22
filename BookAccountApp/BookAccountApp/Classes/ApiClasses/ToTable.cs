@@ -48,8 +48,6 @@ namespace BookAccountApp.ApiClasses
                                 name = S.name,
                                 isActive = S.isActive,
                                 notes = S.notes,
-
-
                                 canDelete = true,
 
                             }).ToList();

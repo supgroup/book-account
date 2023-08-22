@@ -2932,4 +2932,7 @@
   <data name="toHint" xml:space="preserve">
     <value>الى ...</value>
   </data>
+  <data name="generalSettings" xml:space="preserve">
+    <value>اعدادات عامة</value>
+  </data>
 </root>

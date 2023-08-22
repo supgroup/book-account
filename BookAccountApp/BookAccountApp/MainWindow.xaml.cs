@@ -104,7 +104,7 @@ namespace BookAccountApp
             txt_accounting.Text = resourcemanager.GetString("accounting");
             txt_reports.Text = resourcemanager.GetString("trReports");
             txt_sectionData.Text = resourcemanager.GetString("trSectionData");
-            txt_settings.Text = resourcemanager.GetString("trSettings");
+            txt_settings.Text = resourcemanager.GetString("generalSettings");
 
             mi_changePassword.Header = resourcemanager.GetString("trChangePassword");
             BTN_logOut.Header = resourcemanager.GetString("trLogOut");
@@ -155,6 +155,69 @@ namespace BookAccountApp
             }
             catch (Exception ex) { }
 
+        }
+        public string first, second;
+        public void setMainPath()
+        {
+            #region first
+            if (!string.IsNullOrWhiteSpace(first))
+            {
+                switch (first)
+                {
+                    case "bookSales":
+                        txt_firstPath.Text = resourcemanager.GetString("book_sales");
+                        break;
+                    case "accounting":
+                        txt_firstPath.Text = resourcemanager.GetString("accounting");
+                        break;
+                    case "reports":
+                        txt_firstPath.Text = resourcemanager.GetString("trReports");
+                        break;
+                    case "sectionData":
+                        txt_firstPath.Text = resourcemanager.GetString("trSectionData");
+                        break;
+                    case "settings":
+                        txt_firstPath.Text = resourcemanager.GetString("generalSettings");
+                        break;
+
+
+                    default:
+                        txt_firstPath.Text = "";
+                        break;
+                }
+            }
+            #endregion
+
+            #region second
+            if (!string.IsNullOrWhiteSpace(second))
+            {
+                switch (second)
+                {
+                    //passengers office flights operations
+                    case "passengers":
+                        txt_secondPath.Text = ">" + resourcemanager.GetString("passengers");
+                        break;
+                    case "office":
+                        txt_secondPath.Text = ">" + resourcemanager.GetString("trOffices");
+                        break;
+                    case "flights":
+                        txt_secondPath.Text = ">" + resourcemanager.GetString("flights");
+                        break;
+                    case "operations":
+                        txt_secondPath.Text = ">" + resourcemanager.GetString("operations");
+                        break;
+
+
+                    default:
+                        txt_secondPath.Text = "";
+                        break;
+                }
+            }
+            else
+            {
+                txt_secondPath.Text = "";
+            }
+            #endregion
         }
         async Task loading_getUserPersonalInfo()
         {
@@ -421,6 +484,9 @@ namespace BookAccountApp
                 ColorIconRefresh(button.Tag.ToString());
                 //ColorButtonRefresh(button.Tag.ToString());
                 ColorBorderRefresh(button.Tag.ToString());
+                first = button.Tag.ToString();
+                second = "";
+                setMainPath();
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_applications.Instance);
             }
@@ -455,6 +521,9 @@ namespace BookAccountApp
                 ColorIconRefresh(button.Tag.ToString());
                 //ColorButtonRefresh(button.Tag.ToString());
                 ColorBorderRefresh(button.Tag.ToString());
+                first = button.Tag.ToString();
+                second = "";
+                setMainPath();
                 grid_main.Children.Clear();
                 //grid_main.Children.Add(uc_sales.Instance);
                 //uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale, null);
@@ -475,6 +544,9 @@ namespace BookAccountApp
                 ColorIconRefresh(button.Tag.ToString());
                 //ColorButtonRefresh(button.Tag.ToString());
                 ColorBorderRefresh(button.Tag.ToString());
+                first = button.Tag.ToString();
+                second = "";
+                setMainPath();
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_sectionData.Instance);
             }
@@ -493,6 +565,9 @@ namespace BookAccountApp
                 ColorIconRefresh(button.Tag.ToString());
                 //ColorButtonRefresh(button.Tag.ToString());
                 ColorBorderRefresh(button.Tag.ToString());
+                first = button.Tag.ToString();
+                second = "";
+                setMainPath();
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_reports.Instance);
             }
@@ -510,6 +585,9 @@ namespace BookAccountApp
                 ColorIconRefresh(button.Tag.ToString());
                 //ColorButtonRefresh(button.Tag.ToString());
                 ColorBorderRefresh(button.Tag.ToString());
+                first = button.Tag.ToString();
+                second = "";
+                setMainPath();
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_settings.Instance);
             }

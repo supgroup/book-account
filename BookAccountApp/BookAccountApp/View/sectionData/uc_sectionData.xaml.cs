@@ -102,20 +102,20 @@ namespace BookAccountApp.View.sectionData
             }
         }
        
-        private void Btn_users_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Button button = sender as Button;
-                colorButtonRefreash(button.Tag.ToString());
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_users.Instance);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+        //private void Btn_users_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        Button button = sender as Button;
+        //        colorButtonRefreash(button.Tag.ToString());
+        //        grid_main.Children.Clear();
+        //        grid_main.Children.Add(uc_users.Instance);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
 
         private void Btn_agents_Click(object sender, RoutedEventArgs e)
         {
@@ -152,6 +152,8 @@ namespace BookAccountApp.View.sectionData
             {
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
+                MainWindow.mainWindow.second = button.Tag.ToString();
+                MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_passengers.Instance);
             }
@@ -166,6 +168,8 @@ namespace BookAccountApp.View.sectionData
             {
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
+                MainWindow.mainWindow.second = button.Tag.ToString();
+                MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_office.Instance);
             }
@@ -181,6 +185,8 @@ namespace BookAccountApp.View.sectionData
             {
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
+                MainWindow.mainWindow.second = button.Tag.ToString();
+                MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_flights.Instance);
             }
@@ -196,6 +202,8 @@ namespace BookAccountApp.View.sectionData
             {
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
+                MainWindow.mainWindow.second = button.Tag.ToString();
+                MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_operations.Instance);
             }
