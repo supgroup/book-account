@@ -656,8 +656,66 @@ namespace BookAccountApp.Classes
             return value;
         }
         #endregion
-        #region email
+        static FlightTable FlightTableModel = new FlightTable();
+        static IEnumerable<FlightTable> FlightTableList;
+        static public async Task fillFlightTable(ComboBox combo)
+        {
+            FlightTableList = await FlightTableModel.GetAll();
+            combo.ItemsSource = FlightTableList;
+            combo.SelectedValuePath = "flightTableId";
+            combo.DisplayMemberPath = "name";
+            combo.SelectedIndex = -1; 
+ 
 
-        #endregion
+        }
+    
+        static FromTable FromTableModel = new FromTable();
+        static IEnumerable<FromTable> FromTableList;
+        static public async Task fillFromTable(ComboBox combo)
+        {
+            FromTableList = await FromTableModel.GetAll();
+            combo.ItemsSource = FromTableList;
+            combo.SelectedValuePath = "fromTableId";
+            combo.DisplayMemberPath = "name";
+            combo.SelectedIndex = -1;
+
+
+        }
+        static ToTable ToTableModel = new ToTable();
+        static IEnumerable<ToTable> ToTableList;
+        static public async Task fillToTable(ComboBox combo)
+        {
+            ToTableList = await ToTableModel.GetAll();
+            combo.ItemsSource = ToTableList;
+            combo.SelectedValuePath = "toTableId";
+            combo.DisplayMemberPath = "name";
+            combo.SelectedIndex = -1;
+
+
+        }
+        static DurationsTable DurationsTableModel = new DurationsTable();
+        static IEnumerable<DurationsTable> DurationsTableList;
+        static public async Task fillDurationsTable(ComboBox combo)
+        {
+            DurationsTableList = await DurationsTableModel.GetAll();
+            combo.ItemsSource = DurationsTableList;
+            combo.SelectedValuePath = "durationId";
+            combo.DisplayMemberPath = "name";
+            combo.SelectedIndex = -1;
+
+
+        }
+        static StatementsTable StatementsTableModel = new StatementsTable();
+        static IEnumerable<StatementsTable> StatementsTableList;
+        static public async Task fillStatementsTable(ComboBox combo)
+        {
+            StatementsTableList = await StatementsTableModel.GetAll();
+            combo.ItemsSource = StatementsTableList;
+            combo.SelectedValuePath = "opStatementId";
+            combo.DisplayMemberPath = "name";
+            combo.SelectedIndex = -1;
+
+
+        }
     }
 }

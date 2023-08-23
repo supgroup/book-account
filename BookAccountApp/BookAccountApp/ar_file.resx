@@ -2935,4 +2935,7 @@
   <data name="generalSettings" xml:space="preserve">
     <value>اعدادات عامة</value>
   </data>
+  <data name="trErrorDuplicateNameToolTip" xml:space="preserve">
+    <value>الاسم محجوز مسبقاً</value>
+  </data>
 </root>

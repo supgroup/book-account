@@ -2944,4 +2944,7 @@ Please add Email in setting</value>
   <data name="generalSettings" xml:space="preserve">
     <value>General Settings</value>
   </data>
+  <data name="trErrorDuplicateNameToolTip" xml:space="preserve">
+    <value>The name  is already exist</value>
+  </data>
 </root>

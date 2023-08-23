@@ -80,8 +80,9 @@ namespace BookAccountApp.View.sectionData
                 //    grid_main.FlowDirection = FlowDirection.RightToLeft;
                 //}
                 translate();
-                #endregion
 
+                #endregion
+                await fillcombos();
                 //await FillCombo.fillCountries(cb_areaMobile);
                 //await FillCombo.fillCountries(cb_areaPhone);
                 //await FillCombo.fillCountries(cb_areaFax);
@@ -152,6 +153,7 @@ motherHint
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
 
         }
+
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//add
@@ -223,8 +225,6 @@ motherHint
                         {
                             Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
 
-                 
-
                             await RefreshFlightssList();
                             await Search();
                         }
@@ -271,21 +271,21 @@ motherHint
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async Task activate()
-        {//activate
-            /*
-            flights.isActive = 1;
-            decimal s = await flights.Save(flights);
-            if (s <= 0)
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-            else
-            {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
-                await RefreshFlightssList();
-                await Search();
-            }
-            */
-        }
+        //private async Task activate()
+        //{//activate
+        //    /*
+        //    flights.isActive = 1;
+        //    decimal s = await flights.Save(flights);
+        //    if (s <= 0)
+        //        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+        //    else
+        //    {
+        //        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
+        //        await RefreshFlightssList();
+        //        await Search();
+        //    }
+        //    */
+        //}
         #endregion
         #region events
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
@@ -339,12 +339,13 @@ motherHint
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_clear_Click(object sender, RoutedEventArgs e)
+        private async void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
                 Clear();
+                await fillcombos();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -533,7 +534,12 @@ motherHint
             // Collect all generations of memory.
             GC.Collect();
         }
-
+        public async Task fillcombos()
+        {
+            await FillCombo.fillFlightTable(cb_flight);
+            await FillCombo.fillFromTable(cb_flightFrom);
+            await FillCombo.fillToTable(cb_flightTo);
+        }
         #region reports
 
         ReportCls reportclass = new ReportCls();
@@ -719,36 +725,36 @@ motherHint
 
         private void Btn_addFlight_Click(object sender, RoutedEventArgs e)
         {
-            /*
+            
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
                 Window.GetWindow(this).Opacity = 0.2;
-                wd_updateVendor w = new wd_updateVendor();
-                //// pass agent id to update windows
-                w.agent.agentId = 0;
-                w.type = "c";
+                wd_flight w = new wd_flight();
+
+
+                //w.ShowDialog();
+                //if (w.isOk == true)
+                //{
+                //    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                //    await FillCombo.RefreshCustomers();
+                //    await RefrishCustomers();
+                //}
                 w.ShowDialog();
-                if (w.isOk == true)
-                {
-                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                    await FillCombo.RefreshCustomers();
-                    await RefrishCustomers();
-                }
                 Window.GetWindow(this).Opacity = 1;
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 Window.GetWindow(this).Opacity = 1;
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
-            */
+            
         }
 
         private void Btn_addFlightFrom_Click(object sender, RoutedEventArgs e)
