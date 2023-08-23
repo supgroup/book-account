@@ -351,6 +351,9 @@
     <Compile Include="View\windows\wd_flight.xaml.cs">
       <DependentUpon>wd_flight.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_fromTable.xaml.cs">
+      <DependentUpon>wd_fromTable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_logIn.xaml.cs">
       <DependentUpon>wd_logIn.xaml</DependentUpon>
     </Compile>
@@ -365,6 +368,9 @@
     </Compile>
     <Compile Include="View\windows\wd_saleNote.xaml.cs">
       <DependentUpon>wd_saleNote.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_toTable.xaml.cs">
+      <DependentUpon>wd_toTable.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -461,6 +467,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\windows\wd_fromTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\windows\wd_logIn.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -478,6 +488,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_saleNote.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_toTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
