@@ -722,7 +722,7 @@ namespace BookAccountApp.Classes
         static public async Task fillPassengers(ComboBox combo)
         {
             PassengersList = await PassengerModel.GetAll();
-            combo.ItemsSource = FlightTableList;
+            combo.ItemsSource = PassengersList;
             combo.SelectedValuePath = "passengerId";
             combo.DisplayMemberPath = "name";
             combo.SelectedIndex = -1;
@@ -736,7 +736,7 @@ namespace BookAccountApp.Classes
             FlightsList = await FlightsModel.GetAll();
             combo.ItemsSource = FlightsList;
             combo.SelectedValuePath = "flightId";
-            combo.DisplayMemberPath = "flight";
+            combo.DisplayMemberPath = "airline";
             combo.SelectedIndex = -1;
 
 

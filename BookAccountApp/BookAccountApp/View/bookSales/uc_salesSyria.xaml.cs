@@ -89,9 +89,10 @@ namespace BookAccountApp.View.sales
                 //FillCombo.fillAgentLevel(cb_custlevel);
 
                 Keyboard.Focus(cb_passenger);
-              await  fillcombos();
+             
                 await RefreshServiceDatasList();
                 await Search();
+                await fillcombos();
                 Clear();
 
                 HelpClass.EndAwait(grid_main);
@@ -222,33 +223,37 @@ trDateHint
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
-                if (serviceData.flightId > 0)
+                if (serviceData.serviceId>0) { 
+                    if (HelpClass.validate(requiredControlList, this))
                 {
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                    //tb_custCode.Text = await serviceData.generateCodeNumber("cu");
+
+                    serviceData.passengerId = Convert.ToInt32(cb_passenger.SelectedValue); 
+                    serviceData.ticketNum = tb_ticketNum.Text;
+                    serviceData.flightId = Convert.ToInt32(cb_airline.SelectedValue);
+                    serviceData.officeId = Convert.ToInt32(cb_office.SelectedValue);
+                    serviceData.serviceDate = dp_serviceDate.SelectedDate;
+                    serviceData.total = Convert.ToDecimal(tb_total.Text);
+                  serviceData.notes = tb_notes.Text;
+
+                    serviceData.createUserId = MainWindow.userLogin.userId;
+                    serviceData.updateUserId = MainWindow.userLogin.userId;
+
+
+                    decimal s = await serviceData.Save(serviceData);
+                    if (s <= 0)
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    else
                     {
-                        serviceData.airline = tb_airline.Text;
-                        serviceData.flight = cb_flight.Text;
-                        serviceData.flightFrom = cb_flightFrom.Text.Trim();
-                        serviceData.flightTo = cb_flightTo.Text;
-                        serviceData.notes = tb_notes.Text;
-                        decimal s = await serviceData.Save(serviceData);
-                        if (s <= 0)
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                        else
-                        {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
 
-
-                            await RefreshServiceDatasList();
-                            await Search();
-                        }
+                        Clear();
+                        await RefreshServiceDatasList();
+                        await Search();
                     }
                 }
-                else
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
-                */
+                }
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -379,7 +384,7 @@ trDateHint
                 HelpClass.StartAwait(grid_main);
 
                 //selection
-                /*
+               
                 if (dg_serviceData.SelectedIndex != -1)
                 {
                     serviceData = dg_serviceData.SelectedItem as ServiceData;
@@ -387,7 +392,9 @@ trDateHint
                     if (serviceData != null)
                     {
                         //tb_custCode.Text = serviceData.custCode;
-                        //cb_country.SelectedValue = serviceData.countryId;
+                         cb_passenger.SelectedValue = serviceData.passengerId;
+                        cb_airline.SelectedValue = serviceData.flightId;
+                        cb_office.SelectedValue = serviceData.officeId;
                         this.DataContext = serviceData;
                         //await getImg();
                         #region delete
@@ -407,7 +414,7 @@ trDateHint
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
-                */
+                 
                 //p_error_email.Visibility = Visibility.Collapsed;
 
                 HelpClass.EndAwait(grid_main);
@@ -443,19 +450,20 @@ trDateHint
             //search
             if (serviceDatas is null)
                 await RefreshServiceDatasList();
-            /*
+          
             searchText = tb_search.Text.ToLower();
             serviceDatasQuery = serviceDatas.Where(s =>
-            (s.flightId.ToString().Contains(searchText) ||
+            (s.serviceId.ToString().Contains(searchText) ||
             s.airline.ToLower().Contains(searchText) ||
-            s.flight.ToLower().Contains(searchText) ||
-            s.flightFrom.ToLower().Contains(searchText)
+            s.passenger.ToLower().Contains(searchText) ||
+             s.ticketNum.ToLower().Contains(searchText) ||
+            s.officeName.ToLower().Contains(searchText)
             ||
-            s.flightTo.ToLower().Contains(searchText)
-            ));
-            //&& s.isActive == tgl_serviceDatastate
+            s.total.ToString().Contains(searchText)
+            ) );
+          
             //);
-            */
+          
             RefreshServiceDatasView();
         }
         async Task<IEnumerable<ServiceData>> RefreshServiceDatasList()
@@ -467,7 +475,7 @@ trDateHint
         {
 
             dg_serviceData.ItemsSource = serviceDatasQuery;
-            //txt_count.Text = serviceDatasQuery.Count().ToString();
+           // txt_count.Text = serviceDatasQuery.Count().ToString();
         }
         public async Task fillcombos()
         {
