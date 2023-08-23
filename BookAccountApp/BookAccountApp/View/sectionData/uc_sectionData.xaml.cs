@@ -44,7 +44,7 @@ namespace BookAccountApp.View.sectionData
             {
                 HelpClass.StartAwait(grid_mainGrid);
 
-                menuList = new List<string> { "passengers", "agents", };
+                menuList = new List<string> { "passengers", "office", "flights", "operations", };
 
                 #region translate
                 //if (MainWindow.lang.Equals("en"))
