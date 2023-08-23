@@ -723,7 +723,7 @@ motherHint
 
         #endregion
 
-        private void Btn_addFlight_Click(object sender, RoutedEventArgs e)
+        private async void Btn_addFlight_Click(object sender, RoutedEventArgs e)
         {
             
             try
@@ -732,16 +732,8 @@ motherHint
                     HelpClass.StartAwait(grid_main);
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_flight w = new wd_flight();
-
-
-                //w.ShowDialog();
-                //if (w.isOk == true)
-                //{
-                //    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                //    await FillCombo.RefreshCustomers();
-                //    await RefrishCustomers();
-                //}
                 w.ShowDialog();
+                await FillCombo.fillFlightTable(cb_flight);
                 Window.GetWindow(this).Opacity = 1;
 
                 if (sender != null)
@@ -757,14 +749,54 @@ motherHint
             
         }
 
-        private void Btn_addFlightFrom_Click(object sender, RoutedEventArgs e)
+        private async void Btn_addFlightFrom_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_fromTable w = new wd_fromTable();
+                w.ShowDialog();
+                // naji - change this:
+                //await FillCombo.fillFlightTable(cb_flight);
+                Window.GetWindow(this).Opacity = 1;
 
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
-        private void Btn_addFlightTo_Click(object sender, RoutedEventArgs e)
+        private async void Btn_addFlightTo_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_toTable w = new wd_toTable();
+                w.ShowDialog();
+                // naji - change this:
+                //await FillCombo.fillFlightTable(cb_flight);
+                Window.GetWindow(this).Opacity = 1;
 
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }
