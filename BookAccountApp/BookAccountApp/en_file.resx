@@ -2944,6 +2944,33 @@ Please add Email in setting</value>
   <data name="generalSettings" xml:space="preserve">
     <value>General Settings</value>
   </data>
+  <data name="airlineFlight" xml:space="preserve">
+    <value>Airline / Flight</value>
+  </data>
+  <data name="airlineFlightHint" xml:space="preserve">
+    <value>Airline / Flight...</value>
+  </data>
+  <data name="bookInfoSyr" xml:space="preserve">
+    <value>Book Info - Syr</value>
+  </data>
+  <data name="passengerName" xml:space="preserve">
+    <value>Passenger Name</value>
+  </data>
+  <data name="passengerNameHint" xml:space="preserve">
+    <value>Passenger Name ...</value>
+  </data>
+  <data name="ticketNum" xml:space="preserve">
+    <value>Ticket Number</value>
+  </data>
+  <data name="ticketNumHint" xml:space="preserve">
+    <value>Ticket Number ...</value>
+  </data>
+  <data name="total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="totalHint" xml:space="preserve">
+    <value>Total ...</value>
+  </data>
   <data name="trErrorDuplicateNameToolTip" xml:space="preserve">
     <value>The name  is already exist</value>
   </data>

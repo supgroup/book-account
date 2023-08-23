@@ -678,7 +678,7 @@ namespace BookAccountApp.Classes
             combo.SelectedValuePath = "fromTableId";
             combo.DisplayMemberPath = "name";
             combo.SelectedIndex = -1;
-
+            
 
         }
         static ToTable ToTableModel = new ToTable();
@@ -712,6 +712,42 @@ namespace BookAccountApp.Classes
             StatementsTableList = await StatementsTableModel.GetAll();
             combo.ItemsSource = StatementsTableList;
             combo.SelectedValuePath = "opStatementId";
+            combo.DisplayMemberPath = "name";
+            combo.SelectedIndex = -1;
+            
+
+        }
+        static Passengers PassengerModel = new Passengers();
+        static IEnumerable<Passengers> PassengersList;
+        static public async Task fillPassengers(ComboBox combo)
+        {
+            PassengersList = await PassengerModel.GetAll();
+            combo.ItemsSource = FlightTableList;
+            combo.SelectedValuePath = "passengerId";
+            combo.DisplayMemberPath = "name";
+            combo.SelectedIndex = -1;
+
+
+        }
+        static Flights FlightsModel = new Flights();
+        static IEnumerable<Flights> FlightsList;
+        static public async Task fillFlights(ComboBox combo)
+        {
+            FlightsList = await FlightsModel.GetAll();
+            combo.ItemsSource = FlightsList;
+            combo.SelectedValuePath = "flightId";
+            combo.DisplayMemberPath = "flight";
+            combo.SelectedIndex = -1;
+
+
+        }
+        static Office OfficeModel = new Office();
+        static IEnumerable<Office> OfficeList;
+        static public async Task fillOffice(ComboBox combo)
+        {
+            OfficeList = await OfficeModel.GetAll();
+            combo.ItemsSource = OfficeList;
+            combo.SelectedValuePath = "officeId";
             combo.DisplayMemberPath = "name";
             combo.SelectedIndex = -1;
 

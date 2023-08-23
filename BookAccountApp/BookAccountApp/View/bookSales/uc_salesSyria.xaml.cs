@@ -66,7 +66,7 @@ namespace BookAccountApp.View.sales
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "airline" };
+                requiredControlList = new List<string> { "airline", "passenger" };
 
                 #region translate
                 //if (MainWindow.lang.Equals("en"))
@@ -88,8 +88,8 @@ namespace BookAccountApp.View.sales
                 //await FillCombo.fillCountriesNames(cb_country);
                 //FillCombo.fillAgentLevel(cb_custlevel);
 
-                Keyboard.Focus(cb_passengerId);
-
+                Keyboard.Focus(cb_passenger);
+              await  fillcombos();
                 await RefreshServiceDatasList();
                 await Search();
                 Clear();
@@ -104,34 +104,53 @@ namespace BookAccountApp.View.sales
         }
         private void translate()
         {
-            /*
+             
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            txt_title.Text = MainWindow.resourcemanager.GetString("flightInfo");
-
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_airline, MainWindow.resourcemanager.GetString("airlineHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flight, MainWindow.resourcemanager.GetString("flightHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightFrom, MainWindow.resourcemanager.GetString("fromHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightTo, MainWindow.resourcemanager.GetString("toHint"));
+            txt_title.Text = MainWindow.resourcemanager.GetString("bookInfoSyr");
+            /*
+             bookInfoSyr
+passengerName
+ticketNum
+total
+      passengerNameHint
+ticketNumHint
+totalHint      
+airlineFlight
+airlineFlightHint
+officeNameHint
+trDateHint
+* */
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_passenger, MainWindow.resourcemanager.GetString("passengerNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_ticketNum, MainWindow.resourcemanager.GetString("ticketNumHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_airline, MainWindow.resourcemanager.GetString("airlineFlightHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_office, MainWindow.resourcemanager.GetString("officeNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_serviceDate, MainWindow.resourcemanager.GetString("trDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_total, MainWindow.resourcemanager.GetString("totalHint"));
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_fromDateSearch, MainWindow.resourcemanager.GetString("fromDate"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_toDateSearch, MainWindow.resourcemanager.GetString("toDate"));
+            txt_exportDocsButton.Text = MainWindow.resourcemanager.GetString("docExport");
+            txt_uploadDocsButton.Text = MainWindow.resourcemanager.GetString("docUpload");
             //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
 
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_custlevel, MainWindow.resourcemanager.GetString("trLevelHint"));
             //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
-            
+
             //   serviceDatas
 
             dg_serviceData.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
-            dg_serviceData.Columns[1].Header = MainWindow.resourcemanager.GetString("airline");
-            dg_serviceData.Columns[2].Header = MainWindow.resourcemanager.GetString("flight");
-            dg_serviceData.Columns[3].Header = MainWindow.resourcemanager.GetString("from");
-            dg_serviceData.Columns[4].Header = MainWindow.resourcemanager.GetString("to");
-
+            dg_serviceData.Columns[1].Header = MainWindow.resourcemanager.GetString("passengerName");
+            dg_serviceData.Columns[2].Header = MainWindow.resourcemanager.GetString("ticketNum");
+            dg_serviceData.Columns[3].Header = MainWindow.resourcemanager.GetString("airlineFlight");
+            dg_serviceData.Columns[4].Header = MainWindow.resourcemanager.GetString("officeName");
+            dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("trDate");
+            dg_serviceData.Columns[6].Header = MainWindow.resourcemanager.GetString("total");
+         
 
             //dg_serviceData.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
@@ -145,7 +164,7 @@ namespace BookAccountApp.View.sales
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
             btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-            */
+            
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
@@ -158,17 +177,19 @@ namespace BookAccountApp.View.sales
                 //tb_lastName.Text = ts.ToString();
 
                 HelpClass.StartAwait(grid_main);
-                /*
+            
                 serviceData = new ServiceData();
                 if (HelpClass.validate(requiredControlList, this))
                 {
                     //tb_custCode.Text = await serviceData.generateCodeNumber("cu");
 
-                    serviceData.airline = tb_airline.Text;
-                    serviceData.flight = cb_flight.Text;
-                    serviceData.flightFrom = cb_flightFrom.Text.Trim();
-                    serviceData.flightTo = cb_flightTo.Text;
-                    serviceData.notes = tb_notes.Text;
+                    serviceData.passengerId = Convert.ToInt32(cb_passenger.SelectedValue); 
+                    serviceData.ticketNum = tb_ticketNum.Text;
+                    serviceData.flightId = Convert.ToInt32(cb_airline.SelectedValue);
+                    serviceData.officeId = Convert.ToInt32(cb_office.SelectedValue);
+                    serviceData.serviceDate = dp_serviceDate.SelectedDate;
+                    serviceData.total = Convert.ToDecimal(tb_total.Text);
+                  serviceData.notes = tb_notes.Text;
 
                     serviceData.createUserId = MainWindow.userLogin.userId;
                     serviceData.updateUserId = MainWindow.userLogin.userId;
@@ -187,7 +208,7 @@ namespace BookAccountApp.View.sales
                         await Search();
                     }
                 }
-                */
+            
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -448,6 +469,13 @@ namespace BookAccountApp.View.sales
             dg_serviceData.ItemsSource = serviceDatasQuery;
             //txt_count.Text = serviceDatasQuery.Count().ToString();
         }
+        public async Task fillcombos()
+        {
+            await FillCombo.fillPassengers(cb_passenger);
+            await FillCombo.fillFlights(cb_airline);
+            await FillCombo.fillOffice(cb_office);
+        }
+
         #endregion
 
         #region validate - clearValidate - textChange - lostFocus - . . . . 
@@ -782,6 +810,16 @@ namespace BookAccountApp.View.sales
         }
 
         private void Btn_exportDocs_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_addPassenger_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_addOffice_Click(object sender, RoutedEventArgs e)
         {
 
         }

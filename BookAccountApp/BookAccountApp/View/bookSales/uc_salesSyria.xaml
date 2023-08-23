@@ -422,16 +422,16 @@
 
                             <Border Grid.Row="1" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                 <Grid>
-                                    <ComboBox x:Name="cb_passengerId"  Grid.Row="1"
+                                    <ComboBox x:Name="cb_passenger"  Grid.Row="1"
                                       SelectedValue="{Binding passengerId,Mode=OneWay}"
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                  materialDesign:HintAssist.Hint="passengerId..."  
+                                  materialDesign:HintAssist.Hint="passenger..."  
                                   Grid.Column="1" Height="40"   
                                  BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
                                   LostFocus="validateEmpty_LostFocus" />
                                     <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
-                                          Name="p_error_passengerId"
+                                          Name="p_error_passenger"
                               HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52
@@ -446,7 +446,7 @@
 
                             <Button Grid.Column="1"  Padding="0" 
                                 Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
-                                    x:Name="btn_addPassengerId" Click="Btn_addPassengerId_Click"
+                                    x:Name="btn_addPassenger" Click="Btn_addPassenger_Click"
                                 Margin="5,1" IsEnabled="True" Width="30">
                                 <Path Fill="{StaticResource MainColor}" Stretch="Fill"  
                     Width="25" Height="27.5"
@@ -518,16 +518,16 @@
                             </Grid.ColumnDefinitions>
                             <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                 <Grid>
-                                    <ComboBox x:Name="cb_officeId"  Grid.Row="1"
+                                    <ComboBox x:Name="cb_office"  Grid.Row="1"
                                       SelectedValue="{Binding officeId,Mode=OneWay}"
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                  materialDesign:HintAssist.Hint="officeId..."  
+                                  materialDesign:HintAssist.Hint="office..."  
                                   Grid.Column="1" Height="40"   
                                  BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
                                   LostFocus="validateEmpty_LostFocus" />
                                     <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
-                                          Name="p_error_officeId"
+                                          Name="p_error_office"
                               HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52
@@ -540,7 +540,7 @@
                             </Border>
                             <Button Grid.Column="1"  Padding="0" 
                                 Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
-                                    x:Name="btn_addOfficeId" Click="Btn_addOfficeId_Click"
+                                    x:Name="btn_addOffice" Click="Btn_addOffice_Click"
                                 Margin="5,1" IsEnabled="True" Width="30">
                                 <Path Fill="{StaticResource MainColor}" Stretch="Fill"  
                     Width="25" Height="27.5"

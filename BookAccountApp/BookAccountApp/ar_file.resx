@@ -2935,6 +2935,45 @@
   <data name="generalSettings" xml:space="preserve">
     <value>اعدادات عامة</value>
   </data>
+  <data name="airlineFlight" xml:space="preserve">
+    <value>شركة الطيران / الرحلة</value>
+  </data>
+  <data name="airlineFlightHint" xml:space="preserve">
+    <value>شركة الطيران / الرحلة ...</value>
+  </data>
+  <data name="bookInfoSyr" xml:space="preserve">
+    <value>بيانات الحجز - سوري</value>
+  </data>
+  <data name="fromDate" xml:space="preserve">
+    <value>من تاريخ</value>
+  </data>
+  <data name="fromDateHint" xml:space="preserve">
+    <value>من تاريخ ...</value>
+  </data>
+  <data name="passengerName" xml:space="preserve">
+    <value>اسم المسافر</value>
+  </data>
+  <data name="passengerNameHint" xml:space="preserve">
+    <value>اسم المسافر ...</value>
+  </data>
+  <data name="ticketNum" xml:space="preserve">
+    <value>رقم التذكرة</value>
+  </data>
+  <data name="ticketNumHint" xml:space="preserve">
+    <value>رقم التذكرة ...</value>
+  </data>
+  <data name="toDate" xml:space="preserve">
+    <value>الى تاريخ</value>
+  </data>
+  <data name="toDateHint" xml:space="preserve">
+    <value>الى تاريخ ...</value>
+  </data>
+  <data name="total" xml:space="preserve">
+    <value>الاجمالي</value>
+  </data>
+  <data name="totalHint" xml:space="preserve">
+    <value>الاجمالي ...</value>
+  </data>
   <data name="trErrorDuplicateNameToolTip" xml:space="preserve">
     <value>الاسم محجوز مسبقاً</value>
   </data>
