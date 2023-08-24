@@ -763,7 +763,7 @@ namespace BookAccountApp.Classes
             FlightsList = await FlightsModel.GetAll();
             combo.ItemsSource = FlightsList;
             combo.SelectedValuePath = "flightId";
-            combo.DisplayMemberPath = "airline";
+            combo.DisplayMemberPath = "airlineflightTable";
             combo.SelectedIndex = -1;
 
 

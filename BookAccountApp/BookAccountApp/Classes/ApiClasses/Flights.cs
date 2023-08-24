@@ -33,8 +33,8 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> fromTableId { get; set; }
         public Nullable<int> toTableId { get; set; }
         public bool canDelete { get; set; }
-
-
+        
+            public string airlineflightTable { get; set; }
 
         /// <summary>
         /// ///////////////////////////////////////
@@ -54,7 +54,8 @@ namespace BookAccountApp.ApiClasses
                             select new Flights()
                             {
                                 flightId = S.flightId,
-                                airline = S.airline,
+                                airlineflightTable = S.airline + "/" + S.flightTable.name,
+                                airline= S.airline,
                                 flight = S.flightTable.name==null?"": S.flightTable.name,
                                 flightFrom = S.fromTable.name == null ? "" : S.fromTable.name,
                                 flightTo = S.toTable.name,

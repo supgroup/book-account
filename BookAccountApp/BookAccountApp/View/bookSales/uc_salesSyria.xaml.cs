@@ -453,21 +453,22 @@ trDateHint
                 await RefreshServiceDatasList();
           
             searchText = tb_search.Text.ToLower();
-            serviceDatasQuery = serviceDatas.Where(s =>
-            (s.serviceId.ToString().Contains(searchText) ||
-            s.airline==null?true: s.airline.ToLower().Contains(searchText) ||
-            s.passenger == null ? true : s.passenger.ToLower().Contains(searchText) ||
-             s.ticketNum == null ? true : s.ticketNum.ToLower().Contains(searchText) ||
-           s.officeName == null ? true : s.officeName.ToLower().Contains(searchText)
-            ||
-        s.total == null ? false : s.total.ToString().Contains(searchText)
-            ) &&
+            serviceDatasQuery = serviceDatas.Where(s => searchText == "" ? true :
+            (
+          (  s.airline==null?false:( s.airline.ToLower().Contains(searchText))) ||
+           ( s.passenger == null ? false :( s.passenger.ToLower().Contains(searchText))) ||
+             (s.ticketNum == null ? false : (s.ticketNum.ToLower().Contains(searchText)))||
+         (  s.officeName == null ? false : (s.officeName.ToLower().Contains(searchText)))
+             
+            )
+            && (
             //start date
-            (dp_fromDateSearch.SelectedDate != null ? s.serviceDate==null?false:( s.serviceDate.Value.Date >= dp_fromDateSearch.SelectedDate.Value.Date ): true)
+            ((dp_fromDateSearch.SelectedDate != null || dp_fromDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date >= dp_fromDateSearch.SelectedDate.Value.Date) : true)
             &&
             //end date
-            (dp_toDateSearch.SelectedDate != null ? s.serviceDate == null ? false:( s.serviceDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
+            ((dp_toDateSearch.SelectedDate != null || dp_toDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
 
+            )
             );
           
             //);
