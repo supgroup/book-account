@@ -172,9 +172,32 @@ motherHint
                     //tb_custCode.Text = await flights.generateCodeNumber("cu");
 
                     flights.airline = tb_airline.Text;
-                    flights.flight = cb_flight.Text;
-                    flights.flightFrom = cb_flightFrom.Text.Trim();
-                    flights.flightTo = cb_flightTo.Text;
+                    if (Convert.ToInt32(cb_flight.SelectedValue) == 0)
+                    {
+                        flights.flightTableId = null;
+                    }
+                    else
+                    {
+                        flights.flightTableId = Convert.ToInt32(cb_flight.SelectedValue);
+                    }
+                    //
+                    if (Convert.ToInt32(cb_flightTo.SelectedValue) == 0)
+                    {
+                        flights.toTableId = null;
+                    }
+                    else
+                    {
+                        flights.toTableId = Convert.ToInt32(cb_flightTo.SelectedValue);
+                    }
+                    //
+                    if (Convert.ToInt32(cb_flightFrom.SelectedValue) == 0)
+                    {
+                        flights.fromTableId = null;
+                    }
+                    else
+                    {
+                        flights.fromTableId = Convert.ToInt32(cb_flightFrom.SelectedValue);
+                    }                   
                     flights.notes = tb_notes.Text;
 
                     flights.createUserId = MainWindow.userLogin.userId;
@@ -213,11 +236,37 @@ motherHint
                 {
                     if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
+                   
+
                         flights.airline = tb_airline.Text;
-                    flights.flight = cb_flight.Text;
-                    flights.flightFrom = cb_flightFrom.Text.Trim();
-                    flights.flightTo = cb_flightTo.Text;
-                    flights.notes = tb_notes.Text;
+                        if (Convert.ToInt32(cb_flight.SelectedValue) == 0)
+                        {
+                            flights.flightTableId = null;
+                        }
+                        else
+                        {
+                            flights.flightTableId = Convert.ToInt32(cb_flight.SelectedValue);
+                        }
+                        //
+                        if (Convert.ToInt32(cb_flightTo.SelectedValue) == 0)
+                        {
+                            flights.toTableId = null;
+                        }
+                        else
+                        {
+                            flights.toTableId = Convert.ToInt32(cb_flightTo.SelectedValue);
+                        }
+                        //
+                        if (Convert.ToInt32(cb_flightFrom.SelectedValue) == 0)
+                        {
+                            flights.fromTableId = null;
+                        }
+                        else
+                        {
+                            flights.fromTableId = Convert.ToInt32(cb_flightFrom.SelectedValue);
+                        }
+
+                        flights.notes = tb_notes.Text;
                         decimal s = await flights.Save(flights);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -365,11 +414,15 @@ motherHint
                 if (dg_flights.SelectedIndex != -1)
                 {
                     flights = dg_flights.SelectedItem as Flights;
-                    this.DataContext = flights;
+                 //   this.DataContext = flights;
                     if (flights != null)
                     {
                         //tb_custCode.Text = flights.custCode;
+
                         //cb_country.SelectedValue = flights.countryId;
+                        cb_flight.SelectedValue = flights.flightTableId;
+                        cb_flightFrom.SelectedValue = flights.fromTableId;
+                        cb_flightTo.SelectedValue = flights.toTableId;
                         this.DataContext = flights;
                         //await getImg();
                         #region delete
