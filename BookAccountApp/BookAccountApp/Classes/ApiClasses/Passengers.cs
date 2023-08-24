@@ -29,7 +29,7 @@ namespace BookAccountApp.ApiClasses
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-
+        public string fullName { get; set; }
         public bool canDelete { get; set; }
 
 
@@ -61,7 +61,7 @@ namespace BookAccountApp.ApiClasses
                                 updateDate = S.updateDate,
                                 createUserId = S.createUserId,
                                 updateUserId = S.updateUserId,
-
+                                fullName= S.name+" "+S.lastName,
                                 canDelete = true,
 
                             }).ToList();

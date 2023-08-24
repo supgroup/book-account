@@ -66,8 +66,8 @@ namespace BookAccountApp.View.sales
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "airline", "passenger" };
-
+                requiredControlList = new List<string> { "airline", "passenger" ,"total"};
+      
                 #region translate
                 //if (MainWindow.lang.Equals("en"))
                 //{
@@ -189,7 +189,7 @@ trDateHint
                     serviceData.flightId = Convert.ToInt32(cb_airline.SelectedValue);
                     serviceData.officeId = Convert.ToInt32(cb_office.SelectedValue);
                     serviceData.serviceDate = dp_serviceDate.SelectedDate;
-                    serviceData.total = Convert.ToDecimal(tb_total.Text);
+                    serviceData.total =( tb_total.Text==null|| tb_total.Text=="")?0: Convert.ToDecimal(tb_total.Text);
                   serviceData.notes = tb_notes.Text;
 
                     serviceData.createUserId = MainWindow.userLogin.userId;
@@ -267,15 +267,15 @@ trDateHint
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
-                if (serviceData.flightId != 0)
+               
+                if (serviceData.serviceId != 0)
                 {
-                    decimal s = await serviceData.Delete(serviceData.flightId, MainWindow.userLogin.userId, true);
+                    decimal s = await serviceData.Delete(serviceData.serviceId, MainWindow.userLogin.userId, true);
                     if (s < 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("cannotdelete"), animation: ToasterAnimation.FadeIn);
                     else
                     {
-                        serviceData.flightId = 0;
+                        serviceData.serviceId = 0;
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                         await RefreshServiceDatasList();
@@ -285,7 +285,7 @@ trDateHint
 
 
                 }
-                */
+                
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -388,13 +388,14 @@ trDateHint
                 if (dg_serviceData.SelectedIndex != -1)
                 {
                     serviceData = dg_serviceData.SelectedItem as ServiceData;
-                    this.DataContext = serviceData;
+                  //  this.DataContext = serviceData;
                     if (serviceData != null)
                     {
                         //tb_custCode.Text = serviceData.custCode;
                          cb_passenger.SelectedValue = serviceData.passengerId;
                         cb_airline.SelectedValue = serviceData.flightId;
                         cb_office.SelectedValue = serviceData.officeId;
+                        tb_total.Text = HelpClass.DecTostring(serviceData.total);
                         this.DataContext = serviceData;
                         //await getImg();
                         #region delete
@@ -460,7 +461,14 @@ trDateHint
             s.officeName.ToLower().Contains(searchText)
             ||
             s.total.ToString().Contains(searchText)
-            ) );
+            ) &&
+            //start date
+            (dp_fromDateSearch.SelectedDate != null ? s.serviceDate==null?false:( s.serviceDate.Value.Date >= dp_fromDateSearch.SelectedDate.Value.Date ): true)
+            &&
+            //end date
+            (dp_toDateSearch.SelectedDate != null ? s.serviceDate == null ? false:( s.serviceDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
+
+            );
           
             //);
           
@@ -491,20 +499,45 @@ trDateHint
         void Clear()
         {
             this.DataContext = new ServiceData();
-
-
+            cb_passenger.SelectedIndex = -1;
+            cb_airline.SelectedIndex = -1;
+            cb_office.SelectedIndex = -1;
+            cb_passenger.Text ="";
+            cb_airline.Text = "";
+            cb_office.Text = "";
+            tb_total.Text = "";
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
+        string input;
+        decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        { //only  digits
+            try
+            {
+                TextBox textBox = sender as TextBox;
+                HelpClass.InputJustNumber(ref textBox);
+                //if (textBox.Tag.ToString() == "int")
+                //{
+                //    Regex regex = new Regex("[^0-9]");
+                //    e.Handled = regex.IsMatch(e.Text);
+                //}
+                //else if (textBox.Tag.ToString() == "decimal")
+                //{
+                    input = e.Text;
+                    e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
+                //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Spaces_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             try
             {
-                //only  digits
-                TextBox textBox = sender as TextBox;
-                HelpClass.InputJustNumber(ref textBox);
-                Regex regex = new Regex("[^0-9]+");
-                e.Handled = regex.IsMatch(e.Text);
+                e.Handled = e.Key == Key.Space;
             }
             catch (Exception ex)
             {
@@ -526,17 +559,7 @@ trDateHint
             }
 
         }
-        private void Spaces_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                e.Handled = e.Key == Key.Space;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+        
         private void ValidateEmpty_TextChange(object sender, TextChangedEventArgs e)
         {
             try
@@ -830,6 +853,53 @@ trDateHint
         private void Btn_addOffice_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Tb_total_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+
+        }
+
+        private async void Dp_fromDateSearch_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //if (cb_custname.SelectedItem != null)
+                //{
+
+                //}
+
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void Dp_toDateSearch_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //if (cb_custname.SelectedItem != null)
+                //{
+
+                //}
+
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }

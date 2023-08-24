@@ -552,9 +552,36 @@ namespace BookAccountApp.Classes
                     logoImage = setV.value;
                     //await setV.getImg(logoImage);
                 }
-             
-                return 1;
+
+
                 #endregion
+                #region  get accuracy
+
+                //get company fax
+                set = settingsCls.Where(s => s.name == "accuracy").FirstOrDefault<SettingCls>();
+               var accuId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == accuId).FirstOrDefault();
+                if (setV != null)
+                {
+                  
+                    MainWindow.accuracy = setV.value;
+                }
+
+                #endregion
+                #region  get date
+
+                //get company fax
+                set = settingsCls.Where(s => s.name == "dateForm").FirstOrDefault<SettingCls>();
+                var dateId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == dateId).FirstOrDefault();
+                if (setV != null)
+                {
+
+                    MainWindow.dateFormat = setV.value;
+                }
+
+                #endregion
+                return 1;
             }
             catch (Exception)
             { return 0; }
@@ -724,7 +751,7 @@ namespace BookAccountApp.Classes
             PassengersList = await PassengerModel.GetAll();
             combo.ItemsSource = PassengersList;
             combo.SelectedValuePath = "passengerId";
-            combo.DisplayMemberPath = "name";
+            combo.DisplayMemberPath = "fullName";
             combo.SelectedIndex = -1;
 
 

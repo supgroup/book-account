@@ -73,7 +73,7 @@
                                          Padding="10,0,5,0"  
                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                         materialDesign:HintAssist.Hint="serviceDate..."  
-                                        Foreground="#4E4E4E"   Height="40"    />
+                                        Foreground="#4E4E4E"   Height="40" SelectedDateChanged="Dp_fromDateSearch_SelectedDateChanged"    />
                            </Grid>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="2" CornerRadius="10" Margin="5,5,5,5" Height="40"  BorderThickness="1" BorderBrush="{StaticResource MainColor}">
@@ -85,7 +85,7 @@
                                          Padding="10,0,5,0"  
                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                         materialDesign:HintAssist.Hint="serviceDate..."  
-                                        Foreground="#4E4E4E"   Height="40"    />
+                                        Foreground="#4E4E4E"   Height="40" SelectedDateChanged="Dp_toDateSearch_SelectedDateChanged"    />
                         </Grid>
                     </Border>
 
@@ -211,7 +211,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="serviceDate" Binding="{Binding Path=serviceDate}">
+                            <DataGridTextColumn Width="*"  Header="serviceDate" Binding="{Binding Path=serviceDate,Converter={StaticResource dateFrameConverter}}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -222,7 +222,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="total" Binding="{Binding Path=total}">
+                            <DataGridTextColumn Width="*"  Header="total"  Binding="{Binding Path=total,Converter={StaticResource accuracyConverter}}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -574,7 +574,7 @@
                                      MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"  Margin="4,0"  
-                                     LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
+                                     LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Number_PreviewTextInput"/>
                                 <Path x:Name="p_error_total"
                                   Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
                                   HorizontalAlignment="Right" Visibility="Collapsed"   

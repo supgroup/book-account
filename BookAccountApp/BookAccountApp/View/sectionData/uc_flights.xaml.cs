@@ -759,7 +759,7 @@ motherHint
                 wd_fromTable w = new wd_fromTable();
                 w.ShowDialog();
                 // naji - change this:
-                //await FillCombo.fillFlightTable(cb_flight);
+                 await FillCombo.fillFromTable(cb_flightFrom);
                 Window.GetWindow(this).Opacity = 1;
 
                 if (sender != null)
@@ -784,7 +784,7 @@ motherHint
                 wd_toTable w = new wd_toTable();
                 w.ShowDialog();
                 // naji - change this:
-                //await FillCombo.fillFlightTable(cb_flight);
+                 await FillCombo.fillToTable(cb_flightTo);
                 Window.GetWindow(this).Opacity = 1;
 
                 if (sender != null)

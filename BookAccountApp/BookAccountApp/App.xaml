@@ -17,7 +17,7 @@
             <converters:dateFrameConverter x:Key="dateFrameConverter"/>
             <converters:unlimitedConverter x:Key="unlimitedConverter"/>
             <converters:countConverter x:Key="countConverter"/>
-
+            <converters:accuracyConverter x:Key="accuracyConverter"/>
             <!--#region Fonts-->
             <FontFamily x:Key="Font-cairo-light" >cairo light, /BookAccountApp;component/fonts/cairo-font/#cairo light, Arial</FontFamily>
             <FontFamily x:Key="Font-cairo-bold" >cairo bold , /BookAccountApp;component/fonts/cairo-font/#cairo bold, Arial</FontFamily>
