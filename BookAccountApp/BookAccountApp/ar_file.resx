@@ -2977,4 +2977,7 @@
   <data name="trErrorDuplicateNameToolTip" xml:space="preserve">
     <value>الاسم محجوز مسبقاً</value>
   </data>
+  <data name="syr" xml:space="preserve">
+    <value>سوري</value>
+  </data>
 </root>

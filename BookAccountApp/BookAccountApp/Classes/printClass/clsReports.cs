@@ -256,6 +256,34 @@ passwordSoto
 
         }
 
+        public static void SaleReport(IEnumerable<ServiceData> QueryList, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            List<ServiceData> Query = JsonConvert.DeserializeObject<List<ServiceData>>(JsonConvert.SerializeObject(QueryList));
+            foreach (ServiceData row in Query)
+            {
+                row.strServiceDate = dateFrameConverter(row.serviceDate);
+                row.total =decimal.Parse( HelpClass .DecTostring(row.total));
+            }
+
+            rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+            //title
+         
+            //table columns
+            paramarr.Add(new ReportParameter("trNo", MainWindow.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("passengerName", MainWindow.resourcemanagerreport.GetString("passengerName")));
+            paramarr.Add(new ReportParameter("ticketNum", MainWindow.resourcemanagerreport.GetString("ticketNum")));
+            paramarr.Add(new ReportParameter("airlineFlight", MainWindow.resourcemanagerreport.GetString("airlineFlight")));
+            paramarr.Add(new ReportParameter("officeName", MainWindow.resourcemanagerreport.GetString("officeName")));
+            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("total", MainWindow.resourcemanagerreport.GetString("total")));
+           
+
+
+        }
+
         //public static void CustomersReport(IEnumerable<Customers> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         //{
         //    rep.ReportPath = reppath;

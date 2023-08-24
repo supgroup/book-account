@@ -2974,4 +2974,7 @@ Please add Email in setting</value>
   <data name="trErrorDuplicateNameToolTip" xml:space="preserve">
     <value>The name  is already exist</value>
   </data>
+  <data name="syr" xml:space="preserve">
+    <value>Syrian</value>
+  </data>
 </root>

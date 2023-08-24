@@ -48,6 +48,7 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> flightId { get; set; }
         public string officeName  { get; set; }
         public Nullable<int> operationId { get; set; }
+        public string strServiceDate { get; set; }
         public bool canDelete { get; set; }
 
         /// <summary>

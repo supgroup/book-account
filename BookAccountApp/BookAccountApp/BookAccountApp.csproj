@@ -532,17 +532,14 @@
     <Content Include="Reports\SectionData\Ar\ArOperation.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Sale\ArSales.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\logo.png" />
     <Content Include="Thumb\users\tmp.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="pic\supcloudsLogo.ico" />
-    <Content Include="Reports\Sale\Payments\Ar\ArPayDetail.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Sale\Payments\En\EnPayDetail.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Reports\SectionData\En\EnAgents.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -553,12 +550,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="EmailTemplates\images\bookimg.gif" />
-    <Content Include="Reports\Sale\Book\Serials\Ar\serialsmail.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Sale\Book\Serials\En\serialsmail.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Resource Include="increase-logo-01.ico" />
     <Resource Include="increaseLogo.ico" />
     <Resource Include="EmailTemplates\images\image-2.gif" />
@@ -594,12 +585,6 @@
     <Content Include="Reports\Applications\En\EnVersions.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Reports\Sale\Book\Ar\ArBook.rdlc" />
-    <EmbeddedResource Include="Reports\Sale\Book\En\EnBook.rdlc" />
-    <EmbeddedResource Include="Reports\Sale\Book\Serials\Ar\serials.rdlc" />
-    <Content Include="Reports\Sale\Book\Serials\En\serials.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Reports\statisticReports\Ar\ArBook.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -610,12 +595,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\statisticReports\En\EnPayments.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Sale\Payments\Ar\ArPayments.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Sale\Payments\En\EnPayments.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="fonts\cairo-font\cairo bold.ttf" />
@@ -723,6 +702,7 @@
     <None Include="Properties\DataSources\BookAccountApp.ApiClasses.Office.datasource" />
     <None Include="Properties\DataSources\BookAccountApp.ApiClasses.Operations.datasource" />
     <None Include="Properties\DataSources\BookAccountApp.ApiClasses.Passengers.datasource" />
+    <None Include="Properties\DataSources\BookAccountApp.ApiClasses.ServiceData.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonObjectId.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonReader.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonWriter.datasource" />
