@@ -19,9 +19,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Reporting.WinForms;
 using Microsoft.Win32;
- 
 using POS.View.windows;
 using BookAccountApp.View.sectionData;
+
 namespace BookAccountApp.View.windows
 {
     /// <summary>
