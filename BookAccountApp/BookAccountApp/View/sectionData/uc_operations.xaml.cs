@@ -87,13 +87,14 @@ namespace BookAccountApp.View.sectionData
                 //await FillCombo.fillCountries(cb_areaFax);
                 //await FillCombo.fillCountriesNames(cb_country);
                 //FillCombo.fillAgentLevel(cb_custlevel);
-
+          
                 Keyboard.Focus(tb_operation);
 
                 await RefreshOperationssList();
                 await Search();
+              
                 Clear();
-
+                fillcombos();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -164,10 +165,23 @@ motherHint
                 if (HelpClass.validate(requiredControlList, this))
                 {
                     //tb_custCode.Text = await operations.generateCodeNumber("cu");
-
-                    operations.operation = tb_operation.Text;
-                    operations.opStatement =cb_opStatement.Text;
-                    operations.duration = cb_duration.Text;                   
+                    if (Convert.ToInt32(cb_opStatement.SelectedValue) == 0)
+                    {
+                        operations.opStatementId = null;
+                    }
+                    else
+                    {
+                        operations.opStatementId = Convert.ToInt32(cb_opStatement.SelectedValue);
+                    }
+                    if (Convert.ToInt32(cb_duration.SelectedValue) == 0)
+                    {
+                        operations.durationId = null;
+                    }
+                    else
+                    {
+                        operations.durationId = Convert.ToInt32(cb_duration.SelectedValue);
+                    }
+                    operations.operation = tb_operation.Text;                                 
                     operations.notes = tb_notes.Text;
 
                     operations.createUserId = MainWindow.userLogin.userId;
@@ -204,11 +218,26 @@ motherHint
               
                 if (operations.operationId > 0)
                 {
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                    if (HelpClass.validate(requiredControlList, this)  )
                     {
+                        if (Convert.ToInt32(cb_opStatement.SelectedValue) == 0)
+                        {
+                            operations.opStatementId = null;
+                        }
+                        else
+                        {
+                            operations.opStatementId = Convert.ToInt32(cb_opStatement.SelectedValue);
+                        }
+                        if (Convert.ToInt32(cb_duration.SelectedValue) == 0)
+                        {
+                            operations.durationId = null;
+                        }
+                        else
+                        {
+                            operations.durationId = Convert.ToInt32(cb_duration.SelectedValue);
+                        }
                         operations.operation = tb_operation.Text;
-                        operations.opStatement = cb_opStatement.Text;
-                        operations.duration = cb_duration.Text;
+                   
                         operations.notes = tb_notes.Text;
 
                         decimal s = await operations.Save(operations);
@@ -297,6 +326,12 @@ motherHint
         }
         #endregion
         #region events
+        public async Task fillcombos()
+        {
+            await FillCombo.fillStatementsTable(cb_opStatement);
+            await FillCombo.fillDurationsTable(cb_duration);
+           
+        }
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -348,12 +383,13 @@ motherHint
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_clear_Click(object sender, RoutedEventArgs e)
+        private async void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
                 Clear();
+                await fillcombos();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -373,11 +409,13 @@ motherHint
                 if (dg_operations.SelectedIndex != -1)
                 {
                     operations = dg_operations.SelectedItem as Operations;
-                    this.DataContext = operations;
+             
                     if (operations != null)
                     {
                         //tb_custCode.Text = operations.custCode;
                         //cb_country.SelectedValue = operations.countryId;
+                        cb_opStatement.SelectedValue = operations.opStatementId;
+                        cb_duration.SelectedValue = operations.durationId;
                         this.DataContext = operations;
                         //await getImg();
                         #region delete
@@ -464,7 +502,7 @@ motherHint
         {
             this.DataContext = new Operations();
 
-
+            
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
@@ -733,17 +771,17 @@ motherHint
 
         }
 
-        private void Btn_addOpStatement_Click(object sender, RoutedEventArgs e)
+        private async void Btn_addOpStatement_Click(object sender, RoutedEventArgs e)
         {
-            /*
+            
            try
            {
                if (sender != null)
                    HelpClass.StartAwait(grid_main);
                Window.GetWindow(this).Opacity = 0.2;
-               wd_flight w = new wd_flight();
+               wd_statements w = new wd_statements();
                w.ShowDialog();
-               await FillCombo.fillFlightTable(cb_flight);
+               await FillCombo.fillStatementsTable(cb_opStatement);
                Window.GetWindow(this).Opacity = 1;
 
                if (sender != null)
@@ -756,20 +794,20 @@ motherHint
                    HelpClass.EndAwait(grid_main);
                HelpClass.ExceptionMessage(ex, this);
            }
-           */
+            
         }
 
-        private void Btn_addDuration_Click(object sender, RoutedEventArgs e)
+        private async void Btn_addDuration_Click(object sender, RoutedEventArgs e)
         {
-            /*
+          
             try
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
                 Window.GetWindow(this).Opacity = 0.2;
-                wd_flight w = new wd_flight();
+                wd_durations  w = new wd_durations();
                 w.ShowDialog();
-                await FillCombo.fillFlightTable(cb_flight);
+                await FillCombo.fillDurationsTable(cb_duration);
                 Window.GetWindow(this).Opacity = 1;
 
                 if (sender != null)
@@ -782,7 +820,7 @@ motherHint
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+             
         }
     }
 }

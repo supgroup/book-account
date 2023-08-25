@@ -106,9 +106,9 @@ namespace BookAccountApp.View.windows
         private void translate()
         {
 
-            txt_title.Text = MainWindow.resourcemanager.GetString("flights");
+            txt_title.Text = MainWindow.resourcemanager.GetString("opStatement");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("flightHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("opStatementHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
@@ -116,7 +116,7 @@ namespace BookAccountApp.View.windows
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
 
 
-            dg_items.Columns[0].Header = MainWindow.resourcemanager.GetString("flight");
+            dg_items.Columns[0].Header = MainWindow.resourcemanager.GetString("opStatement");
             dg_items.Columns[1].Header = MainWindow.resourcemanager.GetString("trNote");
 
 

@@ -234,7 +234,7 @@ motherHint
                 
                 if (flights.flightId > 0)
                 {
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                    if (HelpClass.validate(requiredControlList, this)  )
                     {
                    
 
