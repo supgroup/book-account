@@ -812,30 +812,83 @@ trDateHint
             }
             */
         }
-
-        private void Btn_addFlightFrom_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Btn_addFlightTo_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+ 
         private void Btn_addPassengerId_Click(object sender, RoutedEventArgs e)
         {
+            /*
+          try
+          {
+              if (sender != null)
+                  HelpClass.StartAwait(grid_main);
+              Window.GetWindow(this).Opacity = 0.2;
+              wd_flight w = new wd_flight();
+              w.ShowDialog();
+              await FillCombo.fillFlightTable(cb_flight);
+              Window.GetWindow(this).Opacity = 1;
 
+              if (sender != null)
+                  HelpClass.EndAwait(grid_main);
+          }
+          catch (Exception ex)
+          {
+              Window.GetWindow(this).Opacity = 1;
+              if (sender != null)
+                  HelpClass.EndAwait(grid_main);
+              HelpClass.ExceptionMessage(ex, this);
+          }
+          */
         }
 
         private void Btn_addAirline_Click(object sender, RoutedEventArgs e)
         {
+            /*
+          try
+          {
+              if (sender != null)
+                  HelpClass.StartAwait(grid_main);
+              Window.GetWindow(this).Opacity = 0.2;
+              wd_flight w = new wd_flight();
+              w.ShowDialog();
+              await FillCombo.fillFlightTable(cb_flight);
+              Window.GetWindow(this).Opacity = 1;
 
+              if (sender != null)
+                  HelpClass.EndAwait(grid_main);
+          }
+          catch (Exception ex)
+          {
+              Window.GetWindow(this).Opacity = 1;
+              if (sender != null)
+                  HelpClass.EndAwait(grid_main);
+              HelpClass.ExceptionMessage(ex, this);
+          }
+          */
         }
 
         private void Btn_addOfficeId_Click(object sender, RoutedEventArgs e)
         {
+            /*
+          try
+          {
+              if (sender != null)
+                  HelpClass.StartAwait(grid_main);
+              Window.GetWindow(this).Opacity = 0.2;
+              wd_flight w = new wd_flight();
+              w.ShowDialog();
+              await FillCombo.fillFlightTable(cb_flight);
+              Window.GetWindow(this).Opacity = 1;
 
+              if (sender != null)
+                  HelpClass.EndAwait(grid_main);
+          }
+          catch (Exception ex)
+          {
+              Window.GetWindow(this).Opacity = 1;
+              if (sender != null)
+                  HelpClass.EndAwait(grid_main);
+              HelpClass.ExceptionMessage(ex, this);
+          }
+          */
         }
 
         private void Btn_uploadDocs_Click(object sender, RoutedEventArgs e)
@@ -850,12 +903,54 @@ trDateHint
 
         private void Btn_addPassenger_Click(object sender, RoutedEventArgs e)
         {
+            /*
+          try
+          {
+              if (sender != null)
+                  HelpClass.StartAwait(grid_main);
+              Window.GetWindow(this).Opacity = 0.2;
+              wd_flight w = new wd_flight();
+              w.ShowDialog();
+              await FillCombo.fillFlightTable(cb_flight);
+              Window.GetWindow(this).Opacity = 1;
 
+              if (sender != null)
+                  HelpClass.EndAwait(grid_main);
+          }
+          catch (Exception ex)
+          {
+              Window.GetWindow(this).Opacity = 1;
+              if (sender != null)
+                  HelpClass.EndAwait(grid_main);
+              HelpClass.ExceptionMessage(ex, this);
+          }
+          */
         }
 
         private void Btn_addOffice_Click(object sender, RoutedEventArgs e)
         {
+            /*
+          try
+          {
+              if (sender != null)
+                  HelpClass.StartAwait(grid_main);
+              Window.GetWindow(this).Opacity = 0.2;
+              wd_flight w = new wd_flight();
+              w.ShowDialog();
+              await FillCombo.fillFlightTable(cb_flight);
+              Window.GetWindow(this).Opacity = 1;
 
+              if (sender != null)
+                  HelpClass.EndAwait(grid_main);
+          }
+          catch (Exception ex)
+          {
+              Window.GetWindow(this).Opacity = 1;
+              if (sender != null)
+                  HelpClass.EndAwait(grid_main);
+              HelpClass.ExceptionMessage(ex, this);
+          }
+          */
         }
 
         private void Tb_total_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -907,7 +1002,28 @@ trDateHint
 
         private void Btn_addOperationId_Click(object sender, RoutedEventArgs e)
         {
+            /*
+          try
+          {
+              if (sender != null)
+                  HelpClass.StartAwait(grid_main);
+              Window.GetWindow(this).Opacity = 0.2;
+              wd_flight w = new wd_flight();
+              w.ShowDialog();
+              await FillCombo.fillFlightTable(cb_flight);
+              Window.GetWindow(this).Opacity = 1;
 
+              if (sender != null)
+                  HelpClass.EndAwait(grid_main);
+          }
+          catch (Exception ex)
+          {
+              Window.GetWindow(this).Opacity = 1;
+              if (sender != null)
+                  HelpClass.EndAwait(grid_main);
+              HelpClass.ExceptionMessage(ex, this);
+          }
+          */
         }
     }
 }
