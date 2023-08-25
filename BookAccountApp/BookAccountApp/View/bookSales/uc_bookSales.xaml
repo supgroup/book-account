@@ -25,6 +25,10 @@
              Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
                  Content="salesSyria" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"   
                        x:Name="btn_salesSyria" Click="Btn_salesSyria_Click" Tag="salesSyria"/>
+            <Button   Grid.Column="1"
+             Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
+                 Content="salesSoto" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"   
+                       x:Name="btn_salesSoto" Click="Btn_salesSoto_Click" Tag="salesSoto"/>
 
 
         </Grid>
