@@ -306,6 +306,9 @@
     <Compile Include="View\bookSales\uc_bookSales.xaml.cs">
       <DependentUpon>uc_bookSales.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\bookSales\uc_salesSoto.xaml.cs">
+      <DependentUpon>uc_salesSoto.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\reports\uc_reports.xaml.cs">
       <DependentUpon>uc_reports.xaml</DependentUpon>
     </Compile>
@@ -360,6 +363,12 @@
     <Compile Include="View\windows\wd_messageBoxWithIcon.xaml.cs">
       <DependentUpon>wd_messageBoxWithIcon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_office.xaml.cs">
+      <DependentUpon>wd_office.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_passengers.xaml.cs">
+      <DependentUpon>wd_passengers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_previewPdf.xaml.cs">
       <DependentUpon>wd_previewPdf.xaml</DependentUpon>
     </Compile>
@@ -404,6 +413,10 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="View\bookSales\uc_bookSales.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\bookSales\uc_salesSoto.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -478,6 +491,14 @@
     <Page Include="View\windows\wd_messageBoxWithIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_office.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_passengers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_previewPdf.xaml">
       <SubType>Designer</SubType>
