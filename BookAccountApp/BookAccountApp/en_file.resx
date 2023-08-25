@@ -2977,4 +2977,10 @@ Please add Email in setting</value>
   <data name="syr" xml:space="preserve">
     <value>Syrian</value>
   </data>
+  <data name="bookInfoSoto" xml:space="preserve">
+    <value>Book Info - Soto</value>
+  </data>
+  <data name="soto" xml:space="preserve">
+    <value>Soto</value>
+  </data>
 </root>

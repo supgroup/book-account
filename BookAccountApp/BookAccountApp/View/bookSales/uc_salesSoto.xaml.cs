@@ -110,7 +110,7 @@ namespace BookAccountApp.View.bookSales
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            txt_title.Text = MainWindow.resourcemanager.GetString("bookInfoSyr");
+            txt_title.Text = MainWindow.resourcemanager.GetString("bookInfoSoto");
             /*
              bookInfoSyr
 passengerName
@@ -150,8 +150,8 @@ trDateHint
             dg_serviceData.Columns[2].Header = MainWindow.resourcemanager.GetString("ticketNum");
             dg_serviceData.Columns[3].Header = MainWindow.resourcemanager.GetString("airlineFlight");
             dg_serviceData.Columns[4].Header = MainWindow.resourcemanager.GetString("officeName");
-            dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("trDate");
-            dg_serviceData.Columns[6].Header = MainWindow.resourcemanager.GetString("total");
+          //  dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("trDate");
+            dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("total");
 
 
             //dg_serviceData.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
@@ -1000,30 +1000,32 @@ trDateHint
             }
         }
 
-        private void Btn_addOperationId_Click(object sender, RoutedEventArgs e)
-        {
-            /*
-          try
-          {
-              if (sender != null)
-                  HelpClass.StartAwait(grid_main);
-              Window.GetWindow(this).Opacity = 0.2;
-              wd_flight w = new wd_flight();
-              w.ShowDialog();
-              await FillCombo.fillFlightTable(cb_flight);
-              Window.GetWindow(this).Opacity = 1;
+       
 
-              if (sender != null)
-                  HelpClass.EndAwait(grid_main);
-          }
-          catch (Exception ex)
-          {
-              Window.GetWindow(this).Opacity = 1;
-              if (sender != null)
-                  HelpClass.EndAwait(grid_main);
-              HelpClass.ExceptionMessage(ex, this);
-          }
-          */
+        private void Btn_addOperation_Click(object sender, RoutedEventArgs e)
+        {
+          /*  
+    try
+    {
+        if (sender != null)
+            HelpClass.StartAwait(grid_main);
+        Window.GetWindow(this).Opacity = 0.2;
+        wd_flight w = new wd_flight();
+        w.ShowDialog();
+        await FillCombo.fillFlightTable(cb_flight);
+        Window.GetWindow(this).Opacity = 1;
+
+        if (sender != null)
+            HelpClass.EndAwait(grid_main);
+    }
+    catch (Exception ex)
+    {
+        Window.GetWindow(this).Opacity = 1;
+        if (sender != null)
+            HelpClass.EndAwait(grid_main);
+        HelpClass.ExceptionMessage(ex, this);
+    }
+     */
         }
     }
 }

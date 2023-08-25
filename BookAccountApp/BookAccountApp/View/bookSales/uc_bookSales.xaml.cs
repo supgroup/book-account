@@ -74,7 +74,8 @@ namespace BookAccountApp.View.bookSales
 
         private void translate()
         {
-            //btn_users.Content = MainWindow.resourcemanager.GetString("trUsers");
+           btn_salesSyria.Content = MainWindow.resourcemanager.GetString("syr");
+            btn_salesSoto.Content = MainWindow.resourcemanager.GetString("soto");
             //btn_office.Content = MainWindow.resourcemanager.GetString("trOffices");
             //btn_passengers.Content = MainWindow.resourcemanager.GetString("passengers");
             //btn_flights.Content = MainWindow.resourcemanager.GetString("flights");

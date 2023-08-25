@@ -2980,4 +2980,10 @@
   <data name="syr" xml:space="preserve">
     <value>سوري</value>
   </data>
+  <data name="bookInfoSoto" xml:space="preserve">
+    <value>بيانات الحجز -سوتو</value>
+  </data>
+  <data name="soto" xml:space="preserve">
+    <value>سوتو</value>
+  </data>
 </root>
