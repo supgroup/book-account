@@ -369,7 +369,12 @@
                                 </Path>
                             </Grid>
                         </Border>
-                        <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid>
                                 <ComboBox x:Name="cb_opStatement"  Grid.Row="1"
                                       SelectedValue="{Binding opStatement,Mode=OneWay}"
@@ -391,7 +396,24 @@
                                           L13,15 L13,17 Z"/>
                             </Grid>
                         </Border>
-                        <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+
+
+                        <Button Grid.Column="1"  Padding="0" 
+                                Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
+                                    x:Name="btn_addOpStatement" Click="Btn_addOpStatement_Click"
+                                Margin="5,1" IsEnabled="True" Width="30">
+                            <Path Fill="{StaticResource MainColor}" Stretch="Fill"  
+                    Width="25" Height="27.5"
+                                      FlowDirection="LeftToRight"
+                           Data="{StaticResource addFile}" />
+                        </Button>
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid>
                                 <ComboBox x:Name="cb_duration"  Grid.Row="1"
                                       SelectedValue="{Binding duration,Mode=OneWay}"
@@ -415,7 +437,18 @@
                         </Border>
 
 
-                        <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Button Grid.Column="1"  Padding="0" 
+                                Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
+                                    x:Name="btn_addDuration" Click="Btn_addDuration_Click"
+                                Margin="5,1" IsEnabled="True" Width="30">
+                            <Path Fill="{StaticResource MainColor}" Stretch="Fill"  
+                    Width="25" Height="27.5"
+                                      FlowDirection="LeftToRight"
+                           Data="{StaticResource addFile}" />
+                        </Button>
+            </Grid>
+
+            <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
                                 <TextBox  x:Name="tb_notes" Text="{Binding notes, Mode=OneWay}"
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
