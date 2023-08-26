@@ -111,19 +111,7 @@ namespace BookAccountApp.View.bookSales
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
             txt_title.Text = MainWindow.resourcemanager.GetString("bookInfoSoto");
-            /*
-             bookInfoSyr
-passengerName
-ticketNum
-total
-      passengerNameHint
-ticketNumHint
-totalHint      
-airlineFlight
-airlineFlightHint
-officeNameHint
-trDateHint
-* */
+
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_passenger, MainWindow.resourcemanager.GetString("passengerNameHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_ticketNum, MainWindow.resourcemanager.GetString("ticketNumHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_airline, MainWindow.resourcemanager.GetString("airlineFlightHint"));
@@ -192,7 +180,7 @@ trDateHint
                     //serviceData.serviceDate = dp_serviceDate.SelectedDate;
                     serviceData.total = (tb_total.Text == null || tb_total.Text == "") ? 0 : Convert.ToDecimal(tb_total.Text);
                     serviceData.notes = tb_notes.Text;
-
+                    serviceData.systemType = "soto";
                     serviceData.createUserId = MainWindow.userLogin.userId;
                     serviceData.updateUserId = MainWindow.userLogin.userId;
 
@@ -237,7 +225,7 @@ trDateHint
                         //serviceData.serviceDate = dp_serviceDate.SelectedDate;
                         serviceData.total = Convert.ToDecimal(tb_total.Text);
                         serviceData.notes = tb_notes.Text;
-
+                        serviceData.systemType = "soto";
                         serviceData.createUserId = MainWindow.userLogin.userId;
                         serviceData.updateUserId = MainWindow.userLogin.userId;
 
@@ -480,6 +468,7 @@ trDateHint
         async Task<IEnumerable<ServiceData>> RefreshServiceDatasList()
         {
             serviceDatas = await serviceData.GetAll();
+            serviceDatas = serviceDatas.Where(s=>s.systemType=="soto").ToList();
             return serviceDatas;
         }
         void RefreshServiceDatasView()
@@ -813,31 +802,7 @@ trDateHint
             */
         }
  
-        private void Btn_addPassengerId_Click(object sender, RoutedEventArgs e)
-        {
-            /*
-          try
-          {
-              if (sender != null)
-                  HelpClass.StartAwait(grid_main);
-              Window.GetWindow(this).Opacity = 0.2;
-              wd_flight w = new wd_flight();
-              w.ShowDialog();
-              await FillCombo.fillFlightTable(cb_flight);
-              Window.GetWindow(this).Opacity = 1;
-
-              if (sender != null)
-                  HelpClass.EndAwait(grid_main);
-          }
-          catch (Exception ex)
-          {
-              Window.GetWindow(this).Opacity = 1;
-              if (sender != null)
-                  HelpClass.EndAwait(grid_main);
-              HelpClass.ExceptionMessage(ex, this);
-          }
-          */
-        }
+       
 
         private void Btn_addAirline_Click(object sender, RoutedEventArgs e)
         {

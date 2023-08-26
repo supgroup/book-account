@@ -191,7 +191,7 @@ trDateHint
                     serviceData.serviceDate = dp_serviceDate.SelectedDate;
                     serviceData.total =( tb_total.Text==null|| tb_total.Text=="")?0: Convert.ToDecimal(tb_total.Text);
                   serviceData.notes = tb_notes.Text;
-
+                    serviceData.systemType="syr";
                     serviceData.createUserId = MainWindow.userLogin.userId;
                     serviceData.updateUserId = MainWindow.userLogin.userId;
 
@@ -235,8 +235,8 @@ trDateHint
                     serviceData.serviceDate = dp_serviceDate.SelectedDate;
                     serviceData.total = Convert.ToDecimal(tb_total.Text);
                   serviceData.notes = tb_notes.Text;
-
-                    serviceData.createUserId = MainWindow.userLogin.userId;
+                        serviceData.systemType = "syr";
+                        serviceData.createUserId = MainWindow.userLogin.userId;
                     serviceData.updateUserId = MainWindow.userLogin.userId;
 
 
@@ -478,6 +478,7 @@ trDateHint
         async Task<IEnumerable<ServiceData>> RefreshServiceDatasList()
         {
             serviceDatas = await serviceData.GetAll();
+            serviceDatas = serviceDatas.Where(s => s.systemType == "syr").ToList();
             return serviceDatas;
         }
         void RefreshServiceDatasView()

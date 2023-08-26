@@ -48,6 +48,7 @@ namespace BookAccountApp
         public Nullable<int> passengerId { get; set; }
         public Nullable<int> flightId { get; set; }
         public Nullable<int> operationId { get; set; }
+        public string systemType { get; set; }
     
         public virtual flights flights { get; set; }
         public virtual office office { get; set; }

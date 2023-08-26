@@ -49,6 +49,7 @@ namespace BookAccountApp.ApiClasses
         public string officeName  { get; set; }
         public Nullable<int> operationId { get; set; }
         public string strServiceDate { get; set; }
+        public string systemType { get; set; }
         public bool canDelete { get; set; }
 
         /// <summary>
@@ -104,7 +105,8 @@ namespace BookAccountApp.ApiClasses
                                 operationId = S.operationId,
                                officeName=OFF.name,
                                 canDelete = true,
-                                      
+                                systemType=S.systemType,
+
                             }).ToList();
 
                         //if (List.Count > 0)
@@ -205,7 +207,7 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.passengerId = newObject.passengerId;
                             tmpObject.flightId = newObject.flightId;
                             tmpObject.operationId = newObject.operationId;
-
+                            tmpObject.systemType = newObject.systemType;
 
                             entity.SaveChanges();
 
@@ -268,7 +270,7 @@ namespace BookAccountApp.ApiClasses
                           passengerId = S.passengerId,
                           flightId = S.flightId,
                           operationId = S.operationId,
-
+                          systemType = S.systemType,
 
                       }).FirstOrDefault();
                     return  row;

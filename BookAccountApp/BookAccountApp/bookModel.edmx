@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="bookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="bookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="cities">
           <Key>
             <PropertyRef Name="cityId" />
@@ -206,6 +206,7 @@
           <Property Name="passengerId" Type="int" />
           <Property Name="flightId" Type="int" />
           <Property Name="operationId" Type="int" />
+          <Property Name="systemType" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="setting">
           <Key>
@@ -743,8 +744,7 @@
             <End Role="userSetValues" EntitySet="userSetValues" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="bookModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -986,6 +986,7 @@
           <NavigationProperty Name="payOp" Relationship="Self.FK_payOp_serviceData" FromRole="serviceData" ToRole="payOp" />
           <NavigationProperty Name="users" Relationship="Self.FK_serviceData_users" FromRole="serviceData" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_serviceData_users1" FromRole="serviceData" ToRole="users" />
+          <Property Name="systemType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="setting">
           <Key>
@@ -1730,6 +1731,7 @@
           <EntitySetMapping Name="serviceData">
             <EntityTypeMapping TypeName="bookModel.serviceData">
               <MappingFragment StoreEntitySet="serviceData">
+                <ScalarProperty Name="systemType" ColumnName="systemType" />
                 <ScalarProperty Name="serviceId" ColumnName="serviceId" />
                 <ScalarProperty Name="serviceNum" ColumnName="serviceNum" />
                 <ScalarProperty Name="type" ColumnName="type" />
