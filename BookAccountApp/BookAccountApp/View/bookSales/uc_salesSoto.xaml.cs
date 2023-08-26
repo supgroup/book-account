@@ -776,39 +776,6 @@ namespace BookAccountApp.View.bookSales
 
         #endregion
 
-        private void Btn_addFlight_Click(object sender, RoutedEventArgs e)
-        {
-            /*
-            try
-            {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
-                Window.GetWindow(this).Opacity = 0.2;
-                wd_updateVendor w = new wd_updateVendor();
-                //// pass agent id to update windows
-                w.agent.agentId = 0;
-                w.type = "c";
-                w.ShowDialog();
-                if (w.isOk == true)
-                {
-                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                    await FillCombo.RefreshCustomers();
-                    await RefrishCustomers();
-                }
-                Window.GetWindow(this).Opacity = 1;
-
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                Window.GetWindow(this).Opacity = 1;
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
-            }
-            */
-        }
  
        
 
@@ -838,31 +805,6 @@ namespace BookAccountApp.View.bookSales
           */
         }
 
-        private void Btn_addOfficeId_Click(object sender, RoutedEventArgs e)
-        {
-            /*
-          try
-          {
-              if (sender != null)
-                  HelpClass.StartAwait(grid_main);
-              Window.GetWindow(this).Opacity = 0.2;
-              wd_flight w = new wd_flight();
-              w.ShowDialog();
-              await FillCombo.fillFlightTable(cb_flight);
-              Window.GetWindow(this).Opacity = 1;
-
-              if (sender != null)
-                  HelpClass.EndAwait(grid_main);
-          }
-          catch (Exception ex)
-          {
-              Window.GetWindow(this).Opacity = 1;
-              if (sender != null)
-                  HelpClass.EndAwait(grid_main);
-              HelpClass.ExceptionMessage(ex, this);
-          }
-          */
-        }
 
         private void Btn_uploadDocs_Click(object sender, RoutedEventArgs e)
         {
@@ -876,15 +818,15 @@ namespace BookAccountApp.View.bookSales
 
         private void Btn_addPassenger_Click(object sender, RoutedEventArgs e)
         {
-            /*
+            
           try
           {
               if (sender != null)
                   HelpClass.StartAwait(grid_main);
               Window.GetWindow(this).Opacity = 0.2;
-              wd_flight w = new wd_flight();
+                wd_passengers w = new wd_passengers();
               w.ShowDialog();
-              await FillCombo.fillFlightTable(cb_flight);
+              //await FillCombo.fillFlightTable(cb_flight);
               Window.GetWindow(this).Opacity = 1;
 
               if (sender != null)
@@ -897,20 +839,19 @@ namespace BookAccountApp.View.bookSales
                   HelpClass.EndAwait(grid_main);
               HelpClass.ExceptionMessage(ex, this);
           }
-          */
+          
         }
 
         private void Btn_addOffice_Click(object sender, RoutedEventArgs e)
         {
-            /*
           try
           {
               if (sender != null)
                   HelpClass.StartAwait(grid_main);
               Window.GetWindow(this).Opacity = 0.2;
-              wd_flight w = new wd_flight();
+                wd_office w = new wd_office();
               w.ShowDialog();
-              await FillCombo.fillFlightTable(cb_flight);
+              //await FillCombo.fillFlightTable(cb_flight);
               Window.GetWindow(this).Opacity = 1;
 
               if (sender != null)
@@ -923,7 +864,6 @@ namespace BookAccountApp.View.bookSales
                   HelpClass.EndAwait(grid_main);
               HelpClass.ExceptionMessage(ex, this);
           }
-          */
         }
 
         private void Tb_total_PreviewTextInput(object sender, TextCompositionEventArgs e)

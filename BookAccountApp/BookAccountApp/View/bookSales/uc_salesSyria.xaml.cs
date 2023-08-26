@@ -23,6 +23,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Reporting.WinForms;
+using BookAccountApp.View.sectionData;
 
 namespace BookAccountApp.View.sales
 {
@@ -829,6 +830,28 @@ trDateHint
         private void Btn_addAirline_Click(object sender, RoutedEventArgs e)
         {
 
+            /*
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_durations w = new wd_durations();
+                w.ShowDialog();
+                await FillCombo.fillDurationsTable(cb_duration);
+                Window.GetWindow(this).Opacity = 1;
+
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+            **/
         }
 
         private void Btn_addOfficeId_Click(object sender, RoutedEventArgs e)
@@ -848,12 +871,50 @@ trDateHint
 
         private void Btn_addPassenger_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_durations w = new wd_durations();
+                w.ShowDialog();
+                //await FillCombo.fillDurationsTable(cb_duration);
+                Window.GetWindow(this).Opacity = 1;
 
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_addOffice_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_office w = new wd_office();
+                w.ShowDialog();
+                //await FillCombo.fillDurationsTable(cb_duration);
+                Window.GetWindow(this).Opacity = 1;
 
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Tb_total_PreviewTextInput(object sender, TextCompositionEventArgs e)

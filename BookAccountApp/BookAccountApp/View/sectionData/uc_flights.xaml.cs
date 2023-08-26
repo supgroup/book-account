@@ -778,7 +778,6 @@ motherHint
 
         private async void Btn_addFlight_Click(object sender, RoutedEventArgs e)
         {
-            
             try
             {
                 if (sender != null)
@@ -799,7 +798,6 @@ motherHint
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            
         }
 
         private async void Btn_addFlightFrom_Click(object sender, RoutedEventArgs e)
