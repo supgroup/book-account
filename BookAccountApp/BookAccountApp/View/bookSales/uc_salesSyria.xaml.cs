@@ -818,7 +818,7 @@ trDateHint
 
         }
 
-        private void Btn_addPassenger_Click(object sender, RoutedEventArgs e)
+        private async  void Btn_addPassenger_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -827,7 +827,7 @@ trDateHint
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_passengers w = new wd_passengers();
                 w.ShowDialog();
-                //await FillCombo.fillDurationsTable(cb_duration);
+               await FillCombo.fillPassengers(cb_passenger);
                 Window.GetWindow(this).Opacity = 1;
 
                 if (sender != null)

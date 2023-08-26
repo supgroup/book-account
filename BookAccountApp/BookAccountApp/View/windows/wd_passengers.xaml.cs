@@ -106,30 +106,19 @@ namespace BookAccountApp.View.windows
         private void translate()
         {
 
-            txt_title.Text = MainWindow.resourcemanager.GetString("flights");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("flightHint"));
+            txt_title.Text = MainWindow.resourcemanager.GetString("passenger");
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_custCode, MainWindow.resourcemanager.GetString("trCodeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_lastName, MainWindow.resourcemanager.GetString("trLastNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_father, MainWindow.resourcemanager.GetString("fatherHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mother, MainWindow.resourcemanager.GetString("motherHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
             btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
 
-
-            dg_items.Columns[0].Header = MainWindow.resourcemanager.GetString("flight");
-            dg_items.Columns[1].Header = MainWindow.resourcemanager.GetString("trNote");
-
-
             btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
-
-
-
-            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            //tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            //tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            //tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            //tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
-            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
+ 
 
         }
         async Task Search()
