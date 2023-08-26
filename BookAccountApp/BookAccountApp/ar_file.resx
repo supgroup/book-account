@@ -2983,6 +2983,9 @@
   <data name="bookInfoSoto" xml:space="preserve">
     <value>بيانات الحجز -سوتو</value>
   </data>
+  <data name="operationHint" xml:space="preserve">
+    <value>العملية ...</value>
+  </data>
   <data name="soto" xml:space="preserve">
     <value>سوتو</value>
   </data>

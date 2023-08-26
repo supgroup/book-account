@@ -2980,6 +2980,9 @@ Please add Email in setting</value>
   <data name="bookInfoSoto" xml:space="preserve">
     <value>Book Info - Soto</value>
   </data>
+  <data name="operationHint" xml:space="preserve">
+    <value>Operation ...</value>
+  </data>
   <data name="soto" xml:space="preserve">
     <value>Soto</value>
   </data>

@@ -93,9 +93,9 @@ namespace BookAccountApp.View.bookSales
 
                 await RefreshServiceDatasList();
                 await Search();
-                await fillcombos();
+              
                 Clear();
-
+                await fillcombos();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -115,10 +115,11 @@ namespace BookAccountApp.View.bookSales
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_passenger, MainWindow.resourcemanager.GetString("passengerNameHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_ticketNum, MainWindow.resourcemanager.GetString("ticketNumHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_airline, MainWindow.resourcemanager.GetString("airlineFlightHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_operation, MainWindow.resourcemanager.GetString("operationHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_office, MainWindow.resourcemanager.GetString("officeNameHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_serviceDate, MainWindow.resourcemanager.GetString("trDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_total, MainWindow.resourcemanager.GetString("totalHint"));
-
+            
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_fromDateSearch, MainWindow.resourcemanager.GetString("fromDate"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_toDateSearch, MainWindow.resourcemanager.GetString("toDate"));
@@ -138,8 +139,8 @@ namespace BookAccountApp.View.bookSales
             dg_serviceData.Columns[2].Header = MainWindow.resourcemanager.GetString("ticketNum");
             dg_serviceData.Columns[3].Header = MainWindow.resourcemanager.GetString("airlineFlight");
             dg_serviceData.Columns[4].Header = MainWindow.resourcemanager.GetString("officeName");
-          //  dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("trDate");
-            dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("total");
+            dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("trDate");
+            dg_serviceData.Columns[6].Header = MainWindow.resourcemanager.GetString("total");
 
 
             //dg_serviceData.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
@@ -177,6 +178,7 @@ namespace BookAccountApp.View.bookSales
                     serviceData.ticketNum = tb_ticketNum.Text;
                     serviceData.flightId = Convert.ToInt32(cb_airline.SelectedValue);
                     serviceData.officeId = Convert.ToInt32(cb_office.SelectedValue);
+                    serviceData.operationId = Convert.ToInt32(cb_operation.SelectedValue);
                     //serviceData.serviceDate = dp_serviceDate.SelectedDate;
                     serviceData.total = (tb_total.Text == null || tb_total.Text == "") ? 0 : Convert.ToDecimal(tb_total.Text);
                     serviceData.notes = tb_notes.Text;
@@ -222,6 +224,7 @@ namespace BookAccountApp.View.bookSales
                         serviceData.ticketNum = tb_ticketNum.Text;
                         serviceData.flightId = Convert.ToInt32(cb_airline.SelectedValue);
                         serviceData.officeId = Convert.ToInt32(cb_office.SelectedValue);
+                        serviceData.operationId = Convert.ToInt32(cb_operation.SelectedValue);
                         //serviceData.serviceDate = dp_serviceDate.SelectedDate;
                         serviceData.total = Convert.ToDecimal(tb_total.Text);
                         serviceData.notes = tb_notes.Text;
@@ -267,10 +270,10 @@ namespace BookAccountApp.View.bookSales
                     {
                         serviceData.serviceId = 0;
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
-
+                        Clear();
                         await RefreshServiceDatasList();
                         await Search();
-                        Clear();
+                    
                     }
 
 
@@ -372,7 +375,7 @@ namespace BookAccountApp.View.bookSales
             try
             {
                 HelpClass.StartAwait(grid_main);
-
+                HelpClass.clearValidate(requiredControlList, this);
                 //selection
 
                 if (dg_serviceData.SelectedIndex != -1)
@@ -385,8 +388,10 @@ namespace BookAccountApp.View.bookSales
                         cb_passenger.SelectedValue = serviceData.passengerId;
                         cb_airline.SelectedValue = serviceData.flightId;
                         cb_office.SelectedValue = serviceData.officeId;
+                        cb_operation.SelectedValue = serviceData.operationId;
+                      
                         tb_total.Text = HelpClass.DecTostring(serviceData.total);
-                        this.DataContext = serviceData;
+                      this.DataContext = serviceData;
                         //await getImg();
                         #region delete
                         //if (serviceData.canDelete)
@@ -404,7 +409,7 @@ namespace BookAccountApp.View.bookSales
                         //HelpClass.getPhone(serviceData.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
                     }
                 }
-                HelpClass.clearValidate(requiredControlList, this);
+             
 
                 //p_error_email.Visibility = Visibility.Collapsed;
 
@@ -482,6 +487,7 @@ namespace BookAccountApp.View.bookSales
             await FillCombo.fillPassengers(cb_passenger);
             await FillCombo.fillFlights(cb_airline);
             await FillCombo.fillOffice(cb_office);
+            await FillCombo.fillOperations(cb_operation);
         }
 
         #endregion
@@ -494,10 +500,12 @@ namespace BookAccountApp.View.bookSales
             cb_passenger.SelectedIndex = -1;
             cb_airline.SelectedIndex = -1;
             cb_office.SelectedIndex = -1;
-            cb_passenger.Text = "";
-            cb_airline.Text = "";
-            cb_office.Text = "";
+            cb_operation.SelectedIndex = -1;
+            //cb_passenger.Text = "";
+            //cb_airline.Text = "";
+            //cb_office.Text = "";
             tb_total.Text = "";
+            //cb_operation.Text ="";
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }

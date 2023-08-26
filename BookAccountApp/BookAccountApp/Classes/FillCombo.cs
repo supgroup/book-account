@@ -780,5 +780,17 @@ namespace BookAccountApp.Classes
 
 
         }
+        static Operations OperationModel = new Operations();
+        static IEnumerable<Operations> OperationsList;
+        static public async Task fillOperations(ComboBox combo)
+        {
+            OperationsList = await OperationModel.GetAll();
+            combo.ItemsSource = OperationsList;
+            combo.SelectedValuePath = "operationId";
+            combo.DisplayMemberPath = "operation";
+            combo.SelectedIndex = -1;
+
+
+        }
     }
 }

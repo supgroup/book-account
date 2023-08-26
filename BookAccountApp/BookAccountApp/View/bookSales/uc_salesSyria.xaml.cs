@@ -88,13 +88,12 @@ namespace BookAccountApp.View.sales
                 //await FillCombo.fillCountriesNames(cb_country);
                 //FillCombo.fillAgentLevel(cb_custlevel);
 
-                Keyboard.Focus(cb_passenger);
+               // Keyboard.Focus(cb_passenger);
              
                 await RefreshServiceDatasList();
-                await Search();
+                await Search();              
+             Clear();
                 await fillcombos();
-                Clear();
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -504,9 +503,9 @@ trDateHint
             cb_passenger.SelectedIndex = -1;
             cb_airline.SelectedIndex = -1;
             cb_office.SelectedIndex = -1;
-            cb_passenger.Text ="";
-            cb_airline.Text = "";
-            cb_office.Text = "";
+            //cb_passenger.Text ="";
+            //cb_airline.Text = "";
+            //cb_office.Text = "";
             tb_total.Text = "";
             // last 
             HelpClass.clearValidate(requiredControlList, this);

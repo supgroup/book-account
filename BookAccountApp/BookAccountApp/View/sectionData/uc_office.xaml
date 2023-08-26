@@ -427,7 +427,7 @@
                                 <TextBox Margin="4,0" x:Name="tb_mobile"  
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
                                          Text="{Binding mobile, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
-                                         materialDesign:HintAssist.Hint="mobile..."   Foreground="#4E4E4E"
+                                         materialDesign:HintAssist.Hint="mobile..."   Foreground="#4E4E4E" MaxLength="20" 
                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
                                         Tag="int" PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
