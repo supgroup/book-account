@@ -778,54 +778,7 @@ trDateHint
 
         #endregion
 
-        private void Btn_addFlight_Click(object sender, RoutedEventArgs e)
-        {
-            /*
-            try
-            {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
-                Window.GetWindow(this).Opacity = 0.2;
-                wd_updateVendor w = new wd_updateVendor();
-                //// pass agent id to update windows
-                w.agent.agentId = 0;
-                w.type = "c";
-                w.ShowDialog();
-                if (w.isOk == true)
-                {
-                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                    await FillCombo.RefreshCustomers();
-                    await RefrishCustomers();
-                }
-                Window.GetWindow(this).Opacity = 1;
-
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                Window.GetWindow(this).Opacity = 1;
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
-            }
-            */
-        }
-
-        private void Btn_addFlightFrom_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Btn_addFlightTo_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Btn_addPassengerId_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
 
         private void Btn_addAirline_Click(object sender, RoutedEventArgs e)
         {
@@ -854,11 +807,7 @@ trDateHint
             **/
         }
 
-        private void Btn_addOfficeId_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+      
         private void Btn_uploadDocs_Click(object sender, RoutedEventArgs e)
         {
 
@@ -876,7 +825,7 @@ trDateHint
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
                 Window.GetWindow(this).Opacity = 0.2;
-                wd_durations w = new wd_durations();
+                wd_passengers w = new wd_passengers();
                 w.ShowDialog();
                 //await FillCombo.fillDurationsTable(cb_duration);
                 Window.GetWindow(this).Opacity = 1;
