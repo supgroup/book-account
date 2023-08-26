@@ -77,18 +77,10 @@ namespace BookAccountApp.View.windows
                 translate();
                 #endregion
 
-                //await FillCombo.fillItemCombo(cb_item);
+               
 
-                //if (FillCombo.itemunitsList is null)
-                //    await FillCombo.RefreshItemUnits();
 
-                await Search();
-
-                #region key up
-                // key_up item
-
-                //cb_unit.Text = "";
-                #endregion
+               
 
                 if (sender != null)
                     HelpClass.EndAwait(grid_sliceMain);
@@ -121,19 +113,6 @@ namespace BookAccountApp.View.windows
  
 
         }
-        async Task Search()
-        {
-
-            if (passengersList is null)
-                await RefreshPassengersList();
-
-            searchText = tb_search.Text.ToLower();
-
-            passengersQuery = passengersList.Where(s =>
-            (s.name.ToLower().Contains(searchText)));
-            RefreshPassengersView();
-
-        }
 
         async Task<IEnumerable<Passengers>> RefreshPassengersList()
         {
@@ -141,11 +120,7 @@ namespace BookAccountApp.View.windows
 
             return passengersList;
         }
-        void RefreshPassengersView()
-        {
-            dg_items.ItemsSource = passengersQuery;
-            txt_count.Text = dg_items.Items.Count.ToString();
-        }
+      
         void Clear()
         {
             this.DataContext = new Flights();
@@ -219,32 +194,6 @@ namespace BookAccountApp.View.windows
         #region events
 
 
-        private void Dg_items_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {//selection
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                //selection
-                if (dg_items.SelectedIndex != -1)
-                {
-                    passengersrow = dg_items.SelectedItem as Passengers;
-                    //   this.DataContext = passengersrow;
-                    if (passengersrow != null)
-                    {
-                        this.DataContext = passengersrow;
-                    }
-                }
-                HelpClass.clearValidate(requiredControlList, this);
-                //p_error_email.Visibility = Visibility.Collapsed;
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             try
@@ -283,42 +232,6 @@ namespace BookAccountApp.View.windows
             }
             catch (Exception ex)
             {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
-        {//search
-            try
-            {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_sliceMain);
-
-                await Search();
-
-                if (sender != null)
-                    HelpClass.EndAwait(grid_sliceMain);
-            }
-            catch (Exception ex)
-            {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_sliceMain);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {//refresh
-            try
-            {//refresh
-
-                HelpClass.StartAwait(grid_main);
-                await RefreshPassengersList();
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -434,7 +347,7 @@ namespace BookAccountApp.View.windows
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                         Clear();
                         await RefreshPassengersList();
-                        await Search();
+                        //await Search();
                     }
                 }
 
@@ -470,7 +383,7 @@ namespace BookAccountApp.View.windows
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                         Clear();
                         await RefreshPassengersList();
-                        await Search();
+                        //await Search();
                     }
                 }
                 HelpClass.EndAwait(grid_main);
@@ -498,7 +411,7 @@ namespace BookAccountApp.View.windows
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                         await RefreshPassengersList();
-                        await Search();
+                        //await Search();
                         Clear();
                     }
 
