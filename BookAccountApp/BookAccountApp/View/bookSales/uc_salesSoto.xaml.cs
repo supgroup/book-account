@@ -816,7 +816,7 @@ namespace BookAccountApp.View.bookSales
 
         }
 
-        private void Btn_addPassenger_Click(object sender, RoutedEventArgs e)
+        private async void Btn_addPassenger_Click(object sender, RoutedEventArgs e)
         {
             
           try
@@ -826,8 +826,8 @@ namespace BookAccountApp.View.bookSales
               Window.GetWindow(this).Opacity = 0.2;
                 wd_passengers w = new wd_passengers();
               w.ShowDialog();
-              //await FillCombo.fillFlightTable(cb_flight);
-              Window.GetWindow(this).Opacity = 1;
+                await FillCombo.fillPassengers(cb_passenger);
+                Window.GetWindow(this).Opacity = 1;
 
               if (sender != null)
                   HelpClass.EndAwait(grid_main);
