@@ -27,6 +27,7 @@ using System.Windows.Resources;
 using BookAccountApp.View.windows;
 using BookAccountApp.View.reports;
 using BookAccountApp.View.bookSales;
+using BookAccountApp.View.accounting;
 
 namespace BookAccountApp
 {
@@ -496,25 +497,9 @@ namespace BookAccountApp
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        //public  void Btn_sales_Click(object sender, RoutedEventArgs e)
-        //{//sales
-        //    try
-        //    {
-        //        //Button button = sender as Button;
-        //        //colorTextRefreash(button.Tag.ToString());
-        //        //ColorIconRefreash(button.Tag.ToString());
-        //        //openVisible(button.Tag.ToString());
-        //        //grid_main.Children.Clear();
-        //        //grid_main.Children.Add(uc_sales.Instance);
-        //        //uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale , null);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        HelpClass.ExceptionMessage(ex, this);
-        //    }
-        //}
+        
         private void Btn_accounting_Click(object sender, RoutedEventArgs e)
-        { 
+        {
             try
             {
                 Button button = sender as Button;
@@ -526,8 +511,7 @@ namespace BookAccountApp
                 second = "";
                 setMainPath();
                 grid_main.Children.Clear();
-                //grid_main.Children.Add(uc_sales.Instance);
-                //uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale, null);
+                grid_main.Children.Add(uc_accounting.Instance);
             }
             catch (Exception ex)
             {
