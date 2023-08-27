@@ -363,6 +363,9 @@
     <Compile Include="View\windows\wd_flight.xaml.cs">
       <DependentUpon>wd_flight.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_flightWithoutGrid.xaml.cs">
+      <DependentUpon>wd_flightWithoutGrid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_fromTable.xaml.cs">
       <DependentUpon>wd_fromTable.xaml</DependentUpon>
     </Compile>
@@ -504,6 +507,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_flight.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_flightWithoutGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
