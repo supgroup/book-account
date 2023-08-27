@@ -426,16 +426,17 @@ motherHint
                         this.DataContext = flights;
                         //await getImg();
                         #region delete
-                        //if (flights.canDelete)
-                        //    btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-                        //else
-                        //{
-                        //    if (flights.isActive == 0)
-                        //        btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
-                        //    else
-                        //        btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
-                        //}
+                        if (flights.canDelete)
+                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                        else
+                        {
+                            if (flights.isActive == false)
+                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                            else
+                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                        }
                         #endregion
+                      
                         //HelpClass.getMobile(flights.mobile, cb_areaMobile, tb_mobile);
                         //HelpClass.getPhone(flights.phone, cb_areaPhone, cb_areaPhoneLocal, tb_phone);
                         //HelpClass.getPhone(flights.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);

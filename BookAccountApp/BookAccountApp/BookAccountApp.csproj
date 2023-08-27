@@ -267,7 +267,13 @@
     <Compile Include="office.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="officeFiles.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="operations.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="passengerFiles.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="passengers.cs">
@@ -277,6 +283,9 @@
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="serviceData.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="serviceDataFiles.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="setting.cs">

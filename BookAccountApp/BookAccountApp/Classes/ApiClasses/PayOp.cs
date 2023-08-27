@@ -25,13 +25,16 @@ namespace BookAccountApp.ApiClasses
         public string opStatus { get; set; }
         public Nullable<System.DateTime> opDate { get; set; }
         public string notes { get; set; }
-        public Nullable<int> officeId { get; set; }
-        public Nullable<int> passengerId { get; set; }
-        public Nullable<int> userId { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
+        public Nullable<int> officeId { get; set; }
+        public Nullable<int> passengerId { get; set; }
+        public Nullable<int> userId { get; set; }
+        public string recipient { get; set; }
+        public string recivedFrom { get; set; }
+        public bool canDelete { get; set; }
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>
