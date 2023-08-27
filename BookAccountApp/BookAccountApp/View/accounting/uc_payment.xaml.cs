@@ -89,7 +89,7 @@ namespace BookAccountApp.View.accounting
                 //await FillCombo.fillCountriesNames(cb_country);
                 //FillCombo.fillAgentLevel(cb_custlevel);
 
-                Keyboard.Focus(cb_passenger);
+                Keyboard.Focus(tb_code);
 
                 await RefreshPayOpsList();
                 await Search();
@@ -112,8 +112,8 @@ namespace BookAccountApp.View.accounting
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
             txt_title.Text = MainWindow.resourcemanager.GetString("bookInfoSoto");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_passenger, MainWindow.resourcemanager.GetString("passengerNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_ticketNum, MainWindow.resourcemanager.GetString("ticketNumHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_passenger, MainWindow.resourcemanager.GetString("passengerNameHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_ticketNum, MainWindow.resourcemanager.GetString("ticketNumHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_airline, MainWindow.resourcemanager.GetString("airlineFlightHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_operation, MainWindow.resourcemanager.GetString("operationHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_office, MainWindow.resourcemanager.GetString("officeNameHint"));
@@ -696,60 +696,9 @@ namespace BookAccountApp.View.accounting
 
         }
 
-        private async void Btn_addPassenger_Click(object sender, RoutedEventArgs e)
-        {
 
-            try
-            {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_main);
-                Window.GetWindow(this).Opacity = 0.2;
-                wd_passengers w = new wd_passengers();
-                w.ShowDialog();
-                await FillCombo.fillPassengers(cb_passenger);
-                Window.GetWindow(this).Opacity = 1;
 
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                Window.GetWindow(this).Opacity = 1;
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
-        }
-
-        private void Btn_addOffice_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_main);
-                Window.GetWindow(this).Opacity = 0.2;
-                wd_office w = new wd_office();
-                w.ShowDialog();
-                //await FillCombo.fillFlightTable(cb_flight);
-                Window.GetWindow(this).Opacity = 1;
-
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                Window.GetWindow(this).Opacity = 1;
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void Tb_total_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-
-        }
+       
 
         private async void Dp_fromDateSearch_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
