@@ -82,7 +82,6 @@ namespace BookAccountApp.View.windows
                 //if (FillCombo.itemunitsList is null)
                 //    await FillCombo.RefreshItemUnits();
 
-                await Search();
 
                 #region key up
                 // key_up item
@@ -107,7 +106,6 @@ namespace BookAccountApp.View.windows
         {
 
             txt_title.Text = MainWindow.resourcemanager.GetString("flights");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("flightHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
@@ -115,9 +113,6 @@ namespace BookAccountApp.View.windows
             btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
 
-
-            dg_items.Columns[0].Header = MainWindow.resourcemanager.GetString("flight");
-            dg_items.Columns[1].Header = MainWindow.resourcemanager.GetString("trNote");
 
 
             btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
@@ -129,34 +124,16 @@ namespace BookAccountApp.View.windows
             //tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
             //tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
             //tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
-            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
 
         }
-        async Task Search()
-        {
-
-            if (officeList is null)
-                await RefreshOfficeList();
-
-            searchText = tb_search.Text.ToLower();
-
-            officeQuery = officeList.Where(s =>
-            (s.name.ToLower().Contains(searchText)));
-            RefreshOfficeView();
-
-        }
-
+       
         async Task<IEnumerable<Office>> RefreshOfficeList()
         {
             officeList = await officerow.GetAll();
 
             return officeList;
         }
-        void RefreshOfficeView()
-        {
-            dg_items.ItemsSource = officeQuery;
-            txt_count.Text = dg_items.Items.Count.ToString();
-        }
+      
         void Clear()
         {
             this.DataContext = new Flights();
@@ -228,32 +205,6 @@ namespace BookAccountApp.View.windows
         #region events
 
 
-        private void Dg_items_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {//selection
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                //selection
-                if (dg_items.SelectedIndex != -1)
-                {
-                    officerow = dg_items.SelectedItem as Office;
-                    //   this.DataContext = officerow;
-                    if (officerow != null)
-                    {
-                        this.DataContext = officerow;
-                    }
-                }
-                HelpClass.clearValidate(requiredControlList, this);
-                //p_error_email.Visibility = Visibility.Collapsed;
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             try
@@ -295,42 +246,7 @@ namespace BookAccountApp.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
-        {//search
-            try
-            {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_sliceMain);
-
-                await Search();
-
-                if (sender != null)
-                    HelpClass.EndAwait(grid_sliceMain);
-            }
-            catch (Exception ex)
-            {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_sliceMain);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {//refresh
-            try
-            {//refresh
-
-                HelpClass.StartAwait(grid_main);
-                await RefreshOfficeList();
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+     
 
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {//clear
@@ -469,7 +385,6 @@ namespace BookAccountApp.View.windows
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                         Clear();
                         await RefreshOfficeList();
-                        await Search();
                     }
                 }
 
@@ -503,7 +418,6 @@ namespace BookAccountApp.View.windows
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                         Clear();
                         await RefreshOfficeList();
-                        await Search();
                     }
                 }
                 HelpClass.EndAwait(grid_main);
@@ -530,7 +444,6 @@ namespace BookAccountApp.View.windows
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                         await RefreshOfficeList();
-                        await Search();
                         Clear();
                     }
 
