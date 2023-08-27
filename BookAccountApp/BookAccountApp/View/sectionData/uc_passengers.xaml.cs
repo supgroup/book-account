@@ -109,6 +109,8 @@ namespace BookAccountApp.View.sectionData
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
             txt_title.Text = MainWindow.resourcemanager.GetString("passenger");
+            txt_exportDocsButton.Text = MainWindow.resourcemanager.GetString("docExport");
+            txt_uploadDocsButton.Text = MainWindow.resourcemanager.GetString("docUpload");
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_custCode, MainWindow.resourcemanager.GetString("trCodeHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_lastName, MainWindow.resourcemanager.GetString("trLastNameHint"));
