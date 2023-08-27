@@ -31,10 +31,10 @@ namespace BookAccountApp.View.windows
     {
         #region variables
 
-        FlightTable flightTablerow = new FlightTable();
+        Flights flights = new Flights();
 
-        IEnumerable<FlightTable> flightTableQuery;
-        IEnumerable<FlightTable> flightTableList;
+        IEnumerable<Flights> flightTableQuery;
+        IEnumerable<Flights> flightTableList;
         public static List<string> requiredControlList;
 
         bool tgl_priceState = true;
@@ -105,32 +105,42 @@ namespace BookAccountApp.View.windows
         private void translate()
         {
 
-            txt_title.Text = MainWindow.resourcemanager.GetString("flights");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("flightHint"));
+           
+            //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
+       
+            txt_title.Text = MainWindow.resourcemanager.GetString("flightInfo");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_airline, MainWindow.resourcemanager.GetString("airlineHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightTableId, MainWindow.resourcemanager.GetString("flightHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightFrom, MainWindow.resourcemanager.GetString("fromHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightTo, MainWindow.resourcemanager.GetString("toHint"));
+
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+
+            //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
+
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_custlevel, MainWindow.resourcemanager.GetString("trLevelHint"));
+            //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
+  
+
+
+            //dg_flights.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
+
+            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
+     
 
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
             btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
 
-
-
-            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
-
-
-
-            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            //tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            //tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            //tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            //tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
-
         }
-       
 
-        async Task<IEnumerable<FlightTable>> RefreshFlightTableList()
+
+        async Task<IEnumerable<Flights>> RefreshFlightTableList()
         {
-            flightTableList = await flightTablerow.GetAll();
+            flightTableList = await flights.GetAll();
 
             return flightTableList;
         }
@@ -189,17 +199,7 @@ namespace BookAccountApp.View.windows
 
 
 
-        private async Task<bool> chkIfNameIsExists(string name, int uId)
-        {
-            bool isValid = true;
-            if (flightTableList == null)
-                await RefreshFlightTableList();
-            if (flightTableList.Any(i => i.name == name && i.flightTableId != uId))
-                isValid = false;
-            if (!isValid)
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorDuplicateNameToolTip"), animation: ToasterAnimation.FadeIn);
-            return isValid;
-        }
+     
 
         #endregion
 
@@ -343,24 +343,55 @@ namespace BookAccountApp.View.windows
                 //tb_lastName.Text = ts.ToString();
 
                 HelpClass.StartAwait(grid_main);
-                bool duplicaterName = false;
-                duplicaterName = await chkIfNameIsExists(tb_name.Text, 0);
-                flightTablerow = new FlightTable();
-                if (HelpClass.validate(requiredControlList, this) && duplicaterName)
+
+                flights = new Flights();
+                if (HelpClass.validate(requiredControlList, this))
                 {
                     //tb_custCode.Text = await flights.generateCodeNumber("cu");
 
-                    flightTablerow.name = tb_name.Text;
-                    flightTablerow.notes = tb_notes.Text;
-                    flightTablerow.isActive = true;
-                    decimal s = await flightTablerow.Save(flightTablerow);
+                    flights.airline = tb_airline.Text;
+                    if (Convert.ToInt32(cb_flightTableId.SelectedValue) == 0)
+                    {
+                        flights.flightTableId = null;
+                    }
+                    else
+                    {
+                        flights.flightTableId = Convert.ToInt32(cb_flightTableId.SelectedValue);
+                    }
+                    //
+                    if (Convert.ToInt32(cb_flightTo.SelectedValue) == 0)
+                    {
+                        flights.toTableId = null;
+                    }
+                    else
+                    {
+                        flights.toTableId = Convert.ToInt32(cb_flightTo.SelectedValue);
+                    }
+                    //
+                    if (Convert.ToInt32(cb_flightFrom.SelectedValue) == 0)
+                    {
+                        flights.fromTableId = null;
+                    }
+                    else
+                    {
+                        flights.fromTableId = Convert.ToInt32(cb_flightFrom.SelectedValue);
+                    }
+                    flights.notes = tb_notes.Text;
+
+                    flights.createUserId = MainWindow.userLogin.userId;
+                    flights.updateUserId = MainWindow.userLogin.userId;
+
+
+                    decimal s = await flights.Save(flights);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+
                         Clear();
-                        await RefreshFlightTableList();
+                       
                     }
                 }
 
@@ -376,26 +407,57 @@ namespace BookAccountApp.View.windows
         {//update
             try
             {
-
                 HelpClass.StartAwait(grid_main);
-                bool duplicaterName = false;
-                duplicaterName = await chkIfNameIsExists(tb_name.Text, flightTablerow.flightTableId);
 
-                if (HelpClass.validate(requiredControlList, this) && duplicaterName)
+                if (flights.flightId > 0)
                 {
-                    flightTablerow.name = tb_name.Text;
-                    flightTablerow.notes = tb_notes.Text;
-                    flightTablerow.isActive = true;
-                    decimal s = await flightTablerow.Save(flightTablerow);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
+                    if (HelpClass.validate(requiredControlList, this))
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        Clear();
-                        await RefreshFlightTableList();
+
+
+                        flights.airline = tb_airline.Text;
+                        if (Convert.ToInt32(cb_flightTableId.SelectedValue) == 0)
+                        {
+                            flights.flightTableId = null;
+                        }
+                        else
+                        {
+                            flights.flightTableId = Convert.ToInt32(cb_flightTableId.SelectedValue);
+                        }
+                        //
+                        if (Convert.ToInt32(cb_flightTo.SelectedValue) == 0)
+                        {
+                            flights.toTableId = null;
+                        }
+                        else
+                        {
+                            flights.toTableId = Convert.ToInt32(cb_flightTo.SelectedValue);
+                        }
+                        //
+                        if (Convert.ToInt32(cb_flightFrom.SelectedValue) == 0)
+                        {
+                            flights.fromTableId = null;
+                        }
+                        else
+                        {
+                            flights.fromTableId = Convert.ToInt32(cb_flightFrom.SelectedValue);
+                        }
+
+                        flights.notes = tb_notes.Text;
+                        decimal s = await flights.Save(flights);
+                        if (s <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        else
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+
+                          
+                        }
                     }
                 }
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -405,25 +467,61 @@ namespace BookAccountApp.View.windows
             }
         }
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
-        {
+        {//delete
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (flightTablerow.flightTableId != 0)
+         
+
+                //}
+                if (flights.flightId != 0)
                 {
-                    decimal s = await flightTablerow.Delete(flightTablerow.flightTableId, MainWindow.userLogin.userId, true);
-                    if (s < 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("cannotdelete"), animation: ToasterAnimation.FadeIn);
+                    if ((!flights.canDelete) && (flights.isActive == false))
+                    {
+                        #region
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
+                        #endregion
+
+                        if (w.isOk)
+                            await activate();
+                    }
                     else
                     {
-                        flightTablerow.flightTableId = 0;
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                        #region
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        if (flights.canDelete)
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                        if (!flights.canDelete)
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
+                        #endregion
 
-                        await RefreshFlightTableList();
-                        Clear();
+                        if (w.isOk)
+                        {
+                            string popupContent = "";
+                            if (flights.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
+                            if ((!flights.canDelete) && (flights.isActive == true)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+
+                            var s = await flights.Delete(flights.flightId, MainWindow.userLogin.userId, flights.canDelete);
+                            if (s < 0)
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                flights.flightId = 0;
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+
+                               
+                                Clear();
+
+                            }
+                        }
                     }
-
-
                 }
                 HelpClass.EndAwait(grid_main);
             }
@@ -433,8 +531,18 @@ namespace BookAccountApp.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
-
+        private async Task activate()
+        {//activate
+            flights.isActive = true;
+            var s = await flights.Save(flights);
+            if (s <= 0)
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+            else
+            {
+                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
+               
+            }
+        }
         #endregion
 
         private void validateEmpty_LostFocus(object sender, RoutedEventArgs e)
