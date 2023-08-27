@@ -51,7 +51,7 @@ namespace BookAccountApp.ApiClasses
         public string strServiceDate { get; set; }
         public string systemType { get; set; }
         public bool canDelete { get; set; }
-
+        public Nullable<bool> isActive { get; set; }
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>

@@ -201,6 +201,8 @@
           <Property Name="officeId" Type="int" />
           <Property Name="passengerId" Type="int" />
           <Property Name="userId" Type="int" />
+          <Property Name="recipient" Type="nvarchar" MaxLength="500" />
+          <Property Name="recivedFrom" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="serviceData">
           <Key>
@@ -1044,6 +1046,8 @@
           <NavigationProperty Name="users" Relationship="Self.FK_payOp_users" FromRole="payOp" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_payOp_users1" FromRole="payOp" ToRole="users" />
           <NavigationProperty Name="users2" Relationship="Self.FK_payOp_users2" FromRole="payOp" ToRole="users" />
+          <Property Name="recipient" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="recivedFrom" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="serviceData">
           <Key>
@@ -1903,6 +1907,8 @@
           <EntitySetMapping Name="payOp">
             <EntityTypeMapping TypeName="bookModel.payOp">
               <MappingFragment StoreEntitySet="payOp">
+                <ScalarProperty Name="recivedFrom" ColumnName="recivedFrom" />
+                <ScalarProperty Name="recipient" ColumnName="recipient" />
                 <ScalarProperty Name="payOpId" ColumnName="payOpId" />
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="cash" ColumnName="cash" />

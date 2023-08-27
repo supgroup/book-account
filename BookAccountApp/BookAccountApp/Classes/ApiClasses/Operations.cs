@@ -31,7 +31,7 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> opStatementId { get; set; }
         public Nullable<int> durationId { get; set; }
         public bool canDelete { get; set; }
-
+        public Nullable<bool> isActive { get; set; }
 
 
         /// <summary>

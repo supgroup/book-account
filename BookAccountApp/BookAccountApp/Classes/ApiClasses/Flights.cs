@@ -33,8 +33,9 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> fromTableId { get; set; }
         public Nullable<int> toTableId { get; set; }
         public bool canDelete { get; set; }
-        
-            public string airlineflightTable { get; set; }
+        public Nullable<bool> isActive { get; set; }
+
+        public string airlineflightTable { get; set; }
 
         /// <summary>
         /// ///////////////////////////////////////
@@ -67,26 +68,26 @@ namespace BookAccountApp.ApiClasses
                                 flightTableId=S.flightTableId==null?0: S.flightTableId,
                                 fromTableId=S.fromTableId == null ? 0 : S.fromTableId,
                                 toTableId =S.toTableId == null ? 0 : S.toTableId,
-
-                                canDelete = true,
+                               isActive=S.isActive,
+                                canDelete = false,
 
                             }).ToList();
 
-                    //if (List.Count > 0)
-                    //{
-                    //    for (int i = 0; i < List.Count; i++)
-                    //    {
-                    //        if (List[i].isActive == 1)
-                    //        {
-                    //            int userId = (int)List[i].userId;
-                    //            var itemsI = entity.packageUser.Where(x => x.userId == userId).Select(b => new { b.userId }).FirstOrDefault();
+                    if (List.Count > 0)
+                    {
+                        for (int i = 0; i < List.Count; i++)
+                        {
+                            if (List[i].isActive == true)
+                            {
+                                int itemId = (int)List[i].flightId;
+                                var itemsI = entity.serviceData.Where(x => x.flightId == itemId).Select(b => new { b.flightId }).FirstOrDefault();
 
-                    //            if ((itemsI is null))
-                    //                canDelete = true;
-                    //        }
-                    //        List[i].canDelete = canDelete;
-                    //    }
-                    //}
+                                if ((itemsI is null))
+                                    canDelete = true;
+                            }
+                            List[i].canDelete = canDelete;
+                        }
+                    }
                     return List;
                 }
 
@@ -129,7 +130,7 @@ namespace BookAccountApp.ApiClasses
                             newObject.updateDate = newObject.createDate;
                             newObject.updateUserId = newObject.createUserId;
 
-
+                            newObject.isActive = true;
                             locationEntity.Add(newObject);
                             entity.SaveChanges();
                             message = newObject.flightId;
@@ -150,7 +151,7 @@ namespace BookAccountApp.ApiClasses
                            
                             tmpObject.createUserId = newObject.createUserId;
                             tmpObject.updateUserId = newObject.updateUserId;
-
+                           tmpObject.isActive = newObject.isActive;
 
                             entity.SaveChanges();
 
@@ -198,7 +199,7 @@ namespace BookAccountApp.ApiClasses
                          flightTableId = S.flightTableId == null ? 0 : S.flightTableId,
                          fromTableId = S.fromTableId == null ? 0 : S.fromTableId,
                          toTableId = S.toTableId == null ? 0 : S.toTableId,
-
+                         isActive = S.isActive,
 
 
                      }).FirstOrDefault();

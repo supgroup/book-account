@@ -30,6 +30,8 @@ namespace BookAccountApp
         public Nullable<int> officeId { get; set; }
         public Nullable<int> passengerId { get; set; }
         public Nullable<int> userId { get; set; }
+        public string recipient { get; set; }
+        public string recivedFrom { get; set; }
     
         public virtual office office { get; set; }
         public virtual passengers passengers { get; set; }
