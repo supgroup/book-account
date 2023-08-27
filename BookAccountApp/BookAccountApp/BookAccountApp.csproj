@@ -204,6 +204,7 @@
     </Compile>
     <Compile Include="Classes\ApiClasses\City.cs" />
     <Compile Include="Classes\ApiClasses\Country.cs" />
+    <Compile Include="Classes\ApiClasses\FileClass.cs" />
     <Compile Include="Classes\ApiClasses\FlightTable.cs" />
     <Compile Include="Classes\ApiClasses\FromTable.cs" />
     <Compile Include="Classes\ApiClasses\StatementsTable.cs" />
@@ -267,7 +268,13 @@
     <Compile Include="office.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="officeFiles.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="operations.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="passengerFiles.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="passengers.cs">
@@ -277,6 +284,9 @@
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="serviceData.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="serviceDataFiles.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="setting.cs">

@@ -86,6 +86,7 @@
           <Property Name="flightTableId" Type="int" />
           <Property Name="fromTableId" Type="int" />
           <Property Name="toTableId" Type="int" />
+          <Property Name="isActive" Type="bit" />
         </EntityType>
         <EntityType Name="flightTable">
           <Key>
@@ -123,6 +124,19 @@
           <Property Name="updateDate" Type="datetime2" Precision="7" />
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="officeFiles">
+          <Key>
+            <PropertyRef Name="fileId" />
+          </Key>
+          <Property Name="fileId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fileName" Type="nvarchar" MaxLength="500" />
+          <Property Name="extention" Type="nvarchar" MaxLength="500" />
+          <Property Name="folderName" Type="nvarchar" MaxLength="500" />
+          <Property Name="notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="officeId" Type="int" />
         </EntityType>
         <EntityType Name="operations">
           <Key>
@@ -137,6 +151,19 @@
           <Property Name="updateUserId" Type="int" />
           <Property Name="opStatementId" Type="int" />
           <Property Name="durationId" Type="int" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="passengerFiles">
+          <Key>
+            <PropertyRef Name="fileId" />
+          </Key>
+          <Property Name="fileId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fileName" Type="nvarchar" MaxLength="500" />
+          <Property Name="extention" Type="nvarchar" MaxLength="500" />
+          <Property Name="folderName" Type="nvarchar" MaxLength="500" />
+          <Property Name="notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="passengerId" Type="int" />
         </EntityType>
         <EntityType Name="passengers">
           <Key>
@@ -152,6 +179,7 @@
           <Property Name="updateDate" Type="datetime2" Precision="7" />
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
+          <Property Name="isActive" Type="bit" />
         </EntityType>
         <EntityType Name="payOp">
           <Key>
@@ -207,6 +235,19 @@
           <Property Name="flightId" Type="int" />
           <Property Name="operationId" Type="int" />
           <Property Name="systemType" Type="nvarchar" MaxLength="50" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="serviceDataFiles">
+          <Key>
+            <PropertyRef Name="fileId" />
+          </Key>
+          <Property Name="fileId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fileName" Type="nvarchar" MaxLength="500" />
+          <Property Name="extention" Type="nvarchar" MaxLength="500" />
+          <Property Name="folderName" Type="nvarchar" MaxLength="500" />
+          <Property Name="notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="serviceId" Type="int" />
         </EntityType>
         <EntityType Name="setting">
           <Key>
@@ -269,7 +310,7 @@
           <Property Name="balance" Type="decimal" Precision="20" Scale="3" Nullable="false" />
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
-          <Property Name="isActive" Type="int" />
+          <Property Name="isActive" Type="bit" />
           <Property Name="code" Type="nvarchar" MaxLength="500" />
           <Property Name="isAdmin" Type="bit" />
           <Property Name="groupId" Type="int" />
@@ -411,6 +452,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_officeFiles_office">
+          <End Role="office" Type="Self.office" Multiplicity="0..1" />
+          <End Role="officeFiles" Type="Self.officeFiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="office">
+              <PropertyRef Name="officeId" />
+            </Principal>
+            <Dependent Role="officeFiles">
+              <PropertyRef Name="officeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_operations_durationsTable">
           <End Role="durationsTable" Type="Self.durationsTable" Multiplicity="0..1" />
           <End Role="operations" Type="Self.operations" Multiplicity="*" />
@@ -432,6 +485,18 @@
             </Principal>
             <Dependent Role="operations">
               <PropertyRef Name="opStatementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_passengerFiles_passengers">
+          <End Role="passengers" Type="Self.passengers" Multiplicity="0..1" />
+          <End Role="passengerFiles" Type="Self.passengerFiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="passengers">
+              <PropertyRef Name="passengerId" />
+            </Principal>
+            <Dependent Role="passengerFiles">
+              <PropertyRef Name="passengerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -579,6 +644,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_serviceDataFiles_serviceData">
+          <End Role="serviceData" Type="Self.serviceData" Multiplicity="0..1" />
+          <End Role="serviceDataFiles" Type="Self.serviceDataFiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="serviceData">
+              <PropertyRef Name="serviceId" />
+            </Principal>
+            <Dependent Role="serviceDataFiles">
+              <PropertyRef Name="serviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_setValues_setting">
           <End Role="setting" Type="Self.setting" Multiplicity="0..1" />
           <End Role="setValues" Type="Self.setValues" Multiplicity="*" />
@@ -625,10 +702,13 @@
           <EntitySet Name="flightTable" EntityType="Self.flightTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="fromTable" EntityType="Self.fromTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="office" EntityType="Self.office" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="officeFiles" EntityType="Self.officeFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="operations" EntityType="Self.operations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="passengerFiles" EntityType="Self.passengerFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="passengers" EntityType="Self.passengers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="payOp" EntityType="Self.payOp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="serviceData" EntityType="Self.serviceData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="serviceDataFiles" EntityType="Self.serviceDataFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="setting" EntityType="Self.setting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="setValues" EntityType="Self.setValues" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="statementsTable" EntityType="Self.statementsTable" Schema="dbo" store:Type="Tables" />
@@ -675,6 +755,10 @@
             <End Role="users" EntitySet="users" />
             <End Role="office" EntitySet="office" />
           </AssociationSet>
+          <AssociationSet Name="FK_officeFiles_office" Association="Self.FK_officeFiles_office">
+            <End Role="office" EntitySet="office" />
+            <End Role="officeFiles" EntitySet="officeFiles" />
+          </AssociationSet>
           <AssociationSet Name="FK_operations_durationsTable" Association="Self.FK_operations_durationsTable">
             <End Role="durationsTable" EntitySet="durationsTable" />
             <End Role="operations" EntitySet="operations" />
@@ -682,6 +766,10 @@
           <AssociationSet Name="FK_operations_statementsTable" Association="Self.FK_operations_statementsTable">
             <End Role="statementsTable" EntitySet="statementsTable" />
             <End Role="operations" EntitySet="operations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_passengerFiles_passengers" Association="Self.FK_passengerFiles_passengers">
+            <End Role="passengers" EntitySet="passengers" />
+            <End Role="passengerFiles" EntitySet="passengerFiles" />
           </AssociationSet>
           <AssociationSet Name="FK_payOp_office" Association="Self.FK_payOp_office">
             <End Role="office" EntitySet="office" />
@@ -730,6 +818,10 @@
           <AssociationSet Name="FK_serviceData_users1" Association="Self.FK_serviceData_users1">
             <End Role="users" EntitySet="users" />
             <End Role="serviceData" EntitySet="serviceData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_serviceDataFiles_serviceData" Association="Self.FK_serviceDataFiles_serviceData">
+            <End Role="serviceData" EntitySet="serviceData" />
+            <End Role="serviceDataFiles" EntitySet="serviceDataFiles" />
           </AssociationSet>
           <AssociationSet Name="FK_setValues_setting" Association="Self.FK_setValues_setting">
             <End Role="setting" EntitySet="setting" />
@@ -838,6 +930,7 @@
           <Property Name="flightTableId" Type="Int32" />
           <Property Name="fromTableId" Type="Int32" />
           <Property Name="toTableId" Type="Int32" />
+          <Property Name="isActive" Type="Boolean" />
           <NavigationProperty Name="flightTable" Relationship="Self.FK_flights_flightTable" FromRole="flights" ToRole="flightTable" />
           <NavigationProperty Name="fromTable" Relationship="Self.FK_flights_fromTable" FromRole="flights" ToRole="fromTable" />
           <NavigationProperty Name="toTable" Relationship="Self.FK_flights_toTable" FromRole="flights" ToRole="toTable" />
@@ -881,10 +974,12 @@
           <Property Name="updateDate" Type="DateTime" Precision="7" />
           <Property Name="createUserId" Type="Int32" />
           <Property Name="updateUserId" Type="Int32" />
+          <Property Name="isActive" Type="Boolean" />
           <NavigationProperty Name="users" Relationship="Self.FK_office_users" FromRole="office" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_office_users1" FromRole="office" ToRole="users" />
           <NavigationProperty Name="payOp" Relationship="Self.FK_payOp_office" FromRole="office" ToRole="payOp" />
           <NavigationProperty Name="serviceData" Relationship="Self.FK_serviceData_office" FromRole="office" ToRole="serviceData" />
+          <NavigationProperty Name="officeFiles" Relationship="bookModel.FK_officeFiles_office" FromRole="office" ToRole="officeFiles" />
         </EntityType>
         <EntityType Name="operations">
           <Key>
@@ -899,6 +994,7 @@
           <Property Name="updateUserId" Type="Int32" />
           <Property Name="opStatementId" Type="Int32" />
           <Property Name="durationId" Type="Int32" />
+          <Property Name="isActive" Type="Boolean" />
           <NavigationProperty Name="durationsTable" Relationship="Self.FK_operations_durationsTable" FromRole="operations" ToRole="durationsTable" />
           <NavigationProperty Name="statementsTable" Relationship="Self.FK_operations_statementsTable" FromRole="operations" ToRole="statementsTable" />
           <NavigationProperty Name="serviceData" Relationship="Self.FK_serviceData_operations" FromRole="operations" ToRole="serviceData" />
@@ -917,8 +1013,10 @@
           <Property Name="updateDate" Type="DateTime" Precision="7" />
           <Property Name="createUserId" Type="Int32" />
           <Property Name="updateUserId" Type="Int32" />
+          <Property Name="isActive" Type="Boolean" />
           <NavigationProperty Name="payOp" Relationship="Self.FK_payOp_passengers" FromRole="passengers" ToRole="payOp" />
           <NavigationProperty Name="serviceData" Relationship="Self.FK_serviceData_passengers" FromRole="passengers" ToRole="serviceData" />
+          <NavigationProperty Name="passengerFiles" Relationship="bookModel.FK_passengerFiles_passengers" FromRole="passengers" ToRole="passengerFiles" />
         </EntityType>
         <EntityType Name="payOp">
           <Key>
@@ -979,6 +1077,8 @@
           <Property Name="passengerId" Type="Int32" />
           <Property Name="flightId" Type="Int32" />
           <Property Name="operationId" Type="Int32" />
+          <Property Name="systemType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
           <NavigationProperty Name="flights" Relationship="Self.FK_serviceData_flights" FromRole="serviceData" ToRole="flights" />
           <NavigationProperty Name="office" Relationship="Self.FK_serviceData_office" FromRole="serviceData" ToRole="office" />
           <NavigationProperty Name="operations" Relationship="Self.FK_serviceData_operations" FromRole="serviceData" ToRole="operations" />
@@ -986,7 +1086,7 @@
           <NavigationProperty Name="payOp" Relationship="Self.FK_payOp_serviceData" FromRole="serviceData" ToRole="payOp" />
           <NavigationProperty Name="users" Relationship="Self.FK_serviceData_users" FromRole="serviceData" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_serviceData_users1" FromRole="serviceData" ToRole="users" />
-          <Property Name="systemType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="serviceDataFiles" Relationship="bookModel.FK_serviceDataFiles_serviceData" FromRole="serviceData" ToRole="serviceDataFiles" />
         </EntityType>
         <EntityType Name="setting">
           <Key>
@@ -1054,7 +1154,7 @@
           <Property Name="balance" Type="Decimal" Precision="20" Scale="3" Nullable="false" />
           <Property Name="createUserId" Type="Int32" />
           <Property Name="updateUserId" Type="Int32" />
-          <Property Name="isActive" Type="Int32" />
+          <Property Name="isActive" Type="Boolean" />
           <Property Name="code" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="isAdmin" Type="Boolean" />
           <Property Name="groupId" Type="Int32" />
@@ -1540,7 +1640,97 @@
             <End Role="setValues" EntitySet="setValues" />
             <End Role="userSetValues" EntitySet="userSetValues" />
           </AssociationSet>
+          <EntitySet Name="officeFiles" EntityType="bookModel.officeFiles" />
+          <EntitySet Name="passengerFiles" EntityType="bookModel.passengerFiles" />
+          <EntitySet Name="serviceDataFiles" EntityType="bookModel.serviceDataFiles" />
+          <AssociationSet Name="FK_officeFiles_office" Association="bookModel.FK_officeFiles_office">
+            <End Role="office" EntitySet="office" />
+            <End Role="officeFiles" EntitySet="officeFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_passengerFiles_passengers" Association="bookModel.FK_passengerFiles_passengers">
+            <End Role="passengers" EntitySet="passengers" />
+            <End Role="passengerFiles" EntitySet="passengerFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_serviceDataFiles_serviceData" Association="bookModel.FK_serviceDataFiles_serviceData">
+            <End Role="serviceData" EntitySet="serviceData" />
+            <End Role="serviceDataFiles" EntitySet="serviceDataFiles" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="officeFiles">
+          <Key>
+            <PropertyRef Name="fileId" />
+          </Key>
+          <Property Name="fileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fileName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="extention" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="folderName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="officeId" Type="Int32" />
+          <NavigationProperty Name="office" Relationship="bookModel.FK_officeFiles_office" FromRole="officeFiles" ToRole="office" />
+        </EntityType>
+        <EntityType Name="passengerFiles">
+          <Key>
+            <PropertyRef Name="fileId" />
+          </Key>
+          <Property Name="fileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fileName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="extention" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="folderName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="passengerId" Type="Int32" />
+          <NavigationProperty Name="passengers" Relationship="bookModel.FK_passengerFiles_passengers" FromRole="passengerFiles" ToRole="passengers" />
+        </EntityType>
+        <EntityType Name="serviceDataFiles">
+          <Key>
+            <PropertyRef Name="fileId" />
+          </Key>
+          <Property Name="fileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fileName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="extention" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="folderName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="serviceId" Type="Int32" />
+          <NavigationProperty Name="serviceData" Relationship="bookModel.FK_serviceDataFiles_serviceData" FromRole="serviceDataFiles" ToRole="serviceData" />
+        </EntityType>
+        <Association Name="FK_officeFiles_office">
+          <End Type="bookModel.office" Role="office" Multiplicity="0..1" />
+          <End Type="bookModel.officeFiles" Role="officeFiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="office">
+              <PropertyRef Name="officeId" />
+            </Principal>
+            <Dependent Role="officeFiles">
+              <PropertyRef Name="officeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_passengerFiles_passengers">
+          <End Type="bookModel.passengers" Role="passengers" Multiplicity="0..1" />
+          <End Type="bookModel.passengerFiles" Role="passengerFiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="passengers">
+              <PropertyRef Name="passengerId" />
+            </Principal>
+            <Dependent Role="passengerFiles">
+              <PropertyRef Name="passengerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_serviceDataFiles_serviceData">
+          <End Type="bookModel.serviceData" Role="serviceData" Multiplicity="0..1" />
+          <End Type="bookModel.serviceDataFiles" Role="serviceDataFiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="serviceData">
+              <PropertyRef Name="serviceId" />
+            </Principal>
+            <Dependent Role="serviceDataFiles">
+              <PropertyRef Name="serviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1632,6 +1822,7 @@
                 <ScalarProperty Name="flightTableId" ColumnName="flightTableId" />
                 <ScalarProperty Name="fromTableId" ColumnName="fromTableId" />
                 <ScalarProperty Name="toTableId" ColumnName="toTableId" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1672,6 +1863,7 @@
                 <ScalarProperty Name="updateDate" ColumnName="updateDate" />
                 <ScalarProperty Name="createUserId" ColumnName="createUserId" />
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1687,6 +1879,7 @@
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
                 <ScalarProperty Name="opStatementId" ColumnName="opStatementId" />
                 <ScalarProperty Name="durationId" ColumnName="durationId" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1703,6 +1896,7 @@
                 <ScalarProperty Name="updateDate" ColumnName="updateDate" />
                 <ScalarProperty Name="createUserId" ColumnName="createUserId" />
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1731,7 +1925,6 @@
           <EntitySetMapping Name="serviceData">
             <EntityTypeMapping TypeName="bookModel.serviceData">
               <MappingFragment StoreEntitySet="serviceData">
-                <ScalarProperty Name="systemType" ColumnName="systemType" />
                 <ScalarProperty Name="serviceId" ColumnName="serviceId" />
                 <ScalarProperty Name="serviceNum" ColumnName="serviceNum" />
                 <ScalarProperty Name="type" ColumnName="type" />
@@ -1760,6 +1953,8 @@
                 <ScalarProperty Name="passengerId" ColumnName="passengerId" />
                 <ScalarProperty Name="flightId" ColumnName="flightId" />
                 <ScalarProperty Name="operationId" ColumnName="operationId" />
+                <ScalarProperty Name="systemType" ColumnName="systemType" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1849,6 +2044,45 @@
                 <ScalarProperty Name="updateDate" ColumnName="updateDate" />
                 <ScalarProperty Name="createUserId" ColumnName="createUserId" />
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="officeFiles">
+            <EntityTypeMapping TypeName="bookModel.officeFiles">
+              <MappingFragment StoreEntitySet="officeFiles">
+                <ScalarProperty Name="officeId" ColumnName="officeId" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="folderName" ColumnName="folderName" />
+                <ScalarProperty Name="extention" ColumnName="extention" />
+                <ScalarProperty Name="fileName" ColumnName="fileName" />
+                <ScalarProperty Name="fileId" ColumnName="fileId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="passengerFiles">
+            <EntityTypeMapping TypeName="bookModel.passengerFiles">
+              <MappingFragment StoreEntitySet="passengerFiles">
+                <ScalarProperty Name="passengerId" ColumnName="passengerId" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="folderName" ColumnName="folderName" />
+                <ScalarProperty Name="extention" ColumnName="extention" />
+                <ScalarProperty Name="fileName" ColumnName="fileName" />
+                <ScalarProperty Name="fileId" ColumnName="fileId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="serviceDataFiles">
+            <EntityTypeMapping TypeName="bookModel.serviceDataFiles">
+              <MappingFragment StoreEntitySet="serviceDataFiles">
+                <ScalarProperty Name="serviceId" ColumnName="serviceId" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="folderName" ColumnName="folderName" />
+                <ScalarProperty Name="extention" ColumnName="extention" />
+                <ScalarProperty Name="fileName" ColumnName="fileName" />
+                <ScalarProperty Name="fileId" ColumnName="fileId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

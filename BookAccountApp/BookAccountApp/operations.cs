@@ -29,6 +29,7 @@ namespace BookAccountApp
         public Nullable<int> updateUserId { get; set; }
         public Nullable<int> opStatementId { get; set; }
         public Nullable<int> durationId { get; set; }
+        public Nullable<bool> isActive { get; set; }
     
         public virtual durationsTable durationsTable { get; set; }
         public virtual statementsTable statementsTable { get; set; }

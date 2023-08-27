@@ -55,7 +55,7 @@ namespace BookAccountApp.View.sectionData
         Users user = new Users();
         IEnumerable<Users> usersQuery;
         IEnumerable<Users> users;
-        byte tgl_userState;
+        bool tgl_userState;
         string searchText = "";
         public static List<string> requiredControlList;
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -175,7 +175,7 @@ namespace BookAccountApp.View.sectionData
                         user.type = cb_type.SelectedValue.ToString();
                     user.address = tb_address.Text;
                     user.notes = tb_notes.Text;
-                    user.isActive = 1;
+                    user.isActive = true;
                     user.createUserId = MainWindow.userLogin.userId;
                     user.updateUserId = MainWindow.userLogin.userId;
 
@@ -288,7 +288,7 @@ namespace BookAccountApp.View.sectionData
                 HelpClass.StartAwait(grid_main);
                 if (user.userId != 0)
                 {
-                    if ((!user.canDelete) && (user.isActive == 0))
+                    if ((!user.canDelete) && (user.isActive ==false))
                     {
                         #region
                         Window.GetWindow(this).Opacity = 0.2;
@@ -318,7 +318,7 @@ namespace BookAccountApp.View.sectionData
                         {
                             string popupContent = "";
                             if (user.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
-                            if ((!user.canDelete) && (user.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+                            if ((!user.canDelete) && (user.isActive == true)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
 
                             decimal s = await user.Delete(user.userId, MainWindow.userLogin.userId, user.canDelete);
                             if (s < 0)
@@ -345,7 +345,7 @@ namespace BookAccountApp.View.sectionData
         }
         private async Task activate()
         {//activate
-            user.isActive = 1;
+            user.isActive = true;
             decimal s = await user.Save(user);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -380,7 +380,7 @@ namespace BookAccountApp.View.sectionData
                 HelpClass.StartAwait(grid_main);
                 if (users is null)
                     await RefreshUsersList();
-                tgl_userState = 1;
+                tgl_userState = true;
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -397,7 +397,7 @@ namespace BookAccountApp.View.sectionData
                 HelpClass.StartAwait(grid_main);
                 if (users is null)
                     await RefreshUsersList();
-                tgl_userState = 0;
+                tgl_userState = false;
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -448,7 +448,7 @@ namespace BookAccountApp.View.sectionData
                             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
                         else
                         {
-                            if (user.isActive == 0)
+                            if (user.isActive == false)
                                 btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
                             else
                                 btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");

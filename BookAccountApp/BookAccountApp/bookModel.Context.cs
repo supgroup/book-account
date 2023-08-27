@@ -44,5 +44,8 @@ namespace BookAccountApp
         public virtual DbSet<toTable> toTable { get; set; }
         public virtual DbSet<users> users { get; set; }
         public virtual DbSet<userSetValues> userSetValues { get; set; }
+        public virtual DbSet<officeFiles> officeFiles { get; set; }
+        public virtual DbSet<passengerFiles> passengerFiles { get; set; }
+        public virtual DbSet<serviceDataFiles> serviceDataFiles { get; set; }
     }
 }

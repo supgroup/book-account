@@ -39,7 +39,7 @@ namespace BookAccountApp.ApiClasses
         public decimal balance { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> isActive { get; set; }
+        public Nullable<bool> isActive { get; set; }
         public string code { get; set; }
         public Nullable<bool> isAdmin { get; set; }
         public Nullable<int> groupId { get; set; }
@@ -134,7 +134,7 @@ namespace BookAccountApp.ApiClasses
           
                 using (bookdbEntities entity = new bookdbEntities())
                 {
-                List = entity.users.Where(S => S.isActive == 1 && S.userId != 1)
+                List = entity.users.Where(S => S.isActive == true && S.userId != 1)
                     .Select(S => new Users
                     {
                         userId = S.userId,
@@ -193,7 +193,7 @@ namespace BookAccountApp.ApiClasses
                 emptyuser.createUserId = 0;
                 emptyuser.updateUserId = 0;
                 emptyuser.userId = 0;
-                emptyuser.isActive = 0;
+                emptyuser.isActive = false;
                 emptyuser.isOnline = 0;
                 emptyuser.canDelete = false;
                 emptyuser.balance = 0;
@@ -203,7 +203,7 @@ namespace BookAccountApp.ApiClasses
 
                     using (bookdbEntities entity = new bookdbEntities())
                     {
-                        usersList = entity.users.Where(S => S.isActive == 1 && S.AccountName == userName)
+                        usersList = entity.users.Where(S => S.isActive == true && S.AccountName == userName)
                         .Select(S => new Users
                         {
                             userId = S.userId,
@@ -483,7 +483,7 @@ namespace BookAccountApp.ApiClasses
                         {
                             users objectDelete = entity.users.Find(userId);
 
-                            objectDelete.isActive = 0;
+                            objectDelete.isActive = false;
                             objectDelete.updateUserId = signuserId;
                         objectDelete.updateDate = DateTime.Now;
                             message = entity.SaveChanges() ;

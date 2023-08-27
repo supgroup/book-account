@@ -19,6 +19,7 @@ namespace BookAccountApp
         {
             this.payOp = new HashSet<payOp>();
             this.serviceData = new HashSet<serviceData>();
+            this.passengerFiles = new HashSet<passengerFiles>();
         }
     
         public int passengerId { get; set; }
@@ -31,10 +32,13 @@ namespace BookAccountApp
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
+        public Nullable<bool> isActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<payOp> payOp { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<serviceData> serviceData { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<passengerFiles> passengerFiles { get; set; }
     }
 }

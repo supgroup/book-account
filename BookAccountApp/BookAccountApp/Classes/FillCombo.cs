@@ -165,7 +165,7 @@ namespace BookAccountApp.Classes
         static public async Task fillAgent(ComboBox combo)
         {
             users = await user.GetAll();
-            combo.ItemsSource = users.Where(x => x.isActive == 1 && x.type == "ag");
+            combo.ItemsSource = users.Where(x => x.isActive == true && x.type == "ag");
             combo.SelectedValuePath = "userId";
             combo.DisplayMemberPath = "name";
         }
@@ -180,7 +180,7 @@ namespace BookAccountApp.Classes
                 else
                 a.name = a.name + " " + a.lastName;
             }
-            combo.ItemsSource = users.Where(x => x.isActive == 1 && x.type == "ag" && x.countryId == countryID);
+            combo.ItemsSource = users.Where(x => x.isActive ==true && x.type == "ag" && x.countryId == countryID);
             combo.SelectedValuePath = "userId";
             combo.DisplayMemberPath = "name";
         }

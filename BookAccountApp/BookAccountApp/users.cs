@@ -49,7 +49,7 @@ namespace BookAccountApp
         public decimal balance { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> isActive { get; set; }
+        public Nullable<bool> isActive { get; set; }
         public string code { get; set; }
         public Nullable<bool> isAdmin { get; set; }
         public Nullable<int> groupId { get; set; }
