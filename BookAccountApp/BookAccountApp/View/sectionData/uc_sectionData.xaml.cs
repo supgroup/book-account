@@ -190,6 +190,7 @@ namespace BookAccountApp.View.sectionData
                 grid_main.Children.Clear();
                 uc_flights ucf = new uc_flights();
                 grid_main.Children.Add(ucf);
+                //grid_main.Children.Add(uc_flights.Instance);
             }
             catch (Exception ex)
             {

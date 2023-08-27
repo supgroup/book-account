@@ -238,28 +238,29 @@ namespace BookAccountApp.ApiClasses
 
                 }
             }
-            return message;
-            //else
-            //{
-            //    try
-            //    {
-            //        using (bookdbEntities entity = new bookdbEntities())
-            //        {
-            //            flights objectDelete = entity.flights.Find(userId);
+        
+            else
+            {
+                try
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        flights objectDelete = entity.flights.Find(id);
 
-            //            objectDelete.isActive = 0;
-            //            objectDelete.updateUserId = signuserId;
-            //        objectDelete.updateDate = DateTime.Now;
-            //            message = entity.SaveChanges() ;
+                        objectDelete.isActive = false;
+                        objectDelete.updateUserId = signuserId;
+                        objectDelete.updateDate = DateTime.Now;
+                        message = entity.SaveChanges();
 
-            //            return message;
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        return 0;
-            //    }
-            //}
+                        return message;
+                    }
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        
 
         }
 

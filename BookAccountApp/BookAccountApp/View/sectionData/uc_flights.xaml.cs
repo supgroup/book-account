@@ -52,11 +52,11 @@ namespace BookAccountApp.View.sectionData
                 return _instance;
             }
         }
-
+        bool first = true;
         Flights flights = new Flights();
         IEnumerable<Flights> flightssQuery;
         IEnumerable<Flights> flightss;
-        byte tgl_flightsstate;
+        bool tgl_flightsstate = true;
         string searchText = "";
         SaveFileDialog saveFileDialog = new SaveFileDialog();
         public static List<string> requiredControlList;
@@ -113,10 +113,10 @@ namespace BookAccountApp.View.sectionData
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_airline, MainWindow.resourcemanager.GetString("airlineHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightTableId, MainWindow.resourcemanager.GetString("flightHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightFrom ,MainWindow.resourcemanager.GetString("fromHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightFrom, MainWindow.resourcemanager.GetString("fromHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightTo, MainWindow.resourcemanager.GetString("toHint"));
-            
-           MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
             //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
 
@@ -131,13 +131,13 @@ mother
 motherHint  
     */
             //   flightss
-             
+
             dg_flights.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
             dg_flights.Columns[1].Header = MainWindow.resourcemanager.GetString("airline");
             dg_flights.Columns[2].Header = MainWindow.resourcemanager.GetString("flight");
             dg_flights.Columns[3].Header = MainWindow.resourcemanager.GetString("from");
             dg_flights.Columns[4].Header = MainWindow.resourcemanager.GetString("to");
-          
+
 
             //dg_flights.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
@@ -165,7 +165,7 @@ motherHint
                 //tb_lastName.Text = ts.ToString();
 
                 HelpClass.StartAwait(grid_main);
-               
+
                 flights = new Flights();
                 if (HelpClass.validate(requiredControlList, this))
                 {
@@ -197,7 +197,7 @@ motherHint
                     else
                     {
                         flights.fromTableId = Convert.ToInt32(cb_flightFrom.SelectedValue);
-                    }                   
+                    }
                     flights.notes = tb_notes.Text;
 
                     flights.createUserId = MainWindow.userLogin.userId;
@@ -217,7 +217,7 @@ motherHint
                         await Search();
                     }
                 }
-              
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -231,12 +231,12 @@ motherHint
             try
             {
                 HelpClass.StartAwait(grid_main);
-                
+
                 if (flights.flightId > 0)
                 {
-                    if (HelpClass.validate(requiredControlList, this)  )
+                    if (HelpClass.validate(requiredControlList, this))
                     {
-                   
+
 
                         flights.airline = tb_airline.Text;
                         if (Convert.ToInt32(cb_flightTableId.SelectedValue) == 0)
@@ -281,7 +281,7 @@ motherHint
                 }
                 else
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
-               
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -295,22 +295,72 @@ motherHint
             try
             {
                 HelpClass.StartAwait(grid_main);
+                //if (flights.flightId != 0)
+                //{
+                //    decimal s = await flights.Delete(flights.flightId, MainWindow.userLogin.userId, true);
+                //    if (s < 0)
+                //        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("cannotdelete"), animation: ToasterAnimation.FadeIn);
+                //    else
+                //    {
+                //        flights.flightId = 0;
+                //        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+
+                //        await RefreshFlightssList();
+                //        await Search();
+                //        Clear();
+                //    }
+
+
+                //}
                 if (flights.flightId != 0)
                 {
-                    decimal s = await flights.Delete(flights.flightId, MainWindow.userLogin.userId, true);
-                    if (s < 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("cannotdelete"), animation: ToasterAnimation.FadeIn);
+                    if ((!flights.canDelete) && (flights.isActive == false))
+                    {
+                        #region
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
+                        #endregion
+
+                        if (w.isOk)
+                            await activate();
+                    }
                     else
                     {
-                        flights.flightId = 0;
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                        #region
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        if (flights.canDelete)
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                        if (!flights.canDelete)
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
+                        #endregion
 
-                        await RefreshFlightssList();
-                        await Search();
-                        Clear();
+                        if (w.isOk)
+                        {
+                            string popupContent = "";
+                            if (flights.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
+                            if ((!flights.canDelete) && (flights.isActive == true)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+
+                            var s = await flights.Delete(flights.flightId, MainWindow.userLogin.userId, flights.canDelete);
+                            if (s < 0)
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                flights.flightId = 0;
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+
+                                await RefreshFlightssList();
+                                await Search();
+                                Clear();
+
+                            }
+                        }
                     }
-
-
                 }
                 HelpClass.EndAwait(grid_main);
             }
@@ -335,6 +385,19 @@ motherHint
         //    }
         //    */
         //}
+        private async Task activate()
+        {//activate
+            flights.isActive = true;
+            var s = await flights.Save(flights);
+            if (s <= 0)
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+            else
+            {
+                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
+                await RefreshFlightssList();
+                await Search();
+            }
+        }
         #endregion
         #region events
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
@@ -356,12 +419,20 @@ motherHint
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
+
                 if (flightss is null)
                     await RefreshFlightssList();
-                tgl_flightsstate = 1;
-                await Search();
-                */
+                tgl_flightsstate = true;
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    await Search();
+
+                }
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -370,6 +441,7 @@ motherHint
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
         {
             try
@@ -377,7 +449,7 @@ motherHint
                 HelpClass.StartAwait(grid_main);
                 if (flightss is null)
                     await RefreshFlightssList();
-                tgl_flightsstate = 0;
+                tgl_flightsstate = false;
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -414,7 +486,7 @@ motherHint
                 if (dg_flights.SelectedIndex != -1)
                 {
                     flights = dg_flights.SelectedItem as Flights;
-                 //   this.DataContext = flights;
+                    //   this.DataContext = flights;
                     if (flights != null)
                     {
                         //tb_custCode.Text = flights.custCode;
@@ -436,10 +508,8 @@ motherHint
                                 btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
                         }
                         #endregion
-                      
-                        //HelpClass.getMobile(flights.mobile, cb_areaMobile, tb_mobile);
-                        //HelpClass.getPhone(flights.phone, cb_areaPhone, cb_areaPhoneLocal, tb_phone);
-                        //HelpClass.getPhone(flights.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
+
+
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
@@ -478,7 +548,7 @@ motherHint
             //search
             if (flightss is null)
                 await RefreshFlightssList();
-            
+
             searchText = tb_search.Text.ToLower();
             flightssQuery = flightss.Where(s =>
             (s.flightId.ToString().Contains(searchText) ||
@@ -487,10 +557,10 @@ motherHint
             s.flightFrom.ToLower().Contains(searchText)
             ||
             s.flightTo.ToLower().Contains(searchText)
-            ));
+            ) && s.isActive == tgl_flightsstate);
             //&& s.isActive == tgl_flightsstate
             //);
-           
+
             RefreshFlightssView();
         }
         async Task<IEnumerable<Flights>> RefreshFlightssList()
@@ -500,7 +570,7 @@ motherHint
         }
         void RefreshFlightssView()
         {
-            dg_flights.ItemsSource = flightssQuery;
+            dg_flights.ItemsSource = flightssQuery.ToList();
             //txt_count.Text = flightssQuery.Count().ToString();
         }
         #endregion
@@ -607,7 +677,7 @@ motherHint
             ////string secondTitle = "";
             ////string subTitle = "";
             //string Title = "";
-      
+
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
             string addpath;
@@ -633,7 +703,7 @@ motherHint
             rep.SetParameters(paramarr);
 
             rep.Refresh();
-           
+
         }
 
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
@@ -811,7 +881,7 @@ motherHint
                 wd_fromTable w = new wd_fromTable();
                 w.ShowDialog();
                 // naji - change this:
-                 await FillCombo.fillFromTable(cb_flightFrom);
+                await FillCombo.fillFromTable(cb_flightFrom);
                 Window.GetWindow(this).Opacity = 1;
 
                 if (sender != null)
@@ -836,7 +906,7 @@ motherHint
                 wd_toTable w = new wd_toTable();
                 w.ShowDialog();
                 // naji - change this:
-                 await FillCombo.fillToTable(cb_flightTo);
+                await FillCombo.fillToTable(cb_flightTo);
                 Window.GetWindow(this).Opacity = 1;
 
                 if (sender != null)
@@ -850,5 +920,7 @@ motherHint
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+
     }
 }
