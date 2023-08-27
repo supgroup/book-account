@@ -188,7 +188,8 @@ namespace BookAccountApp.View.sectionData
                 MainWindow.mainWindow.second = button.Tag.ToString();
                 MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
-                grid_main.Children.Add(uc_flights.Instance);
+                uc_flights ucf = new uc_flights();
+                grid_main.Children.Add(ucf);
             }
             catch (Exception ex)
             {
@@ -205,7 +206,9 @@ namespace BookAccountApp.View.sectionData
                 MainWindow.mainWindow.second = button.Tag.ToString();
                 MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
-                grid_main.Children.Add(uc_operations.Instance);
+                uc_operations ucop = new uc_operations();
+                //grid_main.Children.Add(uc_operations.Instance);
+                grid_main.Children.Add(ucop);
             }
             catch (Exception ex)
             {
