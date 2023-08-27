@@ -83,7 +83,7 @@
                             <Path Fill="{StaticResource LightGrey}" x:Name="path_iconBookSales"
                                   Stretch="Fill" 
                               HorizontalAlignment="Left" Grid.Column="0"  
-                         VerticalAlignment="Center" Width="20" Height="20" Tag="bookSales" 
+                         VerticalAlignment="Center" Width="30" Height="20" Tag="bookSales" 
                               Data="{StaticResource passportTicket}" 
                                   Margin="10,0,10,0"/>
                             <TextBlock Text="book sales" Foreground="{StaticResource LightGrey}" x:Name="txt_bookSales"
