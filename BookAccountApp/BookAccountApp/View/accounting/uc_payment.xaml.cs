@@ -152,142 +152,14 @@ namespace BookAccountApp.View.accounting
             tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
             //tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
 
-            btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
-            btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+            
 
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
-        private async void Btn_add_Click(object sender, RoutedEventArgs e)
-        {//add
-            try
-            {
-                //Country coumod = new Country();
-                //TimeSpan ts = new TimeSpan();
-                //ts = await coumod.GetOffsetTime(int.Parse(tb_custname.Text));
-                //tb_lastName.Text = ts.ToString();
+      
+        private void Btn_save_Click(object sender, RoutedEventArgs e)
+        {
 
-                HelpClass.StartAwait(grid_main);
-                /*
-                payOp = new PayOp();
-                if (HelpClass.validate(requiredControlList, this))
-                {
-                    //tb_custCode.Text = await payOp.generateCodeNumber("cu");
-
-                    payOp.passengerId = Convert.ToInt32(cb_passenger.SelectedValue);
-                    payOp.ticketNum = tb_ticketNum.Text;
-                    payOp.flightId = Convert.ToInt32(cb_airline.SelectedValue);
-                    payOp.officeId = Convert.ToInt32(cb_office.SelectedValue);
-                    payOp.operationId = Convert.ToInt32(cb_operation.SelectedValue);
-                    //payOp.serviceDate = dp_serviceDate.SelectedDate;
-                    payOp.total = (tb_total.Text == null || tb_total.Text == "") ? 0 : Convert.ToDecimal(tb_total.Text);
-                    payOp.notes = tb_notes.Text;
-                    payOp.systemType = "soto";
-                    payOp.createUserId = MainWindow.userLogin.userId;
-                    payOp.updateUserId = MainWindow.userLogin.userId;
-
-
-                    decimal s = await payOp.Save(payOp);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
-                    {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-
-
-                        Clear();
-                        await RefreshPayOpsList();
-                        await Search();
-                    }
-                }
-                */
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Btn_update_Click(object sender, RoutedEventArgs e)
-        {//update
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                /*
-                if (payOp.serviceId > 0)
-                {
-                    if (HelpClass.validate(requiredControlList, this))
-                    {
-                        //tb_custCode.Text = await payOp.generateCodeNumber("cu");
-
-                        payOp.passengerId = Convert.ToInt32(cb_passenger.SelectedValue);
-                        payOp.ticketNum = tb_ticketNum.Text;
-                        payOp.flightId = Convert.ToInt32(cb_airline.SelectedValue);
-                        payOp.officeId = Convert.ToInt32(cb_office.SelectedValue);
-                        payOp.operationId = Convert.ToInt32(cb_operation.SelectedValue);
-                        //payOp.serviceDate = dp_serviceDate.SelectedDate;
-                        payOp.total = Convert.ToDecimal(tb_total.Text);
-                        payOp.notes = tb_notes.Text;
-                        payOp.systemType = "soto";
-                        payOp.createUserId = MainWindow.userLogin.userId;
-                        payOp.updateUserId = MainWindow.userLogin.userId;
-
-
-                        decimal s = await payOp.Save(payOp);
-                        if (s <= 0)
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                        else
-                        {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-
-
-                            Clear();
-                            await RefreshPayOpsList();
-                            await Search();
-                        }
-                    }
-                }
-                */
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Btn_delete_Click(object sender, RoutedEventArgs e)
-        {//delete
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                /*
-                if (payOp.serviceId != 0)
-                {
-                    decimal s = await payOp.Delete(payOp.serviceId, MainWindow.userLogin.userId, true);
-                    if (s < 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("cannotdelete"), animation: ToasterAnimation.FadeIn);
-                    else
-                    {
-                        payOp.serviceId = 0;
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
-                        Clear();
-                        await RefreshPayOpsList();
-                        await Search();
-
-                    }
-
-
-                }
-                */
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
         }
         private async Task activate()
         {//activate
@@ -963,5 +835,7 @@ namespace BookAccountApp.View.accounting
         {
 
         }
+
+       
     }
 }

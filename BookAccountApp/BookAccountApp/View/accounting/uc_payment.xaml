@@ -173,7 +173,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*"  Header="passenger" Binding="{Binding Path=passenger}">
+                            <DataGridTextColumn Width="*"  Header="side" Binding="{Binding Path=side}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -184,7 +184,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="ticketNum" Binding="{Binding Path=ticketNum}">
+                            <DataGridTextColumn Width="*"  Header="recivedFrom" Binding="{Binding Path=recivedFrom}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -441,16 +441,16 @@
 
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                 <Grid>
-                                    <ComboBox x:Name="cb_passenger"  Grid.Row="1"
-                                      SelectedValue="{Binding passengerId,Mode=OneWay}"
+                                    <ComboBox x:Name="cb_side"  Grid.Row="1"
+                                      SelectedValue="{Binding side,Mode=OneWay}"
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                  materialDesign:HintAssist.Hint="passenger..."  
+                                  materialDesign:HintAssist.Hint="side..."  
                                   Grid.Column="1" Height="40"   
                                  BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
                                   LostFocus="validateEmpty_LostFocus" />
                                     <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
-                                          Name="p_error_passenger"
+                                          Name="p_error_side"
                               HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52
@@ -463,15 +463,15 @@
                             </Border>
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
-                                <TextBox x:Name="tb_side"  Text="{Binding side, Mode=OneWay}" Padding="10,0,5,0" 
+                                <TextBox x:Name="tb_recipient"  Text="{Binding recipient, Mode=OneWay}" Padding="10,0,5,0" 
    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-   materialDesign:HintAssist.Hint="side..."  
+   materialDesign:HintAssist.Hint="recipient..."  
    Foreground="#4E4E4E"  
    MaxLength="50" BorderThickness="0"
    materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
    Height="40"  Margin="4,0"  
    LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
-                                <Path x:Name="p_error_side"
+                                <Path x:Name="p_error_recipient"
 Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
 HorizontalAlignment="Right" Visibility="Collapsed"   
 VerticalAlignment="Center" Width="15"  Height="15"
@@ -481,15 +481,15 @@ Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 
                         </Border>
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
-                                <TextBox x:Name="tb_ticketNum"  Text="{Binding ticketNum, Mode=OneWay}" Padding="10,0,5,0" 
+                                <TextBox x:Name="tb_recivedFrom"  Text="{Binding recivedFrom, Mode=OneWay}" Padding="10,0,5,0" 
    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-   materialDesign:HintAssist.Hint="ticketNum..."  
+   materialDesign:HintAssist.Hint="recivedFrom..."  
    Foreground="#4E4E4E"  
    MaxLength="50" BorderThickness="0"
    materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
    Height="40"  Margin="4,0"  
    LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
-                                <Path x:Name="p_error_ticketNum"
+                                <Path x:Name="p_error_recivedFrom"
 Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
 HorizontalAlignment="Right" Visibility="Collapsed"   
 VerticalAlignment="Center" Width="15"  Height="15"
@@ -618,20 +618,11 @@ Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 
 
                 </Grid>
                 <Grid Grid.Row="4" Margin="5,5,5,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" x:Name="btn_add"   Click="Btn_add_Click"
+                   
+                    <Button Grid.Column="0" x:Name="btn_save"   Click="Btn_save_Click"
                         materialDesign:ButtonAssist.CornerRadius="10" Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
-                        Margin="5"    Content="add"/>
-                    <Button Grid.Column="1" x:Name="btn_update" Click="Btn_update_Click"
-                       materialDesign:ButtonAssist.CornerRadius="10" Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
-                        Margin="5"    Content="update"/>
-                    <Button Grid.Column="2" x:Name="btn_delete"  Click="Btn_delete_Click"
-                       materialDesign:ButtonAssist.CornerRadius="10" Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
-                        Margin="5"    Content="delete"/>
+                        Margin="5"    Content="save"/>
+                  
                 </Grid>
             </Grid>
         </Border>
