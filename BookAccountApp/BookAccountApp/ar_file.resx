@@ -2989,4 +2989,7 @@
   <data name="soto" xml:space="preserve">
     <value>سوتو</value>
   </data>
+  <data name="trSelectItemFirst" xml:space="preserve">
+    <value>حدد السجل اولا</value>
+  </data>
 </root>

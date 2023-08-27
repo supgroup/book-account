@@ -30,10 +30,9 @@ namespace BookAccountApp.View.windows
     {
         #region variables
 
-        Operations operationsrow = new Operations();
-
-        IEnumerable<Operations> operationsQuery;
-        IEnumerable<Operations> operationsList;
+        Operations operations = new Operations();
+        IEnumerable<Operations> operationssQuery;
+        IEnumerable<Operations> operationss;
         public static List<string> requiredControlList;
 
         bool tgl_priceState = true;
@@ -61,7 +60,7 @@ namespace BookAccountApp.View.windows
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_sliceMain);
-                requiredControlList = new List<string> { "name" };
+                requiredControlList = new List<string> { "operation" };
                 #region translate
                 //if (AppSettings.lang.Equals("en"))
                 //{
@@ -81,7 +80,7 @@ namespace BookAccountApp.View.windows
                 //if (FillCombo.itemunitsList is null)
                 //    await FillCombo.RefreshItemUnits();
 
-
+               await fillcombos();
                 #region key up
                 // key_up item
 
@@ -104,35 +103,27 @@ namespace BookAccountApp.View.windows
         private void translate()
         {
 
-            txt_title.Text = MainWindow.resourcemanager.GetString("flights");
+ 
+            //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
+            
+            txt_title.Text = MainWindow.resourcemanager.GetString("operationInfo");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_operation, MainWindow.resourcemanager.GetString("operationNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_opStatement, MainWindow.resourcemanager.GetString("opStatementHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_duration, MainWindow.resourcemanager.GetString("durationHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-
+            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
             btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
 
-
-            
-
-
-            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
-
-
-
-            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            //tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            //tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            //tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            //tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
-
         }
-      
+
 
         async Task<IEnumerable<Operations>> RefreshOperationsList()
         {
-            operationsList = await operationsrow.GetAll();
+            operationss = await operations.GetAll();
 
-            return operationsList;
+            return operationss;
         }
     
         void Clear()
@@ -205,7 +196,12 @@ namespace BookAccountApp.View.windows
 
         #region events
 
+        public async Task fillcombos()
+        {
+            await FillCombo.fillStatementsTable(cb_opStatement);
+            await FillCombo.fillDurationsTable(cb_duration);
 
+        }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             try
@@ -343,29 +339,47 @@ namespace BookAccountApp.View.windows
                 //tb_lastName.Text = ts.ToString();
 
                 HelpClass.StartAwait(grid_main);
-                /*
-                bool duplicaterName = false;
-                duplicaterName = await chkIfNameIsExists(tb_name.Text, 0);
-                operationsrow = new Operations();
-                if (HelpClass.validate(requiredControlList, this) && duplicaterName)
-                {
-                    //tb_custCode.Text = await flights.generateCodeNumber("cu");
 
-                    operationsrow.name = tb_name.Text;
-                    operationsrow.notes = tb_notes.Text;
-                    operationsrow.isActive = true;
-                    decimal s = await operationsrow.Save(operationsrow);
+                operations = new Operations();
+                if (HelpClass.validate(requiredControlList, this))
+                {
+                    //tb_custCode.Text = await operations.generateCodeNumber("cu");
+                    if (Convert.ToInt32(cb_opStatement.SelectedValue) == 0)
+                    {
+                        operations.opStatementId = null;
+                    }
+                    else
+                    {
+                        operations.opStatementId = Convert.ToInt32(cb_opStatement.SelectedValue);
+                    }
+                    if (Convert.ToInt32(cb_duration.SelectedValue) == 0)
+                    {
+                        operations.durationId = null;
+                    }
+                    else
+                    {
+                        operations.durationId = Convert.ToInt32(cb_duration.SelectedValue);
+                    }
+                    operations.operation = tb_operation.Text;
+                    operations.notes = tb_notes.Text;
+
+                    operations.createUserId = MainWindow.userLogin.userId;
+                    operations.updateUserId = MainWindow.userLogin.userId;
+
+
+                    decimal s = await operations.Save(operations);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+
                         Clear();
-                        await RefreshOperationsList();
-                        await Search();
+                      
                     }
                 }
-                */
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -378,29 +392,62 @@ namespace BookAccountApp.View.windows
         {//update
             try
             {
-
                 HelpClass.StartAwait(grid_main);
-                /*
-                bool duplicaterName = false;
-                duplicaterName = await chkIfNameIsExists(tb_name.Text, operationsrow.operationsId);
 
-                if (HelpClass.validate(requiredControlList, this) && duplicaterName)
+                if (operations.operationId > 0)
                 {
-                    operationsrow.name = tb_name.Text;
-                    operationsrow.notes = tb_notes.Text;
-                    operationsrow.isActive = true;
-                    decimal s = await operationsrow.Save(operationsrow);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
+                    if (HelpClass.validate(requiredControlList, this))
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        Clear();
-                        await RefreshOperationsList();
-                        await Search();
+                        if (Convert.ToInt32(cb_opStatement.SelectedValue) == 0)
+                        {
+                            operations.opStatementId = null;
+                        }
+                        else
+                        {
+                            operations.opStatementId = Convert.ToInt32(cb_opStatement.SelectedValue);
+                        }
+                        if (Convert.ToInt32(cb_duration.SelectedValue) == 0)
+                        {
+                            operations.durationId = null;
+                        }
+                        else
+                        {
+                            operations.durationId = Convert.ToInt32(cb_duration.SelectedValue);
+                        }
+                        operations.operation = tb_operation.Text;
+
+                        operations.notes = tb_notes.Text;
+
+                        decimal s = await operations.Save(operations);
+                        if (s <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        else
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+
+                            //if (isImgPressed)
+                            //{
+                            //    int operationId = (int)s;
+                            //    string b = await operations.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + operationId.ToString()), operationId);
+                            //    operations.image = b;
+                            //    isImgPressed = false;
+                            //    if (!b.Equals(""))
+                            //    {
+                            //        await getImg();
+                            //    }
+                            //    else
+                            //    {
+                            //        HelpClass.clearImg(btn_image);
+                            //    }
+                            //}
+
+                           
+                        }
                     }
                 }
-                */
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -410,29 +457,60 @@ namespace BookAccountApp.View.windows
             }
         }
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
-        {
+        {//delete
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
-                if (operationsrow.operationsId != 0)
+
+                if (operations.operationId != 0)
                 {
-                    decimal s = await operationsrow.Delete(operationsrow.operationsId, MainWindow.userLogin.userId, true);
-                    if (s < 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("cannotdelete"), animation: ToasterAnimation.FadeIn);
+                    if ((!operations.canDelete) && (operations.isActive == false))
+                    {
+                        #region
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
+                        #endregion
+
+                        if (w.isOk)
+                            await activate();
+                    }
                     else
                     {
-                        operationsrow.operationsId = 0;
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                        #region
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        if (operations.canDelete)
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                        if (!operations.canDelete)
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
+                        #endregion
 
-                        await RefreshOperationsList();
-                        await Search();
-                        Clear();
+                        if (w.isOk)
+                        {
+                            string popupContent = "";
+                            if (operations.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
+                            if ((!operations.canDelete) && (operations.isActive == true)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+
+                            var s = await operations.Delete(operations.operationId, MainWindow.userLogin.userId, operations.canDelete);
+                            if (s < 0)
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                operations.operationId = 0;
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+
+                              
+                                Clear();
+
+                            }
+                        }
                     }
-
-
                 }
-                */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -441,8 +519,18 @@ namespace BookAccountApp.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
-
+        private async Task activate()
+        {//activate
+            operations.isActive = true;
+            var s = await operations.Save(operations);
+            if (s <= 0)
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+            else
+            {
+                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
+                 
+            }
+        }
         #endregion
 
         private void validateEmpty_LostFocus(object sender, RoutedEventArgs e)

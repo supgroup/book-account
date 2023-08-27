@@ -814,20 +814,17 @@ trDateHint
 
         #endregion
 
-        
-
-        private void Btn_addAirline_Click(object sender, RoutedEventArgs e)
+        private async void Btn_addAirline_Click(object sender, RoutedEventArgs e)
         {
 
-            /*
             try
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
                 Window.GetWindow(this).Opacity = 0.2;
-                wd_durations w = new wd_durations();
+                wd_flightWithoutGrid w = new wd_flightWithoutGrid();
                 w.ShowDialog();
-                await FillCombo.fillDurationsTable(cb_duration);
+                await FillCombo.fillFlights(cb_airline);
                 Window.GetWindow(this).Opacity = 1;
 
                 if (sender != null)
@@ -840,20 +837,8 @@ trDateHint
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            **/
         }
-
-      
-        private void Btn_uploadDocs_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Btn_exportDocs_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+        
         private async  void Btn_addPassenger_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -878,7 +863,7 @@ trDateHint
             }
         }
 
-        private void Btn_addOffice_Click(object sender, RoutedEventArgs e)
+        private async void Btn_addOffice_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -887,7 +872,7 @@ trDateHint
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_office w = new wd_office();
                 w.ShowDialog();
-                //await FillCombo.fillDurationsTable(cb_duration);
+                 await FillCombo.fillOffice(cb_office);
                 Window.GetWindow(this).Opacity = 1;
 
                 if (sender != null)
@@ -947,6 +932,15 @@ trDateHint
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+        private void Btn_uploadDocs_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_exportDocs_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

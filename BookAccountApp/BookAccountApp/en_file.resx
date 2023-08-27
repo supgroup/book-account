@@ -2986,4 +2986,7 @@ Please add Email in setting</value>
   <data name="soto" xml:space="preserve">
     <value>Soto</value>
   </data>
+  <data name="trSelectItemFirst" xml:space="preserve">
+    <value>Select record first</value>
+  </data>
 </root>

@@ -221,7 +221,7 @@ motherHint
               
                 if (office.officeId > 0)
                 {
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                    if (HelpClass.validate(requiredControlList, this))
                     {
                         //office.custname = tb_custname.Text;
                         office.name = tb_name.Text;

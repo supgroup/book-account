@@ -35,7 +35,7 @@
                               HorizontalAlignment="Right" Grid.Column="0"  
                               VerticalAlignment="Center" Width="20" Height="20"
                               Data="{StaticResource prices}"/>-->
-                        <TextBlock Text="flight" x:Name="txt_title" Foreground="White" 
+                        <TextBlock Text="operation" x:Name="txt_title" Foreground="White" 
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
                                    Grid.Column="1"      Margin="5,0"/>
                     </Grid>

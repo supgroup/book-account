@@ -815,42 +815,32 @@ namespace BookAccountApp.View.bookSales
  
        
 
-        private void Btn_addAirline_Click(object sender, RoutedEventArgs e)
+        private  async void Btn_addAirline_Click(object sender, RoutedEventArgs e)
         {
-            /*
-          try
-          {
-              if (sender != null)
-                  HelpClass.StartAwait(grid_main);
-              Window.GetWindow(this).Opacity = 0.2;
-              wd_flight w = new wd_flight();
-              w.ShowDialog();
-              await FillCombo.fillFlightTable(cb_flight);
-              Window.GetWindow(this).Opacity = 1;
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_flightWithoutGrid w = new wd_flightWithoutGrid();
+                w.ShowDialog();
+                await FillCombo.fillFlights(cb_airline);
+                Window.GetWindow(this).Opacity = 1;
 
-              if (sender != null)
-                  HelpClass.EndAwait(grid_main);
-          }
-          catch (Exception ex)
-          {
-              Window.GetWindow(this).Opacity = 1;
-              if (sender != null)
-                  HelpClass.EndAwait(grid_main);
-              HelpClass.ExceptionMessage(ex, this);
-          }
-          */
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
 
-        private void Btn_uploadDocs_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Btn_exportDocs_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+     
 
         private async void Btn_addPassenger_Click(object sender, RoutedEventArgs e)
         {
@@ -878,28 +868,51 @@ namespace BookAccountApp.View.bookSales
           
         }
 
-        private void Btn_addOffice_Click(object sender, RoutedEventArgs e)
+        private async void Btn_addOffice_Click(object sender, RoutedEventArgs e)
         {
-          try
-          {
-              if (sender != null)
-                  HelpClass.StartAwait(grid_main);
-              Window.GetWindow(this).Opacity = 0.2;
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
                 wd_office w = new wd_office();
-              w.ShowDialog();
-              //await FillCombo.fillFlightTable(cb_flight);
-              Window.GetWindow(this).Opacity = 1;
+                w.ShowDialog();
+                await FillCombo.fillOffice(cb_office);
+                Window.GetWindow(this).Opacity = 1;
 
-              if (sender != null)
-                  HelpClass.EndAwait(grid_main);
-          }
-          catch (Exception ex)
-          {
-              Window.GetWindow(this).Opacity = 1;
-              if (sender != null)
-                  HelpClass.EndAwait(grid_main);
-              HelpClass.ExceptionMessage(ex, this);
-          }
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Btn_addOperation_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_operations w = new wd_operations();
+                w.ShowDialog();
+                await FillCombo.fillOperations(cb_operation);
+                Window.GetWindow(this).Opacity = 1;
+
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Tb_total_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -951,30 +964,15 @@ namespace BookAccountApp.View.bookSales
 
        
 
-        private void Btn_addOperation_Click(object sender, RoutedEventArgs e)
+       
+        private void Btn_uploadDocs_Click(object sender, RoutedEventArgs e)
         {
-          /*  
-    try
-    {
-        if (sender != null)
-            HelpClass.StartAwait(grid_main);
-        Window.GetWindow(this).Opacity = 0.2;
-        wd_flight w = new wd_flight();
-        w.ShowDialog();
-        await FillCombo.fillFlightTable(cb_flight);
-        Window.GetWindow(this).Opacity = 1;
 
-        if (sender != null)
-            HelpClass.EndAwait(grid_main);
-    }
-    catch (Exception ex)
-    {
-        Window.GetWindow(this).Opacity = 1;
-        if (sender != null)
-            HelpClass.EndAwait(grid_main);
-        HelpClass.ExceptionMessage(ex, this);
-    }
-     */
+        }
+
+        private void Btn_exportDocs_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -31,10 +31,11 @@ namespace BookAccountApp.View.windows
     {
         #region variables
 
-        Office officerow = new Office();
+        Office office = new Office();
+        IEnumerable<Office> officesQuery;
+        IEnumerable<Office> offices;
 
-        IEnumerable<Office> officeQuery;
-        IEnumerable<Office> officeList;
+       
         public static List<string> requiredControlList;
 
         bool tgl_priceState = true;
@@ -104,34 +105,38 @@ namespace BookAccountApp.View.windows
         #region methods
         private void translate()
         {
-
-            txt_title.Text = MainWindow.resourcemanager.GetString("flights");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("flightHint"));
+             
+            //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
+      
+            txt_title.Text = MainWindow.resourcemanager.GetString("officeInfo");
+         
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_custCode, MainWindow.resourcemanager.GetString("trCodeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("officeNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_joinDate, MainWindow.resourcemanager.GetString("joinDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, MainWindow.resourcemanager.GetString("mobileNumHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_userName, MainWindow.resourcemanager.GetString("trUserNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_passwordSY, MainWindow.resourcemanager.GetString("passwordSyrHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_PasswordSoto, MainWindow.resourcemanager.GetString("passwordSotoHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+ 
+
+            //dg_office.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
+
+            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
+    
+            //tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
 
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
             btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
 
-
-
-            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
-
-
-
-            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            //tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            //tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            //tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            //tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
-
         }
-       
+
         async Task<IEnumerable<Office>> RefreshOfficeList()
         {
-            officeList = await officerow.GetAll();
+            offices = await office.GetAll();
 
-            return officeList;
+            return offices;
         }
       
         void Clear()
@@ -191,9 +196,9 @@ namespace BookAccountApp.View.windows
         private async Task<bool> chkIfNameIsExists(string name, int uId)
         {
             bool isValid = true;
-            if (officeList == null)
+            if (offices == null)
                 await RefreshOfficeList();
-            if (officeList.Any(i => i.name == name && i.officeId != uId))
+            if (offices.Any(i => i.name == name && i.officeId != uId))
                 isValid = false;
             if (!isValid)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorDuplicateNameToolTip"), animation: ToasterAnimation.FadeIn);
@@ -361,30 +366,37 @@ namespace BookAccountApp.View.windows
         {//add
             try
             {
-                //Country coumod = new Country();
-                //TimeSpan ts = new TimeSpan();
-                //ts = await coumod.GetOffsetTime(int.Parse(tb_custname.Text));
-                //tb_lastName.Text = ts.ToString();
+
 
                 HelpClass.StartAwait(grid_main);
-                bool duplicaterName = false;
-                duplicaterName = await chkIfNameIsExists(tb_name.Text, 0);
-                officerow = new Office();
-                if (HelpClass.validate(requiredControlList, this) && duplicaterName)
-                {
-                    //tb_custCode.Text = await flights.generateCodeNumber("cu");
 
-                    officerow.name = tb_name.Text;
-                    officerow.notes = tb_notes.Text;
-                    //officerow.isActive = true;
-                    decimal s = await officerow.Save(officerow);
+                office = new Office();
+                if (HelpClass.validate(requiredControlList, this))
+                {
+                    //tb_custCode.Text = await office.generateCodeNumber("cu");
+
+                    office.name = tb_name.Text;
+                    office.joinDate = dp_joinDate.SelectedDate;
+                    office.mobile = tb_mobile.Text.Trim();
+                    office.userName = tb_userName.Text;
+                    office.passwordSY = tb_passwordSY.Text;
+                    office.PasswordSoto = tb_PasswordSoto.Text;
+                    office.notes = tb_notes.Text;
+
+                    office.createUserId = MainWindow.userLogin.userId;
+                    office.updateUserId = MainWindow.userLogin.userId;
+
+
+                    decimal s = await office.Save(office);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+
                         Clear();
-                        await RefreshOfficeList();
+                       
                     }
                 }
 
@@ -400,26 +412,67 @@ namespace BookAccountApp.View.windows
         {//update
             try
             {
-
                 HelpClass.StartAwait(grid_main);
-                bool duplicaterName = false;
-                duplicaterName = await chkIfNameIsExists(tb_name.Text, officerow.officeId);
 
-                if (HelpClass.validate(requiredControlList, this) && duplicaterName)
+                if (office.officeId > 0)
                 {
-                    officerow.name = tb_name.Text;
-                    officerow.notes = tb_notes.Text;
-                    //officerow.isActive = true;
-                    decimal s = await officerow.Save(officerow);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
+                    if (HelpClass.validate(requiredControlList, this) )
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        Clear();
-                        await RefreshOfficeList();
+                        //office.custname = tb_custname.Text;
+                        office.name = tb_name.Text;
+                        office.joinDate = dp_joinDate.SelectedDate;
+                        office.mobile = tb_mobile.Text.Trim();
+                        office.userName = tb_userName.Text;
+                        office.passwordSY = tb_passwordSY.Text;
+                        office.PasswordSoto = tb_PasswordSoto.Text;
+                        office.notes = tb_notes.Text;
+                        office.updateUserId = MainWindow.userLogin.userId;
+                        //office.countryId = Convert.ToInt32(cb_country.SelectedValue);
+                        //office.email = tb_email.Text;
+                        //office.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; ;
+                        //if (!tb_phone.Text.Equals(""))
+                        //    office.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
+                        //if (!tb_fax.Text.Equals(""))
+                        //    office.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
+                        //if (cb_custlevel.SelectedValue != null)
+                        //    office.custlevel = cb_custlevel.SelectedValue.ToString();
+                        //office.company = tb_company.Text.Trim();
+                        //office.address = tb_address.Text;
+
+                        //office.createUserId = MainWindow.userLogin.userId;
+
+                        //office.balance = 0;
+
+                        decimal s = await office.Save(office);
+                        if (s <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        else
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+
+                            //if (isImgPressed)
+                            //{
+                            //    int officeId = (int)s;
+                            //    string b = await office.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + officeId.ToString()), officeId);
+                            //    office.image = b;
+                            //    isImgPressed = false;
+                            //    if (!b.Equals(""))
+                            //    {
+                            //        await getImg();
+                            //    }
+                            //    else
+                            //    {
+                            //        HelpClass.clearImg(btn_image);
+                            //    }
+                            //}
+
+                          
+                        }
                     }
                 }
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -429,25 +482,58 @@ namespace BookAccountApp.View.windows
             }
         }
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
-        {
+        {//delete
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (officerow.officeId != 0)
+                if (office.officeId != 0)
                 {
-                    decimal s = await officerow.Delete(officerow.officeId, MainWindow.userLogin.userId, true);
-                    if (s < 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("cannotdelete"), animation: ToasterAnimation.FadeIn);
+                    if ((!office.canDelete) && (office.isActive == false))
+                    {
+                        #region
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
+                        #endregion
+
+                        if (w.isOk)
+                            await activate();
+                    }
                     else
                     {
-                        officerow.officeId = 0;
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                        #region
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        if (office.canDelete)
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                        if (!office.canDelete)
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
+                        #endregion
 
-                        await RefreshOfficeList();
-                        Clear();
+                        if (w.isOk)
+                        {
+                            string popupContent = "";
+                            if (office.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
+                            if ((!office.canDelete) && (office.isActive == true)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+
+                            var s = await office.Delete(office.officeId, MainWindow.userLogin.userId, office.canDelete);
+                            if (s < 0)
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                office.officeId = 0;
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+
+                             
+                                Clear();
+
+                            }
+                        }
                     }
-
-
                 }
                 HelpClass.EndAwait(grid_main);
             }
@@ -458,7 +544,18 @@ namespace BookAccountApp.View.windows
             }
         }
 
-
+        private async Task activate()
+        {//activate
+            office.isActive = true;
+            var s = await office.Save(office);
+            if (s <= 0)
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+            else
+            {
+                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
+           
+            }
+        }
         #endregion
 
         private void validateEmpty_LostFocus(object sender, RoutedEventArgs e)

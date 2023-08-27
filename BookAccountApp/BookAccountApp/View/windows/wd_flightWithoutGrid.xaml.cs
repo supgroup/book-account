@@ -62,7 +62,7 @@ namespace BookAccountApp.View.windows
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_sliceMain);
-                requiredControlList = new List<string> { "name" };
+                requiredControlList = new List<string> { "airline" };
                 #region translate
                 //if (AppSettings.lang.Equals("en"))
                 //{
@@ -76,8 +76,8 @@ namespace BookAccountApp.View.windows
                 //}
                 translate();
                 #endregion
-
-                //await FillCombo.fillItemCombo(cb_item);
+                await fillcombos();
+                //  await FillCombo.fillItemCombo(cb_item);
 
                 //if (FillCombo.itemunitsList is null)
                 //    await FillCombo.RefreshItemUnits();
@@ -234,6 +234,12 @@ namespace BookAccountApp.View.windows
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
             GC.Collect();
+        }
+        public async Task fillcombos()
+        {
+            await FillCombo.fillFlightTable(cb_flightTableId);
+            await FillCombo.fillFromTable(cb_flightFrom);
+            await FillCombo.fillToTable(cb_flightTo);
         }
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
