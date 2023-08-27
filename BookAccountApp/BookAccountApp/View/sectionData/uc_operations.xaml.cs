@@ -56,7 +56,8 @@ namespace BookAccountApp.View.sectionData
         Operations operations = new Operations();
         IEnumerable<Operations> operationssQuery;
         IEnumerable<Operations> operationss;
-        byte tgl_operationsstate;
+        bool first = true;
+        bool tgl_operationsstate;
         string searchText = "";
         SaveFileDialog saveFileDialog = new SaveFileDialog();
         public static List<string> requiredControlList;
@@ -284,23 +285,57 @@ motherHint
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (operations.operationId != 0)
-                {
-                    decimal s = await operations.Delete(operations.operationId, MainWindow.userLogin.userId, true);
-                    if (s < 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("cannotdelete"), animation: ToasterAnimation.FadeIn);
-                    else
+              
+                    if (operations.operationId != 0)
                     {
-                        operations.operationId = 0;
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                        if ((!operations.canDelete) && (operations.isActive == false))
+                        {
+                            #region
+                            Window.GetWindow(this).Opacity = 0.2;
+                            wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
+                            w.ShowDialog();
+                            Window.GetWindow(this).Opacity = 1;
+                            #endregion
 
-                        await RefreshOperationssList();
-                        await Search();
-                        Clear();
+                            if (w.isOk)
+                                await activate();
+                        }
+                        else
+                        {
+                            #region
+                            Window.GetWindow(this).Opacity = 0.2;
+                            wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                            if (operations.canDelete)
+                                w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                            if (!operations.canDelete)
+                                w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
+                            w.ShowDialog();
+                            Window.GetWindow(this).Opacity = 1;
+                            #endregion
+
+                            if (w.isOk)
+                            {
+                                string popupContent = "";
+                                if (operations.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
+                                if ((!operations.canDelete) && (operations.isActive == true)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+
+                                var s = await operations.Delete(operations.operationId, MainWindow.userLogin.userId, operations.canDelete);
+                                if (s < 0)
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                else
+                                {
+                                    operations.operationId = 0;
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+
+                                    await RefreshOperationssList();
+                                    await Search();
+                                    Clear();
+
+                                }
+                            }
+                        }
                     }
-
-
-                }
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -311,9 +346,8 @@ motherHint
         }
         private async Task activate()
         {//activate
-            /*
-            operations.isActive = 1;
-            decimal s = await operations.Save(operations);
+            operations.isActive = true;
+            var s = await operations.Save(operations);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
@@ -322,7 +356,6 @@ motherHint
                 await RefreshOperationssList();
                 await Search();
             }
-            */
         }
         #endregion
         #region events
@@ -351,12 +384,20 @@ motherHint
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
+
                 if (operationss is null)
                     await RefreshOperationssList();
-                tgl_operationsstate = 1;
-                await Search();
-                */
+                tgl_operationsstate = true;
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    await Search();
+
+                }
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -372,7 +413,7 @@ motherHint
                 HelpClass.StartAwait(grid_main);
                 if (operationss is null)
                     await RefreshOperationssList();
-                tgl_operationsstate = 0;
+                tgl_operationsstate = false;
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -417,21 +458,17 @@ motherHint
                         cb_opStatement.SelectedValue = operations.opStatementId;
                         cb_duration.SelectedValue = operations.durationId;
                         this.DataContext = operations;
-                        //await getImg();
                         #region delete
-                        //if (operations.canDelete)
-                        //    btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-                        //else
-                        //{
-                        //    if (operations.isActive == 0)
-                        //        btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
-                        //    else
-                        //        btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
-                        //}
+                        if (operations.canDelete)
+                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                        else
+                        {
+                            if (operations.isActive == false)
+                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                            else
+                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                        }
                         #endregion
-                        //HelpClass.getMobile(operations.mobile, cb_areaMobile, tb_mobile);
-                        //HelpClass.getPhone(operations.phone, cb_areaPhone, cb_areaPhoneLocal, tb_phone);
-                        //HelpClass.getPhone(operations.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
@@ -478,7 +515,7 @@ motherHint
             s.opStatement.ToLower().Contains(searchText) ||
             s.duration.ToLower().Contains(searchText)
             
-            ));
+            ) && s.isActive == tgl_operationsstate);
             //&& s.isActive == tgl_operationsstate
             //);
             

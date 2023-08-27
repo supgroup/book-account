@@ -57,7 +57,8 @@ namespace BookAccountApp.View.sectionData
         Office office = new Office();
         IEnumerable<Office> officesQuery;
         IEnumerable<Office> offices;
-        byte tgl_officestate;
+        bool tgl_officestate = true;
+        bool first = true;
         string searchText = "";
         SaveFileDialog saveFileDialog = new SaveFileDialog();
         public static List<string> requiredControlList;
@@ -293,20 +294,53 @@ motherHint
                 HelpClass.StartAwait(grid_main);
                 if (office.officeId != 0)
                 {
-                    decimal s = await office.Delete(office.officeId, MainWindow.userLogin.userId, true);
-                    if (s < 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("cannotdelete"), animation: ToasterAnimation.FadeIn);
+                    if ((!office.canDelete) && (office.isActive == false))
+                    {
+                        #region
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
+                        #endregion
+
+                        if (w.isOk)
+                            await activate();
+                    }
                     else
                     {
-                        office.officeId = 0;
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                        #region
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        if (office.canDelete)
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                        if (!office.canDelete)
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
+                        #endregion
 
-                        await RefreshOfficesList();
-                        await Search();
-                        Clear();
+                        if (w.isOk)
+                        {
+                            string popupContent = "";
+                            if (office.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
+                            if ((!office.canDelete) && (office.isActive == true)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+
+                            var s = await office.Delete(office.officeId, MainWindow.userLogin.userId, office.canDelete);
+                            if (s < 0)
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                office.officeId = 0;
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+
+                                await RefreshOfficesList();
+                                await Search();
+                                Clear();
+
+                            }
+                        }
                     }
-
-
                 }
                 HelpClass.EndAwait(grid_main);
             }
@@ -318,9 +352,8 @@ motherHint
         }
         private async Task activate()
         {//activate
-            /*
-            office.isActive = 1;
-            decimal s = await office.Save(office);
+            office.isActive = true;
+            var s = await office.Save(office);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
@@ -329,7 +362,6 @@ motherHint
                 await RefreshOfficesList();
                 await Search();
             }
-            */
         }
         #endregion
         #region events
@@ -352,12 +384,20 @@ motherHint
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
+
                 if (offices is null)
                     await RefreshOfficesList();
-                tgl_officestate = 1;
-                await Search();
-                */
+                tgl_officestate = true;
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    await Search();
+
+                }
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -373,7 +413,7 @@ motherHint
                 HelpClass.StartAwait(grid_main);
                 if (offices is null)
                     await RefreshOfficesList();
-                tgl_officestate = 0;
+                tgl_officestate = false;
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -415,21 +455,17 @@ motherHint
                         //tb_custCode.Text = office.custCode;
                         //cb_country.SelectedValue = office.countryId;
                         this.DataContext = office;
-                        //await getImg();
                         #region delete
-                        //if (office.canDelete)
-                        //    btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-                        //else
-                        //{
-                        //    if (office.isActive == 0)
-                        //        btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
-                        //    else
-                        //        btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
-                        //}
+                        if (office.canDelete)
+                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                        else
+                        {
+                            if (office.isActive == false)
+                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                            else
+                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                        }
                         #endregion
-                        //HelpClass.getMobile(office.mobile, cb_areaMobile, tb_mobile);
-                        //HelpClass.getPhone(office.phone, cb_areaPhone, cb_areaPhoneLocal, tb_phone);
-                        //HelpClass.getPhone(office.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
@@ -477,7 +513,7 @@ motherHint
             s.joinDate.ToString().Contains(searchText)
             ||
             s.mobile.ToLower().Contains(searchText)
-            ));
+            ) && s.isActive == tgl_officestate);
             //&& s.isActive == tgl_officestate
             //);
             

@@ -32,7 +32,7 @@ namespace BookAccountApp.ApiClasses
         public string fullName { get; set; }
         public bool canDelete { get; set; }
 
-
+        public Nullable<bool> isActive { get; set; }
 
         /// <summary>
         /// ///////////////////////////////////////
@@ -62,25 +62,28 @@ namespace BookAccountApp.ApiClasses
                                 createUserId = S.createUserId,
                                 updateUserId = S.updateUserId,
                                 fullName= S.name+" "+S.lastName,
-                                canDelete = true,
-
+                                isActive = S.isActive,
+                                canDelete = false,
                             }).ToList();
 
-                    //if (List.Count > 0)
-                    //{
-                    //    for (int i = 0; i < List.Count; i++)
-                    //    {
-                    //        if (List[i].isActive == 1)
-                    //        {
-                    //            int userId = (int)List[i].userId;
-                    //            var itemsI = entity.packageUser.Where(x => x.userId == userId).Select(b => new { b.userId }).FirstOrDefault();
+                    if (List.Count > 0)
+                    {
+                        for (int i = 0; i < List.Count; i++)
+                        {
+                            if (List[i].isActive == true)
+                            {
+                                int itemId = (int)List[i].passengerId;
+                                var itemsI = entity.serviceData.Where(x => x.passengerId == itemId).Select(b => new { b.passengerId }).FirstOrDefault();
+                                var items2 = entity.payOp.Where(x => x.passengerId == itemId).Select(b => new { b.passengerId }).FirstOrDefault();
 
-                    //            if ((itemsI is null))
-                    //                canDelete = true;
-                    //        }
-                    //        List[i].canDelete = canDelete;
-                    //    }
-                    //}
+                                if ((itemsI is null) && (items2 is null))
+                                {
+                                    List[i].canDelete = true;
+                                }
+                            }
+                           
+                        }
+                    }
                     return List;
                 }
 
@@ -109,9 +112,6 @@ namespace BookAccountApp.ApiClasses
                     Nullable<int> id = null;
                     newObject.createUserId = id;
                 }
-           
-
-
                 try
                 {
                     using (bookdbEntities entity = new bookdbEntities())
@@ -122,7 +122,7 @@ namespace BookAccountApp.ApiClasses
                             newObject.createDate = DateTime.Now;
                             newObject.updateDate = newObject.createDate;
                             newObject.updateUserId = newObject.createUserId;
-
+                            newObject.isActive = true;
 
                             locationEntity.Add(newObject);
                             entity.SaveChanges();
@@ -143,7 +143,7 @@ namespace BookAccountApp.ApiClasses
                           //  tmpObject.updateDate = newObject.updateDate;
                            // tmpObject.createUserId = newObject.createUserId;
                             tmpObject.updateUserId = newObject.updateUserId;
-
+                            tmpObject.isActive = newObject.isActive;
 
                             entity.SaveChanges();
 
@@ -188,7 +188,8 @@ namespace BookAccountApp.ApiClasses
                          updateDate = S.updateDate,
                          createUserId = S.createUserId,
                          updateUserId = S.updateUserId,
-
+                         isActive = S.isActive,
+                     
                      }).FirstOrDefault();
                     return row;
                 }
@@ -212,7 +213,11 @@ namespace BookAccountApp.ApiClasses
                     using (bookdbEntities entity = new bookdbEntities())
                     {
                         passengers objectDelete = entity.passengers.Find(id);
-
+                        List<passengerFiles> fileslist = entity.passengerFiles.Where(f => f.passengerId == objectDelete.passengerId).ToList();
+                        //remove files first
+                        //code here
+                        //remove rows from db
+                        entity.passengerFiles.RemoveRange(fileslist);
                         entity.passengers.Remove(objectDelete);
                         message = entity.SaveChanges();
                         return message;
@@ -225,28 +230,27 @@ namespace BookAccountApp.ApiClasses
 
                 }
             }
-            return message;
-            //else
-            //{
-            //    try
-            //    {
-            //        using (bookdbEntities entity = new bookdbEntities())
-            //        {
-            //            passengers objectDelete = entity.passengers.Find(userId);
+            else
+            {
+                try
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        passengers objectDelete = entity.passengers.Find(id);
 
-            //            objectDelete.isActive = 0;
-            //            objectDelete.updateUserId = signuserId;
-            //        objectDelete.updateDate = DateTime.Now;
-            //            message = entity.SaveChanges() ;
+                        objectDelete.isActive = false;
+                        objectDelete.updateUserId = signuserId;
+                        objectDelete.updateDate = DateTime.Now;
+                        message = entity.SaveChanges();
 
-            //            return message;
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        return 0;
-            //    }
-            //}
+                        return message;
+                    }
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
 
         }
 

@@ -55,7 +55,8 @@ namespace BookAccountApp.View.sectionData
         Users user = new Users();
         IEnumerable<Users> usersQuery;
         IEnumerable<Users> users;
-        bool tgl_userState;
+        bool first = true;
+        bool tgl_userState=true;
         string searchText = "";
         public static List<string> requiredControlList;
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -381,7 +382,16 @@ namespace BookAccountApp.View.sectionData
                 if (users is null)
                     await RefreshUsersList();
                 tgl_userState = true;
-                await Search();
+             
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    await Search();
+
+                }
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

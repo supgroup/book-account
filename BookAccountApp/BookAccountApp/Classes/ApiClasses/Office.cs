@@ -69,26 +69,29 @@ namespace BookAccountApp.ApiClasses
                                 updateDate = S.updateDate,
                                 createUserId = S.createUserId,
                                 updateUserId = S.updateUserId,
-
-                                canDelete = true,
+                                isActive=S.isActive,
+                                canDelete = false,
 
                             }).ToList();
 
-                    //if (List.Count > 0)
-                    //{
-                    //    for (int i = 0; i < List.Count; i++)
-                    //    {
-                    //        if (List[i].isActive == 1)
-                    //        {
-                    //            int userId = (int)List[i].userId;
-                    //            var itemsI = entity.packageUser.Where(x => x.userId == userId).Select(b => new { b.userId }).FirstOrDefault();
+                    if (List.Count > 0)
+                    {
+                        for (int i = 0; i < List.Count; i++)
+                        {
+                            if (List[i].isActive == true)
+                            {
+                                int itemId = (int)List[i].officeId;
+                                var itemsI = entity.serviceData.Where(x => x.officeId == itemId).Select(b => new { b.officeId }).FirstOrDefault();
+                                var items2 = entity.payOp.Where(x => x.officeId == itemId).Select(b => new { b.officeId }).FirstOrDefault();
 
-                    //            if ((itemsI is null))
-                    //                canDelete = true;
-                    //        }
-                    //        List[i].canDelete = canDelete;
-                    //    }
-                    //}
+                                if ((itemsI is null)&& (items2 is null))
+                                {
+                                    List[i].canDelete = true;
+                                }
+                            }
+                         
+                        }
+                    }
                     return List;
                 }
 
@@ -130,7 +133,7 @@ namespace BookAccountApp.ApiClasses
                             newObject.createDate = DateTime.Now;
                             newObject.updateDate = newObject.createDate;
                             newObject.updateUserId = newObject.createUserId;
-
+                            newObject.isActive = true;
 
                             locationEntity.Add(newObject);
                             entity.SaveChanges();
@@ -151,7 +154,7 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.passwordSY = newObject.passwordSY;
                             tmpObject.PasswordSoto = newObject.PasswordSoto;
                             tmpObject.notes = newObject.notes;
-                         
+                            tmpObject.isActive = newObject.isActive;
                             tmpObject.createUserId = newObject.createUserId;
                             tmpObject.updateUserId = newObject.updateUserId;
 
@@ -202,7 +205,7 @@ namespace BookAccountApp.ApiClasses
                          updateDate = S.updateDate,
                          createUserId = S.createUserId,
                          updateUserId = S.updateUserId,
-
+                         isActive = S.isActive,
                      }).FirstOrDefault();
                     return row;
                 }
@@ -226,7 +229,11 @@ namespace BookAccountApp.ApiClasses
                     using (bookdbEntities entity = new bookdbEntities())
                     {
                         office objectDelete = entity.office.Find(id);
-
+                        List<officeFiles> fileslist = entity.officeFiles.Where(f => f.officeId == objectDelete.officeId).ToList();
+                        //remove files first
+                        //code here
+                        //remove rows from db
+                        entity.officeFiles.RemoveRange(fileslist);
                         entity.office.Remove(objectDelete);
                         message = entity.SaveChanges();
                         return message;
@@ -239,28 +246,28 @@ namespace BookAccountApp.ApiClasses
 
                 }
             }
-            return message;
-            //else
-            //{
-            //    try
-            //    {
-            //        using (bookdbEntities entity = new bookdbEntities())
-            //        {
-            //            office objectDelete = entity.office.Find(userId);
+            else
+            {
+                try
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        office objectDelete = entity.office.Find(id);
 
-            //            objectDelete.isActive = 0;
-            //            objectDelete.updateUserId = signuserId;
-            //        objectDelete.updateDate = DateTime.Now;
-            //            message = entity.SaveChanges() ;
+                        objectDelete.isActive = false;
+                        objectDelete.updateUserId = signuserId;
+                        objectDelete.updateDate = DateTime.Now;
+                        message = entity.SaveChanges();
 
-            //            return message;
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        return 0;
-            //    }
-            //}
+                        return message;
+                    }
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+
 
         }
 

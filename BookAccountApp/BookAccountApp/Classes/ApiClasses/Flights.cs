@@ -82,10 +82,12 @@ namespace BookAccountApp.ApiClasses
                                 int itemId = (int)List[i].flightId;
                                 var itemsI = entity.serviceData.Where(x => x.flightId == itemId).Select(b => new { b.flightId }).FirstOrDefault();
 
-                                if ((itemsI is null))
-                                    canDelete = true;
+                                if (itemsI is null)
+                                {
+                                    List[i].canDelete = true;
+                                }
                             }
-                            List[i].canDelete = canDelete;
+                       
                         }
                     }
                     return List;
@@ -237,8 +239,7 @@ namespace BookAccountApp.ApiClasses
                     return 0;
 
                 }
-            }
-        
+            }        
             else
             {
                 try

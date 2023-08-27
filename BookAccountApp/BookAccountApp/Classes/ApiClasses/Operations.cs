@@ -63,25 +63,29 @@ namespace BookAccountApp.ApiClasses
                                 updateUserId = S.updateUserId,
                                 opStatementId=S.opStatementId == null ?0: S.opStatementId,
                                 durationId =S.durationId == null ? 0 : S.durationId,
-                                canDelete = true,
-
+                                canDelete = false,
+                                isActive = S.isActive,
                             }).ToList();
 
-                    //if (List.Count > 0)
-                    //{
-                    //    for (int i = 0; i < List.Count; i++)
-                    //    {
-                    //        if (List[i].isActive == 1)
-                    //        {
-                    //            int userId = (int)List[i].userId;
-                    //            var itemsI = entity.packageUser.Where(x => x.userId == userId).Select(b => new { b.userId }).FirstOrDefault();
 
-                    //            if ((itemsI is null))
-                    //                canDelete = true;
-                    //        }
-                    //        List[i].canDelete = canDelete;
-                    //    }
-                    //}
+                    if (List.Count > 0)
+                    {
+                        for (int i = 0; i < List.Count; i++)
+                        {
+                            if (List[i].isActive == true)
+                            {
+                                int itemId = (int)List[i].operationId;
+                                var itemsI = entity.serviceData.Where(x => x.operationId == itemId).Select(b => new { b.operationId }).FirstOrDefault();
+
+                                if (itemsI is null)
+                                {                                    
+                                    List[i].canDelete = true;
+                                }
+                                  
+                            }
+                            
+                        }
+                    }
                     return List;
                 }
 
@@ -123,7 +127,7 @@ namespace BookAccountApp.ApiClasses
                             newObject.createDate = DateTime.Now;
                             newObject.updateDate = newObject.createDate;
                             newObject.updateUserId = newObject.createUserId;
-
+                            newObject.isActive = true;
 
                             locationEntity.Add(newObject);
                             entity.SaveChanges();
@@ -144,7 +148,7 @@ namespace BookAccountApp.ApiClasses
                          //   tmpObject.updateDate = newObject.updateDate;
                        //     tmpObject.createUserId = newObject.createUserId;
                             tmpObject.updateUserId = newObject.updateUserId;
-
+                            tmpObject.isActive = newObject.isActive;
                             entity.SaveChanges();
 
                             message = tmpObject.operationId;
@@ -189,7 +193,7 @@ namespace BookAccountApp.ApiClasses
                          updateUserId = S.updateUserId,
                          opStatementId = S.opStatementId == null ? 0 : S.opStatementId,
                          durationId = S.durationId == null ? 0 : S.durationId,
-
+                         isActive = S.isActive,
                      }).FirstOrDefault();
                     return row;
                 }
@@ -226,28 +230,27 @@ namespace BookAccountApp.ApiClasses
 
                 }
             }
-            return message;
-            //else
-            //{
-            //    try
-            //    {
-            //        using (bookdbEntities entity = new bookdbEntities())
-            //        {
-            //            operations objectDelete = entity.operations.Find(userId);
+            else
+            {
+                try
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        operations objectDelete = entity.operations.Find(id);
 
-            //            objectDelete.isActive = 0;
-            //            objectDelete.updateUserId = signuserId;
-            //        objectDelete.updateDate = DateTime.Now;
-            //            message = entity.SaveChanges() ;
+                        objectDelete.isActive = false;
+                        objectDelete.updateUserId = signuserId;
+                        objectDelete.updateDate = DateTime.Now;
+                        message = entity.SaveChanges();
 
-            //            return message;
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        return 0;
-            //    }
-            //}
+                        return message;
+                    }
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
 
         }
 

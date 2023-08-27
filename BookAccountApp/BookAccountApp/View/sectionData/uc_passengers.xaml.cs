@@ -56,7 +56,8 @@ namespace BookAccountApp.View.sectionData
         Passengers passenger = new Passengers();
         IEnumerable<Passengers> passengersQuery;
         IEnumerable<Passengers> passengers;
-        byte tgl_passengerstate;
+        bool first = true;
+        bool tgl_passengerstate=true;
         string searchText = "";
         SaveFileDialog saveFileDialog = new SaveFileDialog();
         public static List<string> requiredControlList;
@@ -282,22 +283,56 @@ namespace BookAccountApp.View.sectionData
             {
                 HelpClass.StartAwait(grid_main);
                 if (passenger.passengerId != 0)
-                {
-                    decimal s = await passenger.Delete(passenger.passengerId, MainWindow.userLogin.userId, true);
-                    if (s < 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("cannotdelete"), animation: ToasterAnimation.FadeIn);
-                    else
+                    if (passenger.passengerId != 0)
                     {
-                        passenger.passengerId = 0;
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                        if ((!passenger.canDelete) && (passenger.isActive == false))
+                        {
+                            #region
+                            Window.GetWindow(this).Opacity = 0.2;
+                            wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
+                            w.ShowDialog();
+                            Window.GetWindow(this).Opacity = 1;
+                            #endregion
 
-                        await RefreshPassengersList();
-                        await Search();
-                        Clear();
+                            if (w.isOk)
+                                await activate();
+                        }
+                        else
+                        {
+                            #region
+                            Window.GetWindow(this).Opacity = 0.2;
+                            wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                            if (passenger.canDelete)
+                                w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                            if (!passenger.canDelete)
+                                w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
+                            w.ShowDialog();
+                            Window.GetWindow(this).Opacity = 1;
+                            #endregion
+
+                            if (w.isOk)
+                            {
+                                string popupContent = "";
+                                if (passenger.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
+                                if ((!passenger.canDelete) && (passenger.isActive == true)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+
+                                var s = await passenger.Delete(passenger.passengerId, MainWindow.userLogin.userId, passenger.canDelete);
+                                if (s < 0)
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                else
+                                {
+                                    passenger.passengerId = 0;
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+
+                                    await RefreshPassengersList();
+                                    await Search();
+                                    Clear();
+
+                                }
+                            }
+                        }
                     }
-
-
-                }
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -308,9 +343,8 @@ namespace BookAccountApp.View.sectionData
         }
         private async Task activate()
         {//activate
-            /*
-            passenger.isActive = 1;
-            decimal s = await passenger.Save(passenger);
+            passenger.isActive = true;
+            var s = await passenger.Save(passenger);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
@@ -319,7 +353,6 @@ namespace BookAccountApp.View.sectionData
                 await RefreshPassengersList();
                 await Search();
             }
-            */
         }
         #endregion
         #region events
@@ -342,12 +375,20 @@ namespace BookAccountApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
+
                 if (passengers is null)
                     await RefreshPassengersList();
-                tgl_passengerstate = 1;
-                await Search();
-                */
+                tgl_passengerstate = true;
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    await Search();
+
+                }
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -363,7 +404,7 @@ namespace BookAccountApp.View.sectionData
                 HelpClass.StartAwait(grid_main);
                 if (passengers is null)
                     await RefreshPassengersList();
-                tgl_passengerstate = 0;
+                tgl_passengerstate = false;
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -405,21 +446,17 @@ namespace BookAccountApp.View.sectionData
                         //tb_custCode.Text = passenger.custCode;
                         //cb_country.SelectedValue = passenger.countryId;
                         this.DataContext = passenger;
-                        //await getImg();
                         #region delete
-                        //if (passenger.canDelete)
-                        //    btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-                        //else
-                        //{
-                        //    if (passenger.isActive == 0)
-                        //        btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
-                        //    else
-                        //        btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
-                        //}
+                        if (passenger.canDelete)
+                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                        else
+                        {
+                            if (passenger.isActive == false)
+                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                            else
+                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                        }
                         #endregion
-                        //HelpClass.getMobile(passenger.mobile, cb_areaMobile, tb_mobile);
-                        //HelpClass.getPhone(passenger.phone, cb_areaPhone, cb_areaPhoneLocal, tb_phone);
-                        //HelpClass.getPhone(passenger.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
@@ -467,7 +504,7 @@ namespace BookAccountApp.View.sectionData
             s.father.ToLower().Contains(searchText)
             ||
             s.mother.ToLower().Contains(searchText)
-            ));
+            ) && s.isActive == tgl_passengerstate);
             //&& s.isActive == tgl_passengerstate
             //);
 

@@ -57,7 +57,8 @@ namespace BookAccountApp.View.bookSales
         ServiceData serviceData = new ServiceData();
         IEnumerable<ServiceData> serviceDatasQuery;
         IEnumerable<ServiceData> serviceDatas;
-        byte tgl_serviceDatastate;
+        bool first = true;
+        bool tgl_serviceDatastate = true;
         string searchText = "";
         SaveFileDialog saveFileDialog = new SaveFileDialog();
         public static List<string> requiredControlList;
@@ -263,20 +264,53 @@ namespace BookAccountApp.View.bookSales
 
                 if (serviceData.serviceId != 0)
                 {
-                    decimal s = await serviceData.Delete(serviceData.serviceId, MainWindow.userLogin.userId, true);
-                    if (s < 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("cannotdelete"), animation: ToasterAnimation.FadeIn);
+                    if ((!serviceData.canDelete) && (serviceData.isActive == false))
+                    {
+                        #region
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
+                        #endregion
+
+                        if (w.isOk)
+                            await activate();
+                    }
                     else
                     {
-                        serviceData.serviceId = 0;
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
-                        Clear();
-                        await RefreshServiceDatasList();
-                        await Search();
-                    
+                        #region
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        if (serviceData.canDelete)
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                        if (!serviceData.canDelete)
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
+                        #endregion
+
+                        if (w.isOk)
+                        {
+                            string popupContent = "";
+                            if (serviceData.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
+                            if ((!serviceData.canDelete) && (serviceData.isActive == true)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+
+                            var s = await serviceData.Delete(serviceData.serviceId, MainWindow.userLogin.userId, serviceData.canDelete);
+                            if (s < 0)
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                serviceData.serviceId = 0;
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+
+                                await RefreshServiceDatasList();
+                                await Search();
+                                Clear();
+
+                            }
+                        }
                     }
-
-
                 }
 
                 HelpClass.EndAwait(grid_main);
@@ -289,9 +323,8 @@ namespace BookAccountApp.View.bookSales
         }
         private async Task activate()
         {//activate
-            /*
-            serviceData.isActive = 1;
-            decimal s = await serviceData.Save(serviceData);
+            serviceData.isActive = true;
+            var s = await serviceData.Save(serviceData);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
@@ -300,7 +333,6 @@ namespace BookAccountApp.View.bookSales
                 await RefreshServiceDatasList();
                 await Search();
             }
-            */
         }
         #endregion
         #region events
@@ -323,12 +355,20 @@ namespace BookAccountApp.View.bookSales
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
+
                 if (serviceDatas is null)
                     await RefreshServiceDatasList();
-                tgl_serviceDatastate = 1;
-                await Search();
-                */
+                tgl_serviceDatastate = true;
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    await Search();
+
+                }
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -344,7 +384,7 @@ namespace BookAccountApp.View.bookSales
                 HelpClass.StartAwait(grid_main);
                 if (serviceDatas is null)
                     await RefreshServiceDatasList();
-                tgl_serviceDatastate = 0;
+                tgl_serviceDatastate = false;
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -392,21 +432,17 @@ namespace BookAccountApp.View.bookSales
                       
                         tb_total.Text = HelpClass.DecTostring(serviceData.total);
                       this.DataContext = serviceData;
-                        //await getImg();
                         #region delete
-                        //if (serviceData.canDelete)
-                        //    btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-                        //else
-                        //{
-                        //    if (serviceData.isActive == 0)
-                        //        btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
-                        //    else
-                        //        btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
-                        //}
+                        if (serviceData.canDelete)
+                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                        else
+                        {
+                            if (serviceData.isActive == false)
+                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                            else
+                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                        }
                         #endregion
-                        //HelpClass.getMobile(serviceData.mobile, cb_areaMobile, tb_mobile);
-                        //HelpClass.getPhone(serviceData.phone, cb_areaPhone, cb_areaPhoneLocal, tb_phone);
-                        //HelpClass.getPhone(serviceData.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
                     }
                 }
              
@@ -448,7 +484,7 @@ namespace BookAccountApp.View.bookSales
                 await RefreshServiceDatasList();
 
             searchText = tb_search.Text.ToLower();
-            serviceDatasQuery = serviceDatas.Where(s => searchText == "" ? true :
+            serviceDatasQuery = serviceDatas.Where(s =>( searchText == "" ? true :
             (
           (s.airline == null ? false : (s.airline.ToLower().Contains(searchText))) ||
            (s.passenger == null ? false : (s.passenger.ToLower().Contains(searchText))) ||
@@ -463,7 +499,7 @@ namespace BookAccountApp.View.bookSales
             //end date
             ((dp_toDateSearch.SelectedDate != null || dp_toDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
 
-            )
+            )) && s.isActive == tgl_serviceDatastate
             );
 
             //);

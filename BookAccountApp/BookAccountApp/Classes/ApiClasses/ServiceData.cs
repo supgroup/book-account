@@ -104,27 +104,30 @@ namespace BookAccountApp.ApiClasses
                                 flightId = S.flightId,
                                 operationId = S.operationId,
                                officeName=OFF.name,
-                                canDelete = true,
-                                systemType=S.systemType,
+                                isActive = S.isActive,
+                                canDelete = false,
+                                systemType =S.systemType,
 
                             }).ToList();
 
-                        //if (List.Count > 0)
-                        //{
-                        //    for (int i = 0; i < List.Count; i++)
-                        //    {
-                        //        if (List[i].isActive == 1)
-                        //        {
-                        //            int userId = (int)List[i].userId;
-                        //            var itemsI = entity.packageUser.Where(x => x.userId == userId).Select(b => new { b.userId }).FirstOrDefault();
+                    if (List.Count > 0)
+                    {
+                        for (int i = 0; i < List.Count; i++)
+                        {
+                            if (List[i].isActive == true)
+                            {
+                                int itemId = (int)List[i].serviceId;                               
+                                var itemsI = entity.payOp.Where(x => x.serviceId == itemId).Select(b => new { b.serviceId }).FirstOrDefault();
 
-                        //            if ((itemsI is null))
-                        //                canDelete = true;
-                        //        }
-                        //        List[i].canDelete = canDelete;
-                        //    }
-                        //}
-                        return List;
+                                if (itemsI is null) 
+                                {
+                                    List[i].canDelete = true;
+                                }
+                            }
+                           
+                        }
+                    }
+                    return List;
                     }
 
                 }
@@ -169,9 +172,9 @@ namespace BookAccountApp.ApiClasses
                             newObject.createDate = DateTime.Now;
                                 newObject.updateDate = newObject.createDate;
                                 newObject.updateUserId = newObject.createUserId;
+                            newObject.isActive = true;
 
-
-                                locationEntity.Add(newObject);
+                            locationEntity.Add(newObject);
                                 entity.SaveChanges();
                                 message = newObject.serviceId;
                             }
@@ -208,7 +211,7 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.flightId = newObject.flightId;
                             tmpObject.operationId = newObject.operationId;
                             tmpObject.systemType = newObject.systemType;
-
+                            tmpObject.isActive = newObject.isActive;
                             entity.SaveChanges();
 
                                 message = tmpObject.serviceId;
@@ -271,7 +274,7 @@ namespace BookAccountApp.ApiClasses
                           flightId = S.flightId,
                           operationId = S.operationId,
                           systemType = S.systemType,
-
+                          isActive = S.isActive,
                       }).FirstOrDefault();
                     return  row;
                 }
@@ -288,48 +291,52 @@ namespace BookAccountApp.ApiClasses
         {
 
             decimal message = 0;
-                if (final)
+            if (final)
+            {
+                try
                 {
-                    try
+                    using (bookdbEntities entity = new bookdbEntities())
                     {
-                        using (bookdbEntities entity = new bookdbEntities())
-                        {
-                            serviceData objectDelete = entity.serviceData.Find(id);
-
-                            entity.serviceData.Remove(objectDelete);
-                            message = entity.SaveChanges() ;
-                            return message;
-
-                        }
-                    }
-                    catch
-                    {
-                        return 0;
+                        serviceData objectDelete = entity.serviceData.Find(id);
+                        List<serviceDataFiles> fileslist = entity.serviceDataFiles.Where(f => f.serviceId == objectDelete.serviceId).ToList();
+                        //remove files first
+                        //code here
+                        //remove rows from db
+                        entity.serviceDataFiles.RemoveRange(fileslist);
+                        entity.serviceData.Remove(objectDelete);
+                        message = entity.SaveChanges();
+                        return message;
 
                     }
                 }
-            return message;
-            //else
-            //{
-            //    try
-            //    {
-            //        using (bookdbEntities entity = new bookdbEntities())
-            //        {
-            //            serviceData objectDelete = entity.serviceData.Find(userId);
+                catch
+                {
+                    return 0;
 
-            //            objectDelete.isActive = 0;
-            //            objectDelete.updateUserId = signuserId;
-            //        objectDelete.updateDate = DateTime.Now;
-            //            message = entity.SaveChanges() ;
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        serviceData objectDelete = entity.serviceData.Find(id);
 
-            //            return message;
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        return 0;
-            //    }
-            //}
+                        objectDelete.isActive = false;
+                        objectDelete.updateUserId = signuserId;
+                        objectDelete.updateDate = DateTime.Now;
+                        message = entity.SaveChanges();
+
+                        return message;
+                    }
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+
 
         }
 
