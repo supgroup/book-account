@@ -109,7 +109,7 @@ namespace BookAccountApp.View.sectionData
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            txt_title.Text = MainWindow.resourcemanager.GetString("office");
+            txt_title.Text = MainWindow.resourcemanager.GetString("officeInfo");
             txt_exportDocsButton.Text = MainWindow.resourcemanager.GetString("docExport");
             txt_uploadDocsButton.Text = MainWindow.resourcemanager.GetString("docUpload");
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_custCode, MainWindow.resourcemanager.GetString("trCodeHint"));
