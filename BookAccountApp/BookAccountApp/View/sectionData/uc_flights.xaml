@@ -123,8 +123,14 @@
                                 <Setter Property="BorderBrush" Value="White"/>
                                 <Setter Property="BorderThickness" Value="0 0 1 0"/>
                                 <Setter Property="Foreground" Value="{StaticResource White}"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter Property="Foreground" Value="White" />
+                                    </Trigger>
+                                </Style.Triggers>
                             </Style>
                         </DataGrid.Resources>
+                        
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="*"  Header="flightId" Binding="{Binding Path=flightId}">
                                 <DataGridTextColumn.ElementStyle>
