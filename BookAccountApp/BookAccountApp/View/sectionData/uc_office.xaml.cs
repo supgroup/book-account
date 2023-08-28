@@ -888,13 +888,8 @@ motherHint
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        //private Random _random = new Random();
-
-        //public string GenerateRandomNo()
-        //{
-        //    return _random.Next(0, 9999).ToString("D4");
-        //}
-        private async void Btn_exportDocs_Click(object sender, RoutedEventArgs e)
+     
+        private void Btn_exportDocs_Click(object sender, RoutedEventArgs e)
         {
             try
             {

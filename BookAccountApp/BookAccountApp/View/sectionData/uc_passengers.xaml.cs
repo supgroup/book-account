@@ -810,17 +810,109 @@ namespace BookAccountApp.View.sectionData
         }
 
         #endregion
-
-        private void Btn_uploadDocs_Click(object sender, RoutedEventArgs e)
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+        private async void Btn_uploadDocs_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                if (passenger.passengerId > 0)
+                {
+                    FileClass fcls = new FileClass();
+                    string foldername = passenger.passengerId.ToString();
+                    openFileDialog.Multiselect = true;
+                    openFileDialog.Title = MainWindow.resourcemanager.GetString("docUpload");
+                    if (openFileDialog.ShowDialog() == true)
+                    {
+                        string dir = System.IO.Path.Combine(Global.rootpassengerFolder, foldername);
+                        if (!Directory.Exists(dir))
+                        {
+                            Directory.CreateDirectory(dir);
+                        }
+                        // Read the files
+                        decimal s = 0;
+                        foreach (String file in openFileDialog.FileNames)
+                        {
+                            // Create a PictureBox.
+
+
+                            string fName = System.IO.Path.GetFileNameWithoutExtension(file);
+                            string fileName = System.IO.Path.GetFileName(file);
+                            string ext = System.IO.Path.GetExtension(file);
+                            string destpath = System.IO.Path.Combine(dir, fileName);
+                            string newname = fName;
+                            while (File.Exists(destpath))
+                            {
+                                newname = fName + "-" + HelpClass.GenerateRandomNo();
+                                destpath = System.IO.Path.Combine(dir, newname + ext);
+                            }
+                            File.Copy(file, destpath);
+                            //save todb
+                            fcls.fileName = newname;
+                            fcls.extention = ext;
+                            fcls.folderName = foldername;
+                            fcls.tableRowId = passenger.passengerId;
+                            s = await fcls.SavePassenger(fcls);
+
+
+
+                        }
+                        if (s <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        else
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpload"), animation: ToasterAnimation.FadeIn);
+                        }
+                    }
+                }
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_exportDocs_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+                if (passenger.passengerId > 0)
+                {
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_files w = new wd_files();
+                    w.type = "passenger";
+                    w.itemId = passenger.passengerId;
+                    w.ShowDialog();
+                  
+                    Window.GetWindow(this).Opacity = 1;
+                }
+                else
+                {
 
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
+                }
+
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
-        
+
     }
 }
