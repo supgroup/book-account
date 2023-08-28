@@ -233,14 +233,14 @@ namespace BookAccountApp.View.sectionData
                             label = MainWindow.resourcemanager.GetString("trUsers");
                         }
                      
-                        else if (data == 5)
+                        else if (data == 4)
                         {
                             var Draw = operationsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             chartList.Add(Draw);
                             label = MainWindow.resourcemanager.GetString("operations");
                         }                  
                        
-                        else if (data == 8)
+                        else if (data == 5)
                         {
                             var Draw = flightsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             chartList.Add(Draw);
@@ -291,7 +291,7 @@ namespace BookAccountApp.View.sectionData
                         label = MainWindow.resourcemanager.GetString("trUsers");
                     }
                     
-                    else if (data == 5)
+                    else if (data == 4)
                     {
                         var Draw = operationsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
@@ -299,7 +299,7 @@ namespace BookAccountApp.View.sectionData
                     }
                   
                    
-                    else if (data == 8)
+                    else if (data == 5)
                     {
                         var Draw = flightsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
@@ -380,7 +380,7 @@ namespace BookAccountApp.View.sectionData
                             label = MainWindow.resourcemanager.GetString("trUsers");
                         }
                      
-                        else if (data == 5)
+                        else if (data == 4)
                         {
                             var Draw = operationsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
@@ -388,7 +388,7 @@ namespace BookAccountApp.View.sectionData
                         }
                        
                      
-                        else if (data == 8)
+                        else if (data == 5)
                         {
                             var Draw = flightsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
@@ -437,7 +437,7 @@ namespace BookAccountApp.View.sectionData
                         label = MainWindow.resourcemanager.GetString("trUsers");
                     }
                  
-                    else if (data == 5)
+                    else if (data == 4)
                     {
                         var Draw = operationsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
@@ -445,7 +445,7 @@ namespace BookAccountApp.View.sectionData
                     }
                   
                    
-                    else if (data == 8)
+                    else if (data == 5)
                     {
                         var Draw = flightsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
@@ -528,14 +528,19 @@ namespace BookAccountApp.View.sectionData
                             label = MainWindow.resourcemanager.GetString("trUsers");
                         }
                       
-                        else if (data == 5)
+                        else if (data == 4)
                         {
                             var Draw = operationsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             ColumnchartList.Add(Draw);
                             label = MainWindow.resourcemanager.GetString("operations");
                         }
-                       
-                        
+                        else if (data ==5)
+                        {
+                            var Draw = flightsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            ColumnchartList.Add(Draw);
+                            label = MainWindow.resourcemanager.GetString("flights");
+                        }
+
                         columnAxis.Separator.Step = 2;
                         columnAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
@@ -579,7 +584,7 @@ namespace BookAccountApp.View.sectionData
                         label = MainWindow.resourcemanager.GetString("trUsers");
                     }
                    
-                    else if (data == 5)
+                    else if (data == 4)
                     {
                         var Draw = operationsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
@@ -587,7 +592,7 @@ namespace BookAccountApp.View.sectionData
                     }
                  
                  
-                    else if (data == 8)
+                    else if (data == 5)
                     {
                         var Draw = flightsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
