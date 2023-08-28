@@ -32,7 +32,7 @@ namespace BookAccountApp.ApiClasses
         /// </summary>
         /// <returns></returns>
         /// 
-        //public async Task<List<Flights>> GetAll()
+        //public async Task<List<FileClass>> GetAll()
         //{
 
         //    List<Flights> List = new List<Flights>();
@@ -46,8 +46,8 @@ namespace BookAccountApp.ApiClasses
         //                    {
         //                        flightId = S.flightId,
         //                        airlineflightTable = S.airline + "/" + S.flightTable.name,
-        //                        airline= S.airline,
-        //                        flight = S.flightTable.name==null?"": S.flightTable.name,
+        //                        airline = S.airline,
+        //                        flight = S.flightTable.name == null ? "" : S.flightTable.name,
         //                        flightFrom = S.fromTable.name == null ? "" : S.fromTable.name,
         //                        flightTo = S.toTable.name,
         //                        notes = S.notes,
@@ -55,9 +55,9 @@ namespace BookAccountApp.ApiClasses
         //                        updateDate = S.updateDate,
         //                        createUserId = S.createUserId,
         //                        updateUserId = S.updateUserId,
-        //                        flightTableId=S.flightTableId==null?0: S.flightTableId,
-        //                        fromTableId=S.fromTableId == null ? 0 : S.fromTableId,
-        //                        toTableId =S.toTableId == null ? 0 : S.toTableId,
+        //                        flightTableId = S.flightTableId == null ? 0 : S.flightTableId,
+        //                        fromTableId = S.fromTableId == null ? 0 : S.fromTableId,
+        //                        toTableId = S.toTableId == null ? 0 : S.toTableId,
 
         //                        canDelete = true,
 
@@ -106,7 +106,7 @@ namespace BookAccountApp.ApiClasses
         //            Nullable<int> id = null;
         //            newObject.createUserId = id;
         //        }
-           
+
 
 
         //        try
@@ -138,7 +138,7 @@ namespace BookAccountApp.ApiClasses
         //                    tmpObject.toTableId = newObject.toTableId;
         //                    tmpObject.notes = newObject.notes;
         //                    tmpObject.createDate = newObject.createDate;
-                           
+
         //                    tmpObject.createUserId = newObject.createUserId;
         //                    tmpObject.updateUserId = newObject.updateUserId;
 
@@ -165,7 +165,7 @@ namespace BookAccountApp.ApiClasses
 
 
         //    Flights item = new Flights();
-           
+
 
         //    Flights row = new Flights();
         //    try

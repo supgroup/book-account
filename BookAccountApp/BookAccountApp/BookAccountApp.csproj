@@ -204,6 +204,7 @@
     </Compile>
     <Compile Include="Classes\ApiClasses\City.cs" />
     <Compile Include="Classes\ApiClasses\Country.cs" />
+    <Compile Include="Classes\ApiClasses\FileClass.cs" />
     <Compile Include="Classes\ApiClasses\FlightTable.cs" />
     <Compile Include="Classes\ApiClasses\FromTable.cs" />
     <Compile Include="Classes\ApiClasses\StatementsTable.cs" />
