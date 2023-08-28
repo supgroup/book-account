@@ -570,7 +570,7 @@ Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 
                             </Grid.RowDefinitions>
                             <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="50" Height="50" FlowDirection="LeftToRight"
-                           Data="{StaticResource infoCircle}"/>
+                           Data="{StaticResource printer}"/>
                             <TextBlock x:Name="txt_invoicePrintButton"
                                     Text="invoicePrint"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
@@ -588,7 +588,7 @@ Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 
                             </Grid.RowDefinitions>
                             <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="50" Height="50" FlowDirection="LeftToRight"
-                           Data="{StaticResource infoCircle}"/>
+                           Data="{StaticResource searchFile}"/>
                             <TextBlock x:Name="txt_invoicePreviewButton"
                                     Text="invoicePreview"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
@@ -606,7 +606,7 @@ Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 
                             </Grid.RowDefinitions>
                             <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
        Width="50" Height="50" FlowDirection="LeftToRight"
-       Data="{StaticResource infoCircle}"/>
+       Data="{StaticResource pdfFiles}"/>
                             <TextBlock x:Name="txt_invoicePdfButton"
                 Text="invoicePdf"  Grid.Row="1" 
                                 FontWeight="Regular" FontSize="10" TextAlignment="Center"
