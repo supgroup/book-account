@@ -37,6 +37,7 @@ namespace BookAccountApp.View.windows
         IEnumerable<FileClass> fileClass;
         public int packageUserID = 0;
         string txtSearch = "";
+     public string type = "";
         //print
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
@@ -316,7 +317,15 @@ namespace BookAccountApp.View.windows
             }
             */
         }
-        
 
+        private void Btn_export_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_delete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
