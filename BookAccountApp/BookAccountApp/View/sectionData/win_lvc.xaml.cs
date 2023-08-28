@@ -35,7 +35,7 @@ namespace BookAccountApp.View.sectionData
         IEnumerable<Office> officesQuery;
         IEnumerable<Operations> operationsQuery;
         IEnumerable<Flights> flightsQuery;
-       
+        IEnumerable<ServiceData> serviceDatasQuery;
 
         List<double> chartList;
         List<double> PiechartList;
@@ -115,7 +115,21 @@ namespace BookAccountApp.View.sectionData
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-     
+        public win_lvc(IEnumerable<ServiceData> _serviceDatasQuery, int _data, bool _isSameList)
+        {
+            
+            try
+            {
+                InitializeComponent();
+                serviceDatasQuery = _serviceDatasQuery;
+                data = _data;
+                isSameList = _isSameList;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -246,7 +260,16 @@ namespace BookAccountApp.View.sectionData
                             chartList.Add(Draw);
                             label = MainWindow.resourcemanager.GetString("flights");
                         }
-                      
+                        else if (data == 6)
+                        {
+                            var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            chartList.Add(Draw);
+                            if (isSameList)
+                                label = MainWindow.resourcemanager.GetString("syr");
+                            else
+                                label = MainWindow.resourcemanager.GetString("soto");
+                        }
+                    
                         MyAxis.Separator.Step = 2;
                         MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
@@ -305,7 +328,16 @@ namespace BookAccountApp.View.sectionData
                         chartList.Add(Draw);
                         label = MainWindow.resourcemanager.GetString("flights");
                     }
-                  
+                    else if (data == 6)
+                    {
+                        var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        chartList.Add(Draw);
+                        if (isSameList)
+                            label = MainWindow.resourcemanager.GetString("syr");
+                        else
+                            label = MainWindow.resourcemanager.GetString("soto");
+                    }
+
                     MyAxis.Separator.Step = 1;
                     MyAxis.Labels.Add(year.ToString());
                 }
@@ -385,16 +417,22 @@ namespace BookAccountApp.View.sectionData
                             var Draw = operationsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
                             label = MainWindow.resourcemanager.GetString("operations");
-                        }
-                       
-                     
+                        }                    
                         else if (data == 5)
                         {
                             var Draw = flightsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
                             label = MainWindow.resourcemanager.GetString("flights");
                         }
-                      
+                        else if (data == 6)
+                        {
+                            var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            PiechartList.Add(Draw);
+                            if (isSameList)
+                                label = MainWindow.resourcemanager.GetString("syr");
+                            else
+                                label = MainWindow.resourcemanager.GetString("soto");
+                        }
                         titles.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
                         {
@@ -443,15 +481,18 @@ namespace BookAccountApp.View.sectionData
                         PiechartList.Add(Draw);
                         label = MainWindow.resourcemanager.GetString("operations");
                     }
-                  
-                   
                     else if (data == 5)
                     {
                         var Draw = flightsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
                         label = MainWindow.resourcemanager.GetString("flights");
                     }
-              
+                    else if (data == 6)
+                    {
+                        var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        PiechartList.Add(Draw);
+                        label = MainWindow.resourcemanager.GetString("flights");
+                    }
                     titles.Add(year.ToString());
                 }
             }
@@ -540,7 +581,15 @@ namespace BookAccountApp.View.sectionData
                             ColumnchartList.Add(Draw);
                             label = MainWindow.resourcemanager.GetString("flights");
                         }
-
+                        else if (data == 6)
+                        {
+                            var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            ColumnchartList.Add(Draw);
+                            if (isSameList)
+                                label = MainWindow.resourcemanager.GetString("syr");
+                            else
+                                label = MainWindow.resourcemanager.GetString("soto");
+                        }
                         columnAxis.Separator.Step = 2;
                         columnAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
@@ -598,7 +647,15 @@ namespace BookAccountApp.View.sectionData
                         ColumnchartList.Add(Draw);
                         label = MainWindow.resourcemanager.GetString("flights");
                     }
-                
+                    else if (data ==6)
+                    {
+                        var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        ColumnchartList.Add(Draw);
+                        if (isSameList)
+                            label = MainWindow.resourcemanager.GetString("syr");
+                        else
+                            label = MainWindow.resourcemanager.GetString("soto");
+                    }
                     columnAxis.Separator.Step = 1;
                     columnAxis.Labels.Add(year.ToString());
                 }
