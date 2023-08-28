@@ -348,6 +348,9 @@
     <Compile Include="View\sectionData\uc_users.xaml.cs">
       <DependentUpon>uc_users.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\sectionData\win_lvc.xaml.cs">
+      <DependentUpon>win_lvc.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\settings\uc_general.xaml.cs">
       <DependentUpon>uc_general.xaml</DependentUpon>
     </Compile>
@@ -486,6 +489,10 @@
     <Page Include="View\sectionData\uc_users.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sectionData\win_lvc.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\settings\uc_general.xaml">
       <SubType>Designer</SubType>

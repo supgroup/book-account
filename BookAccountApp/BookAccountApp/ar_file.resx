@@ -2989,7 +2989,13 @@
   <data name="soto" xml:space="preserve">
     <value>سوتو</value>
   </data>
+  <data name="trMonth" xml:space="preserve">
+    <value>شهر</value>
+  </data>
   <data name="trSelectItemFirst" xml:space="preserve">
     <value>حدد السجل اولا</value>
+  </data>
+  <data name="trYear" xml:space="preserve">
+    <value>عام</value>
   </data>
 </root>
