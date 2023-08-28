@@ -373,6 +373,9 @@
     <Compile Include="View\windows\wd_durations.xaml.cs">
       <DependentUpon>wd_durations.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_files.xaml.cs">
+      <DependentUpon>wd_files.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_flight.xaml.cs">
       <DependentUpon>wd_flight.xaml</DependentUpon>
     </Compile>
@@ -520,6 +523,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_durations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_files.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
