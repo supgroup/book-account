@@ -2998,4 +2998,7 @@
   <data name="trYear" xml:space="preserve">
     <value>عام</value>
   </data>
+  <data name="trPopUpload" xml:space="preserve">
+    <value>تم الرفع بنجاح</value>
+  </data>
 </root>

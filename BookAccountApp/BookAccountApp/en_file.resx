@@ -2995,4 +2995,7 @@ Please add Email in setting</value>
   <data name="trYear" xml:space="preserve">
     <value>Year</value>
   </data>
+  <data name="trPopUpload" xml:space="preserve">
+    <value>Uploaded Successfully</value>
+  </data>
 </root>

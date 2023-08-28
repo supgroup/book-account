@@ -1069,6 +1069,13 @@ namespace BookAccountApp.Classes
                 }
             }
         }
+
+        public static Random _random = new Random();
+
+        public static string GenerateRandomNo()
+        {
+            return _random.Next(0, 9999).ToString("D4");
+        }
     }
 
 }

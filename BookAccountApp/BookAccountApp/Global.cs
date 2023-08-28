@@ -19,6 +19,11 @@ namespace BookAccountApp
         public const string TMPCustomersFolder = "Thumb/customer"; // folder to save agents photos locally 
         public const string TMPUsersFolder = "Thumb/users"; // folder to save users photos locally 
         public const string TMPSettingFolder = "Thumb/setting"; // folder to save Logo photos locally 
- 
+        public static string rootofficeFolder = "Thumb/office";
+        public static string rootpassengerFolder = "Thumb/passenger";
+        public static string rootsotofilesFolder = "Thumb/sotofiles";
+        public static string rootsyrsalesFolder = "Thumb/syrsales";
+        
+
     }
 }
