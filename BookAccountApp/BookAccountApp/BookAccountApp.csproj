@@ -629,10 +629,7 @@
     <Resource Include="Thumb\passenger\tmp.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Thumb\sotofiles\tmp.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Thumb\syrsales\tmp.txt">
+    <Resource Include="Thumb\servicefiles\tmp.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Content Include="Thumb\users\tmp.txt">

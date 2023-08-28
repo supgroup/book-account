@@ -1,5 +1,6 @@
 ﻿using BookAccountApp.ApiClasses;
 using BookAccountApp.Classes;
+using POS.View.windows;
 using Microsoft.Reporting.WinForms;
 using netoaster;
 using System;
@@ -24,7 +25,7 @@ using Microsoft.Reporting.WinForms;
 using Microsoft.Win32;
 using netoaster;
 using System.IO;
-
+ 
 namespace BookAccountApp.View.windows
 {
     /// <summary>
@@ -32,12 +33,13 @@ namespace BookAccountApp.View.windows
     /// </summary>
     public partial class wd_files : Window
     {
-        FileClass posSerialModel = new FileClass();
+        FileClass fileClassrow = new FileClass();
         IEnumerable<FileClass> fileClassQuery;
-        IEnumerable<FileClass> fileClass;
-        public int packageUserID = 0;
+        IEnumerable<FileClass> fileClassList;
+        public int itemId = 0;
+        public string type = "";
         string txtSearch = "";
-     public string type = "";
+
         //print
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
@@ -74,10 +76,10 @@ namespace BookAccountApp.View.windows
                 translat();
                 #endregion
 
-                
+
 
                 chk_allSerials.IsChecked = false;
-                fileClassQuery = await RefreshList();
+                await Search();
 
 
 
@@ -183,7 +185,7 @@ namespace BookAccountApp.View.windows
 
         #endregion
 
-#region events
+        #region events
         private void HandleKeyPress(object sender, KeyEventArgs e)
         {
             try
@@ -243,89 +245,237 @@ namespace BookAccountApp.View.windows
         #region methods
         private void translat()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trSerials");
+            txt_title.Text = MainWindow.resourcemanager.GetString("Docs");
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             tt_close.Content = MainWindow.resourcemanager.GetString("trClose");
             //btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
 
-            //dg_serials.Columns[0].Header = MainWindow.resourcemanager.GetString("trSerialNum");
-            //dg_serials.Columns[1].Header = MainWindow.resourcemanager.GetString("trBranch");
-            //dg_serials.Columns[2].Header = MainWindow.resourcemanager.GetString("trPOS");
-            //dg_serials.Columns[3].Header = MainWindow.resourcemanager.GetString("trIsActive");
-
+            dg_files.Columns[0].Header = MainWindow.resourcemanager.GetString("docName");
+            dg_files.Columns[1].Header = MainWindow.resourcemanager.GetString("ext");
+            dg_files.Columns[2].Header = MainWindow.resourcemanager.GetString("select");
+            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+            btn_export.Content = MainWindow.resourcemanager.GetString("trExport");
             //tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
             //tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
             //tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
             //tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
 
-            chk_allSerials.Content = MainWindow.resourcemanager.GetString("trSelectAll");
+            chk_allSerials.Content = MainWindow.resourcemanager.GetString("selectAll");
 
         }
 
-        async Task<IEnumerable<FileClass>> RefreshList()
+        async Task<IEnumerable<FileClass>> RefreshFilesList()
         {
-            //fileClass = await posSerialModel.GetSerialAndPosInfo(packageUserID);
-            return fileClass;
+
+            fileClassList = await fileClassrow.GetbytypeId(type, itemId);
+
+            return fileClassList;
+        }
+        void RefreshFilesView()
+        {
+
+            dg_files.ItemsSource = fileClassQuery;
+            //txt_count.Text = dg_items.Items.Count.ToString();
+        }
+        async Task Search()
+        {
+
+            if (fileClassList is null)
+                await RefreshFilesList();
+
+            fileClassQuery = fileClassList;
+            RefreshFilesView();
+
         }
         IEnumerable<FileClass> fileClassQueryPage = new List<FileClass>();
         #endregion
-        
-        
+
+
 
         private void Chk_allSerials_Checked(object sender, RoutedEventArgs e)
         {
-            /*
+           
             try
             {
                 chk_allSerials.Content = MainWindow.resourcemanager.GetString("trUnSelectAll");
-                isActiveCount = fileClassQueryPage.Count(c => c.isActive == 1);
+                //isActiveCount = fileClassQuery.Count(c => c.isActive ==true);
 
-                foreach (var s in fileClassQueryPage)
+                foreach (var s in fileClassQuery)
                 {
-                    if ((isActiveCount <= p.posCount) || (p.posCount == -1))
-                    {
-                        s.isActive = 1;
-                        dg_serials.ItemsSource = fileClassQueryPage;
-                        dg_serials.Items.Refresh();
-                    }
+                   
+                        s.isActive = true;
+                
+                     
                 }
+                dg_files.ItemsSource = fileClassQuery;
+                dg_files.Items.Refresh();
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+         
         }
 
         private void Chk_allSerials_Unchecked(object sender, RoutedEventArgs e)
         {
-            /*
+        
             try
             {
                 chk_allSerials.Content = MainWindow.resourcemanager.GetString("trSelectAll");
 
-                foreach (var s in fileClassQueryPage)
+                foreach (var s in fileClassQuery)
                 {
-                    s.isActive = 0;
-                    dg_serials.ItemsSource = fileClassQueryPage;
-                    dg_serials.Items.Refresh();
+
+                    s.isActive = false;
+
+
                 }
+                dg_files.ItemsSource = fileClassQuery;
+                dg_files.Items.Refresh();
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+            
         }
 
         private void Btn_export_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                List<FileClass> selectedList = fileClassQuery.Where(f => f.isActive == true).ToList();
+                if (selectedList.Count > 0)
+                {
+                    string sourceDirroot = "";
+                    string sourceDir = "";
+                    if (type == "passenger")
+                    {
+                        sourceDirroot = Global.rootpassengerFolder;
+                    }
+                    else if (type == "office")
+                    {
+                        sourceDirroot = Global.rootofficeFolder;
+                    }
+                    else if (type == "service")
+                    {
+                        sourceDirroot = Global.rootservicefilesFolder;
+                    }
 
+                    string foldername = itemId.ToString();
+                    sourceDir = System.IO.Path.Combine(sourceDirroot, foldername);
+                    string sourceFile = "";
+                    //
+
+                    System.Windows.Forms.FolderBrowserDialog folderbdialog = new System.Windows.Forms.FolderBrowserDialog();
+                   
+                    System.Windows.Forms.DialogResult result = folderbdialog.ShowDialog();
+                    if (result == System.Windows.Forms.DialogResult.OK)
+                    {
+                        string destfolderName = folderbdialog.SelectedPath;
+                        foreach (FileClass row in selectedList)
+                        {
+                            sourceFile = System.IO.Path.Combine(sourceDir, row.fileName + row.extention);
+                            string newname = row.fileName + row.extention;
+                            string destFile = System.IO.Path.Combine(destfolderName, newname);
+
+                            while (File.Exists(destFile))
+                            {
+                                newname = row.fileName + "-" + HelpClass.GenerateRandomNo();
+                                destFile = System.IO.Path.Combine(destfolderName, newname + row.extention);
+                            }
+                            File.Copy(sourceFile, destFile);
+
+                        }
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopExport"), animation: ToasterAnimation.FadeIn);
+                    }
+
+
+                }
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+          
+         
         }
 
-        private void Btn_delete_Click(object sender, RoutedEventArgs e)
+        private async void Btn_delete_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                List<FileClass> selectedList = fileClassQuery.Where(f => f.isActive == true).ToList();
+                if (selectedList.Count > 0)
+                {
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                    w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                    w.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+ 
 
+                    if (w.isOk)
+                    {
+
+                        string sourceDirroot = "";
+                        string sourceDir = "";
+                        if (type == "passenger")
+                        {
+                            sourceDirroot = Global.rootpassengerFolder;
+                        }
+                        else if (type == "office")
+                        {
+                            sourceDirroot = Global.rootofficeFolder;
+                        }
+                        else if (type == "service")
+                        {
+                            sourceDirroot = Global.rootservicefilesFolder;
+                        }
+
+                        string foldername = itemId.ToString();
+                        sourceDir = System.IO.Path.Combine(sourceDirroot, foldername);
+                        string sourceFile = "";
+                        //
+                        FileClass filedelete = new FileClass();
+                        decimal res = 0;
+                        foreach (FileClass row in selectedList)
+                        {
+                            sourceFile = System.IO.Path.Combine(sourceDir, row.fileName + row.extention);
+                            // string newname = row.fileName + row.extention;
+                          
+                            if (File.Exists(sourceFile))
+                            {
+                                // If file found, delete it
+                                File.Delete(sourceFile);
+                            }
+                            res = await fileClassrow.DeletebytypeId(row.fileId, MainWindow.userLogin.userId, true, type);
+                        }
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                        await RefreshFilesList();
+                        await Search();
+                       
+                    }
+
+
+                }
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }

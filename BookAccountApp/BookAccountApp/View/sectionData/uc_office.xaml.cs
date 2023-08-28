@@ -900,11 +900,22 @@ motherHint
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
+                if (office.officeId > 0)
+                {             
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_files w = new wd_files();
+                w.type = "office";
+                w.itemId = office.officeId;
                 w.ShowDialog();
                 //await FillCombo.fillStatementsTable(cb_opStatement);
                 Window.GetWindow(this).Opacity = 1;
+                }
+                else
+                {
+
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
+                }
 
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);

@@ -2998,4 +2998,22 @@ Please add Email in setting</value>
   <data name="trPopUpload" xml:space="preserve">
     <value>Uploaded Successfully</value>
   </data>
+  <data name="docName" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="Docs" xml:space="preserve">
+    <value>Documents</value>
+  </data>
+  <data name="ext" xml:space="preserve">
+    <value>Extention</value>
+  </data>
+  <data name="select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="selectAll" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="trPopExport" xml:space="preserve">
+    <value>Exported Successfuly</value>
+  </data>
 </root>

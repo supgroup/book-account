@@ -2998,7 +2998,25 @@
   <data name="trYear" xml:space="preserve">
     <value>عام</value>
   </data>
+  <data name="docName" xml:space="preserve">
+    <value>اسم المستند</value>
+  </data>
+  <data name="Docs" xml:space="preserve">
+    <value>المستندات</value>
+  </data>
+  <data name="ext" xml:space="preserve">
+    <value>الامتداد</value>
+  </data>
+  <data name="select" xml:space="preserve">
+    <value>تحديد</value>
+  </data>
+  <data name="selectAll" xml:space="preserve">
+    <value>تحديد الكل</value>
+  </data>
   <data name="trPopUpload" xml:space="preserve">
     <value>تم الرفع بنجاح</value>
+  </data>
+  <data name="trPopExport" xml:space="preserve">
+    <value>تم التصدير بنجاح</value>
   </data>
 </root>

@@ -71,7 +71,7 @@
                 <!--</Border>-->
 
                 <Border Grid.Row="3"  Margin="10"   BorderBrush="#999999" BorderThickness="1">
-                    <DataGrid x:Name="dg_serials"  Background="White"
+                    <DataGrid x:Name="dg_files"  Background="White"
                               Visibility="Visible" HorizontalContentAlignment="Center"
                               CanUserAddRows="False" IsReadOnly="True"
                               AutoGenerateColumns="False"    
