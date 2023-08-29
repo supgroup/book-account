@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BookAccountApp.View.settings"
-             mc:Ignorable="d"   Loaded="Window_Loaded"
+             mc:Ignorable="d"  Loaded="Window_Loaded"
+             Margin="0 -75 0 0"
            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Unloaded="UserControl_Unloaded">
     <Grid  x:Name="grid_mainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="125"/>
+            <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -18,19 +19,21 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <!--<ColumnDefinition Width="*"/>-->
             </Grid.ColumnDefinitions>
             <Button   Grid.Column="0"
-             Background="{StaticResource MainColor}" BorderBrush="{x:Null}" 
-                 Content="general" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
-                      x:Name="btn_general" Click="Btn_general_Click" Tag="general"/>
+             Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
+                 Content="commissions" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"   
+                       x:Name="btn_commissions" Click="Btn_commissions_Click" Tag="commissions"/>
             <Button   Grid.Column="1"
-             Background="{StaticResource MainColor}" BorderBrush="{x:Null}" 
-                 Content="emails" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
-                      x:Name="btn_emails" Click="Btn_emails_Click" Tag="emails"/>
+             Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
+                 Content="users" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"   
+                       x:Name="btn_users" Click="Btn_users_Click" Tag="users"/>
             <Button   Grid.Column="2"
-             Background="{StaticResource MainColor}" BorderBrush="{x:Null}" 
-                 Content="reports" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
-                      x:Name="btn_reportsSettings" Click="Btn_reportsSettings_Click" Tag="reportsSettings"/>
+            Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
+                Content="printerSetting" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"   
+            x:Name="btn_printerSetting" Click="Btn_printerSetting_Click" Tag="printerSetting"/>
+
         </Grid>
         <Grid Grid.Row="1" x:Name="grid_main"/>
     </Grid>

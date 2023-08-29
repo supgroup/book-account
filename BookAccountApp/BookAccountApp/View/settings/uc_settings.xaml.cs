@@ -1,8 +1,14 @@
 ﻿using BookAccountApp.Classes;
- 
+using BookAccountApp.View.bookSales;
+using BookAccountApp.View.sales;
+using BookAccountApp.View.settings.commissions;
+using BookAccountApp.View.settings.printerSetting;
+using BookAccountApp.View.settings.users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,13 +27,13 @@ namespace BookAccountApp.View.settings
     /// Interaction logic for uc_settings.xaml
     /// </summary>
     public partial class uc_settings : UserControl
-    { 
+    {
         private static uc_settings _instance;
         public static uc_settings Instance
         {
             get
             {
-                //if (_instance == null)
+                if (_instance == null)
                     _instance = new uc_settings();
                 return _instance;
             }
@@ -38,46 +44,49 @@ namespace BookAccountApp.View.settings
         }
         public static List<string> menuList;
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
+        {//load
             try
             {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_mainGrid);
-                menuList = new List<string> { "emails" ,"general","reportsSettings"};
+                HelpClass.StartAwait(grid_mainGrid);
+
+                menuList = new List<string> { "commissions", "users", "printerSetting", };
+
                 #region translate
-                if (MainWindow.lang.Equals("en"))
-                {
-                    grid_mainGrid.FlowDirection = FlowDirection.LeftToRight;
-                }
-                else
-                {
-                    grid_mainGrid.FlowDirection = FlowDirection.RightToLeft;
-                }
+                //if (MainWindow.lang.Equals("en"))
+                //{
+                //    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.en_file", Assembly.GetExecutingAssembly());
+                //    grid_main.FlowDirection = FlowDirection.LeftToRight;
+                //}
+                //else
+                //{
+                //    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.ar_file", Assembly.GetExecutingAssembly());
+                //    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                //}
                 translate();
                 #endregion
 
+                Btn_commissions_Click(btn_commissions, null);
 
-
-
-
-                Btn_general_Click(btn_general, null);
-
-                if (sender != null)
-                    HelpClass.EndAwait(grid_mainGrid);
+                HelpClass.EndAwait(grid_mainGrid);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_mainGrid);
+                HelpClass.EndAwait(grid_mainGrid);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        public void translate()
+
+        private void translate()
         {
-            btn_general.Content = MainWindow.resourcemanager.GetString("trGeneral");
-            btn_reportsSettings.Content = MainWindow.resourcemanager.GetString("trPrint");
-            btn_emails.Content = MainWindow.resourcemanager.GetString("trEmail");
+            //btn_salesSyria.Content = MainWindow.resourcemanager.GetString("syr");
+            //btn_salesSoto.Content = MainWindow.resourcemanager.GetString("soto");
+            //btn_office.Content = MainWindow.resourcemanager.GetString("trOffices");
+            //btn_passengers.Content = MainWindow.resourcemanager.GetString("passengers");
+            //btn_flights.Content = MainWindow.resourcemanager.GetString("flights");
+            //btn_operations.Content = MainWindow.resourcemanager.GetString("operations");
+            //btn_customers.Content = MainWindow.resourcemanager.GetString("trCustomers");
         }
+
         void colorButtonRefreash(string str)
         {
             foreach (Button button in FindControls.FindVisualChildren<Button>(this))
@@ -98,31 +107,40 @@ namespace BookAccountApp.View.settings
                 }
             }
         }
-        private void Btn_general_Click(object sender, RoutedEventArgs e)
+
+
+
+
+        private void Btn_commissions_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
                 grid_main.Children.Clear();
-                uc_general uc = new uc_general();
-                grid_main.Children.Add(uc);
+                uc_commissions ucsy = new uc_commissions();
+                grid_main.Children.Add(ucsy);
+                
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_emails_Click(object sender, RoutedEventArgs e)
+       
+        
+        private void Btn_users_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                //Button button = sender as Button;
-                //colorButtonRefreash(button.Tag.ToString());
-                //grid_main.Children.Clear();
                 
-                //uc_emailGeneral uc = new uc_emailGeneral();
-                //grid_main.Children.Add(uc);
+                Button button = sender as Button;
+                colorButtonRefreash(button.Tag.ToString());
+                grid_main.Children.Clear();
+                uc_users ucsy = new uc_users();
+                grid_main.Children.Add(ucsy);
+                
             }
             catch (Exception ex)
             {
@@ -130,21 +148,30 @@ namespace BookAccountApp.View.settings
             }
         }
 
-        private void Btn_reportsSettings_Click(object sender, RoutedEventArgs e)
+        private void Btn_printerSetting_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
                 grid_main.Children.Clear();
-                //grid_main.Children.Add(uc_emailGeneral.Instance);
-                uc_reportsSettings uc = new uc_reportsSettings();
-                grid_main.Children.Add(uc);
+                uc_printerSetting ucsy = new uc_printerSetting();
+                grid_main.Children.Add(ucsy);
+                
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            // Collect all generations of memory.
+            GC.Collect();
+        }
+
+
     }
 }
