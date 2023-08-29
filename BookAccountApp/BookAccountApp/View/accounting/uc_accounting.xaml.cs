@@ -130,8 +130,8 @@ namespace BookAccountApp.View.accounting
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
                 grid_main.Children.Clear();
-                //uc_received ucso = new uc_received();
-                //grid_main.Children.Add(ucso);
+                uc_received ucso = new uc_received();
+                grid_main.Children.Add(ucso);
             }
             catch (Exception ex)
             {
