@@ -138,17 +138,13 @@ namespace BookAccountApp.View.accounting
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
 
-            //   payOps
-            
+            //   payOps            
             dg_payOp.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
             dg_payOp.Columns[1].Header = MainWindow.resourcemanager.GetString("sideOrResponseble");
             dg_payOp.Columns[2].Header = MainWindow.resourcemanager.GetString("trRecepient");
             dg_payOp.Columns[3].Header = MainWindow.resourcemanager.GetString("recivedFrom");
             dg_payOp.Columns[4].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
             dg_payOp.Columns[5].Header = MainWindow.resourcemanager.GetString("payDate");
-            
-           
-
             //dg_payOp.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
@@ -163,9 +159,70 @@ namespace BookAccountApp.View.accounting
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
       
-        private void Btn_save_Click(object sender, RoutedEventArgs e)
+        private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+               
 
+                HelpClass.StartAwait(grid_main);
+
+                payOp = new PayOp();
+                if (HelpClass.validate(requiredControlList, this))
+                {
+                    //tb_custCode.Text = await serviceData.generateCodeNumber("cu");
+                    payOp.code ="";
+                    payOp.cash = (tb_cash.Text == null || tb_cash.Text == "") ? 0 : Convert.ToDecimal(tb_cash.Text);
+                    payOp.opType = "p";
+                    payOp.side = cb_side.Text;
+                    payOp.serviceId =null;//
+                    payOp.opStatus = "draft";
+                    payOp.opDate = dp_opDate.SelectedDate;
+                    payOp.notes = tb_notes.Text;
+                     
+                    //payOp.createDate = newObject.createDate;
+                    payOp.updateDate = DateTime.Now;
+                    payOp.officeId = null;//if side is office
+                    payOp.passengerId = null;//if side is passenger
+                    payOp.userId = null;//note used
+                    payOp.recipient = tb_recipient.Text;
+                    payOp.recivedFrom =tb_recivedFrom.Text;
+                    payOp.paysideId = Convert.ToInt32(cb_side.SelectedValue);
+
+
+                    //payOp.passengerId = Convert.ToInt32(cb_passenger.SelectedValue);
+                    //payOp.ticketNum = tb_ticketNum.Text;
+                    //payOp.flightId = Convert.ToInt32(cb_airline.SelectedValue);
+                    //payOp.officeId = Convert.ToInt32(cb_office.SelectedValue);
+                    //payOp.serviceDate = dp_serviceDate.SelectedDate;
+                    //payOp.total = (tb_total.Text == null || tb_total.Text == "") ? 0 : Convert.ToDecimal(tb_total.Text);
+                    //payOp.notes = tb_notes.Text;
+                    //payOp.systemType = "syr";
+                    payOp.createUserId = MainWindow.userLogin.userId;
+                    payOp.updateUserId = MainWindow.userLogin.userId;
+
+
+                    decimal s = await payOp.Save(payOp);
+                    if (s <= 0)
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    else
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+
+                        Clear();
+                        await RefreshPayOpsList();
+                        await Search();
+                    }
+                }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private async Task activate()
         {//activate
@@ -257,7 +314,7 @@ namespace BookAccountApp.View.accounting
                 HelpClass.StartAwait(grid_main);
                 HelpClass.clearValidate(requiredControlList, this);
                 //selection
-                /*
+            
                 if (dg_payOp.SelectedIndex != -1)
                 {
                     payOp = dg_payOp.SelectedItem as PayOp;
@@ -265,12 +322,11 @@ namespace BookAccountApp.View.accounting
                     if (payOp != null)
                     {
                         //tb_custCode.Text = payOp.custCode;
-                        cb_passenger.SelectedValue = payOp.passengerId;
-                        cb_airline.SelectedValue = payOp.flightId;
-                        cb_office.SelectedValue = payOp.officeId;
-                        cb_operation.SelectedValue = payOp.operationId;
-
-                        tb_total.Text = HelpClass.DecTostring(payOp.total);
+                        cb_side.SelectedValue = payOp.paysideId;
+                       
+                       
+                        tb_cash.Text = HelpClass.DecTostring(payOp.cash);
+                        
                         this.DataContext = payOp;
                         //await getImg();
                         #region delete
@@ -289,7 +345,7 @@ namespace BookAccountApp.View.accounting
                         //HelpClass.getPhone(payOp.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
                     }
                 }
-                */
+                
 
                 //p_error_email.Visibility = Visibility.Collapsed;
 
@@ -348,14 +404,15 @@ namespace BookAccountApp.View.accounting
 
             //);
             */
+            payOpsQuery = payOps;
             RefreshPayOpsView();
         }
         async Task<IEnumerable<PayOp>> RefreshPayOpsList()
         {
-            /*
-            payOps = await payOp.GetAll();
-            payOps = payOps.Where(s => s.systemType == "soto").ToList();
-            */
+           
+            payOps = await payOp.GetbyType("p");
+            payOps = payOps;
+           
             return payOps;
         }
         void RefreshPayOpsView()
@@ -366,12 +423,12 @@ namespace BookAccountApp.View.accounting
         }
         public async Task fillcombos()
         {
-            /*
-            await FillCombo.fillPassengers(cb_passenger);
-            await FillCombo.fillFlights(cb_airline);
-            await FillCombo.fillOffice(cb_office);
-            await FillCombo.fillOperations(cb_operation);
-            */
+            await FillCombo.fillpaySide(cb_side,"p");
+            //await FillCombo.fillPassengers(cb_passenger);
+            //await FillCombo.fillFlights(cb_airline);
+            //await FillCombo.fillOffice(cb_office);
+            //await FillCombo.fillOperations(cb_operation);
+            //
         }
 
         #endregion

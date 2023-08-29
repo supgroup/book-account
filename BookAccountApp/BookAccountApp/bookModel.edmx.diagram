@@ -57,6 +57,8 @@
         <AssociationConnector Association="bookModel.FK_officeFiles_office" />
         <AssociationConnector Association="bookModel.FK_passengerFiles_passengers" />
         <AssociationConnector Association="bookModel.FK_serviceDataFiles_serviceData" />
+        <EntityTypeShape EntityType="bookModel.paySides" Width="1.5" PointX="0.75" PointY="5" />
+        <AssociationConnector Association="bookModel.FK_payOp_paySides" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

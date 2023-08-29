@@ -206,6 +206,7 @@
     <Compile Include="Classes\ApiClasses\Country.cs" />
     <Compile Include="Classes\ApiClasses\FileClass.cs" />
     <Compile Include="Classes\ApiClasses\FlightTable.cs" />
+    <Compile Include="Classes\ApiClasses\PaySides.cs" />
     <Compile Include="Classes\ApiClasses\FromTable.cs" />
     <Compile Include="Classes\ApiClasses\StatementsTable.cs" />
     <Compile Include="Classes\ApiClasses\ToTable.cs" />
@@ -281,6 +282,9 @@
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="payOp.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="paySides.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="serviceData.cs">

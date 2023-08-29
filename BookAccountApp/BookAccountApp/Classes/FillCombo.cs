@@ -695,7 +695,20 @@ namespace BookAccountApp.Classes
  
 
         }
-    
+        static PaySides PaySidesModel = new PaySides();
+        static IEnumerable<PaySides> PaySidesList;
+        static public async Task fillpaySide(ComboBox combo,string type)
+        {
+            PaySidesList = await PaySidesModel.GetAll();
+            PaySidesList = PaySidesList.Where(s => s.notes.Contains(type)).ToList();
+            combo.ItemsSource = PaySidesList;
+            combo.SelectedValuePath = "paysideId";
+            combo.DisplayMemberPath = "sideAr";
+            combo.SelectedIndex = -1;
+
+
+        }
+
         static FromTable FromTableModel = new FromTable();
         static IEnumerable<FromTable> FromTableList;
         static public async Task fillFromTable(ComboBox combo)

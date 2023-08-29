@@ -203,6 +203,18 @@
           <Property Name="userId" Type="int" />
           <Property Name="recipient" Type="nvarchar" MaxLength="500" />
           <Property Name="recivedFrom" Type="nvarchar" MaxLength="500" />
+          <Property Name="paysideId" Type="int" />
+        </EntityType>
+        <EntityType Name="paySides">
+          <Key>
+            <PropertyRef Name="paysideId" />
+          </Key>
+          <Property Name="paysideId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="side" Type="nvarchar" MaxLength="100" />
+          <Property Name="sideAr" Type="nvarchar" MaxLength="100" />
+          <Property Name="notes" Type="nvarchar" MaxLength="100" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="code" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="serviceData">
           <Key>
@@ -526,6 +538,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_payOp_paySides">
+          <End Role="paySides" Type="Self.paySides" Multiplicity="0..1" />
+          <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paySides">
+              <PropertyRef Name="paysideId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="paysideId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_payOp_serviceData">
           <End Role="serviceData" Type="Self.serviceData" Multiplicity="0..1" />
           <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
@@ -709,6 +733,7 @@
           <EntitySet Name="passengerFiles" EntityType="Self.passengerFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="passengers" EntityType="Self.passengers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="payOp" EntityType="Self.payOp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="paySides" EntityType="Self.paySides" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="serviceData" EntityType="Self.serviceData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="serviceDataFiles" EntityType="Self.serviceDataFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="setting" EntityType="Self.setting" Schema="dbo" store:Type="Tables" />
@@ -779,6 +804,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_payOp_passengers" Association="Self.FK_payOp_passengers">
             <End Role="passengers" EntitySet="passengers" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_paySides" Association="Self.FK_payOp_paySides">
+            <End Role="paySides" EntitySet="paySides" />
             <End Role="payOp" EntitySet="payOp" />
           </AssociationSet>
           <AssociationSet Name="FK_payOp_serviceData" Association="Self.FK_payOp_serviceData">
@@ -1048,6 +1077,8 @@
           <NavigationProperty Name="users2" Relationship="Self.FK_payOp_users2" FromRole="payOp" ToRole="users" />
           <Property Name="recipient" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="recivedFrom" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="paysideId" Type="Int32" />
+          <NavigationProperty Name="paySides" Relationship="bookModel.FK_payOp_paySides" FromRole="payOp" ToRole="paySides" />
         </EntityType>
         <EntityType Name="serviceData">
           <Key>
@@ -1659,6 +1690,11 @@
             <End Role="serviceData" EntitySet="serviceData" />
             <End Role="serviceDataFiles" EntitySet="serviceDataFiles" />
           </AssociationSet>
+          <EntitySet Name="paySides" EntityType="bookModel.paySides" />
+          <AssociationSet Name="FK_payOp_paySides" Association="bookModel.FK_payOp_paySides">
+            <End Role="paySides" EntitySet="paySides" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="officeFiles">
           <Key>
@@ -1732,6 +1768,30 @@
             </Principal>
             <Dependent Role="serviceDataFiles">
               <PropertyRef Name="serviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="paySides">
+          <Key>
+            <PropertyRef Name="paysideId" />
+          </Key>
+          <Property Name="paysideId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="side" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sideAr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="code" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="payOp" Relationship="bookModel.FK_payOp_paySides" FromRole="paySides" ToRole="payOp" />
+        </EntityType>
+        <Association Name="FK_payOp_paySides">
+          <End Type="bookModel.paySides" Role="paySides" Multiplicity="0..1" />
+          <End Type="bookModel.payOp" Role="payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paySides">
+              <PropertyRef Name="paysideId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="paysideId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1907,6 +1967,7 @@
           <EntitySetMapping Name="payOp">
             <EntityTypeMapping TypeName="bookModel.payOp">
               <MappingFragment StoreEntitySet="payOp">
+                <ScalarProperty Name="paysideId" ColumnName="paysideId" />
                 <ScalarProperty Name="recivedFrom" ColumnName="recivedFrom" />
                 <ScalarProperty Name="recipient" ColumnName="recipient" />
                 <ScalarProperty Name="payOpId" ColumnName="payOpId" />
@@ -2089,6 +2150,18 @@
                 <ScalarProperty Name="extention" ColumnName="extention" />
                 <ScalarProperty Name="fileName" ColumnName="fileName" />
                 <ScalarProperty Name="fileId" ColumnName="fileId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="paySides">
+            <EntityTypeMapping TypeName="bookModel.paySides">
+              <MappingFragment StoreEntitySet="paySides">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="sideAr" ColumnName="sideAr" />
+                <ScalarProperty Name="side" ColumnName="side" />
+                <ScalarProperty Name="paysideId" ColumnName="paysideId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -34,6 +34,9 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> userId { get; set; }
         public string recipient { get; set; }
         public string recivedFrom { get; set; }
+        public Nullable<int> paysideId { get; set; }
+        public string sideAr { get; set; }
+        //    
         public bool canDelete { get; set; }
         /// <summary>
         /// ///////////////////////////////////////
@@ -68,7 +71,55 @@ namespace BookAccountApp.ApiClasses
                                 officeId = S.officeId,
                                 passengerId = S.passengerId,
                                 userId = S.userId,
+                                recipient = S.recipient,
+                                recivedFrom = S.recivedFrom,
+                                paysideId = S.paysideId,
 
+                            }).ToList();
+
+                    return List;
+                }
+
+            }
+            catch
+            {
+                return List;
+            }
+
+        }
+        public async Task<List<PayOp>> GetbyType(string opType)
+        {
+
+            List<PayOp> List = new List<PayOp>();
+            bool canDelete = false;
+            try
+            {
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    List = (from S in entity.payOp
+                            where S.opType==opType
+                            select new PayOp()
+                            {
+                                payOpId = S.payOpId,
+                                code = S.code,
+                                cash = S.cash,
+                                opType = S.opType,
+                                side = S.side,
+                                serviceId = S.serviceId,
+                                opStatus = S.opStatus,
+                                opDate = S.opDate,
+                                notes = S.notes,
+                                createUserId = S.createUserId,
+                                updateUserId = S.updateUserId,
+                                createDate = S.createDate,
+                                updateDate = S.updateDate,
+                                officeId = S.officeId,
+                                passengerId = S.passengerId,
+                                userId = S.userId,
+                                recipient = S.recipient,
+                                recivedFrom = S.recivedFrom,
+                                paysideId = S.paysideId,
+                                sideAr=S.paySides.sideAr,
                             }).ToList();
 
                     return List;
@@ -105,13 +156,32 @@ namespace BookAccountApp.ApiClasses
                     Nullable<int> id = null;
                     newObject.serviceId = id;
                 }
-
+                if (newObject.paysideId == 0 || newObject.paysideId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.paysideId = id;
+                }
+                if (newObject.passengerId == 0 || newObject.passengerId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.passengerId = id;
+                }
+                if (newObject.officeId == 0 || newObject.officeId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.officeId = id;
+                }
+                if (newObject.userId == 0 || newObject.userId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.userId = id;
+                }
                 try
                 {
                     using (bookdbEntities entity = new bookdbEntities())
                     {
                         var locationEntity = entity.Set<payOp>();
-                        if (newObject.serviceId == 0)
+                        if (newObject.payOpId == 0)
                         {
                             newObject.createDate = DateTime.Now;
                             newObject.updateDate = newObject.createDate;
@@ -126,8 +196,7 @@ namespace BookAccountApp.ApiClasses
                         {
                             var tmpObject = entity.payOp.Where(p => p.payOpId == newObject.payOpId).FirstOrDefault();
 
-                            tmpObject.updateDate = DateTime.Now;
-                            //   tmpObject.payOpId = newObject.payOpId;
+                            //tmpObject.payOpId = newObject.payOpId;
                             tmpObject.code = newObject.code;
                             tmpObject.cash = newObject.cash;
                             tmpObject.opType = newObject.opType;
@@ -136,13 +205,17 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.opStatus = newObject.opStatus;
                             tmpObject.opDate = newObject.opDate;
                             tmpObject.notes = newObject.notes;
-                            tmpObject.createUserId = newObject.createUserId;
+                            //tmpObject.createUserId = newObject.createUserId;
                             tmpObject.updateUserId = newObject.updateUserId;
-                            // tmpObject.createDate = newObject.createDate;
-                      
+                            //tmpObject.createDate = newObject.createDate;
+                            tmpObject.updateDate = DateTime.Now;
                             tmpObject.officeId = newObject.officeId;
                             tmpObject.passengerId = newObject.passengerId;
                             tmpObject.userId = newObject.userId;
+                            tmpObject.recipient = newObject.recipient;
+                            tmpObject.recivedFrom = newObject.recivedFrom;
+                            tmpObject.paysideId = newObject.paysideId;
+
 
                             entity.SaveChanges();
 
@@ -194,6 +267,9 @@ namespace BookAccountApp.ApiClasses
                           officeId = S.officeId,
                           passengerId = S.passengerId,
                           userId = S.userId,
+                          recipient = S.recipient,
+                          recivedFrom = S.recivedFrom,
+                          paysideId = S.paysideId,
 
 
                       }).FirstOrDefault();
