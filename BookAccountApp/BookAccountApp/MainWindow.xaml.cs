@@ -197,17 +197,24 @@ namespace BookAccountApp
                 {
                     //passengers office flights operations
                     case "passengers":
-                        txt_secondPath.Text = ">" + resourcemanager.GetString("passengers");
+                        txt_secondPath.Text = "> " + resourcemanager.GetString("passengers");
                         break;
                     case "office":
-                        txt_secondPath.Text = ">" + resourcemanager.GetString("trOffices");
+                        txt_secondPath.Text = "> " + resourcemanager.GetString("trOffices");
                         break;
                     case "flights":
-                        txt_secondPath.Text = ">" + resourcemanager.GetString("flights");
+                        txt_secondPath.Text = "> " + resourcemanager.GetString("flights");
                         break;
                     case "operations":
-                        txt_secondPath.Text = ">" + resourcemanager.GetString("operations");
+                        txt_secondPath.Text = "> " + resourcemanager.GetString("operations");
                         break;
+                    case "salesSyria":
+                        txt_secondPath.Text = "> " + resourcemanager.GetString("syr");
+                        break;
+                    case "salesSoto":
+                        txt_secondPath.Text = "> " + resourcemanager.GetString("soto");
+                        break;
+                  
 
 
                     default:

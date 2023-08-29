@@ -113,7 +113,10 @@ namespace BookAccountApp.View.bookSales
             {
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
+                MainWindow.mainWindow.second = button.Tag.ToString();
+                MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
+
                 uc_salesSyria ucsy = new uc_salesSyria();
                 //grid_main.Children.Add(uc_salesSyria.Instance);
                 grid_main.Children.Add(ucsy);
@@ -129,6 +132,8 @@ namespace BookAccountApp.View.bookSales
             {
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
+                MainWindow.mainWindow.second = button.Tag.ToString();
+                MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
                 uc_salesSoto ucso = new uc_salesSoto();
                 //grid_main.Children.Add(uc_salesSoto.Instance);
