@@ -184,6 +184,17 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
+                            <DataGridTextColumn Width="*"  Header="recipient" Binding="{Binding Path=recipient}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding isActive}" Value="0">
+                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
                             <DataGridTextColumn Width="*"  Header="recivedFrom" Binding="{Binding Path=recivedFrom}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -195,18 +206,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="airline" Binding="{Binding Path=airline}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding isActive}" Value="0">
-                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="officeName" Binding="{Binding Path=officeName}">
+                            <DataGridTextColumn Width="*"  Header="Cash" Binding="{Binding Path=cash}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -228,18 +228,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="cash"  Binding="{Binding Path=cash,Converter={StaticResource accuracyConverter}}" >
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding isActive}" Value="0">
-                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-
+                            
                         </DataGrid.Columns>
                     </DataGrid>
 
@@ -422,9 +411,9 @@
 
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
-                                <TextBox x:Name="tb_code"  Text="{Binding code, Mode=OneWay}" Padding="10,0,5,0" 
+                                <TextBox x:Name="tb_opName"  Text="{Binding code, Mode=OneWay}" Padding="10,0,5,0" 
                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-               materialDesign:HintAssist.Hint="code..."  
+               materialDesign:HintAssist.Hint="operation..."  
                Foreground="#4E4E4E"  
                MaxLength="50" BorderThickness="0"
                materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"

@@ -3019,4 +3019,40 @@
   <data name="trPopExport" xml:space="preserve">
     <value>تم التصدير بنجاح</value>
   </data>
+  <data name="electronicInvoice" xml:space="preserve">
+    <value>فاتورة الكترونية</value>
+  </data>
+  <data name="opDate" xml:space="preserve">
+    <value> تاريخ العملية</value>
+  </data>
+  <data name="opDateHint" xml:space="preserve">
+    <value>تاريخ العملية ...</value>
+  </data>
+  <data name="payInvoice" xml:space="preserve">
+    <value>فاتورة دفع</value>
+  </data>
+  <data name="payInvoiceHint" xml:space="preserve">
+    <value>فاتورة دفع ...</value>
+  </data>
+  <data name="previewInvoice" xml:space="preserve">
+    <value>معاينة الفاتورة</value>
+  </data>
+  <data name="printInvoice" xml:space="preserve">
+    <value>طباعة الفاتورة</value>
+  </data>
+  <data name="recivedFrom" xml:space="preserve">
+    <value>المسلم</value>
+  </data>
+  <data name="recivedFromHint" xml:space="preserve">
+    <value>المسلم ...</value>
+  </data>
+  <data name="sideOrResponseble" xml:space="preserve">
+    <value>الجهة \ صاحب العلاقة</value>
+  </data>
+  <data name="sideOrResponsebleHint" xml:space="preserve">
+    <value>الجهة \ صاحب العلاقة ...</value>
+  </data>
+  <data name="payDate" xml:space="preserve">
+    <value>تاريخ الدفع</value>
+  </data>
 </root>

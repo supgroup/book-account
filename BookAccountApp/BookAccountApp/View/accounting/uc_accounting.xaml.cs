@@ -75,8 +75,8 @@ namespace BookAccountApp.View.accounting
 
         private void translate()
         {
-            btn_payment.Content = MainWindow.resourcemanager.GetString("syr");
-            btn_received.Content = MainWindow.resourcemanager.GetString("soto");
+            btn_payment.Content = MainWindow.resourcemanager.GetString("trPayments");
+            btn_received.Content = MainWindow.resourcemanager.GetString("trReceived");
             //btn_office.Content = MainWindow.resourcemanager.GetString("trOffices");
             //btn_passengers.Content = MainWindow.resourcemanager.GetString("passengers");
             //btn_flights.Content = MainWindow.resourcemanager.GetString("flights");

@@ -3016,4 +3016,40 @@ Please add Email in setting</value>
   <data name="trPopExport" xml:space="preserve">
     <value>Exported Successfuly</value>
   </data>
+  <data name="electronicInvoice" xml:space="preserve">
+    <value>E-Invoice</value>
+  </data>
+  <data name="opDate" xml:space="preserve">
+    <value>Operation Date</value>
+  </data>
+  <data name="opDateHint" xml:space="preserve">
+    <value>Operation Date ...</value>
+  </data>
+  <data name="payInvoice" xml:space="preserve">
+    <value>Pay Invoice</value>
+  </data>
+  <data name="payInvoiceHint" xml:space="preserve">
+    <value>Pay Invoice ...</value>
+  </data>
+  <data name="previewInvoice" xml:space="preserve">
+    <value>Preview Invoice</value>
+  </data>
+  <data name="printInvoice" xml:space="preserve">
+    <value>Print Invoice</value>
+  </data>
+  <data name="recivedFrom" xml:space="preserve">
+    <value>Recived From</value>
+  </data>
+  <data name="recivedFromHint" xml:space="preserve">
+    <value>Recived From ...</value>
+  </data>
+  <data name="sideOrResponseble" xml:space="preserve">
+    <value>Side / Responseble</value>
+  </data>
+  <data name="sideOrResponsebleHint" xml:space="preserve">
+    <value>Side / Responseble ...</value>
+  </data>
+  <data name="payDate" xml:space="preserve">
+    <value>Pay Date</value>
+  </data>
 </root>

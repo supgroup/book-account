@@ -89,7 +89,7 @@ namespace BookAccountApp.View.accounting
                 //await FillCombo.fillCountriesNames(cb_country);
                 //FillCombo.fillAgentLevel(cb_custlevel);
 
-                Keyboard.Focus(tb_code);
+                Keyboard.Focus(tb_opName);
 
                 await RefreshPayOpsList();
                 await Search();
@@ -110,17 +110,23 @@ namespace BookAccountApp.View.accounting
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            txt_title.Text = MainWindow.resourcemanager.GetString("bookInfoSoto");
-
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_passenger, MainWindow.resourcemanager.GetString("passengerNameHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_ticketNum, MainWindow.resourcemanager.GetString("ticketNumHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_airline, MainWindow.resourcemanager.GetString("airlineFlightHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_operation, MainWindow.resourcemanager.GetString("operationHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_office, MainWindow.resourcemanager.GetString("officeNameHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_serviceDate, MainWindow.resourcemanager.GetString("trDateHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_total, MainWindow.resourcemanager.GetString("totalHint"));
-
+            txt_title.Text = MainWindow.resourcemanager.GetString("payInvoice");
+            //payInvoice operationName sideOrResponseble trRecepient trRecepientHint recivedFrom trCashHint opDate trNoteHint printInvoice
+            // previewInvoice electronicInvoice trSave operationNameHint trCashTooltip
+            //payInvoiceHint sideOrResponsebleHint recivedFromHint  opDateHint trCash
+            //
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_opName, MainWindow.resourcemanager.GetString("operationNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_side, MainWindow.resourcemanager.GetString("sideOrResponsebleHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_recipient, MainWindow.resourcemanager.GetString("trRecepientHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_recivedFrom, MainWindow.resourcemanager.GetString("recivedFromHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, MainWindow.resourcemanager.GetString("trCashHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_opDate, MainWindow.resourcemanager.GetString("opDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+
+            txt_invoicePrintButton.Text = MainWindow.resourcemanager.GetString("printInvoice");
+            txt_invoicePreviewButton.Text = MainWindow.resourcemanager.GetString("previewInvoice");
+            txt_invoicePdfButton.Text = MainWindow.resourcemanager.GetString("electronicInvoice");
+            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_fromDateSearch, MainWindow.resourcemanager.GetString("fromDate"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_toDateSearch, MainWindow.resourcemanager.GetString("toDate"));
             //txt_exportDocsButton.Text = MainWindow.resourcemanager.GetString("docExport");
@@ -133,15 +139,15 @@ namespace BookAccountApp.View.accounting
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
 
             //   payOps
-            /*
+            
             dg_payOp.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
-            dg_payOp.Columns[1].Header = MainWindow.resourcemanager.GetString("passengerName");
-            dg_payOp.Columns[2].Header = MainWindow.resourcemanager.GetString("ticketNum");
-            dg_payOp.Columns[3].Header = MainWindow.resourcemanager.GetString("airlineFlight");
-            dg_payOp.Columns[4].Header = MainWindow.resourcemanager.GetString("officeName");
-            dg_payOp.Columns[5].Header = MainWindow.resourcemanager.GetString("trDate");
-            dg_payOp.Columns[6].Header = MainWindow.resourcemanager.GetString("total");
-            */
+            dg_payOp.Columns[1].Header = MainWindow.resourcemanager.GetString("sideOrResponseble");
+            dg_payOp.Columns[2].Header = MainWindow.resourcemanager.GetString("trRecepient");
+            dg_payOp.Columns[3].Header = MainWindow.resourcemanager.GetString("recivedFrom");
+            dg_payOp.Columns[4].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
+            dg_payOp.Columns[5].Header = MainWindow.resourcemanager.GetString("payDate");
+            
+           
 
             //dg_payOp.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
