@@ -317,6 +317,9 @@
     <Compile Include="View\accounting\uc_payment.xaml.cs">
       <DependentUpon>uc_payment.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\accounting\uc_received.xaml.cs">
+      <DependentUpon>uc_received.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\applications\uc_applications.xaml.cs">
       <DependentUpon>uc_applications.xaml</DependentUpon>
     </Compile>
@@ -356,6 +359,12 @@
     <Compile Include="View\sectionData\win_lvc.xaml.cs">
       <DependentUpon>win_lvc.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\settings\commissions\uc_commissions.xaml.cs">
+      <DependentUpon>uc_commissions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\settings\printerSetting\uc_printerSetting.xaml.cs">
+      <DependentUpon>uc_printerSetting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\settings\uc_general.xaml.cs">
       <DependentUpon>uc_general.xaml</DependentUpon>
     </Compile>
@@ -364,6 +373,9 @@
     </Compile>
     <Compile Include="View\settings\uc_settings.xaml.cs">
       <DependentUpon>uc_settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\settings\users\uc_users.xaml.cs">
+      <DependentUpon>uc_users.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_acceptCancelPopup.xaml.cs">
       <DependentUpon>wd_acceptCancelPopup.xaml</DependentUpon>
@@ -450,6 +462,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\accounting\uc_received.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\applications\uc_applications.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -502,6 +518,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\settings\commissions\uc_commissions.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\settings\printerSetting\uc_printerSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\settings\uc_general.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -513,6 +537,10 @@
     <Page Include="View\settings\uc_settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\settings\users\uc_users.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_acceptCancelPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
