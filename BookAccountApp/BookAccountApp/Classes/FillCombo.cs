@@ -456,8 +456,14 @@ namespace BookAccountApp.Classes
         public static string Mobile;
         public static string Address;
         public static string Phone;
-
-       public static async Task< int> loading_getDefaultSystemInfo()
+        public static decimal syr_commission;
+        public static decimal soto_commission;
+        public static decimal office_syr_commission;
+        public static decimal office_soto_commission;
+        public static decimal company_syr_commission;
+        public static decimal company_soto_commission;
+ 
+        public static async Task< int> loading_getDefaultSystemInfo()
         {
             try
             {
@@ -580,6 +586,107 @@ namespace BookAccountApp.Classes
                     MainWindow.dateFormat = setV.value;
                 }
 
+                #endregion
+                #region  get commetion
+
+                //get syr_commission
+                set = settingsCls.Where(s => s.name == "syr_commission").FirstOrDefault<SettingCls>();
+               // var commesionId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == set.settingId).FirstOrDefault();
+                if (setV != null )
+                {
+                    if (setV.value!=null && setV.value!="")
+                    {
+                        FillCombo.syr_commission = Convert.ToDecimal(setV.value);
+                    }
+                    else
+                    {
+                        FillCombo.syr_commission =0;
+                    }
+                   
+                }
+                //soto_commission
+                set = settingsCls.Where(s => s.name == "soto_commission").FirstOrDefault<SettingCls>();
+             
+                setV = settingsValues.Where(i => i.settingId == set.settingId).FirstOrDefault();
+                if (setV != null)
+                {
+                    if (setV.value != null && setV.value != "")
+                    {
+                        FillCombo.soto_commission = Convert.ToDecimal(setV.value);
+                    }
+                    else
+                    {
+                        FillCombo.soto_commission = 0;
+                    }
+
+                }
+                //office_syr_commission
+                set = settingsCls.Where(s => s.name == "office_syr_commission").FirstOrDefault<SettingCls>();
+
+                setV = settingsValues.Where(i => i.settingId == set.settingId).FirstOrDefault();
+                if (setV != null)
+                {
+                    if (setV.value != null && setV.value != "")
+                    {
+                        FillCombo.office_syr_commission = Convert.ToDecimal(setV.value);
+                    }
+                    else
+                    {
+                        FillCombo.office_syr_commission = 0;
+                    }
+
+                }
+                //office_soto_commission
+                set = settingsCls.Where(s => s.name == "office_soto_commission").FirstOrDefault<SettingCls>();
+
+                setV = settingsValues.Where(i => i.settingId == set.settingId).FirstOrDefault();
+                if (setV != null)
+                {
+                    if (setV.value != null && setV.value != "")
+                    {
+                        FillCombo.office_soto_commission = Convert.ToDecimal(setV.value);
+                    }
+                    else
+                    {
+                        FillCombo.office_soto_commission = 0;
+                    }
+
+                }
+                //company_syr_commission
+                set = settingsCls.Where(s => s.name == "company_syr_commission").FirstOrDefault<SettingCls>();
+
+                setV = settingsValues.Where(i => i.settingId == set.settingId).FirstOrDefault();
+                if (setV != null)
+                {
+                    if (setV.value != null && setV.value != "")
+                    {
+                        FillCombo.company_syr_commission = Convert.ToDecimal(setV.value);
+                    }
+                    else
+                    {
+                        FillCombo.company_syr_commission = 0;
+                    }
+
+                }
+                //company_soto_commission
+                set = settingsCls.Where(s => s.name == "company_soto_commission").FirstOrDefault<SettingCls>();
+
+                setV = settingsValues.Where(i => i.settingId == set.settingId).FirstOrDefault();
+                if (setV != null)
+                {
+                    if (setV.value != null && setV.value != "")
+                    {
+                        FillCombo.company_soto_commission = Convert.ToDecimal(setV.value);
+                    }
+                    else
+                    {
+                        FillCombo.company_soto_commission = 0;
+                    }
+
+                } 
+                //
+               
                 #endregion
                 return 1;
             }
