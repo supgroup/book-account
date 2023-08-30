@@ -597,11 +597,11 @@ namespace BookAccountApp.Classes
                 {
                     if (setV.value!=null && setV.value!="")
                     {
-                        FillCombo.syr_commission = Convert.ToDecimal(setV.value);
+                        syr_commission = Convert.ToDecimal(setV.value);
                     }
                     else
                     {
-                        FillCombo.syr_commission =0;
+                        syr_commission =0;
                     }
                    
                 }
@@ -613,11 +613,11 @@ namespace BookAccountApp.Classes
                 {
                     if (setV.value != null && setV.value != "")
                     {
-                        FillCombo.soto_commission = Convert.ToDecimal(setV.value);
+                        soto_commission = Convert.ToDecimal(setV.value);
                     }
                     else
                     {
-                        FillCombo.soto_commission = 0;
+                       soto_commission = 0;
                     }
 
                 }
@@ -629,11 +629,11 @@ namespace BookAccountApp.Classes
                 {
                     if (setV.value != null && setV.value != "")
                     {
-                        FillCombo.office_syr_commission = Convert.ToDecimal(setV.value);
+                        office_syr_commission = Convert.ToDecimal(setV.value);
                     }
                     else
                     {
-                        FillCombo.office_syr_commission = 0;
+                        office_syr_commission = 0;
                     }
 
                 }
@@ -645,11 +645,11 @@ namespace BookAccountApp.Classes
                 {
                     if (setV.value != null && setV.value != "")
                     {
-                        FillCombo.office_soto_commission = Convert.ToDecimal(setV.value);
+                        office_soto_commission = Convert.ToDecimal(setV.value);
                     }
                     else
                     {
-                        FillCombo.office_soto_commission = 0;
+                        office_soto_commission = 0;
                     }
 
                 }
@@ -661,11 +661,11 @@ namespace BookAccountApp.Classes
                 {
                     if (setV.value != null && setV.value != "")
                     {
-                        FillCombo.company_syr_commission = Convert.ToDecimal(setV.value);
+                        company_syr_commission = Convert.ToDecimal(setV.value);
                     }
                     else
                     {
-                        FillCombo.company_syr_commission = 0;
+                       company_syr_commission = 0;
                     }
 
                 }
@@ -677,11 +677,11 @@ namespace BookAccountApp.Classes
                 {
                     if (setV.value != null && setV.value != "")
                     {
-                        FillCombo.company_soto_commission = Convert.ToDecimal(setV.value);
+                        company_soto_commission = Convert.ToDecimal(setV.value);
                     }
                     else
                     {
-                        FillCombo.company_soto_commission = 0;
+                       company_soto_commission = 0;
                     }
 
                 } 
