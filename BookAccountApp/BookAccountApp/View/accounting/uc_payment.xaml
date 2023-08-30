@@ -413,13 +413,13 @@
                             <Grid   >
                                 <TextBox x:Name="tb_opName"  Text="{Binding code, Mode=OneWay}" Padding="10,0,5,0" 
                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-               materialDesign:HintAssist.Hint="operation..."  
+               materialDesign:HintAssist.Hint="operation..." 
                Foreground="#4E4E4E"  
                MaxLength="50" BorderThickness="0"
                materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                Height="40"  Margin="4,0"  
                LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
-                                <Path x:Name="p_error_code"
+                                <Path x:Name="p_error_opName"
             Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
             HorizontalAlignment="Right" Visibility="Collapsed"   
             VerticalAlignment="Center" Width="15"  Height="15"
@@ -437,7 +437,7 @@
                                   materialDesign:HintAssist.Hint="side..."  
                                   Grid.Column="1" Height="40"   
                                  BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-                                  LostFocus="validateEmpty_LostFocus" />
+                                  LostFocus="validateEmpty_LostFocus" SelectionChanged="Cb_side_SelectionChanged" />
                                     <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
                                           Name="p_error_side"
                               HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
@@ -450,7 +450,7 @@
                                           L13,15 L13,17 Z"/>
                                 </Grid>
                             </Border>
-                        <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Border Grid.Row="1" Name="brdr_sideValue" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid>
                                 <ComboBox x:Name="cb_sideValue"  Grid.Row="1"
                SelectedValue="{Binding sideValue,Mode=OneWay}"

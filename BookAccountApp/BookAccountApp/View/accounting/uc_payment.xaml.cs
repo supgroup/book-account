@@ -67,7 +67,7 @@ namespace BookAccountApp.View.accounting
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "airline", "passenger", "total" };
+                requiredControlList = new List<string> { "opName", "side", "cash" };
 
                 #region translate
                 //if (MainWindow.lang.Equals("en"))
@@ -90,8 +90,8 @@ namespace BookAccountApp.View.accounting
                 //FillCombo.fillAgentLevel(cb_custlevel);
 
                 Keyboard.Focus(tb_opName);
-
-                await RefreshPayOpsList();
+                Cb_side_SelectionChanged(null, null);
+                 await RefreshPayOpsList();
                 await Search();
 
                 Clear();
@@ -165,29 +165,58 @@ namespace BookAccountApp.View.accounting
             {
                
 
-                HelpClass.StartAwait(grid_main);
+             //   HelpClass.StartAwait(grid_main);
 
                 payOp = new PayOp();
                 if (HelpClass.validate(requiredControlList, this))
                 {
                     //tb_custCode.Text = await serviceData.generateCodeNumber("cu");
-                    payOp.code ="";
+                    payOp.code = "";
                     payOp.cash = (tb_cash.Text == null || tb_cash.Text == "") ? 0 : Convert.ToDecimal(tb_cash.Text);
                     payOp.opType = "p";
                     payOp.side = cb_side.Text;
-                    payOp.serviceId =null;//
+                    payOp.serviceId = null;//
                     payOp.opStatus = "draft";
                     payOp.opDate = dp_opDate.SelectedDate;
                     payOp.notes = tb_notes.Text;
-                     
+
                     //payOp.createDate = newObject.createDate;
                     payOp.updateDate = DateTime.Now;
-                    payOp.officeId = null;//if side is office
-                    payOp.passengerId = null;//if side is passenger
+                    if (cb_side.SelectedItem != null)
+                    {//passenger office soto other
+                        if ((cb_side.SelectedValue).ToString() == "passenger")
+                        {
+
+                            payOp.passengerId= Convert.ToInt32(cb_sideValue.SelectedValue);
+                            payOp.paysideId = FillCombo.PaySidesList.Where(x=> x.code == "passenger").FirstOrDefault().paysideId;
+                        }
+                        else if ((cb_side.SelectedValue).ToString() == "office")
+                        {
+                            payOp.officeId = Convert.ToInt32(cb_sideValue.SelectedValue);
+                            payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "office").FirstOrDefault().paysideId;
+                        }
+                        else if ((cb_side.SelectedValue).ToString() == "soto")
+                        {
+                            payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "soto").FirstOrDefault().paysideId;
+
+                        }
+                        else if ((cb_side.SelectedValue).ToString() == "other")
+                        {
+                            //other
+                            payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "other").FirstOrDefault().paysideId;
+
+                        }
+                    }
+                    else
+                    {
+                        payOp.paysideId = null;
+                    }
+
+                   
                     payOp.userId = null;//note used
                     payOp.recipient = tb_recipient.Text;
                     payOp.recivedFrom =tb_recivedFrom.Text;
-                    payOp.paysideId = Convert.ToInt32(cb_side.SelectedValue);
+                  
 
 
                     //payOp.passengerId = Convert.ToInt32(cb_passenger.SelectedValue);
@@ -216,7 +245,7 @@ namespace BookAccountApp.View.accounting
                     }
                 }
 
-                HelpClass.EndAwait(grid_main);
+          //      HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -848,6 +877,55 @@ namespace BookAccountApp.View.accounting
 
         }
 
-       
+        private async void Cb_side_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+              
+                if (cb_side.SelectedItem != null)
+                {//passenger office soto other
+                    if ((cb_side.SelectedValue).ToString() == "passenger")
+                    {
+                        MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sideValue, MainWindow.resourcemanager.GetString("passenger"));
+                        await FillCombo.fillPassengers(cb_sideValue);
+                      //  cb_sideValue.Visibility = Visibility.Visible;
+                        brdr_sideValue.Visibility= Visibility.Visible;
+                         
+                         
+                    }
+                    else if ((cb_side.SelectedValue).ToString() == "office")
+                    {
+                        MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sideValue, MainWindow.resourcemanager.GetString("trOffice"));
+                        await FillCombo.fillOffice(cb_sideValue);
+                        brdr_sideValue.Visibility = Visibility.Visible;
+                    }
+                    else if ((cb_side.SelectedValue).ToString() == "soto")
+                    {
+                        cb_sideValue.SelectedItem = null;
+                        brdr_sideValue.Visibility = Visibility.Collapsed;
+                      
+                    }
+                    else
+                    {
+                        //other
+                        cb_sideValue.SelectedItem = null;
+                        brdr_sideValue.Visibility = Visibility.Collapsed;
+
+                    }
+                }
+                else
+                {
+                    cb_sideValue.SelectedItem = null;
+                    brdr_sideValue.Visibility = Visibility.Collapsed;
+                }
+             
+            }
+            catch (Exception ex)
+            {
+                
+                HelpClass.ExceptionMessage(ex, this);
+            }
+          
+        }
     }
 }
