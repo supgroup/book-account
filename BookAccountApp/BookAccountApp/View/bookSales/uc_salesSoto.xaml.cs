@@ -174,7 +174,7 @@ namespace BookAccountApp.View.bookSales
                 if (HelpClass.validate(requiredControlList, this))
                 {
                     //tb_custCode.Text = await serviceData.generateCodeNumber("cu");
-
+                    serviceData.serviceNum = await serviceData.generateCodeNumber("SOTO");
                     serviceData.passengerId = Convert.ToInt32(cb_passenger.SelectedValue);
                     serviceData.ticketNum = tb_ticketNum.Text;
                     serviceData.flightId = Convert.ToInt32(cb_airline.SelectedValue);

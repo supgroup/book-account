@@ -57,6 +57,8 @@ namespace BookAccountApp.View.accounting
         PayOp payOp = new PayOp();
         IEnumerable<PayOp> payOpsQuery;
         IEnumerable<PayOp> payOps;
+        public List<serviceData> invoicesLst = new List<serviceData>();
+        public List<PayOp> cashesLst = new List<PayOp>();
         byte tgl_payOpstate;
         string searchText = "";
         SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -90,6 +92,7 @@ namespace BookAccountApp.View.accounting
                 //FillCombo.fillAgentLevel(cb_custlevel);
 
                 Keyboard.Focus(tb_opName);
+                btn_invoicesSide.Visibility = Visibility.Collapsed;
                 Cb_side_SelectionChanged(null, null);
                  await RefreshPayOpsList();
                 await Search();
@@ -889,34 +892,38 @@ namespace BookAccountApp.View.accounting
                         MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sideValue, MainWindow.resourcemanager.GetString("passenger"));
                         await FillCombo.fillPassengers(cb_sideValue);
                       //  cb_sideValue.Visibility = Visibility.Visible;
-                        brdr_sideValue.Visibility= Visibility.Visible;
-                         
-                         
+                         grid_sideValue.Visibility= Visibility.Visible;
+                        btn_invoicesSide.Visibility = Visibility.Collapsed;
+
+
                     }
                     else if ((cb_side.SelectedValue).ToString() == "office")
                     {
                         MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sideValue, MainWindow.resourcemanager.GetString("trOffice"));
                         await FillCombo.fillOffice(cb_sideValue);
-                        brdr_sideValue.Visibility = Visibility.Visible;
+                         grid_sideValue.Visibility = Visibility.Visible;
+                        btn_invoicesSide.Visibility = Visibility.Collapsed;
                     }
                     else if ((cb_side.SelectedValue).ToString() == "soto")
                     {
                         cb_sideValue.SelectedItem = null;
-                        brdr_sideValue.Visibility = Visibility.Collapsed;
-                      
+                         grid_sideValue.Visibility = Visibility.Collapsed;
+                        btn_invoicesSide.Visibility = Visibility.Visible;
+
                     }
                     else
                     {
                         //other
                         cb_sideValue.SelectedItem = null;
-                        brdr_sideValue.Visibility = Visibility.Collapsed;
-
+                         grid_sideValue.Visibility = Visibility.Collapsed;
+                        btn_invoicesSide.Visibility = Visibility.Collapsed;
                     }
                 }
                 else
                 {
                     cb_sideValue.SelectedItem = null;
-                    brdr_sideValue.Visibility = Visibility.Collapsed;
+                 //    grid_sideValue.Visibility = Visibility.Collapsed;
+                    grid_sideValue.Visibility = Visibility.Collapsed;
                 }
              
             }
@@ -932,38 +939,38 @@ namespace BookAccountApp.View.accounting
         {//invoices
             try
             {
-                /*
+                
                 invoicesLst.Clear();
                 cashesLst.Clear();
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_invoicesList w = new wd_invoicesList();
 
-                if (cb_depositTo.SelectedValue.ToString() == "v")
-                    w.agentId = Convert.ToInt32(cb_recipientV.SelectedValue);
-                else if (cb_depositTo.SelectedValue.ToString() == "c")
-                    w.agentId = Convert.ToInt32(cb_recipientC.SelectedValue);
-                else if (cb_depositTo.SelectedValue.ToString() == "u")
-                    w.userId = Convert.ToInt32(cb_recipientU.SelectedValue);
-                else if (cb_depositTo.SelectedValue.ToString() == "sh")
-                    w.shippingCompanyId = Convert.ToInt32(cb_recipientSh.SelectedValue);
+                //if (cb_side.SelectedValue.ToString() == "soto")
+                //    w.agentId = Convert.ToInt32(cb_recipientV.SelectedValue);
+                //else if (cb_depositTo.SelectedValue.ToString() == "c")
+                //    w.agentId = Convert.ToInt32(cb_recipientC.SelectedValue);
+                //else if (cb_depositTo.SelectedValue.ToString() == "u")
+                //    w.userId = Convert.ToInt32(cb_recipientU.SelectedValue);
+                //else if (cb_depositTo.SelectedValue.ToString() == "sh")
+                //    w.shippingCompanyId = Convert.ToInt32(cb_recipientSh.SelectedValue);
 
-                w.invType = "pay";
+                //w.invType = "pay";
 
                 w.ShowDialog();
-                if (w.isActive)
-                {
-                    tb_cash.Text = SectionData.DecTostring(w.sum);
-                    tb_cash.IsReadOnly = true;
-                    cb_recipientC.IsEnabled = false;
-                    cb_recipientV.IsEnabled = false;
-                    cb_recipientU.IsEnabled = false;
-                    cb_recipientSh.IsEnabled = false;
-                    tb_recipientText.IsEnabled = false;
-                    invoicesLst.AddRange(w.selectedInvoices);
-                    cashesLst.AddRange(w.selectedCashtansfers);
-                }
+                //if (w.isActive)
+                //{
+                //    tb_cash.Text = SectionData.DecTostring(w.sum);
+                //    tb_cash.IsReadOnly = true;
+                //cb_recipientC.IsEnabled = false;
+                //cb_recipientV.IsEnabled = false;
+                //cb_recipientU.IsEnabled = false;
+                //cb_recipientSh.IsEnabled = false;
+                //tb_recipientText.IsEnabled = false;
+                //invoicesLst.AddRange(w.selectedInvoices);
+                //cashesLst.AddRange(w.selectedCashtansfers);
+            //}
                 Window.GetWindow(this).Opacity = 1;
-                */
+               
             }
             catch (Exception ex)
             {

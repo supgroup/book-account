@@ -161,7 +161,7 @@
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="*"  Header="serviceNum" Binding="{Binding Path=serviceId}">
+                            <DataGridTextColumn Width="*"  Header="serviceNum" Binding="{Binding Path=serviceNum}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>

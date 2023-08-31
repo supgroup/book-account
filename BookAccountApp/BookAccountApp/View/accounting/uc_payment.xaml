@@ -427,10 +427,14 @@
                                 </Path>
                             </Grid>
                         </Border>
-
-                        <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
-                                <Grid>
-                                    <ComboBox x:Name="cb_side"  Grid.Row="1"
+                        <Grid x:Name="grid_side">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"  BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                            <Grid>
+                                <ComboBox x:Name="cb_side"  Grid.Row="1"
                                       SelectedValue="{Binding side,Mode=OneWay}"
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
@@ -438,7 +442,7 @@
                                   Grid.Column="1" Height="40"   
                                  BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
                                   LostFocus="validateEmpty_LostFocus" SelectionChanged="Cb_side_SelectionChanged" />
-                                    <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
+                                <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
                                           Name="p_error_side"
                               HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
@@ -448,9 +452,19 @@
                                           C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12
                                           C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 
                                           L13,15 L13,17 Z"/>
-                                </Grid>
-                            </Border>
-                        <Grid>
+                            </Grid>
+                        </Border>
+                            <Button Grid.Column="1"  Padding="0" 
+            Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
+                x:Name="btn_invoicesSide" Click="Btn_invoices_Click"
+            Margin="5,1" IsEnabled="True" Width="30">
+                                <Path Fill="{StaticResource MainColor}" Stretch="Fill"  
+Width="25" Height="27.5"
+                  FlowDirection="LeftToRight"
+       Data="{StaticResource invoice}" />
+                            </Button>
+                        </Grid>
+                        <Grid x:Name="grid_sideValue">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
