@@ -161,7 +161,7 @@
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="*"  Header="serviceNum" Binding="{Binding Path=serviceId}">
+                            <DataGridTextColumn Width="*"  Header="serviceNum" Binding="{Binding Path=payOpId}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -184,6 +184,17 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
+                            <DataGridTextColumn Width="*"  Header="recipient" Binding="{Binding Path=recipient}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding isActive}" Value="0">
+                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
                             <DataGridTextColumn Width="*"  Header="recivedFrom" Binding="{Binding Path=recivedFrom}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -195,18 +206,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="airline" Binding="{Binding Path=airline}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding isActive}" Value="0">
-                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="officeName" Binding="{Binding Path=officeName}">
+                            <DataGridTextColumn Width="*"  Header="Cash"  Binding="{Binding Path=cash,Converter={StaticResource accuracyConverter}}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -218,17 +218,6 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn Width="*"  Header="opDate" Binding="{Binding Path=opDate,Converter={StaticResource dateFrameConverter}}" >
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding isActive}" Value="0">
-                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="cash"  Binding="{Binding Path=cash,Converter={StaticResource accuracyConverter}}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -422,15 +411,15 @@
 
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
-                                <TextBox x:Name="tb_code"  Text="{Binding code, Mode=OneWay}" Padding="10,0,5,0" 
+                                <TextBox x:Name="tb_opName"  Text="{Binding code, Mode=OneWay}" Padding="10,0,5,0" 
                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-               materialDesign:HintAssist.Hint="code..."  
+               materialDesign:HintAssist.Hint="operation..." 
                Foreground="#4E4E4E"  
                MaxLength="50" BorderThickness="0"
                materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                Height="40"  Margin="4,0"  
                LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
-                                <Path x:Name="p_error_code"
+                                <Path x:Name="p_error_opName"
             Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
             HorizontalAlignment="Right" Visibility="Collapsed"   
             VerticalAlignment="Center" Width="15"  Height="15"
@@ -443,13 +432,12 @@
                             <Grid>
                                 <ComboBox x:Name="cb_side"  Grid.Row="1"
                                       SelectedValue="{Binding side,Mode=OneWay}"
-                                              SelectionChanged="cb_side_SelectionChanged"
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                   materialDesign:HintAssist.Hint="side..."  
                                   Grid.Column="1" Height="40"   
                                  BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-                                  LostFocus="validateEmpty_LostFocus" />
+                                  LostFocus="validateEmpty_LostFocus" SelectionChanged="Cb_side_SelectionChanged" />
                                 <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
                                           Name="p_error_side"
                               HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
@@ -462,28 +450,44 @@
                                           L13,15 L13,17 Z"/>
                             </Grid>
                         </Border>
-                        <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
-                            <Grid>
-                                <ComboBox x:Name="cb_sideValue"  Grid.Row="1"
-              SelectedValue="{Binding sideValue,Mode=OneWay}"
-          Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
-          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-          materialDesign:HintAssist.Hint="sideValue..."  
-          Grid.Column="1" Height="40"   
-         BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-          LostFocus="validateEmpty_LostFocus" />
-                                <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
-                  Name="p_error_sideValue"
-      HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
- VerticalAlignment="Center" Width="15"  Height="15"
-      Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52
-                  6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 
-                  17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8
-                  C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12
-                  C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 
-                  L13,15 L13,17 Z"/>
-                            </Grid>
-                        </Border>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Row="1" Name="brdr_sideValue" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                                <Grid>
+                                    <ComboBox x:Name="cb_sideValue"  Grid.Row="1"
+               SelectedValue="{Binding sideValue,Mode=OneWay}"
+           Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
+           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+           materialDesign:HintAssist.Hint="sideValue..."  
+           Grid.Column="1" Height="40"   
+          BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+           LostFocus="validateEmpty_LostFocus" />
+                                    <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
+                   Name="p_error_sideValue"
+       HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
+  VerticalAlignment="Center" Width="15"  Height="15"
+       Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52
+                   6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 
+                   17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8
+                   C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12
+                   C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 
+                   L13,15 L13,17 Z"/>
+                                </Grid>
+                            </Border>
+                            <Button Grid.Column="1"  Padding="0" 
+            Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
+                x:Name="btn_invoices" Click="Btn_invoices_Click"
+            Margin="5,1" IsEnabled="True" Width="30">
+                                <Path Fill="{StaticResource MainColor}" Stretch="Fill"  
+Width="25" Height="27.5"
+                  FlowDirection="LeftToRight"
+       Data="{StaticResource invoice}" />
+                            </Button>
+                        </Grid>
 
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
