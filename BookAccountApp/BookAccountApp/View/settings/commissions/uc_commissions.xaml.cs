@@ -87,41 +87,51 @@ namespace BookAccountApp.View.settings.commissions
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
                 /*
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_systemRate w = new wd_systemRate();
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
                 */
-                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
-        private void Btn_officeCommissions_Click(object sender, RoutedEventArgs e)
+        private void Btn_companyCommissions_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
                 /*
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_officeCommissions w = new wd_officeCommissions();
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
                 */
-                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_officeCommissions_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                /*
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_officeCommissions w = new wd_officeCommissions();
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                */
+            }
+            catch (Exception ex)
+            {
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
+       
     }
 }
