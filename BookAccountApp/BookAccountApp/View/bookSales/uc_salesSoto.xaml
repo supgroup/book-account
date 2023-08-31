@@ -217,7 +217,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="serviceDate" Binding="{Binding Path=serviceDate,Converter={StaticResource dateFrameConverter}}" >
+                            <DataGridTextColumn Width="*"  Header="serviceDate" Binding="{Binding Path=createDate,Converter={StaticResource dateFrameConverter}}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>

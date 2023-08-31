@@ -250,6 +250,13 @@
           <Property Name="operationId" Type="int" />
           <Property Name="systemType" Type="nvarchar" MaxLength="50" />
           <Property Name="isActive" Type="bit" />
+          <Property Name="system_commission_value" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="system_commission_ratio" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="office_commission_value" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="office_commission_ratio" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="company_commission_value" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="company_commission_ratio" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="totalnet" Type="decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="serviceDataFiles">
           <Key>
@@ -1122,6 +1129,13 @@
           <NavigationProperty Name="users" Relationship="Self.FK_serviceData_users" FromRole="serviceData" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_serviceData_users1" FromRole="serviceData" ToRole="users" />
           <NavigationProperty Name="serviceDataFiles" Relationship="bookModel.FK_serviceDataFiles_serviceData" FromRole="serviceData" ToRole="serviceDataFiles" />
+          <Property Name="system_commission_value" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="system_commission_ratio" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="office_commission_value" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="office_commission_ratio" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="company_commission_value" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="company_commission_ratio" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="totalnet" Type="Decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="setting">
           <Key>
@@ -1992,6 +2006,13 @@
           <EntitySetMapping Name="serviceData">
             <EntityTypeMapping TypeName="bookModel.serviceData">
               <MappingFragment StoreEntitySet="serviceData">
+                <ScalarProperty Name="totalnet" ColumnName="totalnet" />
+                <ScalarProperty Name="company_commission_ratio" ColumnName="company_commission_ratio" />
+                <ScalarProperty Name="company_commission_value" ColumnName="company_commission_value" />
+                <ScalarProperty Name="office_commission_ratio" ColumnName="office_commission_ratio" />
+                <ScalarProperty Name="office_commission_value" ColumnName="office_commission_value" />
+                <ScalarProperty Name="system_commission_ratio" ColumnName="system_commission_ratio" />
+                <ScalarProperty Name="system_commission_value" ColumnName="system_commission_value" />
                 <ScalarProperty Name="serviceId" ColumnName="serviceId" />
                 <ScalarProperty Name="serviceNum" ColumnName="serviceNum" />
                 <ScalarProperty Name="type" ColumnName="type" />

@@ -195,8 +195,29 @@ trDateHint
                     serviceData.systemType="syr";
                     serviceData.createUserId = MainWindow.userLogin.userId;
                     serviceData.updateUserId = MainWindow.userLogin.userId;
+                    // calc comm
+                    serviceData.system_commission_ratio = FillCombo.syr_commission;
+                    serviceData.system_commission_value = HelpClass.calcPercentage((decimal)serviceData.total,FillCombo.syr_commission);
+                   
+                    if (serviceData.officeId>0)
+                    {
+                        serviceData.office_commission_ratio = FillCombo.office_syr_commission;
+                        serviceData.office_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, FillCombo.office_syr_commission);
 
+                        serviceData.company_commission_ratio = FillCombo.company_syr_commission - FillCombo.office_syr_commission;
+                        serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, (decimal)serviceData.company_commission_ratio);
 
+                    }
+                    else
+                    {
+                        serviceData.office_commission_ratio =0;
+                        serviceData.office_commission_value = 0;
+                        serviceData.company_commission_ratio = FillCombo.company_syr_commission;
+                        serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, FillCombo.company_syr_commission);
+
+                    }
+                    serviceData.totalnet = serviceData.total - serviceData.system_commission_value - serviceData.office_commission_value;
+                    //
                     decimal s = await serviceData.Save(serviceData);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -239,9 +260,31 @@ trDateHint
                         serviceData.systemType = "syr";
                         serviceData.createUserId = MainWindow.userLogin.userId;
                     serviceData.updateUserId = MainWindow.userLogin.userId;
+                        // calc comm
+                        serviceData.system_commission_ratio = FillCombo.syr_commission;
+                        serviceData.system_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, FillCombo.syr_commission);
 
+                        if (serviceData.officeId > 0)
+                        {
+                            serviceData.office_commission_ratio = FillCombo.office_syr_commission;
+                            serviceData.office_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, FillCombo.office_syr_commission);
 
-                    decimal s = await serviceData.Save(serviceData);
+                            serviceData.company_commission_ratio = FillCombo.company_syr_commission - FillCombo.office_syr_commission;
+                            serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, (decimal)serviceData.company_commission_ratio);
+
+                        }
+                        else
+                        {
+                            serviceData.office_commission_ratio = 0;
+                            serviceData.office_commission_value = 0;
+                            serviceData.company_commission_ratio = FillCombo.company_syr_commission;
+                            serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, FillCombo.company_syr_commission);
+
+                        }
+                        serviceData.totalnet = serviceData.total - serviceData.system_commission_value - serviceData.office_commission_value;
+                        //
+
+                        decimal s = await serviceData.Save(serviceData);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else

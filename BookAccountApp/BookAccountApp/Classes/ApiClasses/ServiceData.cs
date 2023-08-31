@@ -46,12 +46,19 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> updateUserId { get; set; }
         public Nullable<int> passengerId { get; set; }
         public Nullable<int> flightId { get; set; }
-        public string officeName  { get; set; }
+        public string officeName { get; set; }
         public Nullable<int> operationId { get; set; }
         public string strServiceDate { get; set; }
         public string systemType { get; set; }
         public bool canDelete { get; set; }
         public Nullable<bool> isActive { get; set; }
+        public Nullable<decimal> system_commission_value { get; set; }
+        public Nullable<decimal> system_commission_ratio { get; set; }
+        public Nullable<decimal> office_commission_value { get; set; }
+        public Nullable<decimal> office_commission_ratio { get; set; }
+        public Nullable<decimal> company_commission_value { get; set; }
+        public Nullable<decimal> company_commission_ratio { get; set; }
+        public Nullable<decimal> totalnet { get; set; }
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>
@@ -62,10 +69,10 @@ namespace BookAccountApp.ApiClasses
 
             List<ServiceData> List = new List<ServiceData>();
             bool canDelete = false;
-                try
+            try
+            {
+                using (bookdbEntities entity = new bookdbEntities())
                 {
-                    using (bookdbEntities entity = new bookdbEntities())
-                    {
                     List = (from S in entity.serviceData
                             join fl in entity.flights on S.flightId equals fl.flightId into JFL
                             join of in entity.office on S.officeId equals of.officeId into JOF
@@ -78,9 +85,9 @@ namespace BookAccountApp.ApiClasses
                                 serviceId = S.serviceId,
                                 serviceNum = S.serviceNum,
                                 type = S.type,
-                                passenger = P.name+" "+P.lastName,
+                                passenger = P.name + " " + P.lastName,
                                 ticketNum = S.ticketNum,
-                                 airline = F.airline+"/"+F.flightTable.name,
+                                airline = F.airline + "/" + F.flightTable.name,
                                 officeId = S.officeId,
                                 serviceDate = S.serviceDate,
                                 pnr = S.pnr,
@@ -103,10 +110,18 @@ namespace BookAccountApp.ApiClasses
                                 passengerId = S.passengerId,
                                 flightId = S.flightId,
                                 operationId = S.operationId,
-                               officeName=OFF.name,
+                                officeName = OFF.name,
                                 isActive = S.isActive,
                                 canDelete = false,
-                                systemType =S.systemType,
+                                systemType = S.systemType,
+                                system_commission_value = S.system_commission_value,
+                                system_commission_ratio = S.system_commission_ratio,
+                                office_commission_value = S.office_commission_value,
+                                office_commission_ratio = S.office_commission_ratio,
+                                company_commission_value = S.company_commission_value,
+                                company_commission_ratio = S.company_commission_ratio,
+                                totalnet = S.totalnet,
+                             
 
                             }).ToList();
 
@@ -116,74 +131,74 @@ namespace BookAccountApp.ApiClasses
                         {
                             if (List[i].isActive == true)
                             {
-                                int itemId = (int)List[i].serviceId;                               
+                                int itemId = (int)List[i].serviceId;
                                 var itemsI = entity.payOp.Where(x => x.serviceId == itemId).Select(b => new { b.serviceId }).FirstOrDefault();
 
-                                if (itemsI is null) 
+                                if (itemsI is null)
                                 {
                                     List[i].canDelete = true;
                                 }
                             }
-                           
+
                         }
                     }
                     return List;
-                    }
-
                 }
-                catch
-                {
-                    return List;
-                }  
+
+            }
+            catch
+            {
+                return List;
+            }
         }
-    
+
         public async Task<decimal> Save(ServiceData newitem)
         {
             serviceData newObject = new serviceData();
             newObject = JsonConvert.DeserializeObject<serviceData>(JsonConvert.SerializeObject(newitem));
 
             decimal message = 0;
-                if (newObject != null)
+            if (newObject != null)
+            {
+                if (newObject.updateUserId == 0 || newObject.updateUserId == null)
                 {
-                    if (newObject.updateUserId == 0 || newObject.updateUserId == null)
-                    {
-                        Nullable<int> id = null;
-                        newObject.updateUserId = id;
-                    }
-                    if (newObject.createUserId == 0 || newObject.createUserId == null)
-                    {
-                        Nullable<int> id = null;
-                        newObject.createUserId = id;
-                    }
+                    Nullable<int> id = null;
+                    newObject.updateUserId = id;
+                }
+                if (newObject.createUserId == 0 || newObject.createUserId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.createUserId = id;
+                }
                 if (newObject.officeId == 0 || newObject.officeId == null)
                 {
                     Nullable<int> id = null;
                     newObject.officeId = id;
                 }
-                
 
-                    try
+
+                try
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
                     {
-                        using (bookdbEntities entity = new bookdbEntities())
+                        var locationEntity = entity.Set<serviceData>();
+                        if (newObject.serviceId == 0)
                         {
-                            var locationEntity = entity.Set<serviceData>();
-                            if (newObject.serviceId == 0)
-                            {
                             newObject.createDate = DateTime.Now;
-                                newObject.updateDate = newObject.createDate;
-                                newObject.updateUserId = newObject.createUserId;
+                            newObject.updateDate = newObject.createDate;
+                            newObject.updateUserId = newObject.createUserId;
                             newObject.isActive = true;
 
                             locationEntity.Add(newObject);
-                                entity.SaveChanges();
-                                message = newObject.serviceId;
-                            }
-                            else
-                            {
-                                var tmpObject = entity.serviceData.Where(p => p.serviceId == newObject.serviceId).FirstOrDefault();
+                            entity.SaveChanges();
+                            message = newObject.serviceId;
+                        }
+                        else
+                        {
+                            var tmpObject = entity.serviceData.Where(p => p.serviceId == newObject.serviceId).FirstOrDefault();
 
                             tmpObject.updateDate = DateTime.Now;
-                           // tmpObject.serviceId = newObject.serviceId;
+                            // tmpObject.serviceId = newObject.serviceId;
                             tmpObject.serviceNum = newObject.serviceNum;
                             tmpObject.type = newObject.type;
                             tmpObject.passenger = newObject.passenger;
@@ -204,7 +219,7 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.profit = newObject.profit;
                             tmpObject.notes = newObject.notes;
                             tmpObject.state = newObject.state;
-                       
+
                             tmpObject.createUserId = newObject.createUserId;
                             tmpObject.updateUserId = newObject.updateUserId;
                             tmpObject.passengerId = newObject.passengerId;
@@ -212,22 +227,29 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.operationId = newObject.operationId;
                             tmpObject.systemType = newObject.systemType;
                             tmpObject.isActive = newObject.isActive;
+                            tmpObject.system_commission_value = newObject.system_commission_value;
+                            tmpObject.system_commission_ratio = newObject.system_commission_ratio;
+                            tmpObject.office_commission_value = newObject.office_commission_value;
+                            tmpObject.office_commission_ratio = newObject.office_commission_ratio;
+                            tmpObject.company_commission_value = newObject.company_commission_value;
+                            tmpObject.company_commission_ratio = newObject.company_commission_ratio;
+                            tmpObject.totalnet = newObject.totalnet;
                             entity.SaveChanges();
 
-                                message = tmpObject.serviceId;
-                            }
+                            message = tmpObject.serviceId;
                         }
-                        return message;
                     }
-                    catch
-                    {
-                        return 0;
-                    }
+                    return message;
                 }
-                else
+                catch
                 {
                     return 0;
                 }
+            }
+            else
+            {
+                return 0;
+            }
         }
         public async Task<ServiceData> GetByID(int itemId)
         {
@@ -242,41 +264,48 @@ namespace BookAccountApp.ApiClasses
                 using (bookdbEntities entity = new bookdbEntities())
                 {
                     var list = entity.serviceData.ToList();
-                     row = list.Where(u => u.serviceId == itemId)
-                      .Select(S => new ServiceData()
-                      {
-                          serviceId = S.serviceId,
-                          serviceNum = S.serviceNum,
-                          type = S.type,
-                          passenger = S.passenger,
-                          ticketNum = S.ticketNum,
-                          airline = S.airline,
-                          officeId = S.officeId,
-                          serviceDate = S.serviceDate,
-                          pnr = S.pnr,
-                          ticketvalueSP = S.ticketvalueSP,
-                          ticketvalueDollar = S.ticketvalueDollar,
-                          total = S.total,
-                          priceBeforTax = S.priceBeforTax,
-                          commitionRatio = S.commitionRatio,
-                          commitionValue = S.commitionValue,
-                          cost = S.cost,
-                          saleValue = S.saleValue,
-                          paid = S.paid,
-                          profit = S.profit,
-                          notes = S.notes,
-                          state = S.state,
-                          createDate = S.createDate,
-                          updateDate = S.updateDate,
-                          createUserId = S.createUserId,
-                          updateUserId = S.updateUserId,
-                          passengerId = S.passengerId,
-                          flightId = S.flightId,
-                          operationId = S.operationId,
-                          systemType = S.systemType,
-                          isActive = S.isActive,
-                      }).FirstOrDefault();
-                    return  row;
+                    row = list.Where(u => u.serviceId == itemId)
+                     .Select(S => new ServiceData()
+                     {
+                         serviceId = S.serviceId,
+                         serviceNum = S.serviceNum,
+                         type = S.type,
+                         passenger = S.passenger,
+                         ticketNum = S.ticketNum,
+                         airline = S.airline,
+                         officeId = S.officeId,
+                         serviceDate = S.serviceDate,
+                         pnr = S.pnr,
+                         ticketvalueSP = S.ticketvalueSP,
+                         ticketvalueDollar = S.ticketvalueDollar,
+                         total = S.total,
+                         priceBeforTax = S.priceBeforTax,
+                         commitionRatio = S.commitionRatio,
+                         commitionValue = S.commitionValue,
+                         cost = S.cost,
+                         saleValue = S.saleValue,
+                         paid = S.paid,
+                         profit = S.profit,
+                         notes = S.notes,
+                         state = S.state,
+                         createDate = S.createDate,
+                         updateDate = S.updateDate,
+                         createUserId = S.createUserId,
+                         updateUserId = S.updateUserId,
+                         passengerId = S.passengerId,
+                         flightId = S.flightId,
+                         operationId = S.operationId,
+                         systemType = S.systemType,
+                         isActive = S.isActive,
+                         system_commission_value = S.system_commission_value,
+                         system_commission_ratio = S.system_commission_ratio,
+                         office_commission_value = S.office_commission_value,
+                         office_commission_ratio = S.office_commission_ratio,
+                         company_commission_value = S.company_commission_value,
+                         company_commission_ratio = S.company_commission_ratio,
+                         totalnet = S.totalnet,
+                     }).FirstOrDefault();
+                    return row;
                 }
 
             }
@@ -353,34 +382,34 @@ namespace BookAccountApp.ApiClasses
 
         public async Task<int> GetLastNumOfCode(string type)
         {
-            
-                try
+
+            try
+            {
+                List<string> numberList;
+                int lastNum = 0;
+                using (bookdbEntities entity = new bookdbEntities())
                 {
-                    List<string> numberList;
-                    int lastNum = 0;
-                    using (bookdbEntities entity = new bookdbEntities())
+                    numberList = entity.serviceData.Where(b => b.serviceNum.Contains(type + "-")).Select(b => b.serviceNum).ToList();
+
+                    for (int i = 0; i < numberList.Count; i++)
                     {
-                        numberList = entity.serviceData.Where(b => b.serviceNum.Contains(type + "-")).Select(b => b.serviceNum).ToList();
-
-                        for (int i = 0; i < numberList.Count; i++)
-                        {
-                            string code = numberList[i];
-                            string s = code.Substring(code.LastIndexOf("-") + 1);
-                            numberList[i] = s;
-                        }
-                        if (numberList.Count > 0)
-                        {
-                            numberList.Sort();
-                            lastNum = int.Parse(numberList[numberList.Count - 1]);
-                        }
+                        string code = numberList[i];
+                        string s = code.Substring(code.LastIndexOf("-") + 1);
+                        numberList[i] = s;
                     }
+                    if (numberList.Count > 0)
+                    {
+                        numberList.Sort();
+                        lastNum = int.Parse(numberList[numberList.Count - 1]);
+                    }
+                }
 
-                    return lastNum;
-                }
-                catch
-                {
-                    return 0;
-                }
-        } 
+                return lastNum;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
     }
 }

@@ -51,6 +51,13 @@ namespace BookAccountApp
         public Nullable<int> operationId { get; set; }
         public string systemType { get; set; }
         public Nullable<bool> isActive { get; set; }
+        public Nullable<decimal> system_commission_value { get; set; }
+        public Nullable<decimal> system_commission_ratio { get; set; }
+        public Nullable<decimal> office_commission_value { get; set; }
+        public Nullable<decimal> office_commission_ratio { get; set; }
+        public Nullable<decimal> company_commission_value { get; set; }
+        public Nullable<decimal> company_commission_ratio { get; set; }
+        public Nullable<decimal> totalnet { get; set; }
     
         public virtual flights flights { get; set; }
         public virtual office office { get; set; }

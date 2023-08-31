@@ -186,7 +186,29 @@ namespace BookAccountApp.View.bookSales
                     serviceData.systemType = "soto";
                     serviceData.createUserId = MainWindow.userLogin.userId;
                     serviceData.updateUserId = MainWindow.userLogin.userId;
+                    // calc comm
+                    serviceData.system_commission_ratio = FillCombo.soto_commission;
+                    serviceData.system_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, FillCombo.soto_commission);
 
+                    if (serviceData.officeId > 0)
+                    {
+                        serviceData.office_commission_ratio = FillCombo.office_soto_commission;
+                        serviceData.office_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, FillCombo.office_soto_commission);
+
+                        serviceData.company_commission_ratio = FillCombo.company_soto_commission - FillCombo.office_soto_commission;
+                        serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, (decimal)serviceData.company_commission_ratio);
+
+                    }
+                    else
+                    {
+                        serviceData.office_commission_ratio = 0;
+                        serviceData.office_commission_value = 0;
+                        serviceData.company_commission_ratio = FillCombo.company_soto_commission;
+                        serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, FillCombo.company_soto_commission);
+
+                    }
+                    serviceData.totalnet = serviceData.total - serviceData.system_commission_value - serviceData.office_commission_value;
+                    //
 
                     decimal s = await serviceData.Save(serviceData);
                     if (s <= 0)
@@ -233,7 +255,29 @@ namespace BookAccountApp.View.bookSales
                         serviceData.createUserId = MainWindow.userLogin.userId;
                         serviceData.updateUserId = MainWindow.userLogin.userId;
 
+                        // calc comm
+                        serviceData.system_commission_ratio = FillCombo.soto_commission;
+                        serviceData.system_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, FillCombo.soto_commission);
 
+                        if (serviceData.officeId > 0)
+                        {
+                            serviceData.office_commission_ratio = FillCombo.office_soto_commission;
+                            serviceData.office_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, FillCombo.office_soto_commission);
+
+                            serviceData.company_commission_ratio = FillCombo.company_soto_commission - FillCombo.office_soto_commission;
+                            serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, (decimal)serviceData.company_commission_ratio);
+
+                        }
+                        else
+                        {
+                            serviceData.office_commission_ratio = 0;
+                            serviceData.office_commission_value = 0;
+                            serviceData.company_commission_ratio = FillCombo.company_soto_commission;
+                            serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, FillCombo.company_soto_commission);
+
+                        }
+                        serviceData.totalnet = serviceData.total - serviceData.system_commission_value - serviceData.office_commission_value;
+                        //
                         decimal s = await serviceData.Save(serviceData);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
