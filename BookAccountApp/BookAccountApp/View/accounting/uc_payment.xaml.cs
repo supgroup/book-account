@@ -927,5 +927,49 @@ namespace BookAccountApp.View.accounting
             }
           
         }
+
+        private void Btn_invoices_Click(object sender, RoutedEventArgs e)
+        {//invoices
+            try
+            {
+                /*
+                invoicesLst.Clear();
+                cashesLst.Clear();
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_invoicesList w = new wd_invoicesList();
+
+                if (cb_depositTo.SelectedValue.ToString() == "v")
+                    w.agentId = Convert.ToInt32(cb_recipientV.SelectedValue);
+                else if (cb_depositTo.SelectedValue.ToString() == "c")
+                    w.agentId = Convert.ToInt32(cb_recipientC.SelectedValue);
+                else if (cb_depositTo.SelectedValue.ToString() == "u")
+                    w.userId = Convert.ToInt32(cb_recipientU.SelectedValue);
+                else if (cb_depositTo.SelectedValue.ToString() == "sh")
+                    w.shippingCompanyId = Convert.ToInt32(cb_recipientSh.SelectedValue);
+
+                w.invType = "pay";
+
+                w.ShowDialog();
+                if (w.isActive)
+                {
+                    tb_cash.Text = SectionData.DecTostring(w.sum);
+                    tb_cash.IsReadOnly = true;
+                    cb_recipientC.IsEnabled = false;
+                    cb_recipientV.IsEnabled = false;
+                    cb_recipientU.IsEnabled = false;
+                    cb_recipientSh.IsEnabled = false;
+                    tb_recipientText.IsEnabled = false;
+                    invoicesLst.AddRange(w.selectedInvoices);
+                    cashesLst.AddRange(w.selectedCashtansfers);
+                }
+                Window.GetWindow(this).Opacity = 1;
+                */
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }
