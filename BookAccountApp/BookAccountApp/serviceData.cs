@@ -58,6 +58,14 @@ namespace BookAccountApp
         public Nullable<decimal> company_commission_value { get; set; }
         public Nullable<decimal> company_commission_ratio { get; set; }
         public Nullable<decimal> totalnet { get; set; }
+        public Nullable<decimal> passengerPaid { get; set; }
+        public Nullable<decimal> passengerUnpaid { get; set; }
+        public Nullable<decimal> officePaid { get; set; }
+        public Nullable<decimal> officeUnpaid { get; set; }
+        public Nullable<decimal> airlinePaid { get; set; }
+        public Nullable<decimal> airlineUnpaid { get; set; }
+        public Nullable<decimal> systemPaid { get; set; }
+        public Nullable<decimal> systemUnpaid { get; set; }
     
         public virtual flights flights { get; set; }
         public virtual office office { get; set; }

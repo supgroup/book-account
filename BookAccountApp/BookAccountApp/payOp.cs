@@ -33,6 +33,8 @@ namespace BookAccountApp
         public string recipient { get; set; }
         public string recivedFrom { get; set; }
         public Nullable<int> paysideId { get; set; }
+        public Nullable<int> flightId { get; set; }
+        public string opName { get; set; }
     
         public virtual office office { get; set; }
         public virtual passengers passengers { get; set; }
@@ -41,5 +43,6 @@ namespace BookAccountApp
         public virtual users users1 { get; set; }
         public virtual users users2 { get; set; }
         public virtual paySides paySides { get; set; }
+        public virtual flights flights { get; set; }
     }
 }

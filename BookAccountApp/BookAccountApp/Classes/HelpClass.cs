@@ -296,6 +296,16 @@ namespace BookAccountApp.Classes
                         if (!HelpClass.validateEmpty(passwordBox.Password, path))
                             isValid = false;
                 }
+                foreach (var control in requiredControlList)
+                {
+                    DatePicker datep = FindControls.FindVisualChildren<DatePicker>(userControl).Where(x => x.Name == "dp_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (datep != null && path != null)
+                        if (!HelpClass.validateEmpty(datep.Text, path))
+                            isValid = false;
+                }
                 #region Email
                 IsValidEmail(userControl);
                 #endregion

@@ -35,7 +35,7 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> updateUserId { get; set; }
         public string strjoinDate { get; set; }
         public bool canDelete { get; set; }
-
+        public Nullable<decimal> balance { get; set; }
         public Nullable<bool> isActive { get; set; }
 
         /// <summary>

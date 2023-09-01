@@ -87,6 +87,7 @@
           <Property Name="fromTableId" Type="int" />
           <Property Name="toTableId" Type="int" />
           <Property Name="isActive" Type="bit" />
+          <Property Name="balance" Type="decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="flightTable">
           <Key>
@@ -125,6 +126,7 @@
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
           <Property Name="isActive" Type="bit" />
+          <Property Name="balance" Type="decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="officeFiles">
           <Key>
@@ -180,6 +182,7 @@
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
           <Property Name="isActive" Type="bit" />
+          <Property Name="balance" Type="decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="payOp">
           <Key>
@@ -204,6 +207,8 @@
           <Property Name="recipient" Type="nvarchar" MaxLength="500" />
           <Property Name="recivedFrom" Type="nvarchar" MaxLength="500" />
           <Property Name="paysideId" Type="int" />
+          <Property Name="flightId" Type="int" />
+          <Property Name="opName" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="paySides">
           <Key>
@@ -215,6 +220,7 @@
           <Property Name="notes" Type="nvarchar" MaxLength="100" />
           <Property Name="isActive" Type="bit" />
           <Property Name="code" Type="nvarchar" MaxLength="100" />
+          <Property Name="balance" Type="decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="serviceData">
           <Key>
@@ -257,6 +263,14 @@
           <Property Name="company_commission_value" Type="decimal" Precision="20" Scale="3" />
           <Property Name="company_commission_ratio" Type="decimal" Precision="20" Scale="3" />
           <Property Name="totalnet" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="passengerPaid" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="passengerUnpaid" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="officePaid" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="officeUnpaid" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="airlinePaid" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="airlineUnpaid" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="systemPaid" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="systemUnpaid" Type="decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="serviceDataFiles">
           <Key>
@@ -518,6 +532,18 @@
             </Principal>
             <Dependent Role="passengerFiles">
               <PropertyRef Name="passengerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_flights">
+          <End Role="flights" Type="Self.flights" Multiplicity="0..1" />
+          <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="flights">
+              <PropertyRef Name="flightId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="flightId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -805,6 +831,10 @@
             <End Role="passengers" EntitySet="passengers" />
             <End Role="passengerFiles" EntitySet="passengerFiles" />
           </AssociationSet>
+          <AssociationSet Name="FK_payOp_flights" Association="Self.FK_payOp_flights">
+            <End Role="flights" EntitySet="flights" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
           <AssociationSet Name="FK_payOp_office" Association="Self.FK_payOp_office">
             <End Role="office" EntitySet="office" />
             <End Role="payOp" EntitySet="payOp" />
@@ -973,6 +1003,8 @@
           <NavigationProperty Name="fromTable" Relationship="Self.FK_flights_fromTable" FromRole="flights" ToRole="fromTable" />
           <NavigationProperty Name="toTable" Relationship="Self.FK_flights_toTable" FromRole="flights" ToRole="toTable" />
           <NavigationProperty Name="serviceData" Relationship="Self.FK_serviceData_flights" FromRole="flights" ToRole="serviceData" />
+          <NavigationProperty Name="payOp" Relationship="bookModel.FK_payOp_flights" FromRole="flights" ToRole="payOp" />
+          <Property Name="balance" Type="Decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="flightTable">
           <Key>
@@ -1018,6 +1050,7 @@
           <NavigationProperty Name="payOp" Relationship="Self.FK_payOp_office" FromRole="office" ToRole="payOp" />
           <NavigationProperty Name="serviceData" Relationship="Self.FK_serviceData_office" FromRole="office" ToRole="serviceData" />
           <NavigationProperty Name="officeFiles" Relationship="bookModel.FK_officeFiles_office" FromRole="office" ToRole="officeFiles" />
+          <Property Name="balance" Type="Decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="operations">
           <Key>
@@ -1055,6 +1088,7 @@
           <NavigationProperty Name="payOp" Relationship="Self.FK_payOp_passengers" FromRole="passengers" ToRole="payOp" />
           <NavigationProperty Name="serviceData" Relationship="Self.FK_serviceData_passengers" FromRole="passengers" ToRole="serviceData" />
           <NavigationProperty Name="passengerFiles" Relationship="bookModel.FK_passengerFiles_passengers" FromRole="passengers" ToRole="passengerFiles" />
+          <Property Name="balance" Type="Decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="payOp">
           <Key>
@@ -1086,6 +1120,9 @@
           <Property Name="recivedFrom" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="paysideId" Type="Int32" />
           <NavigationProperty Name="paySides" Relationship="bookModel.FK_payOp_paySides" FromRole="payOp" ToRole="paySides" />
+          <Property Name="flightId" Type="Int32" />
+          <NavigationProperty Name="flights" Relationship="bookModel.FK_payOp_flights" FromRole="payOp" ToRole="flights" />
+          <Property Name="opName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="serviceData">
           <Key>
@@ -1136,6 +1173,14 @@
           <Property Name="company_commission_value" Type="Decimal" Precision="20" Scale="3" />
           <Property Name="company_commission_ratio" Type="Decimal" Precision="20" Scale="3" />
           <Property Name="totalnet" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="passengerPaid" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="passengerUnpaid" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="officePaid" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="officeUnpaid" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="airlinePaid" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="airlineUnpaid" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="systemPaid" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="systemUnpaid" Type="Decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="setting">
           <Key>
@@ -1709,6 +1754,10 @@
             <End Role="paySides" EntitySet="paySides" />
             <End Role="payOp" EntitySet="payOp" />
           </AssociationSet>
+          <AssociationSet Name="FK_payOp_flights" Association="bookModel.FK_payOp_flights">
+            <End Role="flights" EntitySet="flights" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="officeFiles">
           <Key>
@@ -1796,6 +1845,7 @@
           <Property Name="isActive" Type="Boolean" />
           <Property Name="code" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="payOp" Relationship="bookModel.FK_payOp_paySides" FromRole="paySides" ToRole="payOp" />
+          <Property Name="balance" Type="Decimal" Precision="20" Scale="3" />
         </EntityType>
         <Association Name="FK_payOp_paySides">
           <End Type="bookModel.paySides" Role="paySides" Multiplicity="0..1" />
@@ -1806,6 +1856,18 @@
             </Principal>
             <Dependent Role="payOp">
               <PropertyRef Name="paysideId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_flights">
+          <End Type="bookModel.flights" Role="flights" Multiplicity="0..1" />
+          <End Type="bookModel.payOp" Role="payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="flights">
+              <PropertyRef Name="flightId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="flightId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1890,6 +1952,7 @@
           <EntitySetMapping Name="flights">
             <EntityTypeMapping TypeName="bookModel.flights">
               <MappingFragment StoreEntitySet="flights">
+                <ScalarProperty Name="balance" ColumnName="balance" />
                 <ScalarProperty Name="flightId" ColumnName="flightId" />
                 <ScalarProperty Name="airline" ColumnName="airline" />
                 <ScalarProperty Name="notes" ColumnName="notes" />
@@ -1927,6 +1990,7 @@
           <EntitySetMapping Name="office">
             <EntityTypeMapping TypeName="bookModel.office">
               <MappingFragment StoreEntitySet="office">
+                <ScalarProperty Name="balance" ColumnName="balance" />
                 <ScalarProperty Name="officeId" ColumnName="officeId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="agentName" ColumnName="agentName" />
@@ -1964,6 +2028,7 @@
           <EntitySetMapping Name="passengers">
             <EntityTypeMapping TypeName="bookModel.passengers">
               <MappingFragment StoreEntitySet="passengers">
+                <ScalarProperty Name="balance" ColumnName="balance" />
                 <ScalarProperty Name="passengerId" ColumnName="passengerId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
@@ -1981,6 +2046,8 @@
           <EntitySetMapping Name="payOp">
             <EntityTypeMapping TypeName="bookModel.payOp">
               <MappingFragment StoreEntitySet="payOp">
+                <ScalarProperty Name="opName" ColumnName="opName" />
+                <ScalarProperty Name="flightId" ColumnName="flightId" />
                 <ScalarProperty Name="paysideId" ColumnName="paysideId" />
                 <ScalarProperty Name="recivedFrom" ColumnName="recivedFrom" />
                 <ScalarProperty Name="recipient" ColumnName="recipient" />
@@ -2006,6 +2073,14 @@
           <EntitySetMapping Name="serviceData">
             <EntityTypeMapping TypeName="bookModel.serviceData">
               <MappingFragment StoreEntitySet="serviceData">
+                <ScalarProperty Name="systemUnpaid" ColumnName="systemUnpaid" />
+                <ScalarProperty Name="systemPaid" ColumnName="systemPaid" />
+                <ScalarProperty Name="airlineUnpaid" ColumnName="airlineUnpaid" />
+                <ScalarProperty Name="airlinePaid" ColumnName="airlinePaid" />
+                <ScalarProperty Name="officeUnpaid" ColumnName="officeUnpaid" />
+                <ScalarProperty Name="officePaid" ColumnName="officePaid" />
+                <ScalarProperty Name="passengerUnpaid" ColumnName="passengerUnpaid" />
+                <ScalarProperty Name="passengerPaid" ColumnName="passengerPaid" />
                 <ScalarProperty Name="totalnet" ColumnName="totalnet" />
                 <ScalarProperty Name="company_commission_ratio" ColumnName="company_commission_ratio" />
                 <ScalarProperty Name="company_commission_value" ColumnName="company_commission_value" />
@@ -2177,6 +2252,7 @@
           <EntitySetMapping Name="paySides">
             <EntityTypeMapping TypeName="bookModel.paySides">
               <MappingFragment StoreEntitySet="paySides">
+                <ScalarProperty Name="balance" ColumnName="balance" />
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="notes" ColumnName="notes" />

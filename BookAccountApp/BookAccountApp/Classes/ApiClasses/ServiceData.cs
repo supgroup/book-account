@@ -59,6 +59,15 @@ namespace BookAccountApp.ApiClasses
         public Nullable<decimal> company_commission_value { get; set; }
         public Nullable<decimal> company_commission_ratio { get; set; }
         public Nullable<decimal> totalnet { get; set; }
+        public Nullable<decimal> passengerPaid { get; set; }
+        public Nullable<decimal> passengerUnpaid { get; set; }
+        public Nullable<decimal> officePaid { get; set; }
+        public Nullable<decimal> officeUnpaid { get; set; }
+        public Nullable<decimal> airlinePaid { get; set; }
+        public Nullable<decimal> airlineUnpaid { get; set; }
+        public Nullable<decimal> systemPaid { get; set; }
+        public Nullable<decimal> systemUnpaid { get; set; }
+
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>
@@ -121,7 +130,15 @@ namespace BookAccountApp.ApiClasses
                                 company_commission_value = S.company_commission_value,
                                 company_commission_ratio = S.company_commission_ratio,
                                 totalnet = S.totalnet,
-                             
+                                passengerPaid = S.passengerPaid,
+                                passengerUnpaid = S.passengerUnpaid,
+                                officePaid = S.officePaid,
+                                officeUnpaid = S.officeUnpaid,
+                                airlinePaid = S.airlinePaid,
+                                airlineUnpaid = S.airlineUnpaid,
+                                systemPaid = S.systemPaid,
+                                systemUnpaid = S.systemUnpaid,
+
 
                             }).ToList();
 
@@ -234,6 +251,15 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.company_commission_value = newObject.company_commission_value;
                             tmpObject.company_commission_ratio = newObject.company_commission_ratio;
                             tmpObject.totalnet = newObject.totalnet;
+                            tmpObject.passengerPaid = newObject.passengerPaid;
+                            tmpObject.passengerUnpaid = newObject.passengerUnpaid;
+                            tmpObject.officePaid = newObject.officePaid;
+                            tmpObject.officeUnpaid = newObject.officeUnpaid;
+                            tmpObject.airlinePaid = newObject.airlinePaid;
+                            tmpObject.airlineUnpaid = newObject.airlineUnpaid;
+                            tmpObject.systemPaid = newObject.systemPaid;
+                            tmpObject.systemUnpaid = newObject.systemUnpaid;
+
                             entity.SaveChanges();
 
                             message = tmpObject.serviceId;
@@ -304,6 +330,15 @@ namespace BookAccountApp.ApiClasses
                          company_commission_value = S.company_commission_value,
                          company_commission_ratio = S.company_commission_ratio,
                          totalnet = S.totalnet,
+                         passengerPaid = S.passengerPaid,
+                         passengerUnpaid = S.passengerUnpaid,
+                         officePaid = S.officePaid,
+                         officeUnpaid = S.officeUnpaid,
+                         airlinePaid = S.airlinePaid,
+                         airlineUnpaid = S.airlineUnpaid,
+                         systemPaid = S.systemPaid,
+                         systemUnpaid = S.systemUnpaid,
+
                      }).FirstOrDefault();
                     return row;
                 }

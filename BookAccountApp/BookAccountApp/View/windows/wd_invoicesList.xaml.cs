@@ -12,7 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BookAccountApp.ApiClasses;
 namespace BookAccountApp.View.windows
 {
     /// <summary>
@@ -33,23 +33,25 @@ namespace BookAccountApp.View.windows
         }
 
         #region variables
-        /*
+      
         public bool isActive;
-        List<Invoice> allInvoicesSource = new List<Invoice>();
-        List<Invoice> allInvoices = new List<Invoice>();
-        public List<Invoice> selectedInvoices = new List<Invoice>();
-        Invoice invoiceModel = new Invoice();
-        Invoice invoice = new Invoice();
+        List<ServiceData> allInvoicesSource = new List<ServiceData>();
+        List<ServiceData> allInvoices = new List<ServiceData>();
+        public List<ServiceData> selectedInvoices = new List<ServiceData>();
+        ServiceData invoiceModel = new ServiceData();
+        ServiceData invoice = new ServiceData();
 
-        List<CashTransfer> allCashtransfersSource = new List<CashTransfer>();
-        List<CashTransfer> allCashtransfers = new List<CashTransfer>();
-        public List<CashTransfer> selectedCashtansfers = new List<CashTransfer>();
-        CashTransfer cashTransfer = new CashTransfer();
-
-        public int agentId = 0, userId = 0, shippingCompanyId = 0;
+        List<PayOp> allCashtransfersSource = new List<PayOp>();
+        List<PayOp> allCashtransfers = new List<PayOp>();
+        public List<PayOp> selectedCashtansfers = new List<PayOp>();
+        PayOp cashTransfer = new PayOp();
+        public int selectedId = 0;
+        public string opType = "";
+        public string side = "";
+        //  public int agentId = 0, userId = 0, shippingCompanyId = 0;
         public decimal sum = 0;
-        public string invType;
-        */
+        //public string invType;
+       
         #endregion
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
@@ -188,10 +190,10 @@ namespace BookAccountApp.View.windows
         }
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
-            /*
+           
             isActive = false;
             this.Close();
-            */
+             
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -228,10 +230,10 @@ namespace BookAccountApp.View.windows
 
         private void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
-            /*
+             
             isActive = true;
             this.Close();
-            */
+                  
         }
 
         #region selection
@@ -298,7 +300,7 @@ namespace BookAccountApp.View.windows
                  decimal x = 0;
                 if (agentId != 0 || (shippingCompanyId != 0 && invType.Equals("feed")))
                 {
-                    invoice = lst_allInvoices.SelectedItem as Invoice;
+                    invoice = lst_allInvoices.SelectedItem as ServiceData;
                     if (invoice != null)
                     {
                         allInvoices.Remove(invoice);
@@ -316,7 +318,7 @@ namespace BookAccountApp.View.windows
                 }
                 else if (userId != 0 || (shippingCompanyId != 0 && invType.Equals("pay")))
                 {
-                    cashTransfer = lst_allInvoices.SelectedItem as CashTransfer;
+                    cashTransfer = lst_allInvoices.SelectedItem as PayOp;
                     if (cashTransfer != null)
                     {
                         allCashtransfers.Remove(cashTransfer);
@@ -358,7 +360,7 @@ namespace BookAccountApp.View.windows
                 decimal x = 0;
                 if (agentId != 0 || (shippingCompanyId != 0 && invType.Equals("feed")))
                 {
-                    invoice = lst_selectedInvoices.SelectedItem as Invoice;
+                    invoice = lst_selectedInvoices.SelectedItem as ServiceData;
 
                     if (invoice != null)
                     {
@@ -377,7 +379,7 @@ namespace BookAccountApp.View.windows
                 }
                 if (userId != 0 || (shippingCompanyId != 0 && invType.Equals("pay")))
                 {
-                    cashTransfer = lst_selectedInvoices.SelectedItem as CashTransfer;
+                    cashTransfer = lst_selectedInvoices.SelectedItem as PayOp;
 
                     if (cashTransfer != null)
                     {

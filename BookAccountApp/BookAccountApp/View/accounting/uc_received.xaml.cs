@@ -439,7 +439,7 @@ namespace BookAccountApp.View.accounting
         async Task<IEnumerable<PayOp>> RefreshPayOpsList()
         {
 
-            payOps = await payOp.GetbyType("p");
+            payOps = await payOp.GetbyType("d");
             payOps = payOps;
 
             return payOps;

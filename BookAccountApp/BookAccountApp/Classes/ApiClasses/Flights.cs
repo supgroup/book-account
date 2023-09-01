@@ -34,7 +34,7 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> toTableId { get; set; }
         public bool canDelete { get; set; }
         public Nullable<bool> isActive { get; set; }
-
+        public Nullable<decimal> balance { get; set; }
         public string airlineflightTable { get; set; }
 
         /// <summary>

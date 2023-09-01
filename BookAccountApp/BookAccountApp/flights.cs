@@ -18,6 +18,7 @@ namespace BookAccountApp
         public flights()
         {
             this.serviceData = new HashSet<serviceData>();
+            this.payOp = new HashSet<payOp>();
         }
     
         public int flightId { get; set; }
@@ -31,11 +32,14 @@ namespace BookAccountApp
         public Nullable<int> fromTableId { get; set; }
         public Nullable<int> toTableId { get; set; }
         public Nullable<bool> isActive { get; set; }
+        public Nullable<decimal> balance { get; set; }
     
         public virtual flightTable flightTable { get; set; }
         public virtual fromTable fromTable { get; set; }
         public virtual toTable toTable { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<serviceData> serviceData { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<payOp> payOp { get; set; }
     }
 }

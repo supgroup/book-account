@@ -36,6 +36,8 @@ namespace BookAccountApp.ApiClasses
         public string recivedFrom { get; set; }
         public Nullable<int> paysideId { get; set; }
         public string sideAr { get; set; }
+        public Nullable<int> flightId { get; set; }
+        public string opName { get; set; }
         //    
         public bool canDelete { get; set; }
         /// <summary>
@@ -59,7 +61,7 @@ namespace BookAccountApp.ApiClasses
                                 code = S.code,
                                 cash = S.cash,
                                 opType = S.opType,
-                                side = S.side,
+                                side = S.paySides.code,
                                 serviceId = S.serviceId,
                                 opStatus = S.opStatus,
                                 opDate = S.opDate,
@@ -74,7 +76,9 @@ namespace BookAccountApp.ApiClasses
                                 recipient = S.recipient,
                                 recivedFrom = S.recivedFrom,
                                 paysideId = S.paysideId,
-
+                                flightId = S.flightId,
+                                opName=S.opName,
+                                sideAr = S.paySides.sideAr,
                             }).ToList();
 
                     return List;
@@ -104,7 +108,7 @@ namespace BookAccountApp.ApiClasses
                                 code = S.code,
                                 cash = S.cash,
                                 opType = S.opType,
-                                side = S.side,
+                                side = S.paySides.code,
                                 serviceId = S.serviceId,
                                 opStatus = S.opStatus,
                                 opDate = S.opDate,
@@ -120,6 +124,8 @@ namespace BookAccountApp.ApiClasses
                                 recivedFrom = S.recivedFrom,
                                 paysideId = S.paysideId,
                                 sideAr=S.paySides.sideAr,
+                                flightId = S.flightId,
+                                opName = S.opName,
                             }).ToList();
 
                     return List;
@@ -215,7 +221,8 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.recipient = newObject.recipient;
                             tmpObject.recivedFrom = newObject.recivedFrom;
                             tmpObject.paysideId = newObject.paysideId;
-
+                            tmpObject.flightId = newObject.flightId;
+                            tmpObject.opName = newObject.opName;
 
                             entity.SaveChanges();
 
@@ -270,8 +277,8 @@ namespace BookAccountApp.ApiClasses
                           recipient = S.recipient,
                           recivedFrom = S.recivedFrom,
                           paysideId = S.paysideId,
-
-
+                        flightId=S.flightId,
+                          opName = S.opName,
                       }).FirstOrDefault();
                     return row;
                 }
@@ -286,76 +293,76 @@ namespace BookAccountApp.ApiClasses
 
         }
 
-        public async Task<PayOp> getLastPayOp(int packageUserId)
-        {
-            PayOp item = new PayOp();
+        //public async Task<PayOp> getLastPayOp(int packageUserId)
+        //{
+        //    PayOp item = new PayOp();
 
-            //Dictionary<string, string> parameters = new Dictionary<string, string>();
-            //parameters.Add("packageUserId", packageUserId.ToString());
-            ////#################
-            //IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "getLastPayOp", parameters);
+        //    //Dictionary<string, string> parameters = new Dictionary<string, string>();
+        //    //parameters.Add("packageUserId", packageUserId.ToString());
+        //    ////#################
+        //    //IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "getLastPayOp", parameters);
 
-            //foreach (Claim c in claims)
-            //{
-            //    if (c.Type == "scopes")
-            //    {
-            //        item = JsonConvert.DeserializeObject<PayOp>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-            //        break;
-            //    }
-            //}
+        //    //foreach (Claim c in claims)
+        //    //{
+        //    //    if (c.Type == "scopes")
+        //    //    {
+        //    //        item = JsonConvert.DeserializeObject<PayOp>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+        //    //        break;
+        //    //    }
+        //    //}
 
-            return item;
-
-
-        }
-
-        public async Task<List<PayOp>> GetByCustomerId(int customerId)
-        {
-            List<PayOp> list = new List<PayOp>();
-            //Dictionary<string, string> parameters = new Dictionary<string, string>();
-            //parameters.Add("customerId", customerId.ToString());
-            ////#################
-            //IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByCustomerId", parameters);
-
-            //foreach (Claim c in claims)
-            //{
-            //    if (c.Type == "scopes")
-            //    {
-            //        list.Add(JsonConvert.DeserializeObject<PayOp>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-            //    }
-            //}
-            return list;
-
-        }
-        public async Task<List<PayOp>> GetByOfficeId(int officeId)
-        {
-            List<PayOp> list = new List<PayOp>();
-            using (bookdbEntities entity = new bookdbEntities())
-            {
-                list = (from S in entity.payOp
-                        where (S.serviceData.officeId == officeId)
-                        select new PayOp()
-                        {
-                            payOpId = S.payOpId,
-                            code = S.code,
-                            cash = S.cash,
-                            opType = S.opType,
-                            side = S.side,
-                            serviceId = S.serviceId,
-                            opStatus = S.opStatus,
-                            opDate = S.opDate,
-                            notes = S.notes,
-                            createUserId = S.createUserId,
-                            updateUserId = S.updateUserId,
-                            createDate = S.createDate,
-                            updateDate = S.updateDate,
+        //    return item;
 
 
-                        }).ToList();
-            }
-            return list;
+        //}
 
-        }
+        //public async Task<List<PayOp>> GetByCustomerId(int customerId)
+        //{
+        //    List<PayOp> list = new List<PayOp>();
+        //    //Dictionary<string, string> parameters = new Dictionary<string, string>();
+        //    //parameters.Add("customerId", customerId.ToString());
+        //    ////#################
+        //    //IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByCustomerId", parameters);
+
+        //    //foreach (Claim c in claims)
+        //    //{
+        //    //    if (c.Type == "scopes")
+        //    //    {
+        //    //        list.Add(JsonConvert.DeserializeObject<PayOp>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+        //    //    }
+        //    //}
+        //    return list;
+
+        //}
+        //public async Task<List<PayOp>> GetByOfficeId(int officeId)
+        //{
+        //    List<PayOp> list = new List<PayOp>();
+        //    using (bookdbEntities entity = new bookdbEntities())
+        //    {
+        //        list = (from S in entity.payOp
+        //                where (S.serviceData.officeId == officeId)
+        //                select new PayOp()
+        //                {
+        //                    payOpId = S.payOpId,
+        //                    code = S.code,
+        //                    cash = S.cash,
+        //                    opType = S.opType,
+        //                    side = S.side,
+        //                    serviceId = S.serviceId,
+        //                    opStatus = S.opStatus,
+        //                    opDate = S.opDate,
+        //                    notes = S.notes,
+        //                    createUserId = S.createUserId,
+        //                    updateUserId = S.updateUserId,
+        //                    createDate = S.createDate,
+        //                    updateDate = S.updateDate,
+
+
+        //                }).ToList();
+        //    }
+        //    return list;
+
+        //}
 
         public async Task<decimal> Delete(int id, int userId, bool final)
         {

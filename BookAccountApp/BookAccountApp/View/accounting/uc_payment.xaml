@@ -161,7 +161,7 @@
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="*"  Header="serviceNum" Binding="{Binding Path=payOpId}">
+                            <DataGridTextColumn Width="*"  Header="serviceNum" Binding="{Binding Path=code}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -173,7 +173,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*"  Header="side" Binding="{Binding Path=side}">
+                            <DataGridTextColumn Width="*"  Header="side" Binding="{Binding Path=sideAr}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -411,7 +411,7 @@
 
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
-                                <TextBox x:Name="tb_opName"  Text="{Binding code, Mode=OneWay}" Padding="10,0,5,0" 
+                                <TextBox x:Name="tb_opName"  Text="{Binding opName, Mode=OneWay}" Padding="10,0,5,0" 
                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                materialDesign:HintAssist.Hint="operation..." 
                Foreground="#4E4E4E"  
@@ -473,7 +473,7 @@ Width="25" Height="27.5"
                             <Border Grid.Row="1" Name="brdr_sideValue" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid>
                                 <ComboBox x:Name="cb_sideValue"  Grid.Row="1"
-               SelectedValue="{Binding sideValue,Mode=OneWay}"
+             
            Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
            materialDesign:HintAssist.Hint="sideValue..."  
