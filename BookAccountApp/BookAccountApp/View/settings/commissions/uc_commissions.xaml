@@ -23,7 +23,7 @@
                                FlowDirection="LeftToRight"
                           Data="{StaticResource ticketPercent}"/>
                         <StackPanel Grid.Column="1" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_systemRateInfo" HorizontalAlignment="Right" Width="135" Foreground="#6e6e6e" FontWeight="SemiBold" Text="systemRateInfo" FontSize="18"></TextBlock>
+                            <TextBlock x:Name="txt_systemRateInfo" HorizontalAlignment="Right" Width="160" Foreground="#6e6e6e" FontWeight="SemiBold" Text="systemRateInfo" FontSize="18"></TextBlock>
                             <TextBlock x:Name="txt_systemRateHint" Text="systemRateHint" FontSize="10" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                         <Border Height="25" Width="25" CornerRadius="25" Grid.Column="2" VerticalAlignment="Bottom" Margin="0,0,10,10"
@@ -58,7 +58,7 @@ l49.5-50.1L108,99.6z"/>
                                FlowDirection="LeftToRight"
                           Data="{StaticResource commissionCompany}"/>
                         <StackPanel Grid.Column="1" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_companyCommissionsInfo" HorizontalAlignment="Right" Width="135" Foreground="#6e6e6e" FontWeight="SemiBold" Text="companyCommissionsInfo" FontSize="18"></TextBlock>
+                            <TextBlock x:Name="txt_companyCommissionsInfo" HorizontalAlignment="Right" Width="160" Foreground="#6e6e6e" FontWeight="SemiBold" Text="companyCommissionsInfo" FontSize="18"></TextBlock>
                             <TextBlock x:Name="txt_companyCommissionsHint" Text="companyCommissionsHint" FontSize="10" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                         <Border Height="25" Width="25" CornerRadius="25" Grid.Column="2" VerticalAlignment="Bottom" Margin="0,0,10,10"
@@ -93,7 +93,7 @@ l49.5-50.1L108,99.6z"/>
                                FlowDirection="LeftToRight"
                           Data="{StaticResource commissionDiscounts}"/>
                         <StackPanel Grid.Column="1" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_officeCommissionsInfo" HorizontalAlignment="Right" Width="135" Foreground="#6e6e6e" FontWeight="SemiBold" Text="officeCommissionsInfo" FontSize="18"></TextBlock>
+                            <TextBlock x:Name="txt_officeCommissionsInfo" HorizontalAlignment="Right" Width="160" Foreground="#6e6e6e" FontWeight="SemiBold" Text="officeCommissionsInfo" FontSize="18"></TextBlock>
                             <TextBlock x:Name="txt_officeCommissionsHint" Text="officeCommissionsHint" FontSize="10" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                         <Border Height="25" Width="25" CornerRadius="25" Grid.Column="2" VerticalAlignment="Bottom" Margin="0,0,10,10"

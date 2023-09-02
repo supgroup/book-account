@@ -22,7 +22,7 @@
                      VerticalAlignment="Center" Height="60" Width="60"
                           Data="{StaticResource user}"/>
                         <StackPanel Grid.Column="1" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_addUserInfo" HorizontalAlignment="Right" Width="135" Foreground="#6e6e6e" FontWeight="SemiBold" Text="addUserInfo" FontSize="18"></TextBlock>
+                            <TextBlock x:Name="txt_addUserInfo" HorizontalAlignment="Right" Width="160" Foreground="#6e6e6e" FontWeight="SemiBold" Text="addUserInfo" FontSize="18"></TextBlock>
                             <TextBlock x:Name="txt_addUserHint" Text="addUserHint" FontSize="10" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                         <Border Height="25" Width="25" CornerRadius="25" Grid.Column="2" VerticalAlignment="Bottom" Margin="0,0,10,10"
@@ -56,7 +56,7 @@ l49.5-50.1L108,99.6z"/>
                      VerticalAlignment="Center" Height="60" Width="60"
                           Data="{StaticResource passcode}"/>
                         <StackPanel Grid.Column="1" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_passwordChangeInfo" HorizontalAlignment="Right" Width="135" Foreground="#6e6e6e" FontWeight="SemiBold" Text="passwordChangeInfo" FontSize="18"></TextBlock>
+                            <TextBlock x:Name="txt_passwordChangeInfo" HorizontalAlignment="Right" Width="160" Foreground="#6e6e6e" FontWeight="SemiBold" Text="passwordChangeInfo" FontSize="18"></TextBlock>
                             <TextBlock x:Name="txt_passwordChangeHint" Text="passwordChangeHint" FontSize="10" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                         <Border Height="25" Width="25" CornerRadius="25" Grid.Column="2" VerticalAlignment="Bottom" Margin="0,0,10,10"
@@ -90,7 +90,7 @@ l49.5-50.1L108,99.6z"/>
                      VerticalAlignment="Center" Height="60" Width="60"
                           Data="{StaticResource permissions}"/>
                         <StackPanel Grid.Column="1" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_permissionInfo" HorizontalAlignment="Right" Width="135" Foreground="#6e6e6e" FontWeight="SemiBold" Text="permissionInfo" FontSize="18"></TextBlock>
+                            <TextBlock x:Name="txt_permissionInfo" HorizontalAlignment="Right" Width="160" Foreground="#6e6e6e" FontWeight="SemiBold" Text="permissionInfo" FontSize="18"></TextBlock>
                             <TextBlock x:Name="txt_permissionHint" Text="permissionHint" FontSize="10" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                         <Border Height="25" Width="25" CornerRadius="25" Grid.Column="2" VerticalAlignment="Bottom" Margin="0,0,10,10"
