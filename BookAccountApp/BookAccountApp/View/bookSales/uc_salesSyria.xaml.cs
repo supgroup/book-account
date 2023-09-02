@@ -68,7 +68,7 @@ namespace BookAccountApp.View.sales
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "airline", "passenger" ,"total"};
+                requiredControlList = new List<string> { "airline", "passenger" ,"total", "serviceDate" };
       
                 #region translate
                 //if (MainWindow.lang.Equals("en"))
@@ -218,6 +218,14 @@ trDateHint
 
                     }
                     serviceData.totalnet = serviceData.total - serviceData.system_commission_value - serviceData.office_commission_value;
+                    serviceData.airlinePaid = 0;
+                    serviceData.airlineUnpaid = 0;
+                    serviceData.officePaid = 0;
+                    serviceData.officeUnpaid = serviceData.office_commission_value;
+                    serviceData.passengerPaid = 0;
+                    serviceData.passengerUnpaid = serviceData.total;//passenger
+                    serviceData.systemPaid = 0;
+                    serviceData.systemUnpaid = serviceData.system_commission_value;
                     //
                     decimal s = await serviceData.Save(serviceData);
                     if (s <= 0)
@@ -283,6 +291,15 @@ trDateHint
 
                         }
                         serviceData.totalnet = serviceData.total - serviceData.system_commission_value - serviceData.office_commission_value;
+                        serviceData.totalnet = serviceData.total - serviceData.system_commission_value - serviceData.office_commission_value;
+                        serviceData.airlinePaid = 0;
+                        serviceData.airlineUnpaid = 0;
+                        serviceData.officePaid = 0;
+                        serviceData.officeUnpaid = serviceData.office_commission_value;
+                        serviceData.passengerPaid = 0;
+                        serviceData.passengerUnpaid = serviceData.total;//passenger
+                        serviceData.systemPaid = 0;
+                        serviceData.systemUnpaid = serviceData.system_commission_value;
                         //
 
                         decimal s = await serviceData.Save(serviceData);
@@ -291,8 +308,6 @@ trDateHint
                     else
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-
-
                         Clear();
                         await RefreshServiceDatasList();
                         await Search();

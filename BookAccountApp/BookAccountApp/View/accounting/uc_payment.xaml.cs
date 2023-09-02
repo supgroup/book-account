@@ -204,6 +204,11 @@ namespace BookAccountApp.View.accounting
                             payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "soto").FirstOrDefault().paysideId;
 
                         }
+                        else if ((cb_side.SelectedValue).ToString() == "syr")
+                        {
+                            payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "syr").FirstOrDefault().paysideId;
+
+                        }
                         else if ((cb_side.SelectedValue).ToString() == "other")
                         {
                             //other
@@ -215,8 +220,6 @@ namespace BookAccountApp.View.accounting
                     {
                         payOp.paysideId = null;
                     }
-
-
                     payOp.userId = null;//note used
                     payOp.recipient = tb_recipient.Text;
                     payOp.recivedFrom = tb_recivedFrom.Text;
@@ -592,7 +595,7 @@ namespace BookAccountApp.View.accounting
 
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
-        SaveFileDialog saveFileDialog2 = new SaveFileDialog();
+   //     SaveFileDialog saveFileDialog = new SaveFileDialog();
 
         public void BuildReport()
         {
@@ -932,6 +935,13 @@ namespace BookAccountApp.View.accounting
                         }
                     }
                     else if ((cb_side.SelectedValue).ToString() == "soto")
+                    {
+                        cb_sideValue.SelectedItem = null;
+                        grid_sideValue.Visibility = Visibility.Collapsed;
+                        btn_invoicesSide.Visibility = Visibility.Visible;
+
+                    }
+                    else if ((cb_side.SelectedValue).ToString() == "syr")
                     {
                         cb_sideValue.SelectedItem = null;
                         grid_sideValue.Visibility = Visibility.Collapsed;
