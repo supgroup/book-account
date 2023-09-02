@@ -36,6 +36,7 @@ namespace BookAccountApp.ApiClasses
         public string strjoinDate { get; set; }
         public bool canDelete { get; set; }
         public Nullable<decimal> balance { get; set; }
+        public Nullable<decimal> commission_ratio { get; set; }
         public Nullable<bool> isActive { get; set; }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace BookAccountApp.ApiClasses
                                 updateUserId = S.updateUserId,
                                 isActive=S.isActive,
                                 canDelete = false,
-
+                                commission_ratio=S.commission_ratio,
                             }).ToList();
 
                     if (List.Count > 0)
@@ -157,7 +158,7 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.isActive = newObject.isActive;
                             tmpObject.createUserId = newObject.createUserId;
                             tmpObject.updateUserId = newObject.updateUserId;
-
+                            tmpObject.commission_ratio = newObject.commission_ratio;
                             entity.SaveChanges();
 
                             message = tmpObject.officeId;
@@ -206,6 +207,7 @@ namespace BookAccountApp.ApiClasses
                          createUserId = S.createUserId,
                          updateUserId = S.updateUserId,
                          isActive = S.isActive,
+                         commission_ratio = S.commission_ratio,
                      }).FirstOrDefault();
                     return row;
                 }

@@ -88,6 +88,7 @@
           <Property Name="toTableId" Type="int" />
           <Property Name="isActive" Type="bit" />
           <Property Name="balance" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="commission_ratio" Type="decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="flightTable">
           <Key>
@@ -127,6 +128,7 @@
           <Property Name="updateUserId" Type="int" />
           <Property Name="isActive" Type="bit" />
           <Property Name="balance" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="commission_ratio" Type="decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="officeFiles">
           <Key>
@@ -1005,6 +1007,7 @@
           <NavigationProperty Name="serviceData" Relationship="Self.FK_serviceData_flights" FromRole="flights" ToRole="serviceData" />
           <NavigationProperty Name="payOp" Relationship="bookModel.FK_payOp_flights" FromRole="flights" ToRole="payOp" />
           <Property Name="balance" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="commission_ratio" Type="Decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="flightTable">
           <Key>
@@ -1051,6 +1054,7 @@
           <NavigationProperty Name="serviceData" Relationship="Self.FK_serviceData_office" FromRole="office" ToRole="serviceData" />
           <NavigationProperty Name="officeFiles" Relationship="bookModel.FK_officeFiles_office" FromRole="office" ToRole="officeFiles" />
           <Property Name="balance" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="commission_ratio" Type="Decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="operations">
           <Key>
@@ -1952,6 +1956,7 @@
           <EntitySetMapping Name="flights">
             <EntityTypeMapping TypeName="bookModel.flights">
               <MappingFragment StoreEntitySet="flights">
+                <ScalarProperty Name="commission_ratio" ColumnName="commission_ratio" />
                 <ScalarProperty Name="balance" ColumnName="balance" />
                 <ScalarProperty Name="flightId" ColumnName="flightId" />
                 <ScalarProperty Name="airline" ColumnName="airline" />
@@ -1990,6 +1995,7 @@
           <EntitySetMapping Name="office">
             <EntityTypeMapping TypeName="bookModel.office">
               <MappingFragment StoreEntitySet="office">
+                <ScalarProperty Name="commission_ratio" ColumnName="commission_ratio" />
                 <ScalarProperty Name="balance" ColumnName="balance" />
                 <ScalarProperty Name="officeId" ColumnName="officeId" />
                 <ScalarProperty Name="name" ColumnName="name" />

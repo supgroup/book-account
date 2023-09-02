@@ -38,6 +38,7 @@ namespace BookAccountApp
         public Nullable<int> updateUserId { get; set; }
         public Nullable<bool> isActive { get; set; }
         public Nullable<decimal> balance { get; set; }
+        public Nullable<decimal> commission_ratio { get; set; }
     
         public virtual users users { get; set; }
         public virtual users users1 { get; set; }

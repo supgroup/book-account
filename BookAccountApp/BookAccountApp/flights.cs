@@ -33,6 +33,7 @@ namespace BookAccountApp
         public Nullable<int> toTableId { get; set; }
         public Nullable<bool> isActive { get; set; }
         public Nullable<decimal> balance { get; set; }
+        public Nullable<decimal> commission_ratio { get; set; }
     
         public virtual flightTable flightTable { get; set; }
         public virtual fromTable fromTable { get; set; }

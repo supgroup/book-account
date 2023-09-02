@@ -35,6 +35,7 @@ namespace BookAccountApp.ApiClasses
         public bool canDelete { get; set; }
         public Nullable<bool> isActive { get; set; }
         public Nullable<decimal> balance { get; set; }
+        public Nullable<decimal> commission_ratio { get; set; }
         public string airlineflightTable { get; set; }
 
         /// <summary>
@@ -70,7 +71,7 @@ namespace BookAccountApp.ApiClasses
                                 toTableId =S.toTableId == null ? 0 : S.toTableId,
                                isActive=S.isActive,
                                 canDelete = false,
-
+                                commission_ratio=S.commission_ratio,
                             }).ToList();
 
                     if (List.Count > 0)
@@ -154,7 +155,7 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.createUserId = newObject.createUserId;
                             tmpObject.updateUserId = newObject.updateUserId;
                            tmpObject.isActive = newObject.isActive;
-
+                            tmpObject.commission_ratio = newObject.commission_ratio;
                             entity.SaveChanges();
 
                             message = tmpObject.flightId;
@@ -202,7 +203,7 @@ namespace BookAccountApp.ApiClasses
                          fromTableId = S.fromTableId == null ? 0 : S.fromTableId,
                          toTableId = S.toTableId == null ? 0 : S.toTableId,
                          isActive = S.isActive,
-
+                         commission_ratio = S.commission_ratio,
 
                      }).FirstOrDefault();
                     return row;
