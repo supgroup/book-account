@@ -78,8 +78,13 @@ namespace BookAccountApp.View.settings.printerSetting
         }
         private void translate()
         {
-            //txt_comInfo.Text = MainWindow.resourcemanager.GetString("trComInfo");
-            //txt_comHint.Text = MainWindow.resourcemanager.GetString("trSettingHint");
+            //printSetting printSettingHint
+            //copyCount
+            //copyCountHint
+            txt_printerSettingInfo.Text = MainWindow.resourcemanager.GetString("printSetting");
+            txt_printerSettingHint.Text = MainWindow.resourcemanager.GetString("printSettingHint");
+            txt_copyCountInfo.Text = MainWindow.resourcemanager.GetString("copyCount");
+            txt_copyCountHint.Text = MainWindow.resourcemanager.GetString("copyCountHint");
         }
 
 

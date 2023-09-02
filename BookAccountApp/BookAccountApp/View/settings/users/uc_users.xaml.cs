@@ -78,7 +78,18 @@ namespace BookAccountApp.View.settings.users
         }
         private void translate()
         {
-            //txt_comInfo.Text = MainWindow.resourcemanager.GetString("trComInfo");
+            //addNewuser
+//            addNewuserHint
+//            Changepass
+//ChangepassHint
+//usersPermissions
+//usersPermissionsHint
+             txt_addUserInfo.Text = MainWindow.resourcemanager.GetString("addNewuser");
+            txt_addUserHint.Text = MainWindow.resourcemanager.GetString("addNewuserHint");
+            txt_passwordChangeInfo.Text = MainWindow.resourcemanager.GetString("Changepass");
+            txt_passwordChangeHint.Text = MainWindow.resourcemanager.GetString("ChangepassHint");
+            txt_permissionInfo.Text = MainWindow.resourcemanager.GetString("usersPermissions");
+            txt_permissionHint.Text = MainWindow.resourcemanager.GetString("usersPermissionsHint");
             //txt_comHint.Text = MainWindow.resourcemanager.GetString("trSettingHint");
         }
 

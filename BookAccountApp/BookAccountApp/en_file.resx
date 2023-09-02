@@ -3052,14 +3052,35 @@ Please add Email in setting</value>
   <data name="payDate" xml:space="preserve">
     <value>Pay Date</value>
   </data>
+  <data name="addNewuser" xml:space="preserve">
+    <value>Add New User</value>
+  </data>
+  <data name="addNewuserHint" xml:space="preserve">
+    <value>Username,Password</value>
+  </data>
+  <data name="Changepass" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="ChangepassHint" xml:space="preserve">
+    <value>New Password</value>
+  </data>
   <data name="companyCommissions" xml:space="preserve">
     <value>Company Commissions</value>
+  </data>
+  <data name="copyCount" xml:space="preserve">
+    <value>Copy Count</value>
+  </data>
+  <data name="copyCountHint" xml:space="preserve">
+    <value>Enter Copy Count</value>
   </data>
   <data name="officeCommissions" xml:space="preserve">
     <value>Office Commissions</value>
   </data>
   <data name="printSetting" xml:space="preserve">
     <value>Print Setting</value>
+  </data>
+  <data name="printSettingHint" xml:space="preserve">
+    <value>Printer,Paper Size</value>
   </data>
   <data name="rateCommission" xml:space="preserve">
     <value>Book Rate / Commissions</value>
@@ -3069,5 +3090,11 @@ Please add Email in setting</value>
   </data>
   <data name="systemRate" xml:space="preserve">
     <value>Book System Rate</value>
+  </data>
+  <data name="usersPermissions" xml:space="preserve">
+    <value>Users Permissions</value>
+  </data>
+  <data name="usersPermissionsHint" xml:space="preserve">
+    <value>Manage Permissions</value>
   </data>
 </root>

@@ -93,13 +93,12 @@ namespace BookAccountApp.View.settings.commissions
         private void Btn_systemRate_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
-                /*
-                Window.GetWindow(this).Opacity = 0.2;
-                wd_systemRate w = new wd_systemRate();
-                w.ShowDialog();
-                Window.GetWindow(this).Opacity = 1;
-                */
+            { 
+                //Window.GetWindow(this).Opacity = 0.2;
+                //wd_systemRate w = new wd_systemRate();
+                //w.ShowDialog();
+                //Window.GetWindow(this).Opacity = 1;
+                 
             }
             catch (Exception ex)
             {

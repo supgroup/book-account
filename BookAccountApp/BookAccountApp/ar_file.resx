@@ -3055,14 +3055,35 @@
   <data name="payDate" xml:space="preserve">
     <value>تاريخ الدفع</value>
   </data>
+  <data name="addNewuser" xml:space="preserve">
+    <value>اضافة مستخدم جديد</value>
+  </data>
+  <data name="addNewuserHint" xml:space="preserve">
+    <value>اسم مستخدم , كلمة السر</value>
+  </data>
+  <data name="Changepass" xml:space="preserve">
+    <value>تغيير كلمة السر</value>
+  </data>
+  <data name="ChangepassHint" xml:space="preserve">
+    <value>كلمة سر جديدة</value>
+  </data>
   <data name="companyCommissions" xml:space="preserve">
     <value>عمولات الشركة</value>
+  </data>
+  <data name="copyCount" xml:space="preserve">
+    <value>عدد النسخ</value>
+  </data>
+  <data name="copyCountHint" xml:space="preserve">
+    <value>ادخال عدد نسخ الطباعة</value>
   </data>
   <data name="officeCommissions" xml:space="preserve">
     <value>عمولات المكاتب</value>
   </data>
   <data name="printSetting" xml:space="preserve">
     <value>اعدادات الطباعة</value>
+  </data>
+  <data name="printSettingHint" xml:space="preserve">
+    <value>تحديد الطابعة,حجم الورق</value>
   </data>
   <data name="rateCommission" xml:space="preserve">
     <value> نسب الحجز/عمولات</value>
@@ -3072,5 +3093,11 @@
   </data>
   <data name="systemRate" xml:space="preserve">
     <value>نسبة انظمة الحجز</value>
+  </data>
+  <data name="usersPermissions" xml:space="preserve">
+    <value>صلاحية المستخدمين</value>
+  </data>
+  <data name="usersPermissionsHint" xml:space="preserve">
+    <value>ادارة السماحيات</value>
   </data>
 </root>
