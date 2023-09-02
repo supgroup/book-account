@@ -422,6 +422,9 @@
     <Compile Include="View\windows\wd_previewPdf.xaml.cs">
       <DependentUpon>wd_previewPdf.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_rateSyrSoto.xaml.cs">
+      <DependentUpon>wd_rateSyrSoto.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_reportSystmSetting.xaml.cs">
       <DependentUpon>wd_reportSystmSetting.xaml</DependentUpon>
     </Compile>
@@ -602,6 +605,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_previewPdf.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_rateSyrSoto.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
