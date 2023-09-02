@@ -78,7 +78,14 @@ namespace BookAccountApp.View.settings.commissions
         }
         private void translate()
         {
-            //txt_comInfo.Text = MainWindow.resourcemanager.GetString("trComInfo");
+            // systemRate companyCommissions  officeCommissions syrSoto
+
+            txt_systemRateInfo.Text = MainWindow.resourcemanager.GetString("systemRate");
+            txt_systemRateHint.Text = MainWindow.resourcemanager.GetString("syrSoto");          
+            txt_companyCommissionsInfo.Text = MainWindow.resourcemanager.GetString("companyCommissions");
+            txt_companyCommissionsHint.Text = MainWindow.resourcemanager.GetString("syrSoto");
+            txt_officeCommissionsInfo.Text = MainWindow.resourcemanager.GetString("officeCommissions");
+            txt_officeCommissionsHint.Text = MainWindow.resourcemanager.GetString("syrSoto");
             //txt_comHint.Text = MainWindow.resourcemanager.GetString("trSettingHint");
         }
 

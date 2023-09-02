@@ -78,7 +78,11 @@ namespace BookAccountApp.View.settings
 
         private void translate()
         {
-            //btn_salesSyria.Content = MainWindow.resourcemanager.GetString("syr");
+            //trUsers rateCommission printSetting
+           btn_commissions.Content = MainWindow.resourcemanager.GetString("rateCommission");
+            btn_users.Content = MainWindow.resourcemanager.GetString("trUsers");
+            btn_printerSetting.Content = MainWindow.resourcemanager.GetString("printSetting");
+
             //btn_salesSoto.Content = MainWindow.resourcemanager.GetString("soto");
             //btn_office.Content = MainWindow.resourcemanager.GetString("trOffices");
             //btn_passengers.Content = MainWindow.resourcemanager.GetString("passengers");

@@ -391,7 +391,7 @@
     <value>اسم المستخدم...</value>
   </data>
   <data name="trUsers" xml:space="preserve">
-    <value>المستخدمون</value>
+    <value>المستخدمين</value>
   </data>
   <data name="trUserType" xml:space="preserve">
     <value>نوع المستخدم</value>
@@ -3054,5 +3054,23 @@
   </data>
   <data name="payDate" xml:space="preserve">
     <value>تاريخ الدفع</value>
+  </data>
+  <data name="companyCommissions" xml:space="preserve">
+    <value>عمولات الشركة</value>
+  </data>
+  <data name="officeCommissions" xml:space="preserve">
+    <value>عمولات المكاتب</value>
+  </data>
+  <data name="printSetting" xml:space="preserve">
+    <value>اعدادات الطباعة</value>
+  </data>
+  <data name="rateCommission" xml:space="preserve">
+    <value> نسب الحجز/عمولات</value>
+  </data>
+  <data name="syrSoto" xml:space="preserve">
+    <value>سوري/سوتو</value>
+  </data>
+  <data name="systemRate" xml:space="preserve">
+    <value>نسبة انظمة الحجز</value>
   </data>
 </root>

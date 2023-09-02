@@ -3052,4 +3052,22 @@ Please add Email in setting</value>
   <data name="payDate" xml:space="preserve">
     <value>Pay Date</value>
   </data>
+  <data name="companyCommissions" xml:space="preserve">
+    <value>Company Commissions</value>
+  </data>
+  <data name="officeCommissions" xml:space="preserve">
+    <value>Office Commissions</value>
+  </data>
+  <data name="printSetting" xml:space="preserve">
+    <value>Print Setting</value>
+  </data>
+  <data name="rateCommission" xml:space="preserve">
+    <value>Book Rate / Commissions</value>
+  </data>
+  <data name="syrSoto" xml:space="preserve">
+    <value>Syrian/Soto</value>
+  </data>
+  <data name="systemRate" xml:space="preserve">
+    <value>Book System Rate</value>
+  </data>
 </root>
