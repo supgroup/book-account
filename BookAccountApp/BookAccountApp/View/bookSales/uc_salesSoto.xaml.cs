@@ -92,7 +92,7 @@ namespace BookAccountApp.View.bookSales
 
                 Keyboard.Focus(cb_passenger);
 
-                await RefreshServiceDatasList();
+              //  await RefreshServiceDatasList();
                 await Search();
               
                 Clear();
@@ -140,7 +140,7 @@ namespace BookAccountApp.View.bookSales
             dg_serviceData.Columns[2].Header = MainWindow.resourcemanager.GetString("ticketNum");
             dg_serviceData.Columns[3].Header = MainWindow.resourcemanager.GetString("airlineFlight");
             dg_serviceData.Columns[4].Header = MainWindow.resourcemanager.GetString("officeName");
-            dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("trDate");
+            dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("trCreateDate");//trDate
             dg_serviceData.Columns[6].Header = MainWindow.resourcemanager.GetString("total");
 
 
@@ -507,6 +507,9 @@ namespace BookAccountApp.View.bookSales
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
+                dp_toDateSearch.SelectedDate = null;
+                dp_fromDateSearch.SelectedDate = null;
+                tb_search.Text = "";
                 await RefreshServiceDatasList();
                 await Search();
                 HelpClass.EndAwait(grid_main);
@@ -536,14 +539,15 @@ namespace BookAccountApp.View.bookSales
          (s.officeName == null ? false : (s.officeName.ToLower().Contains(searchText)))
 
             )
-            && (
-            //start date
-            ((dp_fromDateSearch.SelectedDate != null || dp_fromDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date >= dp_fromDateSearch.SelectedDate.Value.Date) : true)
-            &&
-            //end date
-            ((dp_toDateSearch.SelectedDate != null || dp_toDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
+            //&& (
+            ////start date
+            //((dp_fromDateSearch.SelectedDate != null || dp_fromDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date >= dp_fromDateSearch.SelectedDate.Value.Date) : true)
+            //&&
+            ////end date
+            //((dp_toDateSearch.SelectedDate != null || dp_toDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
 
-            )) && s.isActive == tgl_serviceDatastate
+            //)
+            ) && s.isActive == tgl_serviceDatastate
             );
 
             //);
@@ -552,8 +556,8 @@ namespace BookAccountApp.View.bookSales
         }
         async Task<IEnumerable<ServiceData>> RefreshServiceDatasList()
         {
-            serviceDatas = await serviceData.GetAll();
-            serviceDatas = serviceDatas.Where(s=>s.systemType=="soto").ToList();
+            serviceDatas = await serviceData.GetBy("soto", dp_fromDateSearch.SelectedDate, dp_toDateSearch.SelectedDate);
+          //  serviceDatas = serviceDatas.Where(s=>s.systemType=="soto").ToList();
             return serviceDatas;
         }
         void RefreshServiceDatasView()
@@ -996,7 +1000,7 @@ namespace BookAccountApp.View.bookSales
                 //{
 
                 //}
-
+                await RefreshServiceDatasList();
                 await Search();
 
                 HelpClass.EndAwait(grid_main);
@@ -1017,7 +1021,7 @@ namespace BookAccountApp.View.bookSales
                 //{
 
                 //}
-
+                await RefreshServiceDatasList();
                 await Search();
 
                 HelpClass.EndAwait(grid_main);

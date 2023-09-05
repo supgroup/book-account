@@ -89,6 +89,7 @@ namespace BookAccountApp.ApiClasses
                             from F in JFL.DefaultIfEmpty()
                             from OFF in JOF.DefaultIfEmpty()
                             from P in JP.DefaultIfEmpty()
+
                             select new ServiceData()
                             {
                                 serviceId = S.serviceId,
@@ -169,6 +170,106 @@ namespace BookAccountApp.ApiClasses
             }
         }
 
+        public async Task<List<ServiceData>> GetBy(string systemType,DateTime? fromDate,DateTime? toDate)
+        {
+
+            List<ServiceData> List = new List<ServiceData>();
+            bool canDelete = false;
+            try
+            {
+                DateTime now = DateTime.Now;
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    List = (from S in entity.serviceData
+                            join fl in entity.flights on S.flightId equals fl.flightId into JFL
+                            join of in entity.office on S.officeId equals of.officeId into JOF
+                            join ps in entity.passengers on S.passengerId equals ps.passengerId into JP
+                            from F in JFL.DefaultIfEmpty()
+                            from OFF in JOF.DefaultIfEmpty()
+                            from P in JP.DefaultIfEmpty()
+                            where (S.systemType == systemType)
+                            select new ServiceData()
+                            {
+                                serviceId = S.serviceId,
+                                serviceNum = S.serviceNum,
+                                type = S.type,
+                                passenger = P.name + " " + P.lastName,
+                                ticketNum = S.ticketNum,
+                                airline = F.airline + "/" + F.flightTable.name,
+                                officeId = S.officeId,
+                                serviceDate = S.serviceDate,
+                                pnr = S.pnr,
+                                ticketvalueSP = S.ticketvalueSP,
+                                ticketvalueDollar = S.ticketvalueDollar,
+                                total = S.total,
+                                priceBeforTax = S.priceBeforTax,
+                                commitionRatio = S.commitionRatio,
+                                commitionValue = S.commitionValue,
+                                cost = S.cost,
+                                saleValue = S.saleValue,
+                                paid = S.paid,
+                                profit = S.profit,
+                                notes = S.notes,
+                                state = S.state,
+                                createDate = S.createDate,
+                                updateDate = S.updateDate,
+                                createUserId = S.createUserId,
+                                updateUserId = S.updateUserId,
+                                passengerId = S.passengerId,
+                                flightId = S.flightId,
+                                operationId = S.operationId,
+                                officeName = OFF.name,
+                                isActive = S.isActive,
+                                canDelete = false,
+                                systemType = S.systemType,
+                                system_commission_value = S.system_commission_value,
+                                system_commission_ratio = S.system_commission_ratio,
+                                office_commission_value = S.office_commission_value,
+                                office_commission_ratio = S.office_commission_ratio,
+                                company_commission_value = S.company_commission_value,
+                                company_commission_ratio = S.company_commission_ratio,
+                                totalnet = S.totalnet,
+                                passengerPaid = S.passengerPaid,
+                                passengerUnpaid = S.passengerUnpaid,
+                                officePaid = S.officePaid,
+                                officeUnpaid = S.officeUnpaid,
+                                airlinePaid = S.airlinePaid,
+                                airlineUnpaid = S.airlineUnpaid,
+                                systemPaid = S.systemPaid,
+                                systemUnpaid = S.systemUnpaid,
+
+
+                            }).ToList();
+                    List = List.Where(S => ((fromDate == null && toDate == null) ? ((DateTime)S.createDate).Date == now.Date :
+                            ((fromDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date >= fromDate.Value.Date) : true)
+                            && ((toDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date <= toDate.Value.Date) : true)
+                           )).ToList();
+                    if (List.Count > 0)
+                    {
+                        for (int i = 0; i < List.Count; i++)
+                        {
+                            if (List[i].isActive == true)
+                            {
+                                int itemId = (int)List[i].serviceId;
+                                var itemsI = entity.payOp.Where(x => x.serviceId == itemId).Select(b => new { b.serviceId }).FirstOrDefault();
+
+                                if (itemsI is null)
+                                {
+                                    List[i].canDelete = true;
+                                }
+                            }
+
+                        }
+                    }
+                    return List;
+                }
+
+            }
+            catch(Exception)
+            {
+                return List;
+            }
+        }
         public async Task<decimal> Save(ServiceData newitem)
         {
             serviceData newObject = new serviceData();

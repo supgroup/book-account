@@ -92,7 +92,7 @@ namespace BookAccountApp.View.sales
 
                // Keyboard.Focus(cb_passenger);
              
-                await RefreshServiceDatasList();
+                //await RefreshServiceDatasList();
                 await Search();              
              Clear();
                 await fillcombos();
@@ -150,8 +150,9 @@ trDateHint
             dg_serviceData.Columns[2].Header = MainWindow.resourcemanager.GetString("ticketNum");
             dg_serviceData.Columns[3].Header = MainWindow.resourcemanager.GetString("airlineFlight");
             dg_serviceData.Columns[4].Header = MainWindow.resourcemanager.GetString("officeName");
-            dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("trDate");
-            dg_serviceData.Columns[6].Header = MainWindow.resourcemanager.GetString("total");
+            dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("trCreateDate");
+            dg_serviceData.Columns[6].Header = MainWindow.resourcemanager.GetString("trDate");
+            dg_serviceData.Columns[7].Header = MainWindow.resourcemanager.GetString("total");
          
 
             //dg_serviceData.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
@@ -528,6 +529,9 @@ trDateHint
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
+                dp_toDateSearch.SelectedDate = null;
+                dp_fromDateSearch.SelectedDate = null;
+                tb_search.Text = "";
                 await RefreshServiceDatasList();
                 await Search();
                 HelpClass.EndAwait(grid_main);
@@ -556,14 +560,16 @@ trDateHint
              (s.ticketNum == null ? false : (s.ticketNum.ToLower().Contains(searchText)))||
          (  s.officeName == null ? false : (s.officeName.ToLower().Contains(searchText)))             
             )
-            && (
-            //start date
-            ((dp_fromDateSearch.SelectedDate != null || dp_fromDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date >= dp_fromDateSearch.SelectedDate.Value.Date) : true)
-            &&
-            //end date
-            ((dp_toDateSearch.SelectedDate != null || dp_toDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
+            //&& 
+            //(
+            ////start date
+            //((dp_fromDateSearch.SelectedDate != null || dp_fromDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date >= dp_fromDateSearch.SelectedDate.Value.Date) : true)
+            //&&
+            ////end date
+            //((dp_toDateSearch.SelectedDate != null || dp_toDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
 
-            )) && s.isActive == tgl_serviceDatastate
+            //)
+            ) && s.isActive == tgl_serviceDatastate
             );
           
             //);
@@ -572,8 +578,10 @@ trDateHint
         }
         async Task<IEnumerable<ServiceData>> RefreshServiceDatasList()
         {
-            serviceDatas = await serviceData.GetAll();
-            serviceDatas = serviceDatas.Where(s => s.systemType == "syr").ToList();
+           
+            serviceDatas = await serviceData.GetBy("syr", dp_fromDateSearch.SelectedDate, dp_toDateSearch.SelectedDate);
+
+        //    serviceDatas = serviceDatas.Where(s => s.systemType == "syr").ToList();
             return serviceDatas;
         }
         void RefreshServiceDatasView()
@@ -983,7 +991,7 @@ trDateHint
                 //{
 
                 //}
-
+                await RefreshServiceDatasList();
                 await Search();
 
                 HelpClass.EndAwait(grid_main);
@@ -1004,7 +1012,7 @@ trDateHint
                 //{
 
                 //}
-
+                await RefreshServiceDatasList();
                 await Search();
 
                 HelpClass.EndAwait(grid_main);
