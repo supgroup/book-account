@@ -67,7 +67,12 @@ namespace BookAccountApp.ApiClasses
         public Nullable<decimal> airlineUnpaid { get; set; }
         public Nullable<decimal> systemPaid { get; set; }
         public Nullable<decimal> systemUnpaid { get; set; }
-
+        public Nullable<int> exchangeId { get; set; }
+        public Nullable<int> osId { get; set; }
+        public Nullable<int> systemId { get; set; }
+        public Nullable<decimal> syValue { get; set; }
+        public Nullable<decimal> tax_ratio { get; set; }
+        public Nullable<decimal> tax_value { get; set; }
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>

@@ -62,6 +62,14 @@
         <AssociationConnector Association="bookModel.FK_payOp_flights" />
         <EntityTypeShape EntityType="bookModel.exchange" Width="1.5" PointX="3.375" PointY="5" />
         <AssociationConnector Association="bookModel.FK_serviceData_exchange" />
+        <EntityTypeShape EntityType="bookModel.officeSystem" Width="1.5" PointX="13.5" PointY="29.125" />
+        <EntityTypeShape EntityType="bookModel.systems" Width="1.5" PointX="5.25" PointY="35.5" />
+        <AssociationConnector Association="bookModel.FK_officeSystem_office" />
+        <AssociationConnector Association="bookModel.FK_officeSystem_systems" />
+        <AssociationConnector Association="bookModel.FK_serviceData_officeSystem" />
+        <AssociationConnector Association="bookModel.FK_systems_users" />
+        <AssociationConnector Association="bookModel.FK_systems_users1" />
+        <AssociationConnector Association="bookModel.FK_serviceData_systems" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

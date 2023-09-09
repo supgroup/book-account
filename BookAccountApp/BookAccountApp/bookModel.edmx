@@ -153,6 +153,17 @@
           <Property Name="isActive" Type="bit" />
           <Property Name="officeId" Type="int" />
         </EntityType>
+        <EntityType Name="officeSystem">
+          <Key>
+            <PropertyRef Name="osId" />
+          </Key>
+          <Property Name="osId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="officeId" Type="int" />
+          <Property Name="systemId" Type="int" />
+          <Property Name="office_commission" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="notes" Type="nvarchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="operations">
           <Key>
             <PropertyRef Name="operationId" />
@@ -285,6 +296,11 @@
           <Property Name="systemPaid" Type="decimal" Precision="20" Scale="3" />
           <Property Name="systemUnpaid" Type="decimal" Precision="20" Scale="3" />
           <Property Name="exchangeId" Type="int" />
+          <Property Name="osId" Type="int" />
+          <Property Name="systemId" Type="int" />
+          <Property Name="syValue" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="tax_ratio" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="tax_value" Type="decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="serviceDataFiles">
           <Key>
@@ -325,6 +341,20 @@
           <Property Name="name" Type="nvarchar" MaxLength="500" />
           <Property Name="isActive" Type="bit" />
           <Property Name="notes" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="systems">
+          <Key>
+            <PropertyRef Name="systemId" />
+          </Key>
+          <Property Name="systemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="createDate" Type="datetime2" Precision="7" />
+          <Property Name="updateDate" Type="datetime2" Precision="7" />
+          <Property Name="createUserId" Type="int" />
+          <Property Name="updateUserId" Type="int" />
+          <Property Name="company_commission" Type="decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="toTable">
           <Key>
@@ -513,6 +543,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_officeSystem_office">
+          <End Role="office" Type="Self.office" Multiplicity="0..1" />
+          <End Role="officeSystem" Type="Self.officeSystem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="office">
+              <PropertyRef Name="officeId" />
+            </Principal>
+            <Dependent Role="officeSystem">
+              <PropertyRef Name="officeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_officeSystem_systems">
+          <End Role="systems" Type="Self.systems" Multiplicity="0..1" />
+          <End Role="officeSystem" Type="Self.officeSystem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="systems">
+              <PropertyRef Name="systemId" />
+            </Principal>
+            <Dependent Role="officeSystem">
+              <PropertyRef Name="systemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_operations_durationsTable">
           <End Role="durationsTable" Type="Self.durationsTable" Multiplicity="0..1" />
           <End Role="operations" Type="Self.operations" Multiplicity="*" />
@@ -681,6 +735,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_serviceData_officeSystem">
+          <End Role="officeSystem" Type="Self.officeSystem" Multiplicity="0..1" />
+          <End Role="serviceData" Type="Self.serviceData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="officeSystem">
+              <PropertyRef Name="osId" />
+            </Principal>
+            <Dependent Role="serviceData">
+              <PropertyRef Name="osId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_serviceData_operations">
           <End Role="operations" Type="Self.operations" Multiplicity="0..1" />
           <End Role="serviceData" Type="Self.serviceData" Multiplicity="*" />
@@ -702,6 +768,18 @@
             </Principal>
             <Dependent Role="serviceData">
               <PropertyRef Name="passengerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_serviceData_systems">
+          <End Role="systems" Type="Self.systems" Multiplicity="0..1" />
+          <End Role="serviceData" Type="Self.serviceData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="systems">
+              <PropertyRef Name="systemId" />
+            </Principal>
+            <Dependent Role="serviceData">
+              <PropertyRef Name="systemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -753,6 +831,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_systems_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="systems" Type="Self.systems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="systems">
+              <PropertyRef Name="createUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_systems_users1">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="systems" Type="Self.systems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="systems">
+              <PropertyRef Name="updateUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_users_countriesCodes">
           <End Role="countriesCodes" Type="Self.countriesCodes" Multiplicity="0..1" />
           <End Role="users" Type="Self.users" Multiplicity="*" />
@@ -789,6 +891,7 @@
           <EntitySet Name="fromTable" EntityType="Self.fromTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="office" EntityType="Self.office" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="officeFiles" EntityType="Self.officeFiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="officeSystem" EntityType="Self.officeSystem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="operations" EntityType="Self.operations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="passengerFiles" EntityType="Self.passengerFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="passengers" EntityType="Self.passengers" Schema="dbo" store:Type="Tables" />
@@ -799,6 +902,7 @@
           <EntitySet Name="setting" EntityType="Self.setting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="setValues" EntityType="Self.setValues" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="statementsTable" EntityType="Self.statementsTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="systems" EntityType="Self.systems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="toTable" EntityType="Self.toTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="userSetValues" EntityType="Self.userSetValues" Schema="dbo" store:Type="Tables" />
@@ -845,6 +949,14 @@
           <AssociationSet Name="FK_officeFiles_office" Association="Self.FK_officeFiles_office">
             <End Role="office" EntitySet="office" />
             <End Role="officeFiles" EntitySet="officeFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_officeSystem_office" Association="Self.FK_officeSystem_office">
+            <End Role="office" EntitySet="office" />
+            <End Role="officeSystem" EntitySet="officeSystem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_officeSystem_systems" Association="Self.FK_officeSystem_systems">
+            <End Role="systems" EntitySet="systems" />
+            <End Role="officeSystem" EntitySet="officeSystem" />
           </AssociationSet>
           <AssociationSet Name="FK_operations_durationsTable" Association="Self.FK_operations_durationsTable">
             <End Role="durationsTable" EntitySet="durationsTable" />
@@ -902,12 +1014,20 @@
             <End Role="office" EntitySet="office" />
             <End Role="serviceData" EntitySet="serviceData" />
           </AssociationSet>
+          <AssociationSet Name="FK_serviceData_officeSystem" Association="Self.FK_serviceData_officeSystem">
+            <End Role="officeSystem" EntitySet="officeSystem" />
+            <End Role="serviceData" EntitySet="serviceData" />
+          </AssociationSet>
           <AssociationSet Name="FK_serviceData_operations" Association="Self.FK_serviceData_operations">
             <End Role="operations" EntitySet="operations" />
             <End Role="serviceData" EntitySet="serviceData" />
           </AssociationSet>
           <AssociationSet Name="FK_serviceData_passengers" Association="Self.FK_serviceData_passengers">
             <End Role="passengers" EntitySet="passengers" />
+            <End Role="serviceData" EntitySet="serviceData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_serviceData_systems" Association="Self.FK_serviceData_systems">
+            <End Role="systems" EntitySet="systems" />
             <End Role="serviceData" EntitySet="serviceData" />
           </AssociationSet>
           <AssociationSet Name="FK_serviceData_users" Association="Self.FK_serviceData_users">
@@ -925,6 +1045,14 @@
           <AssociationSet Name="FK_setValues_setting" Association="Self.FK_setValues_setting">
             <End Role="setting" EntitySet="setting" />
             <End Role="setValues" EntitySet="setValues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_systems_users" Association="Self.FK_systems_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="systems" EntitySet="systems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_systems_users1" Association="Self.FK_systems_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="systems" EntitySet="systems" />
           </AssociationSet>
           <AssociationSet Name="FK_users_countriesCodes" Association="Self.FK_users_countriesCodes">
             <End Role="countriesCodes" EntitySet="countriesCodes" />
@@ -1084,6 +1212,7 @@
           <NavigationProperty Name="officeFiles" Relationship="bookModel.FK_officeFiles_office" FromRole="office" ToRole="officeFiles" />
           <Property Name="balance" Type="Decimal" Precision="20" Scale="3" />
           <Property Name="commission_ratio" Type="Decimal" Precision="20" Scale="3" />
+          <NavigationProperty Name="officeSystem" Relationship="bookModel.FK_officeSystem_office" FromRole="office" ToRole="officeSystem" />
         </EntityType>
         <EntityType Name="operations">
           <Key>
@@ -1216,6 +1345,13 @@
           <Property Name="systemUnpaid" Type="Decimal" Precision="20" Scale="3" />
           <Property Name="exchangeId" Type="Int32" />
           <NavigationProperty Name="exchange" Relationship="bookModel.FK_serviceData_exchange" FromRole="serviceData" ToRole="exchange" />
+          <Property Name="osId" Type="Int32" />
+          <NavigationProperty Name="officeSystem" Relationship="bookModel.FK_serviceData_officeSystem" FromRole="serviceData" ToRole="officeSystem" />
+          <Property Name="systemId" Type="Int32" />
+          <NavigationProperty Name="systems" Relationship="bookModel.FK_serviceData_systems" FromRole="serviceData" ToRole="systems" />
+          <Property Name="syValue" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="tax_ratio" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="tax_value" Type="Decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="setting">
           <Key>
@@ -1302,6 +1438,8 @@
           <NavigationProperty Name="payOp2" Relationship="Self.FK_payOp_users2" FromRole="users" ToRole="payOp" />
           <NavigationProperty Name="serviceData" Relationship="Self.FK_serviceData_users" FromRole="users" ToRole="serviceData" />
           <NavigationProperty Name="serviceData1" Relationship="Self.FK_serviceData_users1" FromRole="users" ToRole="serviceData" />
+          <NavigationProperty Name="systems" Relationship="bookModel.FK_systems_users" FromRole="users" ToRole="systems" />
+          <NavigationProperty Name="systems1" Relationship="bookModel.FK_systems_users1" FromRole="users" ToRole="systems" />
         </EntityType>
         <EntityType Name="userSetValues">
           <Key>
@@ -1798,6 +1936,32 @@
             <End Role="exchange" EntitySet="exchange" />
             <End Role="serviceData" EntitySet="serviceData" />
           </AssociationSet>
+          <EntitySet Name="officeSystem" EntityType="bookModel.officeSystem" />
+          <EntitySet Name="systems" EntityType="bookModel.systems" />
+          <AssociationSet Name="FK_officeSystem_office" Association="bookModel.FK_officeSystem_office">
+            <End Role="office" EntitySet="office" />
+            <End Role="officeSystem" EntitySet="officeSystem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_officeSystem_systems" Association="bookModel.FK_officeSystem_systems">
+            <End Role="systems" EntitySet="systems" />
+            <End Role="officeSystem" EntitySet="officeSystem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_serviceData_officeSystem" Association="bookModel.FK_serviceData_officeSystem">
+            <End Role="officeSystem" EntitySet="officeSystem" />
+            <End Role="serviceData" EntitySet="serviceData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_systems_users" Association="bookModel.FK_systems_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="systems" EntitySet="systems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_systems_users1" Association="bookModel.FK_systems_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="systems" EntitySet="systems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_serviceData_systems" Association="bookModel.FK_serviceData_systems">
+            <End Role="systems" EntitySet="systems" />
+            <End Role="serviceData" EntitySet="serviceData" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="officeFiles">
           <Key>
@@ -1932,6 +2096,110 @@
             </Principal>
             <Dependent Role="serviceData">
               <PropertyRef Name="exchangeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="officeSystem">
+          <Key>
+            <PropertyRef Name="osId" />
+          </Key>
+          <Property Name="osId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="officeId" Type="Int32" />
+          <Property Name="systemId" Type="Int32" />
+          <Property Name="office_commission" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="office" Relationship="bookModel.FK_officeSystem_office" FromRole="officeSystem" ToRole="office" />
+          <NavigationProperty Name="systems" Relationship="bookModel.FK_officeSystem_systems" FromRole="officeSystem" ToRole="systems" />
+          <NavigationProperty Name="serviceData" Relationship="bookModel.FK_serviceData_officeSystem" FromRole="officeSystem" ToRole="serviceData" />
+        </EntityType>
+        <EntityType Name="systems">
+          <Key>
+            <PropertyRef Name="systemId" />
+          </Key>
+          <Property Name="systemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="createDate" Type="DateTime" Precision="7" />
+          <Property Name="updateDate" Type="DateTime" Precision="7" />
+          <Property Name="createUserId" Type="Int32" />
+          <Property Name="updateUserId" Type="Int32" />
+          <Property Name="company_commission" Type="Decimal" Precision="20" Scale="3" />
+          <NavigationProperty Name="officeSystem" Relationship="bookModel.FK_officeSystem_systems" FromRole="systems" ToRole="officeSystem" />
+          <NavigationProperty Name="users" Relationship="bookModel.FK_systems_users" FromRole="systems" ToRole="users" />
+          <NavigationProperty Name="users1" Relationship="bookModel.FK_systems_users1" FromRole="systems" ToRole="users" />
+          <NavigationProperty Name="serviceData" Relationship="bookModel.FK_serviceData_systems" FromRole="systems" ToRole="serviceData" />
+        </EntityType>
+        <Association Name="FK_officeSystem_office">
+          <End Type="bookModel.office" Role="office" Multiplicity="0..1" />
+          <End Type="bookModel.officeSystem" Role="officeSystem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="office">
+              <PropertyRef Name="officeId" />
+            </Principal>
+            <Dependent Role="officeSystem">
+              <PropertyRef Name="officeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_officeSystem_systems">
+          <End Type="bookModel.systems" Role="systems" Multiplicity="0..1" />
+          <End Type="bookModel.officeSystem" Role="officeSystem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="systems">
+              <PropertyRef Name="systemId" />
+            </Principal>
+            <Dependent Role="officeSystem">
+              <PropertyRef Name="systemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_serviceData_officeSystem">
+          <End Type="bookModel.officeSystem" Role="officeSystem" Multiplicity="0..1" />
+          <End Type="bookModel.serviceData" Role="serviceData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="officeSystem">
+              <PropertyRef Name="osId" />
+            </Principal>
+            <Dependent Role="serviceData">
+              <PropertyRef Name="osId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_systems_users">
+          <End Type="bookModel.users" Role="users" Multiplicity="0..1" />
+          <End Type="bookModel.systems" Role="systems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="systems">
+              <PropertyRef Name="createUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_systems_users1">
+          <End Type="bookModel.users" Role="users" Multiplicity="0..1" />
+          <End Type="bookModel.systems" Role="systems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="systems">
+              <PropertyRef Name="updateUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_serviceData_systems">
+          <End Type="bookModel.systems" Role="systems" Multiplicity="0..1" />
+          <End Type="bookModel.serviceData" Role="serviceData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="systems">
+              <PropertyRef Name="systemId" />
+            </Principal>
+            <Dependent Role="serviceData">
+              <PropertyRef Name="systemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2139,6 +2407,11 @@
           <EntitySetMapping Name="serviceData">
             <EntityTypeMapping TypeName="bookModel.serviceData">
               <MappingFragment StoreEntitySet="serviceData">
+                <ScalarProperty Name="tax_value" ColumnName="tax_value" />
+                <ScalarProperty Name="tax_ratio" ColumnName="tax_ratio" />
+                <ScalarProperty Name="syValue" ColumnName="syValue" />
+                <ScalarProperty Name="systemId" ColumnName="systemId" />
+                <ScalarProperty Name="osId" ColumnName="osId" />
                 <ScalarProperty Name="exchangeId" ColumnName="exchangeId" />
                 <ScalarProperty Name="systemUnpaid" ColumnName="systemUnpaid" />
                 <ScalarProperty Name="systemPaid" ColumnName="systemPaid" />
@@ -2338,6 +2611,33 @@
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
                 <ScalarProperty Name="syValue" ColumnName="syValue" />
                 <ScalarProperty Name="exchangeId" ColumnName="exchangeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="officeSystem">
+            <EntityTypeMapping TypeName="bookModel.officeSystem">
+              <MappingFragment StoreEntitySet="officeSystem">
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="office_commission" ColumnName="office_commission" />
+                <ScalarProperty Name="systemId" ColumnName="systemId" />
+                <ScalarProperty Name="officeId" ColumnName="officeId" />
+                <ScalarProperty Name="osId" ColumnName="osId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="systems">
+            <EntityTypeMapping TypeName="bookModel.systems">
+              <MappingFragment StoreEntitySet="systems">
+                <ScalarProperty Name="company_commission" ColumnName="company_commission" />
+                <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="systemId" ColumnName="systemId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

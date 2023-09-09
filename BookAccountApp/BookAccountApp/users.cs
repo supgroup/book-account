@@ -27,6 +27,8 @@ namespace BookAccountApp
             this.payOp2 = new HashSet<payOp>();
             this.serviceData = new HashSet<serviceData>();
             this.serviceData1 = new HashSet<serviceData>();
+            this.systems = new HashSet<systems>();
+            this.systems1 = new HashSet<systems>();
         }
     
         public int userId { get; set; }
@@ -79,5 +81,9 @@ namespace BookAccountApp
         public virtual ICollection<serviceData> serviceData { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<serviceData> serviceData1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<systems> systems { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<systems> systems1 { get; set; }
     }
 }

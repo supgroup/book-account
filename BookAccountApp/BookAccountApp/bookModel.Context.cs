@@ -49,5 +49,7 @@ namespace BookAccountApp
         public virtual DbSet<serviceDataFiles> serviceDataFiles { get; set; }
         public virtual DbSet<paySides> paySides { get; set; }
         public virtual DbSet<exchange> exchange { get; set; }
+        public virtual DbSet<officeSystem> officeSystem { get; set; }
+        public virtual DbSet<systems> systems { get; set; }
     }
 }

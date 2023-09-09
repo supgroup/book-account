@@ -67,6 +67,11 @@ namespace BookAccountApp
         public Nullable<decimal> systemPaid { get; set; }
         public Nullable<decimal> systemUnpaid { get; set; }
         public Nullable<int> exchangeId { get; set; }
+        public Nullable<int> osId { get; set; }
+        public Nullable<int> systemId { get; set; }
+        public Nullable<decimal> syValue { get; set; }
+        public Nullable<decimal> tax_ratio { get; set; }
+        public Nullable<decimal> tax_value { get; set; }
     
         public virtual flights flights { get; set; }
         public virtual office office { get; set; }
@@ -79,5 +84,7 @@ namespace BookAccountApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<serviceDataFiles> serviceDataFiles { get; set; }
         public virtual exchange exchange { get; set; }
+        public virtual officeSystem officeSystem { get; set; }
+        public virtual systems systems { get; set; }
     }
 }
