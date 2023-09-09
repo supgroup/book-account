@@ -150,6 +150,8 @@ namespace BookAccountApp.ApiClasses
                 return 0;
             }
         }
+
+
         public async Task<OfficeSystem> GetByID(int itemId)
         {
 
@@ -276,5 +278,100 @@ namespace BookAccountApp.ApiClasses
         //    }
         //}
 
+        public async Task<decimal> AddBySysId(int systemId)
+        {
+            
+         
+            decimal message = 0;
+            if (systemId >0)
+            {
+               
+
+
+                try
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        var officeIdList = entity.office.Select(o=>o.officeId).ToList();
+                        var tableEntity = entity.Set<officeSystem>();
+                        if (officeIdList.Count>0)
+                        {
+                          
+                            officeSystem officeSystemtemp = new officeSystem();
+                            foreach(int officeId in officeIdList)
+                            {
+                                officeSystemtemp = new officeSystem();
+                                officeSystemtemp.osId = 0;
+                                officeSystemtemp.isActive = true;
+                               // officeSystemtemp.notes = "";
+                                officeSystemtemp.officeId = officeId;
+                                officeSystemtemp.office_commission = 0;
+                                officeSystemtemp.systemId = systemId;
+                                tableEntity.Add(officeSystemtemp);
+                                entity.SaveChanges();
+                                message = officeSystemtemp.osId;
+                            }
+
+                        }
+                      
+                    }
+                    return message;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public async Task<decimal> AddByOfficeId(int officeId)
+        {
+            decimal message = 0;
+            if (officeId > 0)
+            {
+
+                try
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        var systemIdList = entity.systems.Select(o => o.systemId).ToList();
+                        var tableEntity = entity.Set<officeSystem>();
+                        if (systemIdList.Count > 0)
+                        {
+
+                            officeSystem officeSystemtemp = new officeSystem();
+                            foreach (int systemId in systemIdList)
+                            {
+                                officeSystemtemp = new officeSystem();
+                                officeSystemtemp.osId = 0;
+                                officeSystemtemp.isActive = true;
+                                // officeSystemtemp.notes = "";
+                                officeSystemtemp.officeId = officeId;
+                                officeSystemtemp.office_commission = 0;
+                                officeSystemtemp.systemId = systemId;
+                                tableEntity.Add(officeSystemtemp);
+                                entity.SaveChanges();
+                                message = officeSystemtemp.osId;
+                            }
+
+                        }
+
+                    }
+                    return message;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }
