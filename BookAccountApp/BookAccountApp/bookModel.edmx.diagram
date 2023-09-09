@@ -60,6 +60,8 @@
         <EntityTypeShape EntityType="bookModel.paySides" Width="1.5" PointX="0.75" PointY="5" />
         <AssociationConnector Association="bookModel.FK_payOp_paySides" />
         <AssociationConnector Association="bookModel.FK_payOp_flights" />
+        <EntityTypeShape EntityType="bookModel.exchange" Width="1.5" PointX="3.375" PointY="5" />
+        <AssociationConnector Association="bookModel.FK_serviceData_exchange" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

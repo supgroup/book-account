@@ -166,8 +166,6 @@ namespace BookAccountApp.View.accounting
         {
             try
             {
-
-
                 //   HelpClass.StartAwait(grid_main);
 
                 payOp = new PayOp();

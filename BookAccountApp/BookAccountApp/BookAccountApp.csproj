@@ -257,6 +257,9 @@
     <Compile Include="error.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="exchange.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="flights.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>

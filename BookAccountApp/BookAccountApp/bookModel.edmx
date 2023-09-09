@@ -72,6 +72,17 @@
           <Property Name="createDate" Type="datetime2" Precision="7" />
           <Property Name="createUserId" Type="int" />
         </EntityType>
+        <EntityType Name="exchange">
+          <Key>
+            <PropertyRef Name="exchangeId" />
+          </Key>
+          <Property Name="exchangeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="syValue" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="createDate" Type="datetime2" Precision="7" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="createUserId" Type="int" />
+        </EntityType>
         <EntityType Name="flights">
           <Key>
             <PropertyRef Name="flightId" />
@@ -273,6 +284,7 @@
           <Property Name="airlineUnpaid" Type="decimal" Precision="20" Scale="3" />
           <Property Name="systemPaid" Type="decimal" Precision="20" Scale="3" />
           <Property Name="systemUnpaid" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="exchangeId" Type="int" />
         </EntityType>
         <EntityType Name="serviceDataFiles">
           <Key>
@@ -633,6 +645,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_serviceData_exchange">
+          <End Role="exchange" Type="Self.exchange" Multiplicity="0..1" />
+          <End Role="serviceData" Type="Self.serviceData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="exchange">
+              <PropertyRef Name="exchangeId" />
+            </Principal>
+            <Dependent Role="serviceData">
+              <PropertyRef Name="exchangeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_serviceData_flights">
           <End Role="flights" Type="Self.flights" Multiplicity="0..1" />
           <End Role="serviceData" Type="Self.serviceData" Multiplicity="*" />
@@ -759,6 +783,7 @@
           <EntitySet Name="customers" EntityType="Self.customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="durationsTable" EntityType="Self.durationsTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="error" EntityType="Self.error" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="exchange" EntityType="Self.exchange" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="flights" EntityType="Self.flights" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="flightTable" EntityType="Self.flightTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="fromTable" EntityType="Self.fromTable" Schema="dbo" store:Type="Tables" />
@@ -864,6 +889,10 @@
           <AssociationSet Name="FK_payOp_users2" Association="Self.FK_payOp_users2">
             <End Role="users" EntitySet="users" />
             <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_serviceData_exchange" Association="Self.FK_serviceData_exchange">
+            <End Role="exchange" EntitySet="exchange" />
+            <End Role="serviceData" EntitySet="serviceData" />
           </AssociationSet>
           <AssociationSet Name="FK_serviceData_flights" Association="Self.FK_serviceData_flights">
             <End Role="flights" EntitySet="flights" />
@@ -1185,6 +1214,8 @@
           <Property Name="airlineUnpaid" Type="Decimal" Precision="20" Scale="3" />
           <Property Name="systemPaid" Type="Decimal" Precision="20" Scale="3" />
           <Property Name="systemUnpaid" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="exchangeId" Type="Int32" />
+          <NavigationProperty Name="exchange" Relationship="bookModel.FK_serviceData_exchange" FromRole="serviceData" ToRole="exchange" />
         </EntityType>
         <EntityType Name="setting">
           <Key>
@@ -1762,6 +1793,11 @@
             <End Role="flights" EntitySet="flights" />
             <End Role="payOp" EntitySet="payOp" />
           </AssociationSet>
+          <EntitySet Name="exchange" EntityType="bookModel.exchange" />
+          <AssociationSet Name="FK_serviceData_exchange" Association="bookModel.FK_serviceData_exchange">
+            <End Role="exchange" EntitySet="exchange" />
+            <End Role="serviceData" EntitySet="serviceData" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="officeFiles">
           <Key>
@@ -1872,6 +1908,30 @@
             </Principal>
             <Dependent Role="payOp">
               <PropertyRef Name="flightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="exchange">
+          <Key>
+            <PropertyRef Name="exchangeId" />
+          </Key>
+          <Property Name="exchangeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="syValue" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="createDate" Type="DateTime" Precision="7" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="createUserId" Type="Int32" />
+          <NavigationProperty Name="serviceData" Relationship="bookModel.FK_serviceData_exchange" FromRole="exchange" ToRole="serviceData" />
+        </EntityType>
+        <Association Name="FK_serviceData_exchange">
+          <End Type="bookModel.exchange" Role="exchange" Multiplicity="0..1" />
+          <End Type="bookModel.serviceData" Role="serviceData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="exchange">
+              <PropertyRef Name="exchangeId" />
+            </Principal>
+            <Dependent Role="serviceData">
+              <PropertyRef Name="exchangeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2079,6 +2139,7 @@
           <EntitySetMapping Name="serviceData">
             <EntityTypeMapping TypeName="bookModel.serviceData">
               <MappingFragment StoreEntitySet="serviceData">
+                <ScalarProperty Name="exchangeId" ColumnName="exchangeId" />
                 <ScalarProperty Name="systemUnpaid" ColumnName="systemUnpaid" />
                 <ScalarProperty Name="systemPaid" ColumnName="systemPaid" />
                 <ScalarProperty Name="airlineUnpaid" ColumnName="airlineUnpaid" />
@@ -2265,6 +2326,18 @@
                 <ScalarProperty Name="sideAr" ColumnName="sideAr" />
                 <ScalarProperty Name="side" ColumnName="side" />
                 <ScalarProperty Name="paysideId" ColumnName="paysideId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="exchange">
+            <EntityTypeMapping TypeName="bookModel.exchange">
+              <MappingFragment StoreEntitySet="exchange">
+                <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="syValue" ColumnName="syValue" />
+                <ScalarProperty Name="exchangeId" ColumnName="exchangeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

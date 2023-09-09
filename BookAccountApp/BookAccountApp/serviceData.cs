@@ -66,6 +66,7 @@ namespace BookAccountApp
         public Nullable<decimal> airlineUnpaid { get; set; }
         public Nullable<decimal> systemPaid { get; set; }
         public Nullable<decimal> systemUnpaid { get; set; }
+        public Nullable<int> exchangeId { get; set; }
     
         public virtual flights flights { get; set; }
         public virtual office office { get; set; }
@@ -77,5 +78,6 @@ namespace BookAccountApp
         public virtual users users1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<serviceDataFiles> serviceDataFiles { get; set; }
+        public virtual exchange exchange { get; set; }
     }
 }
