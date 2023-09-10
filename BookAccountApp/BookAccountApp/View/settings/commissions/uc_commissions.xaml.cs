@@ -78,19 +78,15 @@ namespace BookAccountApp.View.settings.commissions
         }
         private void translate()
         {
-            // systemRate companyCommissions  officeCommissions syrSoto
 
-            txt_systemRateInfo.Text = MainWindow.resourcemanager.GetString("systemRate");
-            txt_systemRateHint.Text = MainWindow.resourcemanager.GetString("syrSoto");          
-            txt_companyCommissionsInfo.Text = MainWindow.resourcemanager.GetString("companyCommissions");
-            txt_companyCommissionsHint.Text = MainWindow.resourcemanager.GetString("syrSoto");
-            txt_officeCommissionsInfo.Text = MainWindow.resourcemanager.GetString("officeCommissions");
-            txt_officeCommissionsHint.Text = MainWindow.resourcemanager.GetString("syrSoto");
-            //txt_comHint.Text = MainWindow.resourcemanager.GetString("trSettingHint");
+            //txt_taxInfo.Text = MainWindow.resourcemanager.GetString("tax");
+            //txt_taxHint.Text = MainWindow.resourcemanager.GetString("syrSoto");          
+            //txt_priceExchangeInfo.Text = MainWindow.resourcemanager.GetString("priceExchange");
+            //txt_priceExchangeHint.Text = MainWindow.resourcemanager.GetString("syrSoto");
         }
 
 
-        private void Btn_systemRate_Click(object sender, RoutedEventArgs e)
+        private void Btn_tax_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -104,7 +100,7 @@ namespace BookAccountApp.View.settings.commissions
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_companyCommissions_Click(object sender, RoutedEventArgs e)
+        private void Btn_priceExchange_Click(object sender, RoutedEventArgs e)
         {
             try
             {
