@@ -26,7 +26,8 @@ namespace BookAccountApp.ApiClasses
         public Nullable<bool> isActive { get; set; }
         public string notes { get; set; }
         public bool canDelete { get; set; }
-   
+        public string systemName { get; set; }
+        public string officeName { get; set; }
 
 
         /// <summary>
