@@ -78,10 +78,10 @@ namespace BookAccountApp.View.settings.commissions
         }
         private void translate()
         {
-
-            //txt_taxInfo.Text = MainWindow.resourcemanager.GetString("tax");
-            //txt_taxHint.Text = MainWindow.resourcemanager.GetString("syrSoto");          
-            //txt_priceExchangeInfo.Text = MainWindow.resourcemanager.GetString("priceExchange");
+            //trTax exchangePrice
+           txt_taxInfo.Text = MainWindow.resourcemanager.GetString("trTax");
+           //  txt_taxHint.Text = MainWindow.resourcemanager.GetString("syrSoto");          
+             txt_priceExchangeInfo.Text = MainWindow.resourcemanager.GetString("exchangePrice");
             //txt_priceExchangeHint.Text = MainWindow.resourcemanager.GetString("syrSoto");
         }
 

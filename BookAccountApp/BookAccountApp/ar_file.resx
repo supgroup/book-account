@@ -3100,4 +3100,10 @@
   <data name="usersPermissionsHint" xml:space="preserve">
     <value>ادارة السماحيات</value>
   </data>
+  <data name="exchangePrice" xml:space="preserve">
+    <value>سعر الصرف</value>
+  </data>
+  <data name="financeSetting" xml:space="preserve">
+    <value>اعدادات مالية</value>
+  </data>
 </root>

@@ -70,7 +70,7 @@ namespace BookAccountApp.ApiClasses
                             {
                                 int itemId = (int)List[i].systemId;
                          var itemsI = entity.serviceData.Where(x => x.systemId == itemId).Select(b => new { b.systemId }).FirstOrDefault();
-                                var items2 = entity.officeSystem.Where(x => x.systemId == itemId).Select(b => new { b.systemId }).FirstOrDefault();
+                           var items2 = entity.serviceData.Where(x => x.officeSystem.systemId == itemId).Select(b => new { b.serviceId }).FirstOrDefault();
 
                                 if (itemsI is null && items2 is null)
                                 {                                    
@@ -127,10 +127,15 @@ namespace BookAccountApp.ApiClasses
                             locationEntity.Add(newObject);
                             entity.SaveChanges();
                             message = newObject.systemId;
+                            OfficeSystem osmodel = new OfficeSystem();
+                          decimal   res= await osmodel.AddBySysId(newObject.systemId);
+
                         }
                         else
                         {
                             var tmpObject = entity.systems.Where(p => p.systemId == newObject.systemId).FirstOrDefault();
+                            OfficeSystem osmodel = new OfficeSystem();
+                            int res = await osmodel.updateListisActive(tmpObject.systemId,(bool)newObject.isActive, "systems");
 
                             tmpObject.updateDate = DateTime.Now;
 
@@ -227,15 +232,16 @@ namespace BookAccountApp.ApiClasses
             {
                 try
                 {
+                    OfficeSystem osmodel = new OfficeSystem();
                     using (bookdbEntities entity = new bookdbEntities())
                     {
                         systems objectDelete = entity.systems.Find(id);
-
+                        int res = await osmodel.updateListisActive(id, false, "systems");
                         objectDelete.isActive = false;
                         objectDelete.updateUserId = signuserId;
                         objectDelete.updateDate = DateTime.Now;
                         message = entity.SaveChanges();
-
+              
                         return message;
                     }
                 }

@@ -11,6 +11,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Data.Entity.Migrations;
 
 using System.Security.Claims;
 using Newtonsoft.Json.Converters;
@@ -55,7 +56,7 @@ namespace BookAccountApp.ApiClasses
                                 notes = S.notes,
 
                                 canDelete = false,
-                             
+
                             }).ToList();
 
 
@@ -69,12 +70,12 @@ namespace BookAccountApp.ApiClasses
                                 var itemsI = entity.serviceData.Where(x => x.osId == itemId).Select(b => new { b.osId }).FirstOrDefault();
 
                                 if (itemsI is null)
-                                {                                    
+                                {
                                     List[i].canDelete = true;
                                 }
-                                  
+
                             }
-                            
+
                         }
                     }
                     return List;
@@ -87,12 +88,12 @@ namespace BookAccountApp.ApiClasses
             }
         }
 
-        public async Task<decimal> Save(OfficeSystem newitem)
+        public async Task<int> Save(OfficeSystem newitem)
         {
             officeSystem newObject = new officeSystem();
             newObject = JsonConvert.DeserializeObject<officeSystem>(JsonConvert.SerializeObject(newitem));
 
-            decimal message = 0;
+            int message = 0;
             if (newObject != null)
             {
                 if (newObject.officeId == 0 || newObject.officeId == null)
@@ -105,7 +106,7 @@ namespace BookAccountApp.ApiClasses
                     Nullable<int> id = null;
                     newObject.systemId = id;
                 }
-           
+
 
 
                 try
@@ -115,9 +116,8 @@ namespace BookAccountApp.ApiClasses
                         var locationEntity = entity.Set<officeSystem>();
                         if (newObject.osId == 0)
                         {
-                        
-                            newObject.isActive = true;
 
+                            newObject.isActive = true;
                             locationEntity.Add(newObject);
                             entity.SaveChanges();
                             message = newObject.osId;
@@ -126,8 +126,8 @@ namespace BookAccountApp.ApiClasses
                         {
                             var tmpObject = entity.officeSystem.Where(p => p.osId == newObject.osId).FirstOrDefault();
 
-                             
-                          //  tmpObject.osId = newObject.osId;
+
+                            //  tmpObject.osId = newObject.osId;
                             tmpObject.officeId = newObject.officeId;
                             tmpObject.systemId = newObject.systemId;
                             tmpObject.office_commission = newObject.office_commission;
@@ -158,7 +158,7 @@ namespace BookAccountApp.ApiClasses
 
 
             OfficeSystem item = new OfficeSystem();
-           
+
 
             OfficeSystem row = new OfficeSystem();
             try
@@ -235,6 +235,104 @@ namespace BookAccountApp.ApiClasses
             }
 
         }
+        public async Task<decimal> DeletebySysId(int systemId)
+        {
+
+            decimal message = 0;
+
+            try
+            {
+                List<OfficeSystem> oslist = new List<OfficeSystem>();
+                oslist = await GetbySysId(systemId);
+
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    if (oslist.Count > 0)
+                    {
+                        for (int i = 0; i < oslist.Count; i++)
+                        {
+                            if (oslist[i].isActive == true)
+                            {
+                                int itemId = (int)oslist[i].osId;
+                                var itemsI = entity.serviceData.Where(x => x.osId == itemId).Select(b => new { b.osId }).FirstOrDefault();
+
+                                if (itemsI is null)
+                                {
+                                    var itemsos = entity.officeSystem.Find(itemId);
+
+                                    entity.officeSystem.Remove(itemsos);
+                                    message = entity.SaveChanges();
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    return message;
+
+                }
+            }
+            catch
+            {
+                return 0;
+
+            }
+
+
+
+        }
+        public async Task<decimal> DeletebyOfficeId(int officeId)
+        {
+
+            decimal message = 0;
+
+            try
+            {
+                List<OfficeSystem> oslist = new List<OfficeSystem>();
+                oslist = await GetbyOfficeId(officeId);
+
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    if (oslist.Count > 0)
+                    {
+                        for (int i = 0; i < oslist.Count; i++)
+                        {
+                            if (oslist[i].isActive == true)
+                            {
+                                int itemId = (int)oslist[i].osId;
+                                var itemsI = entity.serviceData.Where(x => x.osId == itemId).Select(b => new { b.osId }).FirstOrDefault();
+
+                                if (itemsI is null)
+                                {
+                                    var itemsos = entity.officeSystem.Find(itemId);
+
+                                    entity.officeSystem.Remove(itemsos);
+                                    message = entity.SaveChanges();
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    return message;
+
+                }
+            }
+            catch
+            {
+                return 0;
+
+            }
+
+
+
+        }
 
         //public async Task<string> generateCodeNumber(string type)
         //{
@@ -281,30 +379,30 @@ namespace BookAccountApp.ApiClasses
 
         public async Task<decimal> AddBySysId(int systemId)
         {
-            
-         
+
+
             decimal message = 0;
-            if (systemId >0)
+            if (systemId > 0)
             {
-               
+
 
 
                 try
                 {
                     using (bookdbEntities entity = new bookdbEntities())
                     {
-                        var officeIdList = entity.office.Select(o=>o.officeId).ToList();
+                        var officeIdList = entity.office.Select(o => o.officeId).ToList();
                         var tableEntity = entity.Set<officeSystem>();
-                        if (officeIdList.Count>0)
+                        if (officeIdList.Count > 0)
                         {
-                          
+
                             officeSystem officeSystemtemp = new officeSystem();
-                            foreach(int officeId in officeIdList)
+                            foreach (int officeId in officeIdList)
                             {
                                 officeSystemtemp = new officeSystem();
                                 officeSystemtemp.osId = 0;
                                 officeSystemtemp.isActive = true;
-                               // officeSystemtemp.notes = "";
+                                // officeSystemtemp.notes = "";
                                 officeSystemtemp.officeId = officeId;
                                 officeSystemtemp.office_commission = 0;
                                 officeSystemtemp.systemId = systemId;
@@ -314,7 +412,7 @@ namespace BookAccountApp.ApiClasses
                             }
 
                         }
-                      
+
                     }
                     return message;
                 }
@@ -372,6 +470,199 @@ namespace BookAccountApp.ApiClasses
             else
             {
                 return 0;
+            }
+        }
+
+        public async Task<List<OfficeSystem>> GetbySysId(int systemId)
+        {
+
+            List<OfficeSystem> List = new List<OfficeSystem>();
+            bool canDelete = false;
+            try
+            {
+                if (systemId > 0)
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        List = (from S in entity.officeSystem
+                                where S.systemId == systemId
+                                select new OfficeSystem()
+                                {
+                                    osId = S.osId,
+                                    officeId = S.officeId,
+                                    systemId = S.systemId,
+                                    office_commission = S.office_commission,
+                                    systemName = S.systems.name,
+                                    officeName = S.office.name,
+                                    isActive = S.isActive,
+                                    notes = S.notes,
+
+                                    canDelete = false,
+
+                                }).ToList();
+
+
+                        //if (List.Count > 0)
+                        //{
+                        //    for (int i = 0; i < List.Count; i++)
+                        //    {
+                        //        if (List[i].isActive == true)
+                        //        {
+                        //            int itemId = (int)List[i].osId;
+                        //            var itemsI = entity.serviceData.Where(x => x.osId == itemId).Select(b => new { b.osId }).FirstOrDefault();
+
+                        //            if (itemsI is null)
+                        //            {
+                        //                List[i].canDelete = true;
+                        //            }
+
+                        //        }
+
+                        //    }
+                        //}
+                        return List;
+                    }
+                }
+                else
+                {
+                    return List;
+                }
+
+
+            }
+            catch
+            {
+                return List;
+            }
+
+
+        }
+        public async Task<List<OfficeSystem>> GetbyOfficeId(int officeId)
+        {
+
+            List<OfficeSystem> List = new List<OfficeSystem>();
+            bool canDelete = false;
+            try
+            {
+                if (officeId > 0)
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        List = (from S in entity.officeSystem
+                                where S.officeId == officeId
+                                select new OfficeSystem()
+                                {
+                                    osId = S.osId,
+                                    officeId = S.officeId,
+                                    systemId = S.systemId,
+                                    office_commission = S.office_commission,
+                                    systemName = S.systems.name,
+                                    officeName = S.office.name,
+                                    isActive = S.isActive,
+                                    notes = S.notes,
+
+                                    canDelete = false,
+
+                                }).ToList();
+
+
+                        //if (List.Count > 0)
+                        //{
+                        //    for (int i = 0; i < List.Count; i++)
+                        //    {
+                        //        if (List[i].isActive == true)
+                        //        {
+                        //            int itemId = (int)List[i].osId;
+                        //            var itemsI = entity.serviceData.Where(x => x.osId == itemId).Select(b => new { b.osId }).FirstOrDefault();
+
+                        //            if (itemsI is null)
+                        //            {
+                        //                List[i].canDelete = true;
+                        //            }
+
+                        //        }
+
+                        //    }
+                        //}
+                        return List;
+                    }
+                }
+                else
+                {
+                    return List;
+                }
+
+
+            }
+            catch
+            {
+                return List;
+            }
+        }
+
+        public async Task<int> updateList(List<OfficeSystem> newList)
+        {
+
+            int message = 0;
+
+            try
+            {
+                if (officeId > 0)
+                {
+                    foreach (OfficeSystem row in newList)
+                    {
+                        message = await Save(row);
+                    }
+                    return message;
+
+                }
+                else
+                {
+                    return 0;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return message;
+            }
+        }
+        public async Task<int> updateListisActive(int id,bool isActive,string table)
+        {
+
+            int message = 0;
+
+            try
+            {
+                if (id > 0)
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {                  
+                        if (table == "systems")
+                        {
+                            entity.officeSystem.Where(s => s.systemId == id).ToList().ForEach(x => x.isActive = isActive);
+                            message= entity.SaveChanges();
+                        }else if (table == "office")
+                        {                            
+                            entity.officeSystem.Where(s => s.officeId == id).ToList().ForEach(x => x.isActive = isActive);
+                            message = entity.SaveChanges();                             
+                        }
+                    }
+                 
+                    return message;
+
+                }
+                else
+                {
+                    return 0;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return message;
             }
         }
     }

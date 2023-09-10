@@ -84,8 +84,9 @@ namespace BookAccountApp.ApiClasses
                                 int itemId = (int)List[i].officeId;
                                 var itemsI = entity.serviceData.Where(x => x.officeId == itemId).Select(b => new { b.officeId }).FirstOrDefault();
                                 var items2 = entity.payOp.Where(x => x.officeId == itemId).Select(b => new { b.officeId }).FirstOrDefault();
+                                var items3 = entity.serviceData.Where(x => x.officeSystem.officeId == itemId).Select(b => new { b.serviceId }).FirstOrDefault();
 
-                                if ((itemsI is null)&& (items2 is null))
+                                if ((itemsI is null)&& (items2 is null) && (items3 is null))
                                 {
                                     List[i].canDelete = true;
                                 }
@@ -139,10 +140,15 @@ namespace BookAccountApp.ApiClasses
                             locationEntity.Add(newObject);
                             entity.SaveChanges();
                             message = newObject.officeId;
+                            OfficeSystem osmodel = new OfficeSystem();
+                            decimal res = await osmodel.AddByOfficeId(newObject.officeId);
                         }
                         else
                         {
                             var tmpObject = entity.office.Where(p => p.officeId == newObject.officeId).FirstOrDefault();
+                            // update is active in os list
+                            OfficeSystem osmodel = new OfficeSystem();
+                            int res = await osmodel.updateListisActive(tmpObject.officeId,(bool)newObject.isActive, "office");
 
                             tmpObject.updateDate = DateTime.Now;
                          
@@ -252,10 +258,11 @@ namespace BookAccountApp.ApiClasses
             {
                 try
                 {
+                    OfficeSystem osmodel = new OfficeSystem();
                     using (bookdbEntities entity = new bookdbEntities())
                     {
                         office objectDelete = entity.office.Find(id);
-
+                        int res = await osmodel.updateListisActive(id, false, "office");
                         objectDelete.isActive = false;
                         objectDelete.updateUserId = signuserId;
                         objectDelete.updateDate = DateTime.Now;

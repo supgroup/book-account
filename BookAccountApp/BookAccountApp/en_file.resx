@@ -3097,4 +3097,10 @@ Please add Email in setting</value>
   <data name="usersPermissionsHint" xml:space="preserve">
     <value>Manage Permissions</value>
   </data>
+  <data name="exchangePrice" xml:space="preserve">
+    <value>Exchange</value>
+  </data>
+  <data name="financeSetting" xml:space="preserve">
+    <value>Finance Setting</value>
+  </data>
 </root>
