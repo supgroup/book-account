@@ -128,7 +128,7 @@ trDateHint
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_ticketNum, MainWindow.resourcemanager.GetString("ticketNumHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_airline, MainWindow.resourcemanager.GetString("airlineFlightHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_office, MainWindow.resourcemanager.GetString("officeNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_serviceDate, MainWindow.resourcemanager.GetString("trDateHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_serviceDate, MainWindow.resourcemanager.GetString("trDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_total, MainWindow.resourcemanager.GetString("totalHint"));
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
@@ -191,7 +191,7 @@ trDateHint
                     serviceData.ticketNum = tb_ticketNum.Text;
                     serviceData.flightId = Convert.ToInt32(cb_airline.SelectedValue);
                     serviceData.officeId = Convert.ToInt32(cb_office.SelectedValue);
-                    serviceData.serviceDate = dp_serviceDate.SelectedDate;
+                    //serviceData.serviceDate = dp_serviceDate.SelectedDate;
                     serviceData.total =( tb_total.Text==null|| tb_total.Text=="")?0: Convert.ToDecimal(tb_total.Text);
                   serviceData.notes = tb_notes.Text;
                     serviceData.systemType="syr";
@@ -264,7 +264,7 @@ trDateHint
                     serviceData.ticketNum = tb_ticketNum.Text;
                     serviceData.flightId = Convert.ToInt32(cb_airline.SelectedValue);
                     serviceData.officeId = Convert.ToInt32(cb_office.SelectedValue);
-                    serviceData.serviceDate = dp_serviceDate.SelectedDate;
+                    //serviceData.serviceDate = dp_serviceDate.SelectedDate;
                     serviceData.total = Convert.ToDecimal(tb_total.Text);
                   serviceData.notes = tb_notes.Text;
                         serviceData.systemType = "syr";
@@ -952,7 +952,10 @@ trDateHint
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void Btn_addSystem_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
         private async void Btn_addOffice_Click(object sender, RoutedEventArgs e)
         {
             try
