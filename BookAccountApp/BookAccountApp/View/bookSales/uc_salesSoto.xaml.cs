@@ -116,7 +116,7 @@ namespace BookAccountApp.View.bookSales
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_passenger, MainWindow.resourcemanager.GetString("passengerNameHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_ticketNum, MainWindow.resourcemanager.GetString("ticketNumHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_airline, MainWindow.resourcemanager.GetString("airlineFlightHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_operation, MainWindow.resourcemanager.GetString("operationHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_operation, MainWindow.resourcemanager.GetString("operationHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_office, MainWindow.resourcemanager.GetString("officeNameHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_serviceDate, MainWindow.resourcemanager.GetString("trDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_total, MainWindow.resourcemanager.GetString("totalHint"));
@@ -179,7 +179,7 @@ namespace BookAccountApp.View.bookSales
                     serviceData.ticketNum = tb_ticketNum.Text;
                     serviceData.flightId = Convert.ToInt32(cb_airline.SelectedValue);
                     serviceData.officeId = Convert.ToInt32(cb_office.SelectedValue);
-                    serviceData.operationId = Convert.ToInt32(cb_operation.SelectedValue);
+                    //serviceData.operationId = Convert.ToInt32(cb_operation.SelectedValue);
                     //serviceData.serviceDate = dp_serviceDate.SelectedDate;
                     serviceData.total = (tb_total.Text == null || tb_total.Text == "") ? 0 : Convert.ToDecimal(tb_total.Text);
                     serviceData.notes = tb_notes.Text;
@@ -247,7 +247,7 @@ namespace BookAccountApp.View.bookSales
                         serviceData.ticketNum = tb_ticketNum.Text;
                         serviceData.flightId = Convert.ToInt32(cb_airline.SelectedValue);
                         serviceData.officeId = Convert.ToInt32(cb_office.SelectedValue);
-                        serviceData.operationId = Convert.ToInt32(cb_operation.SelectedValue);
+                        //serviceData.operationId = Convert.ToInt32(cb_operation.SelectedValue);
                         //serviceData.serviceDate = dp_serviceDate.SelectedDate;
                         serviceData.total = Convert.ToDecimal(tb_total.Text);
                         serviceData.notes = tb_notes.Text;
@@ -472,7 +472,7 @@ namespace BookAccountApp.View.bookSales
                         cb_passenger.SelectedValue = serviceData.passengerId;
                         cb_airline.SelectedValue = serviceData.flightId;
                         cb_office.SelectedValue = serviceData.officeId;
-                        cb_operation.SelectedValue = serviceData.operationId;
+                        //cb_operation.SelectedValue = serviceData.operationId;
                       
                         tb_total.Text = HelpClass.DecTostring(serviceData.total);
                       this.DataContext = serviceData;
@@ -571,7 +571,7 @@ namespace BookAccountApp.View.bookSales
             await FillCombo.fillPassengers(cb_passenger);
             await FillCombo.fillFlights(cb_airline);
             await FillCombo.fillOffice(cb_office);
-            await FillCombo.fillOperations(cb_operation);
+            //await FillCombo.fillOperations(cb_operation);
         }
 
         #endregion
@@ -584,7 +584,7 @@ namespace BookAccountApp.View.bookSales
             cb_passenger.SelectedIndex = -1;
             cb_airline.SelectedIndex = -1;
             cb_office.SelectedIndex = -1;
-            cb_operation.SelectedIndex = -1;
+            //cb_operation.SelectedIndex = -1;
             //cb_passenger.Text = "";
             //cb_airline.Text = "";
             //cb_office.Text = "";
@@ -938,6 +938,10 @@ namespace BookAccountApp.View.bookSales
           }
           
         }
+        private void Btn_addSystem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         private async void Btn_addOffice_Click(object sender, RoutedEventArgs e)
         {
@@ -971,7 +975,7 @@ namespace BookAccountApp.View.bookSales
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_operations w = new wd_operations();
                 w.ShowDialog();
-                await FillCombo.fillOperations(cb_operation);
+                //await FillCombo.fillOperations(cb_operation);
                 Window.GetWindow(this).Opacity = 1;
 
                 if (sender != null)
@@ -1136,5 +1140,7 @@ namespace BookAccountApp.View.bookSales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+      
     }
 }
