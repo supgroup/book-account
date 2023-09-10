@@ -207,6 +207,7 @@
     <Compile Include="Classes\ApiClasses\FileClass.cs" />
     <Compile Include="Classes\ApiClasses\FlightTable.cs" />
     <Compile Include="Classes\ApiClasses\OfficeSystem.cs" />
+    <Compile Include="Classes\ApiClasses\Exchange.cs" />
     <Compile Include="Classes\ApiClasses\Systems.cs" />
     <Compile Include="Classes\ApiClasses\PaySides.cs" />
     <Compile Include="Classes\ApiClasses\FromTable.cs" />

@@ -52,16 +52,16 @@ namespace BookAccountApp.View.settings.commissions
                 //MainWindow.mainWindow.initializationMainTrack(this.Tag.ToString(), 1);
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
-                {
-                    //MainWindow.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
-                    grid_main.FlowDirection = FlowDirection.LeftToRight;
-                }
-                else
-                {
+                //if (MainWindow.lang.Equals("en"))
+                //{
+                //    //MainWindow.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
+                //    grid_main.FlowDirection = FlowDirection.LeftToRight;
+                //}
+                //else
+                //{
                     //MainWindow.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
-                }
+                //}
 
                 translate();
                 #endregion
