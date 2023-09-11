@@ -68,7 +68,7 @@ namespace BookAccountApp.View.bookSales
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "airline", "passenger", "total" };
+                requiredControlList = new List<string> { "airline", "passenger", "total", "system" };
 
                 #region translate
                 //if (MainWindow.lang.Equals("en"))
@@ -128,7 +128,7 @@ namespace BookAccountApp.View.bookSales
             txt_uploadDocsButton.Text = MainWindow.resourcemanager.GetString("docUpload");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_system, MainWindow.resourcemanager.GetString("bookSystemHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_priceBeforTax, MainWindow.resourcemanager.GetString("priceBeforTaxHint"));
-
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_charge, MainWindow.resourcemanager.GetString("trTaxHint"));
             //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
 
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_custlevel, MainWindow.resourcemanager.GetString("trLevelHint"));

@@ -30,9 +30,9 @@ namespace BookAccountApp.View.windows
     {
         #region variables
 
-        Operations operations = new Operations();
-        IEnumerable<Operations> operationssQuery;
-        IEnumerable<Operations> operationss;
+        Systems SystemModel = new Systems();
+        //IEnumerable<Operations> operationssQuery;
+        //IEnumerable<Operations> operationss;
         public static List<string> requiredControlList;
 
         bool tgl_priceState = true;
@@ -60,7 +60,7 @@ namespace BookAccountApp.View.windows
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_sliceMain);
-                requiredControlList = new List<string> { "operation" };
+                requiredControlList = new List<string> { "name", "company_commission" };
                 #region translate
                 //if (AppSettings.lang.Equals("en"))
                 //{
@@ -80,7 +80,7 @@ namespace BookAccountApp.View.windows
                 //if (FillCombo.itemunitsList is null)
                 //    await FillCombo.RefreshItemUnits();
 
-               await fillcombos();
+               //await fillcombos();
                 #region key up
                 // key_up item
 
@@ -106,11 +106,15 @@ namespace BookAccountApp.View.windows
  
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
             
-            txt_title.Text = MainWindow.resourcemanager.GetString("operationInfo");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_operation, MainWindow.resourcemanager.GetString("operationNameHint"));
+            txt_title.Text = MainWindow.resourcemanager.GetString("bookInfo");
+             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("bookSysNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_company_commission, MainWindow.resourcemanager.GetString("companyCommissionHint"));
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_opStatement, MainWindow.resourcemanager.GetString("opStatementHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_duration, MainWindow.resourcemanager.GetString("durationHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+ 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
             btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
@@ -119,16 +123,12 @@ namespace BookAccountApp.View.windows
         }
 
 
-        async Task<IEnumerable<Operations>> RefreshOperationsList()
-        {
-            operationss = await operations.GetAll();
 
-            return operationss;
-        }
-    
+
         void Clear()
         {
-            this.DataContext = new Flights();
+            this.DataContext = new Systems();
+            tb_company_commission.Text = "";
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
@@ -196,13 +196,7 @@ namespace BookAccountApp.View.windows
 
         #region events
 
-        public async Task fillcombos()
-        {
-            /*
-            await FillCombo.fillStatementsTable(cb_opStatement);
-            await FillCombo.fillDurationsTable(cb_duration);
-            */
-        }
+     
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             try
@@ -323,13 +317,9 @@ namespace BookAccountApp.View.windows
         //}
         #endregion
 
-        #region repots
 
 
-
-        #endregion
-
-        #region add - update - delete
+        #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//add
             try
@@ -341,35 +331,21 @@ namespace BookAccountApp.View.windows
 
                 HelpClass.StartAwait(grid_main);
 
-                operations = new Operations();
-                /*
+                SystemModel = new Systems();
                 if (HelpClass.validate(requiredControlList, this))
                 {
-                    //tb_custCode.Text = await operations.generateCodeNumber("cu");
-                    if (Convert.ToInt32(cb_opStatement.SelectedValue) == 0)
-                    {
-                        operations.opStatementId = null;
-                    }
-                    else
-                    {
-                        operations.opStatementId = Convert.ToInt32(cb_opStatement.SelectedValue);
-                    }
-                    if (Convert.ToInt32(cb_duration.SelectedValue) == 0)
-                    {
-                        operations.durationId = null;
-                    }
-                    else
-                    {
-                        operations.durationId = Convert.ToInt32(cb_duration.SelectedValue);
-                    }
-                    operations.operation = tb_operation.Text;
-                    operations.notes = tb_notes.Text;
-
-                    operations.createUserId = MainWindow.userLogin.userId;
-                    operations.updateUserId = MainWindow.userLogin.userId;
+                    //tb_custCode.Text = await SystemModel.generateCodeNumber("cu");
 
 
-                    decimal s = await operations.Save(operations);
+                    SystemModel.name = tb_name.Text.Trim();
+                    SystemModel.company_commission = (tb_company_commission.Text == null || tb_company_commission.Text == "") ? 0 : Convert.ToDecimal(tb_company_commission.Text);
+                    SystemModel.notes = tb_notes.Text;
+
+                    SystemModel.createUserId = MainWindow.userLogin.userId;
+                    SystemModel.updateUserId = MainWindow.userLogin.userId;
+
+
+                    decimal s = await SystemModel.Save(SystemModel);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
@@ -378,10 +354,10 @@ namespace BookAccountApp.View.windows
 
 
                         Clear();
-                      
+                   
                     }
                 }
-                */
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -395,32 +371,18 @@ namespace BookAccountApp.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
-                if (operations.operationId > 0)
+
+                if (SystemModel.systemId > 0)
                 {
                     if (HelpClass.validate(requiredControlList, this))
                     {
-                        if (Convert.ToInt32(cb_opStatement.SelectedValue) == 0)
-                        {
-                            operations.opStatementId = null;
-                        }
-                        else
-                        {
-                            operations.opStatementId = Convert.ToInt32(cb_opStatement.SelectedValue);
-                        }
-                        if (Convert.ToInt32(cb_duration.SelectedValue) == 0)
-                        {
-                            operations.durationId = null;
-                        }
-                        else
-                        {
-                            operations.durationId = Convert.ToInt32(cb_duration.SelectedValue);
-                        }
-                        operations.operation = tb_operation.Text;
 
-                        operations.notes = tb_notes.Text;
 
-                        decimal s = await operations.Save(operations);
+                        SystemModel.name = tb_name.Text.Trim();
+                        SystemModel.company_commission = (tb_company_commission.Text == null || tb_company_commission.Text == "") ? 0 : Convert.ToDecimal(tb_company_commission.Text);
+                        SystemModel.notes = tb_notes.Text;
+                        SystemModel.updateUserId = MainWindow.userLogin.userId;
+                        decimal s = await SystemModel.Save(SystemModel);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -429,9 +391,9 @@ namespace BookAccountApp.View.windows
 
                             //if (isImgPressed)
                             //{
-                            //    int operationId = (int)s;
-                            //    string b = await operations.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + operationId.ToString()), operationId);
-                            //    operations.image = b;
+                            //    int systemId = (int)s;
+                            //    string b = await SystemModel.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + systemId.ToString()), systemId);
+                            //    SystemModel.image = b;
                             //    isImgPressed = false;
                             //    if (!b.Equals(""))
                             //    {
@@ -449,7 +411,7 @@ namespace BookAccountApp.View.windows
                 }
                 else
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
-                */
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -464,9 +426,9 @@ namespace BookAccountApp.View.windows
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (operations.operationId != 0)
+                if (SystemModel.systemId != 0)
                 {
-                    if ((!operations.canDelete) && (operations.isActive == false))
+                    if ((!SystemModel.canDelete) && (SystemModel.isActive == false))
                     {
                         #region
                         Window.GetWindow(this).Opacity = 0.2;
@@ -484,9 +446,9 @@ namespace BookAccountApp.View.windows
                         #region
                         Window.GetWindow(this).Opacity = 0.2;
                         wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                        if (operations.canDelete)
+                        if (SystemModel.canDelete)
                             w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
-                        if (!operations.canDelete)
+                        if (!SystemModel.canDelete)
                             w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
                         w.ShowDialog();
                         Window.GetWindow(this).Opacity = 1;
@@ -495,18 +457,18 @@ namespace BookAccountApp.View.windows
                         if (w.isOk)
                         {
                             string popupContent = "";
-                            if (operations.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
-                            if ((!operations.canDelete) && (operations.isActive == true)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+                            if (SystemModel.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
+                            if ((!SystemModel.canDelete) && (SystemModel.isActive == true)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
 
-                            var s = await operations.Delete(operations.operationId, MainWindow.userLogin.userId, operations.canDelete);
+                            var s = await SystemModel.Delete(SystemModel.systemId, MainWindow.userLogin.userId, SystemModel.canDelete);
                             if (s < 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
-                                operations.operationId = 0;
+                                SystemModel.systemId = 0;
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
-                              
+                               
                                 Clear();
 
                             }
@@ -523,14 +485,14 @@ namespace BookAccountApp.View.windows
         }
         private async Task activate()
         {//activate
-            operations.isActive = true;
-            var s = await operations.Save(operations);
+            SystemModel.isActive = true;
+            var s = await SystemModel.Save(SystemModel);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
-                 
+                
             }
         }
         #endregion
@@ -552,6 +514,42 @@ namespace BookAccountApp.View.windows
             try
             {
                 HelpClass.validate(requiredControlList, this);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Spaces_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                e.Handled = e.Key == Key.Space;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        string input;
+        decimal _decimal = 0;
+        private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            try
+            {
+                TextBox textBox = sender as TextBox;
+                HelpClass.InputJustNumber(ref textBox);
+                //if (textBox.Tag.ToString() == "int")
+                //{
+                //    Regex regex = new Regex("[^0-9]");
+                //    e.Handled = regex.IsMatch(e.Text);
+                //}
+                //else if (textBox.Tag.ToString() == "decimal")
+                //{
+                input = e.Text;
+                e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
+                //}
             }
             catch (Exception ex)
             {

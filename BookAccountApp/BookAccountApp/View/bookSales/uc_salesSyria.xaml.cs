@@ -68,7 +68,7 @@ namespace BookAccountApp.View.sales
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "airline", "passenger" ,"total", "serviceDate" };
+                requiredControlList = new List<string> { "airline", "passenger" ,"total", "system" };
       
                 #region translate
                 //if (MainWindow.lang.Equals("en"))
@@ -119,7 +119,8 @@ trTaxHint
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_ticketNum, MainWindow.resourcemanager.GetString("ticketNumHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_airline, MainWindow.resourcemanager.GetString("airlineFlightHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_office, MainWindow.resourcemanager.GetString("officeNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_priceBeforTax, MainWindow.resourcemanager.GetString("priceBeforTaxHint")); 
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_priceBeforTax, MainWindow.resourcemanager.GetString("priceBeforTaxHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_charge, MainWindow.resourcemanager.GetString("trTaxHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_total, MainWindow.resourcemanager.GetString("totalHint"));
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
