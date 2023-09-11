@@ -89,7 +89,7 @@ namespace BookAccountApp.View.sectionData
                 //await FillCombo.fillCountriesNames(cb_country);
                 //FillCombo.fillAgentLevel(cb_custlevel);
           
-                Keyboard.Focus(tb_operation);
+                Keyboard.Focus(tb_name);
 
                 await RefreshOperationssList();
                 await Search();
@@ -111,9 +111,9 @@ namespace BookAccountApp.View.sectionData
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
             txt_title.Text = MainWindow.resourcemanager.GetString("operationInfo");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_operation, MainWindow.resourcemanager.GetString("operationNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_opStatement, MainWindow.resourcemanager.GetString("opStatementHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_duration, MainWindow.resourcemanager.GetString("durationHint"));            
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_operation, MainWindow.resourcemanager.GetString("operationNameHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_opStatement, MainWindow.resourcemanager.GetString("opStatementHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_duration, MainWindow.resourcemanager.GetString("durationHint"));            
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
             //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
@@ -161,7 +161,7 @@ motherHint
                 //tb_lastName.Text = ts.ToString();
 
                 HelpClass.StartAwait(grid_main);
-            
+                /*
                 operations = new Operations();
                 if (HelpClass.validate(requiredControlList, this))
                 {
@@ -202,7 +202,7 @@ motherHint
                         await Search();
                     }
                 }
-                
+                */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -216,7 +216,7 @@ motherHint
             try
             {
                 HelpClass.StartAwait(grid_main);
-              
+              /*
                 if (operations.operationId > 0)
                 {
                     if (HelpClass.validate(requiredControlList, this)  )
@@ -271,7 +271,7 @@ motherHint
                 }
                 else
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
-                 
+                 */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -361,8 +361,8 @@ motherHint
         #region events
         public async Task fillcombos()
         {
-            await FillCombo.fillStatementsTable(cb_opStatement);
-            await FillCombo.fillDurationsTable(cb_duration);
+            //await FillCombo.fillStatementsTable(cb_opStatement);
+            //await FillCombo.fillDurationsTable(cb_duration);
            
         }
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
@@ -445,7 +445,7 @@ motherHint
             try
             {
                 HelpClass.StartAwait(grid_main);
-
+                /*
                 //selection
                 if (dg_operations.SelectedIndex != -1)
                 {
@@ -471,6 +471,7 @@ motherHint
                         #endregion
                     }
                 }
+                */
                 HelpClass.clearValidate(requiredControlList, this);
                 //p_error_email.Visibility = Visibility.Collapsed;
 
@@ -829,7 +830,7 @@ motherHint
         {
 
         }
-
+        /*
         private async void Btn_addOpStatement_Click(object sender, RoutedEventArgs e)
         {
             
@@ -880,6 +881,29 @@ motherHint
                 HelpClass.ExceptionMessage(ex, this);
             }
              
+        }
+        */
+        private void Btn_officeSystem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_officeSystem w = new wd_officeSystem();
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }

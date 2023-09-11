@@ -144,7 +144,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*"  Header="operation" Binding="{Binding Path=operation}">
+                            <DataGridTextColumn Width="*"  Header="name" Binding="{Binding Path=name}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -155,7 +155,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="opStatement" Binding="{Binding Path=opStatement}">
+                            <DataGridTextColumn Width="*"  Header="company_commission" Binding="{Binding Path=company_commission}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -166,7 +166,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="duration" Binding="{Binding Path=duration}">
+                            <DataGridTextColumn Width="*"  Header="notes" Binding="{Binding Path=notes}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -359,15 +359,15 @@
 
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
-                                <TextBox x:Name="tb_operation"  Text="{Binding operation, Mode=OneWay}" Padding="10,0,5,0" 
+                                <TextBox x:Name="tb_name"  Text="{Binding name, Mode=OneWay}" Padding="10,0,5,0" 
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                     materialDesign:HintAssist.Hint="operation..."  
+                                     materialDesign:HintAssist.Hint="name..."  
                                      Foreground="#4E4E4E"  
                                      MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"  Margin="4,0"  
                                      LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
-                                <Path x:Name="p_error_operation"
+                                <Path x:Name="p_error_name"
                                   Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
                                   HorizontalAlignment="Right" Visibility="Collapsed"   
                                   VerticalAlignment="Center" Width="15"  Height="15"
@@ -375,86 +375,25 @@
                                 </Path>
                             </Grid>
                         </Border>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
-                            <Grid>
-                                <ComboBox x:Name="cb_opStatement"  Grid.Row="1"
-                                      SelectedValue="{Binding opStatement,Mode=OneWay}"
-                                  Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
-                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                  materialDesign:HintAssist.Hint="opStatement..."  
-                                  Grid.Column="1" Height="40"   
-                                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-                                  LostFocus="validateEmpty_LostFocus" />
-                                <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
-                                          Name="p_error_opStatement"
-                              HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52
-                                          6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 
-                                          17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8
-                                          C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12
-                                          C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 
-                                          L13,15 L13,17 Z"/>
+                        <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                            <Grid   >
+                                <TextBox x:Name="tb_company_commission"  Text="{Binding company_commission, Mode=OneWay}" Padding="10,0,5,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="company_commission..."  
+                                     Foreground="#4E4E4E"  
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"  Margin="4,0"  
+                                     LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
+                                <Path x:Name="p_error_company_commission"
+                                  Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                                  Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                                </Path>
                             </Grid>
                         </Border>
-
-
-                        <Button Grid.Column="1"  Padding="0" 
-                                Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
-                                    x:Name="btn_addOpStatement" Click="Btn_addOpStatement_Click"
-                                Margin="5,1" IsEnabled="True" Width="30">
-                            <Path Fill="{StaticResource MainColor}" Stretch="Fill"  
-                    Width="25" Height="27.5"
-                                      FlowDirection="LeftToRight"
-                           Data="{StaticResource addFile}" />
-                        </Button>
-                        </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
-                            <Grid>
-                                <ComboBox x:Name="cb_duration"  Grid.Row="1"
-                                      SelectedValue="{Binding duration,Mode=OneWay}"
-                                  Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
-                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                  materialDesign:HintAssist.Hint="duration..."  
-                                  Grid.Column="1" Height="40"   
-                                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-                                  LostFocus="validateEmpty_LostFocus" />
-                                <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
-                                          Name="p_error_duration"
-                              HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52
-                                          6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 
-                                          17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8
-                                          C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12
-                                          C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 
-                                          L13,15 L13,17 Z"/>
-                            </Grid>
-                        </Border>
-
-
-                        <Button Grid.Column="1"  Padding="0" 
-                                Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
-                                    x:Name="btn_addDuration" Click="Btn_addDuration_Click"
-                                Margin="5,1" IsEnabled="True" Width="30">
-                            <Path Fill="{StaticResource MainColor}" Stretch="Fill"  
-                    Width="25" Height="27.5"
-                                      FlowDirection="LeftToRight"
-                           Data="{StaticResource addFile}" />
-                        </Button>
-            </Grid>
-
-            <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
                                 <TextBox  x:Name="tb_notes" Text="{Binding notes, Mode=OneWay}"
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -470,6 +409,30 @@
                 </ScrollViewer>
                 <Border Grid.Row="2"  Height="1"  BorderBrush="{StaticResource LightGrey}" 
                     BorderThickness="1" Opacity="0.5" Margin="10,5,10,0"  />
+                <Grid  Grid.Row="3"   >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btn_officeSystem" Grid.Column="0" BorderBrush="{x:Null}" Padding="0" 
+                  Margin="5 5 2.5 5 " Height="auto" 
+                Background="{x:Null}" VerticalAlignment="Top" Click="Btn_officeSystem_Click" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+           Width="50" Height="50" FlowDirection="LeftToRight"
+           Data="{StaticResource infoCircle}"/>
+                            <TextBlock x:Name="txt_officeSystemButton"
+                    Text="officeSystem"  Grid.Row="1" 
+                                    FontWeight="Regular" FontSize="10" TextAlignment="Center"
+                                    Foreground="{StaticResource SecondColor}"
+                                     HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                        </Grid>
+                    </Button>
+                </Grid>
                 <Grid Grid.Row="4" Margin="5,5,5,10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
