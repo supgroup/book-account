@@ -79,27 +79,26 @@ namespace BookAccountApp.View.settings.commissions
         private void translate()
         {
             //trTax exchangePrice
-           txt_taxInfo.Text = MainWindow.resourcemanager.GetString("trTax");
            //  txt_taxHint.Text = MainWindow.resourcemanager.GetString("syrSoto");          
              txt_priceExchangeInfo.Text = MainWindow.resourcemanager.GetString("exchangePrice");
             //txt_priceExchangeHint.Text = MainWindow.resourcemanager.GetString("syrSoto");
         }
 
 
-        private void Btn_tax_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Window.GetWindow(this).Opacity = 0.2;
-                wd_rateSyrSoto w = new wd_rateSyrSoto();
-                w.ShowDialog();
-                Window.GetWindow(this).Opacity = 1;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+        //private void Btn_tax_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        Window.GetWindow(this).Opacity = 0.2;
+        //        wd_rateSyrSoto w = new wd_rateSyrSoto();
+        //        w.ShowDialog();
+        //        Window.GetWindow(this).Opacity = 1;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
         private void Btn_priceExchange_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -114,6 +113,7 @@ namespace BookAccountApp.View.settings.commissions
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private void Btn_officeCommissions_Click(object sender, RoutedEventArgs e)
         {
             try
