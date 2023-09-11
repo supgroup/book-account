@@ -107,9 +107,9 @@ namespace BookAccountApp.View.windows
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
             
             txt_title.Text = MainWindow.resourcemanager.GetString("operationInfo");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_operation, MainWindow.resourcemanager.GetString("operationNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_opStatement, MainWindow.resourcemanager.GetString("opStatementHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_duration, MainWindow.resourcemanager.GetString("durationHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_operation, MainWindow.resourcemanager.GetString("operationNameHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_opStatement, MainWindow.resourcemanager.GetString("opStatementHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_duration, MainWindow.resourcemanager.GetString("durationHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
@@ -198,9 +198,10 @@ namespace BookAccountApp.View.windows
 
         public async Task fillcombos()
         {
+            /*
             await FillCombo.fillStatementsTable(cb_opStatement);
             await FillCombo.fillDurationsTable(cb_duration);
-
+            */
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -341,6 +342,7 @@ namespace BookAccountApp.View.windows
                 HelpClass.StartAwait(grid_main);
 
                 operations = new Operations();
+                /*
                 if (HelpClass.validate(requiredControlList, this))
                 {
                     //tb_custCode.Text = await operations.generateCodeNumber("cu");
@@ -379,7 +381,7 @@ namespace BookAccountApp.View.windows
                       
                     }
                 }
-
+                */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -393,7 +395,7 @@ namespace BookAccountApp.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-
+                /*
                 if (operations.operationId > 0)
                 {
                     if (HelpClass.validate(requiredControlList, this))
@@ -447,7 +449,7 @@ namespace BookAccountApp.View.windows
                 }
                 else
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
-
+                */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
