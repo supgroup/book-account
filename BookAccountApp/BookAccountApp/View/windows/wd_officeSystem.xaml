@@ -92,7 +92,7 @@
                         </DataGrid.Resources>
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="*" IsReadOnly="True" Header="officeName" Binding="{Binding Path=officeName}"/>
-                            <DataGridTextColumn Width="*"  Header="office_commission" Binding="{Binding Path=office_commission, Mode=TwoWay}"/>
+                            <DataGridTextColumn Width="*"  Header="office_commission"  Binding="{Binding Path=office_commission, Mode=TwoWay ,Converter={StaticResource accuracyConverter}}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>

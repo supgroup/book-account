@@ -607,7 +607,7 @@ namespace BookAccountApp.ApiClasses
 
             try
             {
-                if (officeId > 0)
+                if (newList.Count > 0)
                 {
                     foreach (OfficeSystem row in newList)
                     {

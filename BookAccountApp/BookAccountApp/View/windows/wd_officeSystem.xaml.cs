@@ -30,11 +30,12 @@ namespace BookAccountApp.View.windows
         #region variables
 
         OfficeSystem officeSystemrow = new OfficeSystem();
-
+     public Systems SystemModel = new Systems();
+        public Office OfficeModel = new Office();
         IEnumerable<OfficeSystem> officeSystemQuery;
         IEnumerable<OfficeSystem> officeSystemList;
         public static List<string> requiredControlList;
-
+        public string type = "";
         bool tgl_priceState = true;
         string searchText = "";
         BrushConverter bc = new BrushConverter();
@@ -74,10 +75,11 @@ namespace BookAccountApp.View.windows
                 //}
                 translate();
                 #endregion
+                await RefreshofficeSystemList();
+                await Search();
 
-              
 
-             
+
 
 
                 if (sender != null)
@@ -95,35 +97,29 @@ namespace BookAccountApp.View.windows
         #region methods
         private void translate()
         {
-            /*
-            txt_title.Text = MainWindow.resourcemanager.GetString("opStatement");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("opStatementHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+             
+            txt_title.Text = MainWindow.resourcemanager.GetString("officeCommissions");
+             
+                txt_systemName.Text = type == "systems" ? SystemModel.name : OfficeModel.name;
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("opStatementHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
-            btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
-            btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            btn_cancel.Content = MainWindow.resourcemanager.GetString("trCancel");
+            //btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
 
 
-            dg_items.Columns[0].Header = MainWindow.resourcemanager.GetString("opStatement");
-            dg_items.Columns[1].Header = MainWindow.resourcemanager.GetString("trNote");
-            */
+            dg_items.Columns[0].Header = type == "systems" ? MainWindow.resourcemanager.GetString("trOffice") : MainWindow.resourcemanager.GetString("bookSystem");
+            dg_items.Columns[1].Header = MainWindow.resourcemanager.GetString("commission");
+             
 
 
         }
         
 
-        async Task<IEnumerable<OfficeSystem>> RefreshOfficeSystemList()
-        {
-            officeSystemList = await officeSystemrow.GetAll();
-
-            return officeSystemList;
-        }
-        void RefreshOfficeSystemView()
-        {
-            dg_items.ItemsSource = officeSystemQuery;
-        }
+        
+       
         /*
         void Clear()
         {
@@ -180,13 +176,48 @@ namespace BookAccountApp.View.windows
 
 
 
-       
+
 
 
         #endregion
 
         #region events
+        async Task Search()
+        {
+            //search
+            if (officeSystemList is null)
+                await RefreshofficeSystemList();
 
+            //searchText = tb_search.Text.ToLower();
+            //officeSystemQuery = officeSystemList.Where(s =>
+            //(
+            //s.name.ToLower().Contains(searchText) ||
+            //s.notes.ToLower().Contains(searchText)
+
+            //) && s.isActive == tgl_operationsstate);
+            //&& s.isActive == tgl_operationsstate
+            //);
+            officeSystemQuery = officeSystemList;
+            RefreshOfficeSystemView();
+        }
+        async Task<IEnumerable<OfficeSystem>> RefreshofficeSystemList()
+        {
+            if(type== "systems")
+            {
+                officeSystemList = await officeSystemrow.GetbySysId(SystemModel.systemId);
+            }
+           
+            else if (type == "office")
+            {               
+   officeSystemList = await officeSystemrow.GetbyOfficeId(OfficeModel.officeId);
+            }
+        
+            return officeSystemList;
+        }
+        void RefreshOfficeSystemView()
+        {
+            dg_items.ItemsSource = officeSystemQuery;
+        }
 
         private void Dg_items_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
@@ -292,14 +323,46 @@ namespace BookAccountApp.View.windows
             }
         }
 
-        private void Btn_save_Click(object sender, RoutedEventArgs e)
+        private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {
-
+           
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //if (HelpClass.validate(requiredControlList, this) && duplicaterName)
+                //{
+                    
+                  int s = await officeSystemrow.updateList(officeSystemQuery.ToList());
+                    if (s <= 0)
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    else
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        
+                        await RefreshofficeSystemList();
+                        await Search();
+                    }
+                //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_cancel_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
 
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }

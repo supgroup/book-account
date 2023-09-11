@@ -853,10 +853,24 @@ namespace BookAccountApp.View.sectionData
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
+                if (SystemModel.systemId > 0)
+                {
+              
+
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_officeSystem w = new wd_officeSystem();
+                    w.type = "systems";
+                    w.SystemModel = SystemModel;
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
+                }
+                else
+                {
+
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
+                }
+                //
 
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);

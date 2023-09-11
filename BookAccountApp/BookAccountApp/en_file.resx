@@ -3124,4 +3124,7 @@ Please add Email in setting</value>
   <data name="bookSysNameHint" xml:space="preserve">
     <value>Book System Name</value>
   </data>
+  <data name="commission" xml:space="preserve">
+    <value>Commission %</value>
+  </data>
 </root>

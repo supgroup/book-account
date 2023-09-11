@@ -3133,4 +3133,7 @@
   <data name="companyCommissionHint" xml:space="preserve">
     <value>عمولة الشركة ...</value>
   </data>
+  <data name="commission" xml:space="preserve">
+    <value>العمولة %</value>
+  </data>
 </root>
