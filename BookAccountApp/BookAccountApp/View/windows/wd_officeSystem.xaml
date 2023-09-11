@@ -91,8 +91,8 @@
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="*"  Header="officeName" Binding="{Binding Path=officeName}"/>
-                            <DataGridTextColumn Width="*"  Header="office_commission" Binding="{Binding Path=office_commission}"/>
+                            <DataGridTextColumn Width="*" IsReadOnly="True" Header="officeName" Binding="{Binding Path=officeName}"/>
+                            <DataGridTextColumn Width="*"  Header="office_commission" Binding="{Binding Path=office_commission, Mode=TwoWay}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
