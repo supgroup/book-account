@@ -132,7 +132,7 @@
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="*"  Header="operationId" Binding="{Binding Path=operationId}">
+                            <DataGridTextColumn Width="*"  Header="systemId" Binding="{Binding Path=systemId}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -155,7 +155,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="company_commission" Binding="{Binding Path=company_commission}">
+                            <DataGridTextColumn Width="*"  Header="company_commission"  Binding="{Binding Path=company_commission,Converter={StaticResource accuracyConverter}}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -384,7 +384,7 @@
                                      MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"  Margin="4,0"  
-                                     LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
+                                      LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Number_PreviewTextInput"/>
                                 <Path x:Name="p_error_company_commission"
                                   Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
                                   HorizontalAlignment="Right" Visibility="Collapsed"   

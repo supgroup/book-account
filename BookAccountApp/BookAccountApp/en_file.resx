@@ -3118,4 +3118,10 @@ Please add Email in setting</value>
   <data name="bookSystems" xml:space="preserve">
     <value>Book Systems</value>
   </data>
+  <data name="bookInfo" xml:space="preserve">
+    <value>Book System Info</value>
+  </data>
+  <data name="bookSysNameHint" xml:space="preserve">
+    <value>Book System Name</value>
+  </data>
 </root>

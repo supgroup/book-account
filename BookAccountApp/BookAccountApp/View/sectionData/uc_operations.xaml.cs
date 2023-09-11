@@ -53,9 +53,9 @@ namespace BookAccountApp.View.sectionData
             }
         }
 
-        Operations operations = new Operations();
-        IEnumerable<Operations> operationssQuery;
-        IEnumerable<Operations> operationss;
+        Systems SystemModel = new Systems();
+        IEnumerable<Systems> SystemsQuery;
+        IEnumerable<Systems> SystemsList;
         bool first = true;
         bool tgl_operationsstate;
         string searchText = "";
@@ -67,7 +67,7 @@ namespace BookAccountApp.View.sectionData
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "operation" };
+                requiredControlList = new List<string> { "name", "company_commission" };
 
                 #region translate
                 //if (MainWindow.lang.Equals("en"))
@@ -95,7 +95,7 @@ namespace BookAccountApp.View.sectionData
                 await Search();
               
                 Clear();
-                fillcombos();
+               // fillcombos();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -106,45 +106,29 @@ namespace BookAccountApp.View.sectionData
         }
         private void translate()
         {
+            //bookInfo bookSysNameHint companyCommissionHint bookSystem officeCommissions
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            txt_title.Text = MainWindow.resourcemanager.GetString("operationInfo");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_operation, MainWindow.resourcemanager.GetString("operationNameHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_opStatement, MainWindow.resourcemanager.GetString("opStatementHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_duration, MainWindow.resourcemanager.GetString("durationHint"));            
+            txt_title.Text = MainWindow.resourcemanager.GetString("bookInfo"); 
+       txt_officeSystemButton.Text = MainWindow.resourcemanager.GetString("officeCommissions");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("bookSysNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_company_commission, MainWindow.resourcemanager.GetString("companyCommissionHint"));
+                     
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-
-            //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
-
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_custlevel, MainWindow.resourcemanager.GetString("trLevelHint"));
-            //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
-            /*
-            father  
-fatherHint  	
-mother  
-motherHint  
-    */
-            //   operationss
+ 
+            //   SystemsList
            
             dg_operations.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");        
-            dg_operations.Columns[1].Header = MainWindow.resourcemanager.GetString("operationName");
-            dg_operations.Columns[2].Header = MainWindow.resourcemanager.GetString("opStatement");
-            dg_operations.Columns[3].Header = MainWindow.resourcemanager.GetString("duration");
-          
-
-            //dg_operations.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
-
+            dg_operations.Columns[1].Header = MainWindow.resourcemanager.GetString("bookSystem");
+            dg_operations.Columns[2].Header = MainWindow.resourcemanager.GetString("companyCommission");
+            dg_operations.Columns[3].Header = MainWindow.resourcemanager.GetString("trNote");
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
             tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
             tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
             tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
             tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            //tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
-
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
             btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
@@ -161,35 +145,22 @@ motherHint
                 //tb_lastName.Text = ts.ToString();
 
                 HelpClass.StartAwait(grid_main);
-                /*
-                operations = new Operations();
+                
+                SystemModel = new Systems();
                 if (HelpClass.validate(requiredControlList, this))
                 {
-                    //tb_custCode.Text = await operations.generateCodeNumber("cu");
-                    if (Convert.ToInt32(cb_opStatement.SelectedValue) == 0)
-                    {
-                        operations.opStatementId = null;
-                    }
-                    else
-                    {
-                        operations.opStatementId = Convert.ToInt32(cb_opStatement.SelectedValue);
-                    }
-                    if (Convert.ToInt32(cb_duration.SelectedValue) == 0)
-                    {
-                        operations.durationId = null;
-                    }
-                    else
-                    {
-                        operations.durationId = Convert.ToInt32(cb_duration.SelectedValue);
-                    }
-                    operations.operation = tb_operation.Text;                                 
-                    operations.notes = tb_notes.Text;
+                    //tb_custCode.Text = await SystemModel.generateCodeNumber("cu");
+                    
+                 
+                    SystemModel.name = tb_name.Text.Trim();
+                    SystemModel.company_commission = (tb_company_commission.Text == null || tb_company_commission.Text == "") ? 0 : Convert.ToDecimal(tb_company_commission.Text); 
+                    SystemModel.notes = tb_notes.Text;
 
-                    operations.createUserId = MainWindow.userLogin.userId;
-                    operations.updateUserId = MainWindow.userLogin.userId;
+                    SystemModel.createUserId = MainWindow.userLogin.userId;
+                    SystemModel.updateUserId = MainWindow.userLogin.userId;
 
 
-                    decimal s = await operations.Save(operations);
+                    decimal s = await SystemModel.Save(SystemModel);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
@@ -202,7 +173,7 @@ motherHint
                         await Search();
                     }
                 }
-                */
+               
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -216,32 +187,18 @@ motherHint
             try
             {
                 HelpClass.StartAwait(grid_main);
-              /*
-                if (operations.operationId > 0)
+             
+                if (SystemModel.systemId > 0)
                 {
                     if (HelpClass.validate(requiredControlList, this)  )
                     {
-                        if (Convert.ToInt32(cb_opStatement.SelectedValue) == 0)
-                        {
-                            operations.opStatementId = null;
-                        }
-                        else
-                        {
-                            operations.opStatementId = Convert.ToInt32(cb_opStatement.SelectedValue);
-                        }
-                        if (Convert.ToInt32(cb_duration.SelectedValue) == 0)
-                        {
-                            operations.durationId = null;
-                        }
-                        else
-                        {
-                            operations.durationId = Convert.ToInt32(cb_duration.SelectedValue);
-                        }
-                        operations.operation = tb_operation.Text;
-                   
-                        operations.notes = tb_notes.Text;
 
-                        decimal s = await operations.Save(operations);
+
+                        SystemModel.name = tb_name.Text.Trim();
+                        SystemModel.company_commission = (tb_company_commission.Text == null || tb_company_commission.Text == "") ? 0 : Convert.ToDecimal(tb_company_commission.Text);
+                        SystemModel.notes = tb_notes.Text;
+                        SystemModel.updateUserId = MainWindow.userLogin.userId;
+                        decimal s = await SystemModel.Save(SystemModel);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -250,9 +207,9 @@ motherHint
 
                             //if (isImgPressed)
                             //{
-                            //    int operationId = (int)s;
-                            //    string b = await operations.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + operationId.ToString()), operationId);
-                            //    operations.image = b;
+                            //    int systemId = (int)s;
+                            //    string b = await SystemModel.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + systemId.ToString()), systemId);
+                            //    SystemModel.image = b;
                             //    isImgPressed = false;
                             //    if (!b.Equals(""))
                             //    {
@@ -271,7 +228,7 @@ motherHint
                 }
                 else
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
-                 */
+                  
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -286,9 +243,9 @@ motherHint
             {
                 HelpClass.StartAwait(grid_main);
               
-                    if (operations.operationId != 0)
+                    if (SystemModel.systemId != 0)
                     {
-                        if ((!operations.canDelete) && (operations.isActive == false))
+                        if ((!SystemModel.canDelete) && (SystemModel.isActive == false))
                         {
                             #region
                             Window.GetWindow(this).Opacity = 0.2;
@@ -306,9 +263,9 @@ motherHint
                             #region
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                            if (operations.canDelete)
+                            if (SystemModel.canDelete)
                                 w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
-                            if (!operations.canDelete)
+                            if (!SystemModel.canDelete)
                                 w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
@@ -317,15 +274,15 @@ motherHint
                             if (w.isOk)
                             {
                                 string popupContent = "";
-                                if (operations.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
-                                if ((!operations.canDelete) && (operations.isActive == true)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+                                if (SystemModel.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
+                                if ((!SystemModel.canDelete) && (SystemModel.isActive == true)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
 
-                                var s = await operations.Delete(operations.operationId, MainWindow.userLogin.userId, operations.canDelete);
+                                var s = await SystemModel.Delete(SystemModel.systemId, MainWindow.userLogin.userId, SystemModel.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
-                                    operations.operationId = 0;
+                                    SystemModel.systemId = 0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshOperationssList();
@@ -346,8 +303,8 @@ motherHint
         }
         private async Task activate()
         {//activate
-            operations.isActive = true;
-            var s = await operations.Save(operations);
+            SystemModel.isActive = true;
+            var s = await SystemModel.Save(SystemModel);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
@@ -385,7 +342,7 @@ motherHint
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (operationss is null)
+                if (SystemsList is null)
                     await RefreshOperationssList();
                 tgl_operationsstate = true;
                 if (first)
@@ -411,7 +368,7 @@ motherHint
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (operationss is null)
+                if (SystemsList is null)
                     await RefreshOperationssList();
                 tgl_operationsstate = false;
                 await Search();
@@ -445,25 +402,25 @@ motherHint
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
+              
                 //selection
                 if (dg_operations.SelectedIndex != -1)
                 {
-                    operations = dg_operations.SelectedItem as Operations;
+                    SystemModel = dg_operations.SelectedItem as Systems;
              
-                    if (operations != null)
+                    if (SystemModel != null)
                     {
-                        //tb_custCode.Text = operations.custCode;
-                        //cb_country.SelectedValue = operations.countryId;
-                        cb_opStatement.SelectedValue = operations.opStatementId;
-                        cb_duration.SelectedValue = operations.durationId;
-                        this.DataContext = operations;
+                        //tb_custCode.Text = SystemModel.custCode;
+                        //cb_country.SelectedValue = SystemModel.countryId;
+                 
+                        this.DataContext = SystemModel;
+                        tb_company_commission.Text = HelpClass.DecTostring(SystemModel.company_commission);
                         #region delete
-                        if (operations.canDelete)
+                        if (SystemModel.canDelete)
                             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
                         else
                         {
-                            if (operations.isActive == false)
+                            if (SystemModel.isActive == false)
                                 btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
                             else
                                 btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
@@ -471,7 +428,7 @@ motherHint
                         #endregion
                     }
                 }
-                */
+               
                 HelpClass.clearValidate(requiredControlList, this);
                 //p_error_email.Visibility = Visibility.Collapsed;
 
@@ -506,15 +463,14 @@ motherHint
         async Task Search()
         {
             //search
-            if (operationss is null)
+            if (SystemsList is null)
                 await RefreshOperationssList();
           
             searchText = tb_search.Text.ToLower();
-            operationssQuery = operationss.Where(s =>
-            (s.operationId.ToString().Contains(searchText) ||
-            s.operation.ToLower().Contains(searchText) ||
-            s.opStatement.ToLower().Contains(searchText) ||
-            s.duration.ToLower().Contains(searchText)
+            SystemsQuery = SystemsList.Where(s =>
+            ( 
+            s.name.ToLower().Contains(searchText) ||
+            s.notes.ToLower().Contains(searchText)  
             
             ) && s.isActive == tgl_operationsstate);
             //&& s.isActive == tgl_operationsstate
@@ -522,15 +478,15 @@ motherHint
             
             RefreshOperationssView();
         }
-        async Task<IEnumerable<Operations>> RefreshOperationssList()
+        async Task<IEnumerable<Systems>> RefreshOperationssList()
         {
-            operationss = await operations.GetAll();
-            return operationss;
+            SystemsList = await SystemModel.GetAll();
+            return SystemsList;
         }
         void RefreshOperationssView()
         {
-            dg_operations.ItemsSource = operationssQuery;
-            //txt_count.Text = operationssQuery.Count().ToString();
+            dg_operations.ItemsSource = SystemsQuery;
+            //txt_count.Text = SystemsQuery.Count().ToString();
         }
         #endregion
 
@@ -538,21 +494,29 @@ motherHint
 
         void Clear()
         {
-            this.DataContext = new Operations();
-
-            
+            this.DataContext = new Systems();
+            tb_company_commission.Text = "";
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
+        string input;
+        decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             try
             {
-                //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
-                Regex regex = new Regex("[^0-9]+");
-                e.Handled = regex.IsMatch(e.Text);
+                //if (textBox.Tag.ToString() == "int")
+                //{
+                //    Regex regex = new Regex("[^0-9]");
+                //    e.Handled = regex.IsMatch(e.Text);
+                //}
+                //else if (textBox.Tag.ToString() == "decimal")
+                //{
+                input = e.Text;
+                e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
+                //}
             }
             catch (Exception ex)
             {
@@ -650,7 +614,7 @@ motherHint
             //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
             //  Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport");
 
-            clsReports.OperationReport(operationssQuery, rep, reppath, paramarr);
+            clsReports.SystemReport(SystemsQuery, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
@@ -800,7 +764,7 @@ motherHint
                 //{
                 #region
                 Window.GetWindow(this).Opacity = 0.2;
-                win_lvc win = new win_lvc(operationssQuery, 4);
+                win_lvc win = new win_lvc(SystemsQuery, 4);
                 win.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
                 #endregion

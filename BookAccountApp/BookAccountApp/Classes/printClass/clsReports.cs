@@ -256,6 +256,31 @@ passwordSoto
 
         }
 
+        public static void SystemReport(IEnumerable<Systems> QueryList, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            List<Systems> Query = JsonConvert.DeserializeObject<List<Systems>>(JsonConvert.SerializeObject(QueryList));
+            //foreach (Office row in Query)
+            //{
+            //    row.strjoinDate = dateFrameConverter(row.joinDate);
+
+            //}
+
+            rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+            //title
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("operations")));
+            //table columns
+            paramarr.Add(new ReportParameter("trNo", MainWindow.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("operationName", MainWindow.resourcemanagerreport.GetString("operationName")));
+            paramarr.Add(new ReportParameter("opStatement", MainWindow.resourcemanagerreport.GetString("opStatement")));
+            paramarr.Add(new ReportParameter("duration", MainWindow.resourcemanagerreport.GetString("duration")));
+
+
+
+        }
+
         public static void SaleReport(IEnumerable<ServiceData> QueryList, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;

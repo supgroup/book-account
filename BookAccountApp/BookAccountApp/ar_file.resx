@@ -3121,4 +3121,16 @@
   <data name="bookSystems" xml:space="preserve">
     <value>انظمة الحجز</value>
   </data>
+  <data name="bookInfo" xml:space="preserve">
+    <value>بيانات نظام الحجز</value>
+  </data>
+  <data name="bookSysNameHint" xml:space="preserve">
+    <value>اسم نظام الحجز ...</value>
+  </data>
+  <data name="companyCommission" xml:space="preserve">
+    <value>عمولة الشركة</value>
+  </data>
+  <data name="companyCommissionHint" xml:space="preserve">
+    <value>عمولة الشركة ...</value>
+  </data>
 </root>

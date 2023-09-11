@@ -238,10 +238,15 @@ namespace BookAccountApp.ApiClasses
                     {
                         office objectDelete = entity.office.Find(id);
                         List<officeFiles> fileslist = entity.officeFiles.Where(f => f.officeId == objectDelete.officeId).ToList();
+                      
                         //remove files first
                         //code here
                         //remove rows from db
                         entity.officeFiles.RemoveRange(fileslist);
+                        //delete related OfficeSystem
+                        OfficeSystem OfficeSystemModel = new OfficeSystem();
+                        decimal res=   await OfficeSystemModel.DeletebyOfficeId(id);
+
                         entity.office.Remove(objectDelete);
                         message = entity.SaveChanges();
                         return message;

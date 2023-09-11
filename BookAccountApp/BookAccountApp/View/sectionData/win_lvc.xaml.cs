@@ -33,7 +33,7 @@ namespace BookAccountApp.View.sectionData
         IEnumerable<Passengers> passengersQuery;
         IEnumerable<Users> usersQuery;
         IEnumerable<Office> officesQuery;
-        IEnumerable<Operations> operationsQuery;
+        IEnumerable<Systems> operationsQuery;
         IEnumerable<Flights> flightsQuery;
         IEnumerable<ServiceData> serviceDatasQuery;
 
@@ -89,7 +89,7 @@ namespace BookAccountApp.View.sectionData
             }
         }
      
-        public win_lvc(IEnumerable<Operations> _operationsQuery, int _data)
+        public win_lvc(IEnumerable<Systems> _operationsQuery, int _data)
         {
             try
             {

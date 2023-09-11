@@ -215,6 +215,9 @@ namespace BookAccountApp.ApiClasses
                     using (bookdbEntities entity = new bookdbEntities())
                     {
                         systems objectDelete = entity.systems.Find(id);
+                        //delete related OfficeSystem
+                        OfficeSystem OfficeSystemModel = new OfficeSystem();
+                        decimal res = await OfficeSystemModel.DeletebySysId(id);
 
                         entity.systems.Remove(objectDelete);
                         message = entity.SaveChanges();
