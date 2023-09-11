@@ -77,7 +77,7 @@ namespace BookAccountApp.View.sectionData
             btn_office.Content = MainWindow.resourcemanager.GetString("trOffices");
             btn_passengers.Content = MainWindow.resourcemanager.GetString("passengers");
             btn_flights.Content = MainWindow.resourcemanager.GetString("flights");
-            btn_operations.Content = MainWindow.resourcemanager.GetString("operations");
+            btn_operations.Content = MainWindow.resourcemanager.GetString("bookSystems");//operations
             //btn_customers.Content = MainWindow.resourcemanager.GetString("trCustomers");
         }
 

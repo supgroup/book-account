@@ -3118,4 +3118,7 @@
   <data name="priceBeforTaxHint" xml:space="preserve">
     <value>السعر قبل الضرائب ...</value>
   </data>
+  <data name="bookSystems" xml:space="preserve">
+    <value>انظمة الحجز</value>
+  </data>
 </root>

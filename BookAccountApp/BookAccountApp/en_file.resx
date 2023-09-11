@@ -3115,4 +3115,7 @@ Please add Email in setting</value>
   <data name="priceBeforTaxHint" xml:space="preserve">
     <value>Price Befor Tax...</value>
   </data>
+  <data name="bookSystems" xml:space="preserve">
+    <value>Book Systems</value>
+  </data>
 </root>
