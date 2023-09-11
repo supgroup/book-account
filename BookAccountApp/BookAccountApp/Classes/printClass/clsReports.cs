@@ -262,20 +262,20 @@ passwordSoto
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             List<Systems> Query = JsonConvert.DeserializeObject<List<Systems>>(JsonConvert.SerializeObject(QueryList));
-            //foreach (Office row in Query)
-            //{
-            //    row.strjoinDate = dateFrameConverter(row.joinDate);
+            foreach (Systems row in Query)
+            {
+                row.company_commission = decimal.Parse(HelpClass.DecTostring(row.company_commission));
 
-            //}
+            }
 
             rep.DataSources.Add(new ReportDataSource("DataSet", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("operations")));
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("bookSystems")));
             //table columns
             paramarr.Add(new ReportParameter("trNo", MainWindow.resourcemanagerreport.GetString("trNo.")));
-            paramarr.Add(new ReportParameter("operationName", MainWindow.resourcemanagerreport.GetString("operationName")));
-            paramarr.Add(new ReportParameter("opStatement", MainWindow.resourcemanagerreport.GetString("opStatement")));
-            paramarr.Add(new ReportParameter("duration", MainWindow.resourcemanagerreport.GetString("duration")));
+            paramarr.Add(new ReportParameter("name", MainWindow.resourcemanagerreport.GetString("bookSystem")));
+            paramarr.Add(new ReportParameter("trcompany_commission", MainWindow.resourcemanagerreport.GetString("companyCommission")));
+            paramarr.Add(new ReportParameter("trNotes", MainWindow.resourcemanagerreport.GetString("trNote")));
 
 
 

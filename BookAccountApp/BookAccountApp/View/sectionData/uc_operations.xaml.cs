@@ -602,7 +602,7 @@ namespace BookAccountApp.View.sectionData
             bool isArabic = ReportCls.checkLang();
             //if (isArabic)
             //{
-            addpath = @"\Reports\SectionData\Ar\ArOperation.rdlc";
+            addpath = @"\Reports\SectionData\Ar\ArSystems.rdlc";
 
             //}
             //else

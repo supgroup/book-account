@@ -694,6 +694,9 @@
     <Content Include="Reports\Sale\ArSales.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\SectionData\Ar\ArSystems.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\logo.png" />
     <Content Include="Thumb\office\tmp.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -871,6 +874,7 @@
     <None Include="Properties\DataSources\BookAccountApp.ApiClasses.Operations.datasource" />
     <None Include="Properties\DataSources\BookAccountApp.ApiClasses.Passengers.datasource" />
     <None Include="Properties\DataSources\BookAccountApp.ApiClasses.ServiceData.datasource" />
+    <None Include="Properties\DataSources\BookAccountApp.ApiClasses.Systems.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonObjectId.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonReader.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonWriter.datasource" />
