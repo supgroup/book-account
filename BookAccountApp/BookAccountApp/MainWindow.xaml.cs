@@ -205,8 +205,8 @@ namespace BookAccountApp
                     case "flights":
                         txt_secondPath.Text = "> " + resourcemanager.GetString("flights");
                         break;
-                    case "operations":
-                        txt_secondPath.Text = "> " + resourcemanager.GetString("operations");
+                    case "bookSystems":
+                        txt_secondPath.Text = "> " + resourcemanager.GetString("bookSystems");
                         break;
                     case "salesSyria":
                         txt_secondPath.Text = "> " + resourcemanager.GetString("syr");
