@@ -112,23 +112,14 @@ namespace BookAccountApp.View.sales
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
             txt_title.Text = MainWindow.resourcemanager.GetString("bookInfoSyr");
             /*
-             bookInfoSyr
-passengerName
-ticketNum
-total
-      passengerNameHint
-ticketNumHint
-totalHint      
-airlineFlight
-airlineFlightHint
-officeNameHint
-trDateHint
+trTaxHint
 * */
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_passenger, MainWindow.resourcemanager.GetString("passengerNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_system, MainWindow.resourcemanager.GetString("bookSystemHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_ticketNum, MainWindow.resourcemanager.GetString("ticketNumHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_airline, MainWindow.resourcemanager.GetString("airlineFlightHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_office, MainWindow.resourcemanager.GetString("officeNameHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_serviceDate, MainWindow.resourcemanager.GetString("trDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_priceBeforTax, MainWindow.resourcemanager.GetString("priceBeforTaxHint")); 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_total, MainWindow.resourcemanager.GetString("totalHint"));
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
@@ -136,27 +127,16 @@ trDateHint
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_toDateSearch, MainWindow.resourcemanager.GetString("toDate"));
             txt_exportDocsButton.Text = MainWindow.resourcemanager.GetString("docExport");
             txt_uploadDocsButton.Text = MainWindow.resourcemanager.GetString("docUpload");
-            //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
-
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_custlevel, MainWindow.resourcemanager.GetString("trLevelHint"));
-            //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
-
-            //   serviceDatas
-
+         
             dg_serviceData.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
             dg_serviceData.Columns[1].Header = MainWindow.resourcemanager.GetString("passengerName");
-            dg_serviceData.Columns[2].Header = MainWindow.resourcemanager.GetString("ticketNum");
-            dg_serviceData.Columns[3].Header = MainWindow.resourcemanager.GetString("airlineFlight");
-            dg_serviceData.Columns[4].Header = MainWindow.resourcemanager.GetString("officeName");
-            dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("trCreateDate");
-            dg_serviceData.Columns[6].Header = MainWindow.resourcemanager.GetString("trDate");
-            dg_serviceData.Columns[7].Header = MainWindow.resourcemanager.GetString("total");
-         
-
-            //dg_serviceData.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
-
+            dg_serviceData.Columns[2].Header = MainWindow.resourcemanager.GetString("bookSystem");
+            dg_serviceData.Columns[3].Header = MainWindow.resourcemanager.GetString("ticketNum");
+            dg_serviceData.Columns[4].Header = MainWindow.resourcemanager.GetString("airlineFlight");
+            dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("officeName");
+           dg_serviceData.Columns[6].Header = MainWindow.resourcemanager.GetString("priceBeforTax");
+            dg_serviceData.Columns[7].Header = MainWindow.resourcemanager.GetString("total"); 
+            dg_serviceData.Columns[8].Header = MainWindow.resourcemanager.GetString("trDate");
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
             tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
             tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
@@ -595,6 +575,7 @@ trDateHint
             await FillCombo.fillPassengers(cb_passenger);
             await FillCombo.fillFlights(cb_airline);
             await FillCombo.fillOffice(cb_office);
+            await FillCombo.fillSystems(cb_system);
         }
 
         #endregion
@@ -952,9 +933,28 @@ trDateHint
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_addSystem_Click(object sender, RoutedEventArgs e)
+        private async void Btn_addSystem_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_systems w = new wd_systems();
+                w.ShowDialog();
+                await FillCombo.fillSystems(cb_system);
+                Window.GetWindow(this).Opacity = 1;
 
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private async void Btn_addOffice_Click(object sender, RoutedEventArgs e)
         {

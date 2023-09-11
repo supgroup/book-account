@@ -3103,4 +3103,16 @@ Please add Email in setting</value>
   <data name="financeSetting" xml:space="preserve">
     <value>Finance Setting</value>
   </data>
+  <data name="bookSystem" xml:space="preserve">
+    <value>Book System</value>
+  </data>
+  <data name="bookSystemHint" xml:space="preserve">
+    <value>Book System ...</value>
+  </data>
+  <data name="priceBeforTax" xml:space="preserve">
+    <value>Price Befor Tax</value>
+  </data>
+  <data name="priceBeforTaxHint" xml:space="preserve">
+    <value>Price Befor Tax...</value>
+  </data>
 </root>

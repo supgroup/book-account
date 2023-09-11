@@ -425,6 +425,9 @@
     <Compile Include="View\windows\wd_office.xaml.cs">
       <DependentUpon>wd_office.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_systems.xaml.cs">
+      <DependentUpon>wd_systems.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_operations.xaml.cs">
       <DependentUpon>wd_operations.xaml</DependentUpon>
     </Compile>
@@ -607,6 +610,10 @@
     <Page Include="View\windows\wd_office.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_systems.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_operations.xaml">
       <SubType>Designer</SubType>

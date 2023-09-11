@@ -901,14 +901,14 @@ namespace BookAccountApp.Classes
 
 
         }
-        static Operations OperationModel = new Operations();
-        static IEnumerable<Operations> OperationsList;
-        static public async Task fillOperations(ComboBox combo)
+        static Systems SystemsModel = new Systems();
+        static IEnumerable<Systems> SystemsList;
+        static public async Task fillSystems(ComboBox combo)
         {
-            OperationsList = await OperationModel.GetAll();
-            combo.ItemsSource = OperationsList;
-            combo.SelectedValuePath = "operationId";
-            combo.DisplayMemberPath = "operation";
+            SystemsList = await SystemsModel.GetAll();
+            combo.ItemsSource = SystemsList; 
+            combo.SelectedValuePath = "systemId";
+            combo.DisplayMemberPath = "name";
             combo.SelectedIndex = -1;
 
 

@@ -126,6 +126,9 @@ namespace BookAccountApp.View.bookSales
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_toDateSearch, MainWindow.resourcemanager.GetString("toDate"));
             txt_exportDocsButton.Text = MainWindow.resourcemanager.GetString("docExport");
             txt_uploadDocsButton.Text = MainWindow.resourcemanager.GetString("docUpload");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_system, MainWindow.resourcemanager.GetString("bookSystemHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_priceBeforTax, MainWindow.resourcemanager.GetString("priceBeforTaxHint"));
+
             //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
 
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_custlevel, MainWindow.resourcemanager.GetString("trLevelHint"));
@@ -134,17 +137,15 @@ namespace BookAccountApp.View.bookSales
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
 
             //   serviceDatas
-
             dg_serviceData.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
             dg_serviceData.Columns[1].Header = MainWindow.resourcemanager.GetString("passengerName");
-            dg_serviceData.Columns[2].Header = MainWindow.resourcemanager.GetString("ticketNum");
-            dg_serviceData.Columns[3].Header = MainWindow.resourcemanager.GetString("airlineFlight");
-            dg_serviceData.Columns[4].Header = MainWindow.resourcemanager.GetString("officeName");
-            dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("trCreateDate");//trDate
-            dg_serviceData.Columns[6].Header = MainWindow.resourcemanager.GetString("total");
-
-
-            //dg_serviceData.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
+            dg_serviceData.Columns[2].Header = MainWindow.resourcemanager.GetString("bookSystem");
+            dg_serviceData.Columns[3].Header = MainWindow.resourcemanager.GetString("ticketNum");
+            dg_serviceData.Columns[4].Header = MainWindow.resourcemanager.GetString("airlineFlight");
+            dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("officeName");
+            dg_serviceData.Columns[6].Header = MainWindow.resourcemanager.GetString("priceBeforTax");
+            dg_serviceData.Columns[7].Header = MainWindow.resourcemanager.GetString("total");
+            dg_serviceData.Columns[8].Header = MainWindow.resourcemanager.GetString("trDate");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
             tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
@@ -571,7 +572,7 @@ namespace BookAccountApp.View.bookSales
             await FillCombo.fillPassengers(cb_passenger);
             await FillCombo.fillFlights(cb_airline);
             await FillCombo.fillOffice(cb_office);
-            //await FillCombo.fillOperations(cb_operation);
+         await FillCombo.fillSystems(cb_system);
         }
 
         #endregion
@@ -938,9 +939,28 @@ namespace BookAccountApp.View.bookSales
           }
           
         }
-        private void Btn_addSystem_Click(object sender, RoutedEventArgs e)
+        private async void Btn_addSystem_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_systems w = new wd_systems();
+                w.ShowDialog();
+                await FillCombo.fillSystems(cb_system);
+                Window.GetWindow(this).Opacity = 1;
 
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Btn_addOffice_Click(object sender, RoutedEventArgs e)
@@ -966,29 +986,29 @@ namespace BookAccountApp.View.bookSales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Btn_addOperation_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_main);
-                Window.GetWindow(this).Opacity = 0.2;
-                wd_operations w = new wd_operations();
-                w.ShowDialog();
-                //await FillCombo.fillOperations(cb_operation);
-                Window.GetWindow(this).Opacity = 1;
+        //private async void Btn_addOperation_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (sender != null)
+        //            HelpClass.StartAwait(grid_main);
+        //        Window.GetWindow(this).Opacity = 0.2;
+        //        wd_operations w = new wd_operations();
+        //        w.ShowDialog();
+        //        //await FillCombo.fillOperations(cb_operation);
+        //        Window.GetWindow(this).Opacity = 1;
 
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                Window.GetWindow(this).Opacity = 1;
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+        //        if (sender != null)
+        //            HelpClass.EndAwait(grid_main);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Window.GetWindow(this).Opacity = 1;
+        //        if (sender != null)
+        //            HelpClass.EndAwait(grid_main);
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
 
         private void Tb_total_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {

@@ -177,6 +177,35 @@ namespace BookAccountApp.ApiClasses
                 return row;
             }
         }
+        public async Task<Exchange> Getlast()
+        {
+            Exchange row = new Exchange();
+            try
+            {
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    var list = entity.exchange.ToList();
+                    row = list.Where(u => u.exchangeId == entity.exchange.Max(x => x.exchangeId))
+                     .Select(S => new Exchange()
+                     {
+                         exchangeId = S.exchangeId,
+                         syValue = S.syValue,
+                         createDate = S.createDate,
+                         isActive = S.isActive,
+                         notes = S.notes,
+                         createUserId = S.createUserId,
+                     }).FirstOrDefault();
+                    return row;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                row = new Exchange();
+                //userrow.name = ex.ToString();
+                return row;
+            }
+        }
         public async Task<decimal> Delete(int id, int signuserId, bool final)
         {
 

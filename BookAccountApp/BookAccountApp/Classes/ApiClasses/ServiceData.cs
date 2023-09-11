@@ -73,6 +73,7 @@ namespace BookAccountApp.ApiClasses
         public Nullable<decimal> syValue { get; set; }
         public Nullable<decimal> tax_ratio { get; set; }
         public Nullable<decimal> tax_value { get; set; }
+        public string systemName { get; set; }
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>
@@ -189,9 +190,11 @@ namespace BookAccountApp.ApiClasses
                             join fl in entity.flights on S.flightId equals fl.flightId into JFL
                             join of in entity.office on S.officeId equals of.officeId into JOF
                             join ps in entity.passengers on S.passengerId equals ps.passengerId into JP
+                            join syst in entity.systems on S.systemId equals syst.systemId into Syst
                             from F in JFL.DefaultIfEmpty()
                             from OFF in JOF.DefaultIfEmpty()
                             from P in JP.DefaultIfEmpty()
+                            from SYS in Syst.DefaultIfEmpty()
                             where (S.systemType == systemType)
                             select new ServiceData()
                             {
@@ -242,8 +245,14 @@ namespace BookAccountApp.ApiClasses
                                 airlineUnpaid = S.airlineUnpaid,
                                 systemPaid = S.systemPaid,
                                 systemUnpaid = S.systemUnpaid,
-
-
+                                exchangeId = S.exchangeId,
+                                osId = S.osId,
+                                systemId = S.systemId,
+                                syValue = S.syValue,
+                                tax_ratio = S.tax_ratio,
+                                tax_value = S.tax_value,
+                                systemName=SYS.name,
+                               
                             }).ToList();
                     List = List.Where(S => ((fromDate == null && toDate == null) ? ((DateTime)S.createDate).Date == now.Date :
                             ((fromDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date >= fromDate.Value.Date) : true)
@@ -365,6 +374,12 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.airlineUnpaid = newObject.airlineUnpaid;
                             tmpObject.systemPaid = newObject.systemPaid;
                             tmpObject.systemUnpaid = newObject.systemUnpaid;
+                            tmpObject.exchangeId = newObject.exchangeId;
+                            tmpObject.osId = newObject.osId;
+                            tmpObject.systemId = newObject.systemId;
+                            tmpObject.syValue = newObject.syValue;
+                            tmpObject.tax_ratio = newObject.tax_ratio;
+                            tmpObject.tax_value = newObject.tax_value;
 
                             entity.SaveChanges();
 

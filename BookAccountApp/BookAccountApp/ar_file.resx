@@ -2957,10 +2957,10 @@
     <value>اسم المسافر ...</value>
   </data>
   <data name="ticketNum" xml:space="preserve">
-    <value>رقم التذكرة</value>
+    <value>PNR/رقم التذكرة</value>
   </data>
   <data name="ticketNumHint" xml:space="preserve">
-    <value>رقم التذكرة ...</value>
+    <value>PNR/رقم التذكرة ...</value>
   </data>
   <data name="toDate" xml:space="preserve">
     <value>الى تاريخ</value>
@@ -3105,5 +3105,17 @@
   </data>
   <data name="financeSetting" xml:space="preserve">
     <value>اعدادات مالية</value>
+  </data>
+  <data name="bookSystem" xml:space="preserve">
+    <value>نظام الحجز</value>
+  </data>
+  <data name="bookSystemHint" xml:space="preserve">
+    <value>نظام الحجز ...</value>
+  </data>
+  <data name="priceBeforTax" xml:space="preserve">
+    <value>السعر قبل الضرائب</value>
+  </data>
+  <data name="priceBeforTaxHint" xml:space="preserve">
+    <value>السعر قبل الضرائب ...</value>
   </data>
 </root>
