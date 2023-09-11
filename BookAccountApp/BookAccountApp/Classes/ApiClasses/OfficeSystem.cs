@@ -599,7 +599,45 @@ namespace BookAccountApp.ApiClasses
                 return List;
             }
         }
+        public async Task<OfficeSystem> GetByOfficeSysId(int officeId, int systemId)
+        {
 
+
+            OfficeSystem item = new OfficeSystem();
+
+
+            OfficeSystem row = new OfficeSystem();
+            try
+            {
+                if (officeId>0 && systemId>0)
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        var list = entity.officeSystem.ToList();
+                        row = list.Where(u => u.officeId == officeId && u.systemId == systemId)
+                         .Select(S => new OfficeSystem()
+                         {
+                             osId = S.osId,
+                             officeId = S.officeId,
+                             systemId = S.systemId,
+                             office_commission = S.office_commission,
+                             isActive = S.isActive,
+                             notes = S.notes,
+
+                         }).FirstOrDefault();
+                       
+                    }
+                }
+                return row;
+
+            }
+            catch (Exception ex)
+            {
+                row = new OfficeSystem();
+                //userrow.name = ex.ToString();
+                return row;
+            }
+        }
         public async Task<int> updateList(List<OfficeSystem> newList)
         {
 

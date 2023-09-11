@@ -902,7 +902,7 @@ namespace BookAccountApp.Classes
 
         }
         static Systems SystemsModel = new Systems();
-        static IEnumerable<Systems> SystemsList;
+        public static IEnumerable<Systems> SystemsList;
         static public async Task fillSystems(ComboBox combo)
         {
             SystemsList = await SystemsModel.GetAll();

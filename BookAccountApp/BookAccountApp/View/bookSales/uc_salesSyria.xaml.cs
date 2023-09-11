@@ -55,6 +55,7 @@ namespace BookAccountApp.View.sales
         }
 
         ServiceData serviceData = new ServiceData();
+        Systems SystemModel = new Systems();
         IEnumerable<ServiceData> serviceDatasQuery;
         IEnumerable<ServiceData> serviceDatas;
         bool first = true;
@@ -172,34 +173,46 @@ trTaxHint
                     serviceData.ticketNum = tb_ticketNum.Text;
                     serviceData.flightId = Convert.ToInt32(cb_airline.SelectedValue);
                     serviceData.officeId = Convert.ToInt32(cb_office.SelectedValue);
+                    serviceData.systemId = Convert.ToInt32(cb_system.SelectedValue);
+                    
                     //serviceData.serviceDate = dp_serviceDate.SelectedDate;
                     serviceData.total =( tb_total.Text==null|| tb_total.Text=="")?0: Convert.ToDecimal(tb_total.Text);
-                  serviceData.notes = tb_notes.Text;
+                    serviceData.priceBeforTax = (tb_priceBeforTax.Text == null || tb_priceBeforTax.Text == "") ? 0 : Convert.ToDecimal(tb_priceBeforTax.Text);
+                    serviceData.tax_value = (tb_charge.Text == null || tb_charge.Text == "") ? 0 : Convert.ToDecimal(tb_charge.Text);
+
+                    serviceData.notes = tb_notes.Text;
                     serviceData.systemType="syr";
                     serviceData.createUserId = MainWindow.userLogin.userId;
                     serviceData.updateUserId = MainWindow.userLogin.userId;
                     // calc comm
-                    serviceData.system_commission_ratio = FillCombo.syr_commission;
-                    serviceData.system_commission_value = HelpClass.calcPercentage((decimal)serviceData.total,FillCombo.syr_commission);
-                   
+                    //     serviceData.system_commission_ratio = FillCombo.syr_commission;
+
+                    //serviceData.system_commission_value = HelpClass.calcPercentage((decimal)serviceData.total,FillCombo.syr_commission);
+                    SystemModel= FillCombo.SystemsList.ToList().Where(x=>x.systemId == serviceData.systemId).FirstOrDefault();
+                    
                     if (serviceData.officeId>0)
                     {
-                        serviceData.office_commission_ratio = FillCombo.office_syr_commission;
-                        serviceData.office_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, FillCombo.office_syr_commission);
+                        OfficeSystem OfficeSystemModel = new OfficeSystem();                       
+                            OfficeSystemModel = await OfficeSystemModel.GetByOfficeSysId((int)serviceData.officeId, (int)serviceData.systemId);
+                        serviceData.osId = OfficeSystemModel.osId  ;
+                        serviceData.office_commission_ratio = OfficeSystemModel.office_commission;
+                        serviceData.office_commission_value = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)OfficeSystemModel.office_commission);
 
-                        serviceData.company_commission_ratio = FillCombo.company_syr_commission - FillCombo.office_syr_commission;
-                        serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, (decimal)serviceData.company_commission_ratio);
+                        serviceData.company_commission_ratio = SystemModel.company_commission - OfficeSystemModel.office_commission;
+                        serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)serviceData.company_commission_ratio);
 
                     }
                     else
                     {
                         serviceData.office_commission_ratio =0;
                         serviceData.office_commission_value = 0;
-                        serviceData.company_commission_ratio = FillCombo.company_syr_commission;
-                        serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, FillCombo.company_syr_commission);
+                        serviceData.company_commission_ratio = SystemModel.company_commission;
+                        serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)SystemModel.company_commission);
 
                     }
-                    serviceData.totalnet = serviceData.total - serviceData.system_commission_value - serviceData.office_commission_value;
+
+                    serviceData.totalnet = serviceData.priceBeforTax - serviceData.company_commission_value - serviceData.office_commission_value;
+                    serviceData.profit = serviceData.company_commission_value;
                     serviceData.airlinePaid = 0;
                     serviceData.airlineUnpaid = 0;
                     serviceData.officePaid = 0;
@@ -239,41 +252,51 @@ trTaxHint
                 if (serviceData.serviceId>0) { 
                     if (HelpClass.validate(requiredControlList, this))
                 {
-                    //tb_custCode.Text = await serviceData.generateCodeNumber("cu");
+                        serviceData.serviceNum = await serviceData.generateCodeNumber("SY");
+                        serviceData.passengerId = Convert.ToInt32(cb_passenger.SelectedValue);
+                        serviceData.ticketNum = tb_ticketNum.Text;
+                        serviceData.flightId = Convert.ToInt32(cb_airline.SelectedValue);
+                        serviceData.officeId = Convert.ToInt32(cb_office.SelectedValue);
+                        serviceData.systemId = Convert.ToInt32(cb_system.SelectedValue);
 
-                    serviceData.passengerId = Convert.ToInt32(cb_passenger.SelectedValue); 
-                    serviceData.ticketNum = tb_ticketNum.Text;
-                    serviceData.flightId = Convert.ToInt32(cb_airline.SelectedValue);
-                    serviceData.officeId = Convert.ToInt32(cb_office.SelectedValue);
-                    //serviceData.serviceDate = dp_serviceDate.SelectedDate;
-                    serviceData.total = Convert.ToDecimal(tb_total.Text);
-                  serviceData.notes = tb_notes.Text;
+                        //serviceData.serviceDate = dp_serviceDate.SelectedDate;
+                        serviceData.total = (tb_total.Text == null || tb_total.Text == "") ? 0 : Convert.ToDecimal(tb_total.Text);
+                        serviceData.priceBeforTax = (tb_priceBeforTax.Text == null || tb_priceBeforTax.Text == "") ? 0 : Convert.ToDecimal(tb_priceBeforTax.Text);
+                        serviceData.tax_value = (tb_charge.Text == null || tb_charge.Text == "") ? 0 : Convert.ToDecimal(tb_charge.Text);
+
+                        serviceData.notes = tb_notes.Text;
                         serviceData.systemType = "syr";
                         serviceData.createUserId = MainWindow.userLogin.userId;
-                    serviceData.updateUserId = MainWindow.userLogin.userId;
+                        serviceData.updateUserId = MainWindow.userLogin.userId;
                         // calc comm
-                        serviceData.system_commission_ratio = FillCombo.syr_commission;
-                        serviceData.system_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, FillCombo.syr_commission);
+                        //     serviceData.system_commission_ratio = FillCombo.syr_commission;
+
+                        //serviceData.system_commission_value = HelpClass.calcPercentage((decimal)serviceData.total,FillCombo.syr_commission);
+                        SystemModel = FillCombo.SystemsList.ToList().Where(x => x.systemId == serviceData.systemId).FirstOrDefault();
 
                         if (serviceData.officeId > 0)
                         {
-                            serviceData.office_commission_ratio = FillCombo.office_syr_commission;
-                            serviceData.office_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, FillCombo.office_syr_commission);
+                            OfficeSystem OfficeSystemModel = new OfficeSystem();
+                            OfficeSystemModel = await OfficeSystemModel.GetByOfficeSysId((int)serviceData.officeId, (int)serviceData.systemId);
+                            serviceData.osId = OfficeSystemModel.osId;
+                            serviceData.office_commission_ratio = OfficeSystemModel.office_commission;
+                            serviceData.office_commission_value = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)OfficeSystemModel.office_commission);
 
-                            serviceData.company_commission_ratio = FillCombo.company_syr_commission - FillCombo.office_syr_commission;
-                            serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, (decimal)serviceData.company_commission_ratio);
+                            serviceData.company_commission_ratio = SystemModel.company_commission - OfficeSystemModel.office_commission;
+                            serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)serviceData.company_commission_ratio);
 
                         }
                         else
                         {
                             serviceData.office_commission_ratio = 0;
                             serviceData.office_commission_value = 0;
-                            serviceData.company_commission_ratio = FillCombo.company_syr_commission;
-                            serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.total, FillCombo.company_syr_commission);
+                            serviceData.company_commission_ratio = SystemModel.company_commission;
+                            serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)SystemModel.company_commission);
 
                         }
-                        serviceData.totalnet = serviceData.total - serviceData.system_commission_value - serviceData.office_commission_value;
-                        serviceData.totalnet = serviceData.total - serviceData.system_commission_value - serviceData.office_commission_value;
+                        serviceData.totalnet = serviceData.priceBeforTax - serviceData.company_commission_value - serviceData.office_commission_value;
+                      
+                        serviceData.profit = serviceData.company_commission_value;
                         serviceData.airlinePaid = 0;
                         serviceData.airlineUnpaid = 0;
                         serviceData.officePaid = 0;
@@ -283,18 +306,17 @@ trTaxHint
                         serviceData.systemPaid = 0;
                         serviceData.systemUnpaid = serviceData.system_commission_value;
                         //
-
                         decimal s = await serviceData.Save(serviceData);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
-                    {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                        Clear();
-                        await RefreshServiceDatasList();
-                        await Search();
+                        if (s <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        else
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                            Clear();
+                            await RefreshServiceDatasList();
+                            await Search();
+                        }
                     }
-                }
                 }
                 HelpClass.EndAwait(grid_main);
             }
@@ -477,7 +499,10 @@ trTaxHint
                          cb_passenger.SelectedValue = serviceData.passengerId;
                         cb_airline.SelectedValue = serviceData.flightId;
                         cb_office.SelectedValue = serviceData.officeId;
+                        cb_system.SelectedValue = serviceData.systemId;
                         tb_total.Text = HelpClass.DecTostring(serviceData.total);
+                        tb_priceBeforTax.Text = HelpClass.DecTostring(serviceData.priceBeforTax);
+                        tb_charge.Text = HelpClass.DecTostring(serviceData.tax_value);
                         this.DataContext = serviceData;
                         #region delete
                         if (serviceData.canDelete)
@@ -539,7 +564,9 @@ trTaxHint
           (  s.airline==null?false:( s.airline.ToLower().Contains(searchText))) ||
            ( s.passenger == null ? false :( s.passenger.ToLower().Contains(searchText))) ||
              (s.ticketNum == null ? false : (s.ticketNum.ToLower().Contains(searchText)))||
-         (  s.officeName == null ? false : (s.officeName.ToLower().Contains(searchText)))             
+         (  s.officeName == null ? false : (s.officeName.ToLower().Contains(searchText)))
+         ||
+         (s.systemName == null ? false : (s.systemName.ToLower().Contains(searchText)))
             )
             //&& 
             //(
@@ -589,10 +616,13 @@ trTaxHint
             cb_passenger.SelectedIndex = -1;
             cb_airline.SelectedIndex = -1;
             cb_office.SelectedIndex = -1;
+            cb_system.SelectedIndex = -1;
             //cb_passenger.Text ="";
             //cb_airline.Text = "";
             //cb_office.Text = "";
             tb_total.Text = "";
+            tb_priceBeforTax.Text = "";
+            tb_charge.Text = "";
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }

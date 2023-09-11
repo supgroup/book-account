@@ -342,6 +342,7 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.ticketvalueSP = newObject.ticketvalueSP;
                             tmpObject.ticketvalueDollar = newObject.ticketvalueDollar;
                             tmpObject.total = newObject.total;
+                          
                             tmpObject.priceBeforTax = newObject.priceBeforTax;
                             tmpObject.commitionRatio = newObject.commitionRatio;
                             tmpObject.commitionValue = newObject.commitionValue;
