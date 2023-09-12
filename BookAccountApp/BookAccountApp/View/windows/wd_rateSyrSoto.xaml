@@ -70,7 +70,7 @@
                                      MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"  Margin="4,0"  
-                                     LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
+                                     LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Number_PreviewTextInput"/>
                                         <Path x:Name="p_error_exchange"
                                   Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
                                   HorizontalAlignment="Right" Visibility="Collapsed"   

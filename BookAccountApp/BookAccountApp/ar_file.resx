@@ -3136,4 +3136,10 @@
   <data name="commission" xml:space="preserve">
     <value>العمولة %</value>
   </data>
+  <data name="priceInSy" xml:space="preserve">
+    <value>السعر بالليرة السورية</value>
+  </data>
+  <data name="priceInSyHint" xml:space="preserve">
+    <value>السعر بالليرة السورية ...</value>
+  </data>
 </root>

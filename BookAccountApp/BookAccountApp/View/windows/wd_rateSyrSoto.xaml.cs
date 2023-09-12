@@ -70,7 +70,7 @@ namespace BookAccountApp.View.windows
                 //}
                 translate();
                 #endregion
-               await fillExchange();
+                await fillExchange();
 
 
 
@@ -88,22 +88,14 @@ namespace BookAccountApp.View.windows
 
         #region methods
         private void translate()
-        {
-            /*
-            txt_title.Text = MainWindow.resourcemanager.GetString("officeInfo");
-
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("officeNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, MainWindow.resourcemanager.GetString("mobileNumHint"));
-
-
-            btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
-            btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-            */
+        {             
+            txt_title.Text = MainWindow.resourcemanager.GetString("exchangePrice");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_exchange, MainWindow.resourcemanager.GetString("priceInSyHint"));
+            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
         }
 
-       
-       
+
+
         public static bool validate(List<string> requiredControlList, UserControl userControl)
         {
             bool isValid = true;
@@ -161,7 +153,7 @@ namespace BookAccountApp.View.windows
         {
 
 
-            ExchangeModel= await ExchangeModel.Getlast();
+            ExchangeModel = await ExchangeModel.Getlast();
             if (ExchangeModel is null)
             {
 
@@ -172,8 +164,8 @@ namespace BookAccountApp.View.windows
             {
                 tb_exchange.Text = HelpClass.DecTostring(ExchangeModel.syValue);
             }
-            
- 
+
+
 
         }
 
@@ -220,7 +212,7 @@ namespace BookAccountApp.View.windows
         }
 
 
-      
+
         string input;
         decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -260,35 +252,41 @@ namespace BookAccountApp.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        
+
         #endregion
 
- 
+
 
         #region add - update - delete
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//add
             try
             {
-
-
                 HelpClass.StartAwait(grid_main);
                 if (HelpClass.validate(requiredControlList, this))
                 {
-                    //tb_custCode.Text = await flights.generateCodeNumber("cu");
-                    ExchangeModel = new Exchange();
-                    ExchangeModel.syValue = (tb_exchange.Text == null || tb_exchange.Text == "") ? 0 : Convert.ToDecimal(tb_exchange.Text);
-                    ExchangeModel.createUserId = MainWindow.userLogin.userId;
-                    ExchangeModel.isActive = true;
-                    decimal s = await ExchangeModel.Save(ExchangeModel);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    if (Convert.ToDecimal(tb_exchange.Text) == ExchangeModel.syValue)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+
+                    }
                     else
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                        
-                        await fillExchange();
-                        await FillCombo.getExchange();
+                        //tb_custCode.Text = await flights.generateCodeNumber("cu");
+                        ExchangeModel = new Exchange();
+                        ExchangeModel.syValue = (tb_exchange.Text == null || tb_exchange.Text == "") ? 0 : Convert.ToDecimal(tb_exchange.Text);
+                        ExchangeModel.createUserId = MainWindow.userLogin.userId;
+                        ExchangeModel.isActive = true;
+                        decimal s = await ExchangeModel.Save(ExchangeModel);
+                        if (s <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        else
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+
+                            await fillExchange();
+                            await FillCombo.getExchange();
+                        }
                     }
                 }
 
@@ -301,7 +299,7 @@ namespace BookAccountApp.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        
+
         #endregion
 
         private void validateEmpty_LostFocus(object sender, RoutedEventArgs e)
@@ -328,6 +326,16 @@ namespace BookAccountApp.View.windows
             }
         }
 
-
+        private void Spaces_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                e.Handled = e.Key == Key.Space;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }
