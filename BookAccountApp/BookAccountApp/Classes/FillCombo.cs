@@ -161,7 +161,7 @@ namespace BookAccountApp.Classes
         /// </summary>
         static Users user = new Users();
         static IEnumerable<Users> users;
-      
+
         static public async Task fillAgent(ComboBox combo)
         {
             users = await user.GetAll();
@@ -170,17 +170,17 @@ namespace BookAccountApp.Classes
             combo.DisplayMemberPath = "name";
         }
 
-        static public async Task fillAgentByCountry(ComboBox combo , int countryID)
+        static public async Task fillAgentByCountry(ComboBox combo, int countryID)
         {
             users = await user.GetAll();
-            foreach(var a in users)
+            foreach (var a in users)
             {
                 if (a.userId == 3)
                     a.name = "Supclouds";
                 else
-                a.name = a.name + " " + a.lastName;
+                    a.name = a.name + " " + a.lastName;
             }
-            combo.ItemsSource = users.Where(x => x.isActive ==true && x.type == "ag" && x.countryId == countryID);
+            combo.ItemsSource = users.Where(x => x.isActive == true && x.type == "ag" && x.countryId == countryID);
             combo.SelectedValuePath = "userId";
             combo.DisplayMemberPath = "name";
         }
@@ -230,7 +230,7 @@ namespace BookAccountApp.Classes
 
         static public async Task<IEnumerable<Country>> RefreshCountry()
         {
-           countrynum = await countrycodes.GetAll();
+            countrynum = await countrycodes.GetAll();
             countrynum = countrynum.Where(x => x.countryId == 9).ToList();
             return countrynum;
         }
@@ -257,7 +257,7 @@ namespace BookAccountApp.Classes
             combo.SelectedValuePath = "countryId";
             combo.DisplayMemberPath = "name";
         }
-        static public async Task fillCountriesLocal(ComboBox combo , int countryid,Border border)
+        static public async Task fillCountriesLocal(ComboBox combo, int countryid, Border border)
         {
             if (citynum is null)
                 await RefreshCity();
@@ -270,7 +270,7 @@ namespace BookAccountApp.Classes
             else
                 border.Visibility = Visibility.Collapsed;
         }
-        static public async Task fillCountriesLocal(ComboBox combo, int countryid )
+        static public async Task fillCountriesLocal(ComboBox combo, int countryid)
         {
             if (citynum is null)
                 await RefreshCity();
@@ -278,7 +278,7 @@ namespace BookAccountApp.Classes
             combo.ItemsSource = FillCombo.citynumofcountry;
             combo.SelectedValuePath = "cityId";
             combo.DisplayMemberPath = "cityCode";
-        
+
         }
         #endregion
 
@@ -376,18 +376,18 @@ namespace BookAccountApp.Classes
         #endregion
 
         #region Report
-        public static string sale_copy_count="1";
- 
-        public static string print_on_save_sale ;
-      
-        public static string email_on_save_sale ;
-     
+        public static string sale_copy_count = "1";
+
+        public static string print_on_save_sale;
+
+        public static string email_on_save_sale;
+
         public static string rep_printer_name;
-    
- 
-        public static string rep_print_count="1";
+
+
+        public static string rep_print_count = "1";
         public static string docPapersize;
-    
+
         static public string getdefaultPrinters()
         {
 
@@ -420,7 +420,7 @@ namespace BookAccountApp.Classes
              */
             print_on_save_sale = printList.Where(X => X.name == "print_on_save_sale").FirstOrDefault().value;
             email_on_save_sale = printList.Where(X => X.name == "email_on_save_sale").FirstOrDefault().value;
-            if (print_on_save_sale==null)
+            if (print_on_save_sale == null)
             {
                 print_on_save_sale = "0";
             }
@@ -436,7 +436,7 @@ namespace BookAccountApp.Classes
             var list = new[] {
   new { Text = MainWindow.resourcemanager.GetString("trAccounting")  , Value = "accounting" },
             new { Text = MainWindow.resourcemanager.GetString("trSales")  , Value = "sales" },
-          
+
 
              };
             COMBO.DisplayMemberPath = "Text";
@@ -462,8 +462,8 @@ namespace BookAccountApp.Classes
         public static decimal office_soto_commission;
         public static decimal company_syr_commission;
         public static decimal company_soto_commission;
- 
-        public static async Task< int> loading_getDefaultSystemInfo()
+        public static decimal exchangeValue;
+        public static async Task<int> loading_getDefaultSystemInfo()
         {
             try
             {
@@ -473,79 +473,79 @@ namespace BookAccountApp.Classes
                 SetValues setV = new SetValues();
                 List<char> charsToRemove = new List<char>() { '@', '_', ',', '.', '-' };
                 #region get company name
-                
-                        //get company name
-                        set = settingsCls.Where(s => s.name == "com_name").FirstOrDefault<SettingCls>();
-                        nameId = set.settingId;
-                        setV = settingsValues.Where(i => i.settingId == nameId).FirstOrDefault();
-                        if (setV != null)
-                            companyName = setV.value;
 
-                  
+                //get company name
+                set = settingsCls.Where(s => s.name == "com_name").FirstOrDefault<SettingCls>();
+                nameId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == nameId).FirstOrDefault();
+                if (setV != null)
+                    companyName = setV.value;
+
+
                 #endregion
 
                 #region  get company address
-               
-                        //get company address
-                        set = settingsCls.Where(s => s.name == "com_address").FirstOrDefault<SettingCls>();
-                        addressId = set.settingId;
-                        setV = settingsValues.Where(i => i.settingId == addressId).FirstOrDefault();
-                        if (setV != null)
-                            Address = setV.value;
-                
+
+                //get company address
+                set = settingsCls.Where(s => s.name == "com_address").FirstOrDefault<SettingCls>();
+                addressId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == addressId).FirstOrDefault();
+                if (setV != null)
+                    Address = setV.value;
+
                 #endregion
 
                 #region  get company email
-              
-                        //get company email
-                        set = settingsCls.Where(s => s.name == "com_email").FirstOrDefault<SettingCls>();
-                        emailId = set.settingId;
-                        setV = settingsValues.Where(i => i.settingId == emailId).FirstOrDefault();
-                        if (setV != null)
-                            Email = setV.value;
-                 
+
+                //get company email
+                set = settingsCls.Where(s => s.name == "com_email").FirstOrDefault<SettingCls>();
+                emailId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == emailId).FirstOrDefault();
+                if (setV != null)
+                    Email = setV.value;
+
                 #endregion
 
                 #region  get company mobile
-             
-                        //get company mobile
-                        set = settingsCls.Where(s => s.name == "com_mobile").FirstOrDefault<SettingCls>();
-                        mobileId = set.settingId;
-                        setV = settingsValues.Where(i => i.settingId == mobileId).FirstOrDefault();
-                        if (setV != null)
-                        {
-                            charsToRemove.ForEach(x => setV.value = setV.value.Replace(x.ToString(), String.Empty));
-                            Mobile = setV.value;
-                        }
-                
+
+                //get company mobile
+                set = settingsCls.Where(s => s.name == "com_mobile").FirstOrDefault<SettingCls>();
+                mobileId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == mobileId).FirstOrDefault();
+                if (setV != null)
+                {
+                    charsToRemove.ForEach(x => setV.value = setV.value.Replace(x.ToString(), String.Empty));
+                    Mobile = setV.value;
+                }
+
                 #endregion
 
                 #region  get company phone
-               
-                        //get company phone
-                        set = settingsCls.Where(s => s.name == "com_phone").FirstOrDefault<SettingCls>();
-                        phoneId = set.settingId;
-                        setV = settingsValues.Where(i => i.settingId == phoneId).FirstOrDefault();
-                        if (setV != null)
-                        {
-                            charsToRemove.ForEach(x => setV.value = setV.value.Replace(x.ToString(), String.Empty));
-                            Phone = setV.value;
-                        }
-              
+
+                //get company phone
+                set = settingsCls.Where(s => s.name == "com_phone").FirstOrDefault<SettingCls>();
+                phoneId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == phoneId).FirstOrDefault();
+                if (setV != null)
+                {
+                    charsToRemove.ForEach(x => setV.value = setV.value.Replace(x.ToString(), String.Empty));
+                    Phone = setV.value;
+                }
+
                 #endregion
 
                 #region  get company fax
-                
-                        //get company fax
-                        set = settingsCls.Where(s => s.name == "com_fax").FirstOrDefault<SettingCls>();
-                        faxId = set.settingId;
-                        setV = settingsValues.Where(i => i.settingId == faxId).FirstOrDefault();
-                        if (setV != null)
-                        {
-                            charsToRemove.ForEach(x => setV.value = setV.value.Replace(x.ToString(), String.Empty));
-                            Fax = setV.value;
-                        }
-                
+
+                //get company fax
+                set = settingsCls.Where(s => s.name == "com_fax").FirstOrDefault<SettingCls>();
+                faxId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == faxId).FirstOrDefault();
+                if (setV != null)
+                {
+                    charsToRemove.ForEach(x => setV.value = setV.value.Replace(x.ToString(), String.Empty));
+                    Fax = setV.value;
+                }
+
                 #endregion
 
                 #region   get company logo
@@ -565,11 +565,11 @@ namespace BookAccountApp.Classes
 
                 //get company fax
                 set = settingsCls.Where(s => s.name == "accuracy").FirstOrDefault<SettingCls>();
-               var accuId = set.settingId;
+                var accuId = set.settingId;
                 setV = settingsValues.Where(i => i.settingId == accuId).FirstOrDefault();
                 if (setV != null)
                 {
-                  
+
                     MainWindow.accuracy = setV.value;
                 }
 
@@ -591,23 +591,23 @@ namespace BookAccountApp.Classes
 
                 //get syr_commission
                 set = settingsCls.Where(s => s.name == "syr_commission").FirstOrDefault<SettingCls>();
-               // var commesionId = set.settingId;
+                // var commesionId = set.settingId;
                 setV = settingsValues.Where(i => i.settingId == set.settingId).FirstOrDefault();
-                if (setV != null )
+                if (setV != null)
                 {
-                    if (setV.value!=null && setV.value!="")
+                    if (setV.value != null && setV.value != "")
                     {
                         syr_commission = Convert.ToDecimal(setV.value);
                     }
                     else
                     {
-                        syr_commission =0;
+                        syr_commission = 0;
                     }
-                   
+
                 }
                 //soto_commission
                 set = settingsCls.Where(s => s.name == "soto_commission").FirstOrDefault<SettingCls>();
-             
+
                 setV = settingsValues.Where(i => i.settingId == set.settingId).FirstOrDefault();
                 if (setV != null)
                 {
@@ -617,7 +617,7 @@ namespace BookAccountApp.Classes
                     }
                     else
                     {
-                       soto_commission = 0;
+                        soto_commission = 0;
                     }
 
                 }
@@ -665,7 +665,7 @@ namespace BookAccountApp.Classes
                     }
                     else
                     {
-                       company_syr_commission = 0;
+                        company_syr_commission = 0;
                     }
 
                 }
@@ -681,13 +681,15 @@ namespace BookAccountApp.Classes
                     }
                     else
                     {
-                       company_soto_commission = 0;
+                        company_soto_commission = 0;
                     }
 
-                } 
+                }
                 //
-               
+
                 #endregion
+
+               await getExchange();
                 return 1;
             }
             catch (Exception)
@@ -798,19 +800,19 @@ namespace BookAccountApp.Classes
             combo.ItemsSource = FlightTableList;
             combo.SelectedValuePath = "flightTableId";
             combo.DisplayMemberPath = "name";
-            combo.SelectedIndex = -1; 
- 
+            combo.SelectedIndex = -1;
+
 
         }
         static PaySides PaySidesModel = new PaySides();
-       public static IEnumerable<PaySides> PaySidesList;
-        static public async Task fillpaySide(ComboBox combo,string type)
+        public static IEnumerable<PaySides> PaySidesList;
+        static public async Task fillpaySide(ComboBox combo, string type)
         {
             PaySidesList = await PaySidesModel.GetAll();
             PaySidesList = PaySidesList.Where(s => s.notes.Contains(type)).ToList();
             combo.ItemsSource = PaySidesList;
             // combo.SelectedValuePath = "paysideId";
-            combo.SelectedValuePath = "code"; 
+            combo.SelectedValuePath = "code";
             combo.DisplayMemberPath = "sideAr";
             combo.SelectedIndex = -1;
 
@@ -826,7 +828,7 @@ namespace BookAccountApp.Classes
             combo.SelectedValuePath = "fromTableId";
             combo.DisplayMemberPath = "name";
             combo.SelectedIndex = -1;
-            
+
 
         }
         static ToTable ToTableModel = new ToTable();
@@ -862,7 +864,7 @@ namespace BookAccountApp.Classes
             combo.SelectedValuePath = "opStatementId";
             combo.DisplayMemberPath = "name";
             combo.SelectedIndex = -1;
-            
+
 
         }
         static Passengers PassengerModel = new Passengers();
@@ -906,12 +908,26 @@ namespace BookAccountApp.Classes
         static public async Task fillSystems(ComboBox combo)
         {
             SystemsList = await SystemsModel.GetAll();
-            combo.ItemsSource = SystemsList; 
+            combo.ItemsSource = SystemsList;
             combo.SelectedValuePath = "systemId";
             combo.DisplayMemberPath = "name";
             combo.SelectedIndex = -1;
 
 
+        }
+        public static Exchange ExchangeModel = new Exchange();
+        static public async Task getExchange()
+        {
+            ExchangeModel = await ExchangeModel.Getlast();
+            if (ExchangeModel is null)
+            {
+                ExchangeModel = new Exchange();
+                exchangeValue = 0;
+            }
+            else
+            {
+                exchangeValue = (decimal)ExchangeModel.syValue;
+            }
         }
     }
 }

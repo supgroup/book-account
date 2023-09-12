@@ -63,7 +63,7 @@
                             <StackPanel >
                                 <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                     <Grid   >
-                                        <TextBox x:Name="tb_syr"  Text="{Binding syr, Mode=OneWay}" Padding="10,0,5,0" 
+                                        <TextBox x:Name="tb_exchange"  Text="{Binding syr, Mode=OneWay}" Padding="10,0,5,0" 
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                      materialDesign:HintAssist.Hint="syr..."  
                                      Foreground="#4E4E4E"  
@@ -71,7 +71,7 @@
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"  Margin="4,0"  
                                      LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
-                                        <Path x:Name="p_error_syr"
+                                        <Path x:Name="p_error_exchange"
                                   Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
                                   HorizontalAlignment="Right" Visibility="Collapsed"   
                                   VerticalAlignment="Center" Width="15"  Height="15"

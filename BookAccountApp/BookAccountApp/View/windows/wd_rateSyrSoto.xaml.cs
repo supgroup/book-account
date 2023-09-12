@@ -25,7 +25,10 @@ namespace BookAccountApp.View.windows
     {
         #region variables
 
-       
+        Exchange ExchangeModel = new Exchange();
+
+        IEnumerable<Exchange> ExchangeQuery;
+        IEnumerable<Exchange> ExchangeList;
 
 
         public static List<string> requiredControlList;
@@ -53,7 +56,7 @@ namespace BookAccountApp.View.windows
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_windowMain);
-                requiredControlList = new List<string> { "name" };
+                requiredControlList = new List<string> { "exchange" };
                 #region translate
                 //if (AppSettings.lang.Equals("en"))
                 //{
@@ -67,7 +70,7 @@ namespace BookAccountApp.View.windows
                 //}
                 translate();
                 #endregion
-
+               await fillExchange();
 
 
 
@@ -149,12 +152,30 @@ namespace BookAccountApp.View.windows
 
 
 
-    
+
 
         #endregion
 
         #region events
+        async Task fillExchange()
+        {
 
+
+            ExchangeModel= await ExchangeModel.Getlast();
+            if (ExchangeModel is null)
+            {
+
+                ExchangeModel = new Exchange();
+                tb_exchange.Text = "0";
+            }
+            else
+            {
+                tb_exchange.Text = HelpClass.DecTostring(ExchangeModel.syValue);
+            }
+            
+ 
+
+        }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -242,11 +263,7 @@ namespace BookAccountApp.View.windows
         
         #endregion
 
-        #region repots
-
-
-
-        #endregion
+ 
 
         #region add - update - delete
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
@@ -256,8 +273,25 @@ namespace BookAccountApp.View.windows
 
 
                 HelpClass.StartAwait(grid_main);
+                if (HelpClass.validate(requiredControlList, this))
+                {
+                    //tb_custCode.Text = await flights.generateCodeNumber("cu");
+                    ExchangeModel = new Exchange();
+                    ExchangeModel.syValue = (tb_exchange.Text == null || tb_exchange.Text == "") ? 0 : Convert.ToDecimal(tb_exchange.Text);
+                    ExchangeModel.createUserId = MainWindow.userLogin.userId;
+                    ExchangeModel.isActive = true;
+                    decimal s = await ExchangeModel.Save(ExchangeModel);
+                    if (s <= 0)
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    else
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                        
+                        await fillExchange();
+                        await FillCombo.getExchange();
+                    }
+                }
 
-               
 
                 HelpClass.EndAwait(grid_main);
             }
