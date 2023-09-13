@@ -344,6 +344,12 @@
     <Compile Include="View\bookSales\uc_salesSoto.xaml.cs">
       <DependentUpon>uc_salesSoto.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\reports\uc_bookSts.xaml.cs">
+      <DependentUpon>uc_bookSts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\uc_paymentsSts.xaml.cs">
+      <DependentUpon>uc_paymentsSts.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\reports\uc_reports.xaml.cs">
       <DependentUpon>uc_reports.xaml</DependentUpon>
     </Compile>
@@ -503,6 +509,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\bookSales\uc_salesSoto.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\uc_bookSts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\uc_paymentsSts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
