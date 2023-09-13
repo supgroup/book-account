@@ -1,4 +1,5 @@
 ﻿using BookAccountApp.Classes;
+using BookAccountApp.View.reports;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,16 +36,8 @@ namespace BookAccountApp.View.reports
         }
         public uc_reports()
         {
-            try
-            {
-                InitializeComponent();
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            InitializeComponent();
         }
-
         public static List<string> menuList;
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -52,23 +45,13 @@ namespace BookAccountApp.View.reports
             {
                 HelpClass.StartAwait(grid_mainGrid);
 
-                menuList = new List<string> { "book", "payments" };
+                menuList = new List<string> { "paymentsSts", "bookSts" };
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
-                {
-                    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.en_file", Assembly.GetExecutingAssembly());
-                    grid_main.FlowDirection = FlowDirection.LeftToRight;
-                }
-                else
-                {
-                    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.ar_file", Assembly.GetExecutingAssembly());
-                    grid_main.FlowDirection = FlowDirection.RightToLeft;
-                }
                 translate();
                 #endregion
 
-                Btn_book_Click(btn_book, null);
+                Btn_paymentsSts_Click(btn_paymentsSts, null);
 
                 HelpClass.EndAwait(grid_mainGrid);
             }
@@ -81,13 +64,8 @@ namespace BookAccountApp.View.reports
 
         private void translate()
         {
-            btn_book.Content = MainWindow.resourcemanager.GetString("trBookings");
-            btn_payments.Content = MainWindow.resourcemanager.GetString("trPayments");
-        }
-
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
-        {//unload
-            GC.Collect();
+            //btn_bookSts.Content = MainWindow.resourcemanager.GetString("");
+            //btn_paymentsSts.Content = MainWindow.resourcemanager.GetString("");
         }
 
         void colorButtonRefreash(string str)
@@ -111,14 +89,34 @@ namespace BookAccountApp.View.reports
             }
         }
 
-        private void Btn_book_Click(object sender, RoutedEventArgs e)
-        {//book
+        
+
+        private void Btn_paymentsSts_Click(object sender, RoutedEventArgs e)
+        {
             try
             {
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
+                MainWindow.mainWindow.second = button.Tag.ToString();
+                MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
-               // grid_main.Children.Add(uc_bookReport.Instance);
+                grid_main.Children.Add(uc_paymentsSts.Instance);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_bookSts_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+                colorButtonRefreash(button.Tag.ToString());
+                MainWindow.mainWindow.second = button.Tag.ToString();
+                MainWindow.mainWindow.setMainPath();
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_bookSts.Instance);
             }
             catch (Exception ex)
             {
@@ -126,20 +124,14 @@ namespace BookAccountApp.View.reports
             }
         }
 
-        private void Btn_payments_Click(object sender, RoutedEventArgs e)
-        {//payments
-            try
-            {
-                Button button = sender as Button;
-                colorButtonRefreash(button.Tag.ToString());
-                grid_main.Children.Clear();
-              //  grid_main.Children.Add(uc_paymentsReport.Instance);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+      
 
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            // Collect all generations of memory.
+            GC.Collect();
         }
+
+
     }
 }
