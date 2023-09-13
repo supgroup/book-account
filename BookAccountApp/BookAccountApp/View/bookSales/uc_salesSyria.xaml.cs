@@ -199,7 +199,7 @@ trTaxHint
                 if (serviceData.serviceId>0) { 
                     if (HelpClass.validate(requiredControlList, this))
                 {
-                        prepareModel();
+                      await  prepareModel();
                         //
                         decimal s = await serviceData.Save(serviceData);
                         if (s <= 0)
