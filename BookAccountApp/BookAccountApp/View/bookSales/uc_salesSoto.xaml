@@ -240,7 +240,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*"  Header="charge"  Binding="{Binding Path=charge,Converter={StaticResource accuracyConverter}}" >
+                            <!--<DataGridTextColumn Width="*"  Header="charge"  Binding="{Binding Path=charge,Converter={StaticResource accuracyConverter}}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -250,7 +250,7 @@
                                         </Style.Triggers>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
+                            </DataGridTextColumn>-->
                              <DataGridTextColumn Width="*"  Header="total"  Binding="{Binding Path=total,Converter={StaticResource accuracyConverter}}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
