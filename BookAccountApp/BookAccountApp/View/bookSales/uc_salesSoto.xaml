@@ -649,7 +649,7 @@ Width="25" Height="27.5"
                         </Border>
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
-                                <TextBox x:Name="tb_charge"  Text="{Binding charge, Mode=OneWay}" Padding="10,0,5,0" 
+                                <TextBox x:Name="tb_charge"  Text="{Binding tax_value, Mode=OneWay}" Padding="10,0,5,0" 
              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
              materialDesign:HintAssist.Hint="charge..."  
              Foreground="#4E4E4E"  

@@ -76,7 +76,7 @@ namespace BookAccountApp.View.reports
                 await Search();
 
                 Clear();
-                await fillcombos();
+                //await fillcombos();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

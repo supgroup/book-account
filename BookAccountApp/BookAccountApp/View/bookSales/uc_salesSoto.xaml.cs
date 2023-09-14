@@ -299,6 +299,7 @@ namespace BookAccountApp.View.bookSales
         {
 
             serviceData.serviceNum = await serviceData.generateCodeNumber("SOTO");
+            serviceData.systemType = "soto";
             serviceData.passengerId = Convert.ToInt32(cb_passenger.SelectedValue);
             serviceData.ticketNum = tb_ticketNum.Text;
             serviceData.flightId = Convert.ToInt32(cb_airline.SelectedValue);
@@ -311,7 +312,7 @@ namespace BookAccountApp.View.bookSales
             serviceData.tax_value = (tb_charge.Text == null || tb_charge.Text == "") ? 0 : Convert.ToDecimal(tb_charge.Text);
 
             serviceData.notes = tb_notes.Text;
-            serviceData.systemType = "soto";
+
             serviceData.createUserId = MainWindow.userLogin.userId;
             serviceData.updateUserId = MainWindow.userLogin.userId;
             // calc comm
@@ -328,21 +329,23 @@ namespace BookAccountApp.View.bookSales
                 serviceData.office_commission_ratio = OfficeSystemModel.office_commission;
                 serviceData.office_commission_value = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)OfficeSystemModel.office_commission);
 
-                serviceData.company_commission_ratio = SystemModel.company_commission - OfficeSystemModel.office_commission;
-                serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)serviceData.company_commission_ratio);
-
+                serviceData.commitionRatio = SystemModel.company_commission - OfficeSystemModel.office_commission;
+                serviceData.commitionValue = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)serviceData.commitionRatio);
+                serviceData.profit = serviceData.company_commission_value;
             }
             else
             {
+                serviceData.commitionRatio = SystemModel.company_commission;
+                serviceData.commitionValue = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)serviceData.commitionRatio);
                 serviceData.office_commission_ratio = 0;
                 serviceData.office_commission_value = 0;
-                serviceData.company_commission_ratio = SystemModel.company_commission;
-                serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)SystemModel.company_commission);
-
             }
+            serviceData.company_commission_ratio = SystemModel.company_commission;
+            serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)SystemModel.company_commission);
 
             serviceData.totalnet = serviceData.priceBeforTax - serviceData.company_commission_value - serviceData.office_commission_value;
-            serviceData.profit = serviceData.company_commission_value;
+
+            serviceData.profit = serviceData.commitionValue;
             serviceData.airlinePaid = 0;
             serviceData.airlineUnpaid = 0;
             serviceData.officePaid = 0;
@@ -351,10 +354,8 @@ namespace BookAccountApp.View.bookSales
             serviceData.passengerUnpaid = serviceData.total;//passenger
             serviceData.systemPaid = 0;
             serviceData.systemUnpaid = serviceData.system_commission_value;
-            //
             serviceData.exchangeId = FillCombo.ExchangeModel.exchangeId;
             serviceData.syValue = FillCombo.exchangeValue;
-            //
         }
         private async Task activate()
         {//activate
