@@ -932,20 +932,38 @@ namespace BookAccountApp.View.accounting
                             cb_sideValue.SelectedValue = payOp.officeId;
                         }
                     }
-                    else if ((cb_side.SelectedValue).ToString() == "soto")
+                    else if ((cb_side.SelectedValue).ToString() == "system")
                     {
-                        cb_sideValue.SelectedItem = null;
-                        grid_sideValue.Visibility = Visibility.Collapsed;
-                        btn_invoicesSide.Visibility = Visibility.Visible;
-
+                        MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sideValue, MainWindow.resourcemanager.GetString("bookSystems"));
+                        await FillCombo.fillSystems(cb_sideValue);
+                        grid_sideValue.Visibility = Visibility.Visible;
+                        btn_invoicesSide.Visibility = Visibility.Collapsed;
+                        if (payOp.payOpId > 0)
+                        {
+                            cb_sideValue.SelectedValue = payOp.officeId;
+                        }
                     }
-                    else if ((cb_side.SelectedValue).ToString() == "syr")
-                    {
-                        cb_sideValue.SelectedItem = null;
-                        grid_sideValue.Visibility = Visibility.Collapsed;
-                        btn_invoicesSide.Visibility = Visibility.Visible;
+                    //else if ((cb_side.SelectedValue).ToString() == "soto")
+                    //{
+                    //    cb_sideValue.SelectedItem = null;
+                    //    grid_sideValue.Visibility = Visibility.Collapsed;
+                    //    btn_invoicesSide.Visibility = Visibility.Visible;
 
-                    }
+                    //}
+                    //else if ((cb_side.SelectedValue).ToString() == "syr")
+                    //{
+                    //    cb_sideValue.SelectedItem = null;
+                    //    grid_sideValue.Visibility = Visibility.Collapsed;
+                    //    btn_invoicesSide.Visibility = Visibility.Visible;
+
+                    //}
+                    //else if ((cb_side.SelectedValue).ToString() == "syr")
+                    //{
+                    //    cb_sideValue.SelectedItem = null;
+                    //    grid_sideValue.Visibility = Visibility.Collapsed;
+                    //    btn_invoicesSide.Visibility = Visibility.Visible;
+
+                    //}
                     else
                     {
                         //other

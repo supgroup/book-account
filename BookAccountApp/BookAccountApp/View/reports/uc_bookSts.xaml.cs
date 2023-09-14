@@ -53,7 +53,7 @@ namespace BookAccountApp.View.reports
         BookSts bookSts = new BookSts();
         IEnumerable<BookSts> bookStssQuery;
         IEnumerable<BookSts> bookStss;
-
+        Statistics StatisticsModel = new Statistics();
         byte tgl_bookStsstate;
         string searchText = "";
         public static List<string> requiredControlList;
@@ -282,7 +282,7 @@ namespace BookAccountApp.View.reports
         async Task<IEnumerable<BookSts>> RefreshBookStssList()
         {
 
-            //bookStss = await bookSts.GetbyType("p");
+            bookStss = await StatisticsModel.GetBookProfit(dp_fromDateSearch.SelectedDate,dp_toDateSearch.SelectedDate);
 
             return bookStss;
         }

@@ -51,6 +51,7 @@ namespace BookAccountApp.View.reports
 
         SaveFileDialog saveFileDialog = new SaveFileDialog();
         PaymentsSts paymentsSts = new PaymentsSts();
+        Statistics StatisticsModel = new Statistics();
         IEnumerable<PaymentsSts> paymentsStssQuery;
         IEnumerable<PaymentsSts> paymentsStss;
 
@@ -282,7 +283,7 @@ namespace BookAccountApp.View.reports
         async Task<IEnumerable<PaymentsSts>> RefreshPaymentsStssList()
         {
 
-            //paymentsStss = await paymentsSts.GetbyType("p");
+             paymentsStss = await StatisticsModel.GetPayments(dp_fromDateSearch.SelectedDate,dp_toDateSearch.SelectedDate);
 
             return paymentsStss;
         }

@@ -809,7 +809,7 @@ namespace BookAccountApp.Classes
         static public async Task fillpaySide(ComboBox combo, string type)
         {
             PaySidesList = await PaySidesModel.GetAll();
-            PaySidesList = PaySidesList.Where(s => s.notes.Contains(type)).ToList();
+            PaySidesList = PaySidesList.Where(s => s.notes.Contains(type)&& s.isActive==true).ToList();
             combo.ItemsSource = PaySidesList;
             // combo.SelectedValuePath = "paysideId";
             combo.SelectedValuePath = "code";
