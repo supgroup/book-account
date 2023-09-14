@@ -174,7 +174,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*"  Header="side" Binding="{Binding Path=sideAr}">
+                            <DataGridTextColumn Width="*"  Header="System" Binding="{Binding Path=systemName}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -185,7 +185,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="recipient" Binding="{Binding Path=recipient}">
+                            <DataGridTextColumn Width="*"  Header="office" Binding="{Binding Path=officeName}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -196,7 +196,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="recivedFrom" Binding="{Binding Path=recivedFrom}">
+                            <DataGridTextColumn Width="*"  Header="priceBeforTax" Binding="{Binding Path=priceBeforTax,Converter={StaticResource accuracyConverter}}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -207,7 +207,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="Cash"  Binding="{Binding Path=cash,Converter={StaticResource accuracyConverter}}" >
+                            <DataGridTextColumn Width="*"  Header="company commition"  Binding="{Binding Path=company_commission_value,Converter={StaticResource accuracyConverter}}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -218,7 +218,29 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="serviceDate" Binding="{Binding Path=serviceDate,Converter={StaticResource dateFrameConverter}}" >
+                            <DataGridTextColumn Width="*"  Header="office commition" Binding="{Binding Path=office_commission_value,Converter={StaticResource accuracyConverter}}" >
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding isActive}" Value="0">
+                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Width="*"  Header="profit" Binding="{Binding Path=profit,Converter={StaticResource accuracyConverter}}" >
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding isActive}" Value="0">
+                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Width="*"  Header="date" Binding="{Binding Path=createDate,Converter={StaticResource dateFrameConverter}}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>

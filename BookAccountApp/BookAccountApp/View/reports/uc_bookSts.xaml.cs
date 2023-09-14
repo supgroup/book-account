@@ -268,13 +268,13 @@ namespace BookAccountApp.View.reports
              (s.recipient == null ? false : (s.recipient.ToLower().Contains(searchText))) ||
          (s.recivedFrom == null ? false : (s.recivedFrom.ToLower().Contains(searchText)))
             ))
-            && (
-            //start date
-            ((dp_fromDateSearch.SelectedDate != null || dp_fromDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date >= dp_fromDateSearch.SelectedDate.Value.Date) : true)
-            &&
-            //end date
-            ((dp_toDateSearch.SelectedDate != null || dp_toDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
-            )
+            //&& (
+            ////start date
+            //((dp_fromDateSearch.SelectedDate != null || dp_fromDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date >= dp_fromDateSearch.SelectedDate.Value.Date) : true)
+            //&&
+            ////end date
+            //((dp_toDateSearch.SelectedDate != null || dp_toDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
+            //)
             );
 
             RefreshBookStssView();
@@ -628,7 +628,7 @@ namespace BookAccountApp.View.reports
                 //{
 
                 //}
-
+                await RefreshBookStssList();
                 await Search();
 
                 HelpClass.EndAwait(grid_main);
@@ -649,7 +649,7 @@ namespace BookAccountApp.View.reports
                 //{
 
                 //}
-
+                await RefreshBookStssList();
                 await Search();
 
                 HelpClass.EndAwait(grid_main);
