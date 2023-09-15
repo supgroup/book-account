@@ -891,6 +891,16 @@ namespace BookAccountApp.Classes
 
 
         }
+        static public async Task fillFlightsBySysId(ComboBox combo,int systemId)
+        {
+            FlightsList = await FlightsModel.GetbySysId(systemId);
+            combo.ItemsSource = FlightsList;
+            combo.SelectedValuePath = "flightId";
+            combo.DisplayMemberPath = "airlineflightTable";
+            combo.SelectedIndex = -1;
+
+
+        }
         static Office OfficeModel = new Office();
         static IEnumerable<Office> OfficeList;
         static public async Task fillOffice(ComboBox combo)
@@ -915,6 +925,7 @@ namespace BookAccountApp.Classes
 
 
         }
+   
         public static Exchange ExchangeModel = new Exchange();
         static public async Task getExchange()
         {

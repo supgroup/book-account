@@ -100,6 +100,7 @@
           <Property Name="isActive" Type="bit" />
           <Property Name="balance" Type="decimal" Precision="20" Scale="3" />
           <Property Name="commission_ratio" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="systemId" Type="int" />
         </EntityType>
         <EntityType Name="flightTable">
           <Key>
@@ -492,6 +493,18 @@
             </Principal>
             <Dependent Role="flights">
               <PropertyRef Name="fromTableId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_flights_systems">
+          <End Role="systems" Type="Self.systems" Multiplicity="0..1" />
+          <End Role="flights" Type="Self.flights" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="systems">
+              <PropertyRef Name="systemId" />
+            </Principal>
+            <Dependent Role="flights">
+              <PropertyRef Name="systemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -934,6 +947,10 @@
             <End Role="fromTable" EntitySet="fromTable" />
             <End Role="flights" EntitySet="flights" />
           </AssociationSet>
+          <AssociationSet Name="FK_flights_systems" Association="Self.FK_flights_systems">
+            <End Role="systems" EntitySet="systems" />
+            <End Role="flights" EntitySet="flights" />
+          </AssociationSet>
           <AssociationSet Name="FK_flights_toTable" Association="Self.FK_flights_toTable">
             <End Role="toTable" EntitySet="toTable" />
             <End Role="flights" EntitySet="flights" />
@@ -1165,6 +1182,8 @@
           <NavigationProperty Name="payOp" Relationship="bookModel.FK_payOp_flights" FromRole="flights" ToRole="payOp" />
           <Property Name="balance" Type="Decimal" Precision="20" Scale="3" />
           <Property Name="commission_ratio" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="systemId" Type="Int32" />
+          <NavigationProperty Name="systems" Relationship="bookModel.FK_flights_systems" FromRole="flights" ToRole="systems" />
         </EntityType>
         <EntityType Name="flightTable">
           <Key>
@@ -1962,6 +1981,10 @@
             <End Role="systems" EntitySet="systems" />
             <End Role="serviceData" EntitySet="serviceData" />
           </AssociationSet>
+          <AssociationSet Name="FK_flights_systems" Association="bookModel.FK_flights_systems">
+            <End Role="systems" EntitySet="systems" />
+            <End Role="flights" EntitySet="flights" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="officeFiles">
           <Key>
@@ -2130,6 +2153,7 @@
           <NavigationProperty Name="users" Relationship="bookModel.FK_systems_users" FromRole="systems" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="bookModel.FK_systems_users1" FromRole="systems" ToRole="users" />
           <NavigationProperty Name="serviceData" Relationship="bookModel.FK_serviceData_systems" FromRole="systems" ToRole="serviceData" />
+          <NavigationProperty Name="flights" Relationship="bookModel.FK_flights_systems" FromRole="systems" ToRole="flights" />
         </EntityType>
         <Association Name="FK_officeSystem_office">
           <End Type="bookModel.office" Role="office" Multiplicity="0..1" />
@@ -2199,6 +2223,18 @@
               <PropertyRef Name="systemId" />
             </Principal>
             <Dependent Role="serviceData">
+              <PropertyRef Name="systemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_flights_systems">
+          <End Type="bookModel.systems" Role="systems" Multiplicity="0..1" />
+          <End Type="bookModel.flights" Role="flights" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="systems">
+              <PropertyRef Name="systemId" />
+            </Principal>
+            <Dependent Role="flights">
               <PropertyRef Name="systemId" />
             </Dependent>
           </ReferentialConstraint>
@@ -2284,6 +2320,7 @@
           <EntitySetMapping Name="flights">
             <EntityTypeMapping TypeName="bookModel.flights">
               <MappingFragment StoreEntitySet="flights">
+                <ScalarProperty Name="systemId" ColumnName="systemId" />
                 <ScalarProperty Name="commission_ratio" ColumnName="commission_ratio" />
                 <ScalarProperty Name="balance" ColumnName="balance" />
                 <ScalarProperty Name="flightId" ColumnName="flightId" />

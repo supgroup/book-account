@@ -70,6 +70,7 @@
         <AssociationConnector Association="bookModel.FK_systems_users" />
         <AssociationConnector Association="bookModel.FK_systems_users1" />
         <AssociationConnector Association="bookModel.FK_serviceData_systems" />
+        <AssociationConnector Association="bookModel.FK_flights_systems" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -557,7 +557,8 @@ trTaxHint
         public async Task fillcombos()
         {
             await FillCombo.fillPassengers(cb_passenger);
-            await FillCombo.fillFlights(cb_airline);
+            //await FillCombo.fillFlights(cb_airline);
+            await FillCombo.fillFlightsBySysId(cb_airline, Convert.ToInt32(cb_system.SelectedValue));
             await FillCombo.fillOffice(cb_office);
             await FillCombo.fillSystems(cb_system);
         }
@@ -1113,6 +1114,24 @@ trTaxHint
                 Window.GetWindow(this).Opacity = 1;
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void Cb_system_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+
+                if (cb_system.SelectedItem != null)
+                {
+                    await FillCombo.fillFlightsBySysId(cb_airline, Convert.ToInt32(cb_system.SelectedValue));
+                }
+
+            }
+            catch (Exception ex)
+            {
+
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

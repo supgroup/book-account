@@ -34,6 +34,7 @@ namespace BookAccountApp
         public Nullable<bool> isActive { get; set; }
         public Nullable<decimal> balance { get; set; }
         public Nullable<decimal> commission_ratio { get; set; }
+        public Nullable<int> systemId { get; set; }
     
         public virtual flightTable flightTable { get; set; }
         public virtual fromTable fromTable { get; set; }
@@ -42,5 +43,6 @@ namespace BookAccountApp
         public virtual ICollection<serviceData> serviceData { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<payOp> payOp { get; set; }
+        public virtual systems systems { get; set; }
     }
 }

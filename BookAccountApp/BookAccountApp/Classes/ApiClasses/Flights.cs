@@ -37,6 +37,7 @@ namespace BookAccountApp.ApiClasses
         public Nullable<decimal> balance { get; set; }
         public Nullable<decimal> commission_ratio { get; set; }
         public string airlineflightTable { get; set; }
+        public Nullable<int> systemId { get; set; }
 
         /// <summary>
         /// ///////////////////////////////////////
@@ -56,8 +57,8 @@ namespace BookAccountApp.ApiClasses
                             select new Flights()
                             {
                                 flightId = S.flightId,
-                                airlineflightTable = S.airline + "/" + S.flightTable.name,
-                                airline= S.airline,
+                                airlineflightTable = S.systems.name + "/" + S.flightTable.name,
+                                airline= S.systems.name,
                                 flight = S.flightTable.name==null?"": S.flightTable.name,
                                 flightFrom = S.fromTable.name == null ? "" : S.fromTable.name,
                                 flightTo = S.toTable.name,
@@ -72,7 +73,8 @@ namespace BookAccountApp.ApiClasses
                                isActive=S.isActive,
                                 canDelete = false,
                                 commission_ratio=S.commission_ratio,
-                            }).ToList();
+                                systemId = S.systemId,
+                }).ToList();
 
                     if (List.Count > 0)
                     {
@@ -146,6 +148,7 @@ namespace BookAccountApp.ApiClasses
 
                         //    tmpObject.flightId = newObject.flightId;
                             tmpObject.airline = newObject.airline;
+                            tmpObject.systemId = newObject.systemId;
                             tmpObject.flightTableId = newObject.flightTableId;
                             tmpObject.fromTableId = newObject.fromTableId;
                             tmpObject.toTableId = newObject.toTableId;
@@ -190,7 +193,7 @@ namespace BookAccountApp.ApiClasses
                      .Select(S => new Flights()
                      {
                          flightId = S.flightId,
-                         airline = S.airline,
+                         airline = S.systems.name,
                          flight = S.flightTable.name == null ? "" : S.flightTable.name,
                          flightFrom = S.fromTable.name == null ? "" : S.fromTable.name,
                          flightTo = S.toTable.name,
@@ -204,6 +207,7 @@ namespace BookAccountApp.ApiClasses
                          toTableId = S.toTableId == null ? 0 : S.toTableId,
                          isActive = S.isActive,
                          commission_ratio = S.commission_ratio,
+                         systemId = S.systemId,
 
                      }).FirstOrDefault();
                     return row;
@@ -266,6 +270,64 @@ namespace BookAccountApp.ApiClasses
 
         }
 
+        public async Task<List<Flights>> GetbySysId(int systemId)
+        {
 
+            List<Flights> List = new List<Flights>();
+            bool canDelete = false;
+            try
+            {
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    List = (from S in entity.flights
+                            where S.systemId==systemId
+                            select new Flights()
+                            {
+                                flightId = S.flightId,
+                                airlineflightTable = S.systems.name + "/" + S.flightTable.name,
+                                airline = S.systems.name,
+                                flight = S.flightTable.name == null ? "" : S.flightTable.name,
+                                flightFrom = S.fromTable.name == null ? "" : S.fromTable.name,
+                                flightTo = S.toTable.name,
+                                notes = S.notes,
+                                createDate = S.createDate,
+                                updateDate = S.updateDate,
+                                createUserId = S.createUserId,
+                                updateUserId = S.updateUserId,
+                                flightTableId = S.flightTableId == null ? 0 : S.flightTableId,
+                                fromTableId = S.fromTableId == null ? 0 : S.fromTableId,
+                                toTableId = S.toTableId == null ? 0 : S.toTableId,
+                                isActive = S.isActive,
+                                canDelete = false,
+                                commission_ratio = S.commission_ratio,
+                                systemId = S.systemId,
+                            }).ToList();
+
+                    //if (List.Count > 0)
+                    //{
+                    //    for (int i = 0; i < List.Count; i++)
+                    //    {
+                    //        if (List[i].isActive == true)
+                    //        {
+                    //            int itemId = (int)List[i].flightId;
+                    //            var itemsI = entity.serviceData.Where(x => x.flightId == itemId).Select(b => new { b.flightId }).FirstOrDefault();
+
+                    //            if (itemsI is null)
+                    //            {
+                    //                List[i].canDelete = true;
+                    //            }
+                    //        }
+
+                    //    }
+                    //}
+                    return List;
+                }
+
+            }
+            catch
+            {
+                return List;
+            }
+        }
     }
 }
