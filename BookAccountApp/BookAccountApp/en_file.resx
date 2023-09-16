@@ -3133,4 +3133,25 @@ Please add Email in setting</value>
   <data name="priceInSyHint" xml:space="preserve">
     <value>Price In SYP ...</value>
   </data>
+  <data name="airlineFlightSys" xml:space="preserve">
+    <value>Airline/Flight/System</value>
+  </data>
+  <data name="durationProfits" xml:space="preserve">
+    <value>Duration Profits</value>
+  </data>
+  <data name="profits" xml:space="preserve">
+    <value>Profits</value>
+  </data>
+  <data name="profitsNet" xml:space="preserve">
+    <value>Profits Net</value>
+  </data>
+  <data name="quarter1234" xml:space="preserve">
+    <value>Quarter1/Quarter2/Quarter3/Quarter4/</value>
+  </data>
+  <data name="totalOperations" xml:space="preserve">
+    <value>Total Operations</value>
+  </data>
+  <data name="yearMonth" xml:space="preserve">
+    <value>Year/Half/Quarter/Month</value>
+  </data>
 </root>

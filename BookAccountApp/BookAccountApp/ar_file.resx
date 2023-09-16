@@ -3142,4 +3142,25 @@
   <data name="priceInSyHint" xml:space="preserve">
     <value>السعر بالليرة السورية ...</value>
   </data>
+  <data name="airlineFlightSys" xml:space="preserve">
+    <value>شركة الطيران / الرحلة / نظام الدفع</value>
+  </data>
+  <data name="durationProfits" xml:space="preserve">
+    <value>ارباح المدة</value>
+  </data>
+  <data name="profits" xml:space="preserve">
+    <value>الارباح</value>
+  </data>
+  <data name="profitsNet" xml:space="preserve">
+    <value>صافي الارباح</value>
+  </data>
+  <data name="quarter1234" xml:space="preserve">
+    <value>ربع اول/ثاني/ثالث/رابع</value>
+  </data>
+  <data name="totalOperations" xml:space="preserve">
+    <value>اجمالي المعاملات</value>
+  </data>
+  <data name="yearMonth" xml:space="preserve">
+    <value>سنة/نصفي/ربعي/شهري</value>
+  </data>
 </root>

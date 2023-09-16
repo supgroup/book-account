@@ -122,7 +122,8 @@ namespace BookAccountApp.ApiClasses
         {
 
             List<BookSts> List = new List<BookSts>();
-          
+            string syr = MainWindow.resourcemanager.GetString("syr");
+            string soto = MainWindow.resourcemanager.GetString("soto");
             try
             {
                 DateTime now = DateTime.Now;
@@ -145,7 +146,7 @@ namespace BookAccountApp.ApiClasses
                                 type = S.type,
                                 passenger = P.name + " " + P.lastName,
                                 ticketNum = S.ticketNum,
-                                airline = F.airline + "/" + F.flightTable.name,
+                                airline = SYS.name + "/" + F.flightTable.name + "/" +(S.systemType=="syr"?syr:soto),
                                 officeId = S.officeId,
                                 serviceDate = S.serviceDate,
                                 pnr = S.pnr,

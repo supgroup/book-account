@@ -87,23 +87,20 @@ namespace BookAccountApp.View.reports
         }
         private void translate()
         {
-            /*
+            //durationProfits yearMonth quarter1234 profitsNet totalOperations profitsNet
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            txt_title.Text = MainWindow.resourcemanager.GetString("payInvoice");
-        
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_opName, MainWindow.resourcemanager.GetString("operationNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_side, MainWindow.resourcemanager.GetString("sideOrResponsebleHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_recipient, MainWindow.resourcemanager.GetString("trRecepientHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_recivedFrom, MainWindow.resourcemanager.GetString("recivedFromHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, MainWindow.resourcemanager.GetString("trCashHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_opDate, MainWindow.resourcemanager.GetString("opDateHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            txt_title.Text = MainWindow.resourcemanager.GetString("durationProfits");
+            txt_totalSaleTitle.Text = MainWindow.resourcemanager.GetString("totalOperations");
+            txt_totalProfitTitle.Text = MainWindow.resourcemanager.GetString("profitsNet");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_duration, MainWindow.resourcemanager.GetString("yearMonth"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_quarter, MainWindow.resourcemanager.GetString("quarter1234"));
+          
 
             txt_invoicePrintButton.Text = MainWindow.resourcemanager.GetString("printInvoice");
             txt_invoicePreviewButton.Text = MainWindow.resourcemanager.GetString("previewInvoice");
             txt_invoicePdfButton.Text = MainWindow.resourcemanager.GetString("electronicInvoice");
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            //btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_fromDateSearch, MainWindow.resourcemanager.GetString("fromDate"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_toDateSearch, MainWindow.resourcemanager.GetString("toDate"));
             //txt_exportDocsButton.Text = MainWindow.resourcemanager.GetString("docExport");
@@ -117,11 +114,13 @@ namespace BookAccountApp.View.reports
 
             //   bookStss            
             dg_bookSts.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
-            dg_bookSts.Columns[1].Header = MainWindow.resourcemanager.GetString("sideOrResponseble");
-            dg_bookSts.Columns[2].Header = MainWindow.resourcemanager.GetString("trRecepient");
-            dg_bookSts.Columns[3].Header = MainWindow.resourcemanager.GetString("recivedFrom");
-            dg_bookSts.Columns[4].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
-            dg_bookSts.Columns[5].Header = MainWindow.resourcemanager.GetString("payDate");
+            dg_bookSts.Columns[1].Header = MainWindow.resourcemanager.GetString("bookSystem");
+            dg_bookSts.Columns[2].Header = MainWindow.resourcemanager.GetString("airlineFlightSys");
+            dg_bookSts.Columns[3].Header = MainWindow.resourcemanager.GetString("trOffice");
+            dg_bookSts.Columns[4].Header = MainWindow.resourcemanager.GetString("priceBeforTax");
+            dg_bookSts.Columns[5].Header = MainWindow.resourcemanager.GetString("profits");
+            dg_bookSts.Columns[6].Header = MainWindow.resourcemanager.GetString("trDate");
+         
             //dg_bookSts.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
@@ -132,7 +131,6 @@ namespace BookAccountApp.View.reports
             //tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
 
 
-            */
         }
 
 
