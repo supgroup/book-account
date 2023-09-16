@@ -102,8 +102,19 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> flightId { get; set; }
         public string opName { get; set; }
         //    
+    
+        //    
+        public string passenger { get; set; }
+        public string airline { get; set; }
 
-
+        public string officeName { get; set; }
+        public string systemType { get; set; }
+        public Nullable<int> systemId { get; set; }
+        public string systemName { get; set; }
+        public string currency { get; set; }
+        public Nullable<decimal> syValue { get; set; }
+        public Nullable<int> exchangeId { get; set; }
+        public Nullable<decimal> priceBeforTax { get; set; }
     }
     public class Statistics
     {
@@ -250,7 +261,56 @@ namespace BookAccountApp.ApiClasses
             }
 
         }
+        public async Task<List<PaymentsSts>> GetPaySystemsTransfer()
+        {
 
+            List<PaymentsSts> List = new List<PaymentsSts>();
+
+            try
+            {
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    List = (from S in entity.payOp
+                                // where S.opType == opType
+                            select new PaymentsSts()
+                            {
+                                payOpId = S.payOpId,
+                                code = S.code,
+                                cash = S.cash,
+                                opType = S.opType,
+                                side = S.paySides.code,
+                                serviceId = S.serviceId,
+                                opStatus = S.opStatus,
+                                opDate = S.opDate,
+                                notes = S.notes,
+                                createUserId = S.createUserId,
+                                updateUserId = S.updateUserId,
+                                createDate = S.createDate,
+                                updateDate = S.updateDate,
+                                officeId = S.officeId,
+                                passengerId = S.passengerId,
+                                userId = S.userId,
+                                recipient = S.recipient,
+                                recivedFrom = S.recivedFrom,
+                                paysideId = S.paysideId,
+                                sideAr = S.paySides.sideAr,
+                                flightId = S.flightId,
+                                opName = S.opName,
+                            }).ToList();
+                    //List = List.Where(S => ((fromDate == null && toDate == null) ? true :
+                    //       ((fromDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date >= fromDate.Value.Date) : true)
+                    //       && ((toDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date <= toDate.Value.Date) : true)
+                    //      )).ToList();
+                    return List;
+                }
+
+            }
+            catch
+            {
+                return List;
+            }
+
+        }
         //private string urimainpath = "Statistics/";
         ///// <summary>
         ///// ///////////////////////////////////////
