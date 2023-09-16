@@ -74,6 +74,7 @@ namespace BookAccountApp.ApiClasses
         public Nullable<decimal> tax_ratio { get; set; }
         public Nullable<decimal> tax_value { get; set; }
         public string systemName { get; set; }
+        public string currency { get; set; }
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>
@@ -402,7 +403,6 @@ namespace BookAccountApp.ApiClasses
         public async Task<ServiceData> GetByID(int itemId)
         {
 
-
             ServiceData item = new ServiceData();
             string message = "";
 
@@ -411,57 +411,74 @@ namespace BookAccountApp.ApiClasses
             {
                 using (bookdbEntities entity = new bookdbEntities())
                 {
-                    var list = entity.serviceData.ToList();
-                    row = list.Where(u => u.serviceId == itemId)
-                     .Select(S => new ServiceData()
-                     {
-                         serviceId = S.serviceId,
-                         serviceNum = S.serviceNum,
-                         type = S.type,
-                         passenger = S.passenger,
-                         ticketNum = S.ticketNum,
-                         airline = S.systems.name,
-                         officeId = S.officeId,
-                         serviceDate = S.serviceDate,
-                         pnr = S.pnr,
-                         ticketvalueSP = S.ticketvalueSP,
-                         ticketvalueDollar = S.ticketvalueDollar,
-                         total = S.total,
-                         priceBeforTax = S.priceBeforTax,
-                         commitionRatio = S.commitionRatio,
-                         commitionValue = S.commitionValue,
-                         cost = S.cost,
-                         saleValue = S.saleValue,
-                         paid = S.paid,
-                         profit = S.profit,
-                         notes = S.notes,
-                         state = S.state,
-                         createDate = S.createDate,
-                         updateDate = S.updateDate,
-                         createUserId = S.createUserId,
-                         updateUserId = S.updateUserId,
-                         passengerId = S.passengerId,
-                         flightId = S.flightId,
-                         operationId = S.operationId,
-                         systemType = S.systemType,
-                         isActive = S.isActive,
-                         system_commission_value = S.system_commission_value,
-                         system_commission_ratio = S.system_commission_ratio,
-                         office_commission_value = S.office_commission_value,
-                         office_commission_ratio = S.office_commission_ratio,
-                         company_commission_value = S.company_commission_value,
-                         company_commission_ratio = S.company_commission_ratio,
-                         totalnet = S.totalnet,
-                         passengerPaid = S.passengerPaid,
-                         passengerUnpaid = S.passengerUnpaid,
-                         officePaid = S.officePaid,
-                         officeUnpaid = S.officeUnpaid,
-                         airlinePaid = S.airlinePaid,
-                         airlineUnpaid = S.airlineUnpaid,
-                         systemPaid = S.systemPaid,
-                         systemUnpaid = S.systemUnpaid,
+                    item = (from S in entity.serviceData
+                            join fl in entity.flights on S.flightId equals fl.flightId into JFL
+                            join of in entity.office on S.officeId equals of.officeId into JOF
+                            join ps in entity.passengers on S.passengerId equals ps.passengerId into JP
+                            join syst in entity.systems on S.systemId equals syst.systemId into Syst
+                            from F in JFL.DefaultIfEmpty()
+                            from OFF in JOF.DefaultIfEmpty()
+                            from P in JP.DefaultIfEmpty()
+                            from SYS in Syst.DefaultIfEmpty()
+                            where (S.serviceId == itemId)
+                            select new ServiceData()
+                            {
+                                serviceId = S.serviceId,
+                                serviceNum = S.serviceNum,
+                                type = S.type,
+                                passenger = P.name + " " + P.lastName,
+                                ticketNum = S.ticketNum,
+                                airline = F.systems.name + "/" + F.flightTable.name,
+                                officeId = S.officeId,
+                                serviceDate = S.serviceDate,
+                                pnr = S.pnr,
+                                ticketvalueSP = S.ticketvalueSP,
+                                ticketvalueDollar = S.ticketvalueDollar,
+                                total = S.total,
+                                priceBeforTax = S.priceBeforTax,
+                                commitionRatio = S.commitionRatio,
+                                commitionValue = S.commitionValue,
+                                cost = S.cost,
+                                saleValue = S.saleValue,
+                                paid = S.paid,
+                                profit = S.profit,
+                                notes = S.notes,
+                                state = S.state,
+                                createDate = S.createDate,
+                                updateDate = S.updateDate,
+                                createUserId = S.createUserId,
+                                updateUserId = S.updateUserId,
+                                passengerId = S.passengerId,
+                                flightId = S.flightId,
+                                operationId = S.operationId,
+                                officeName = OFF.name,
+                                isActive = S.isActive,
+                                canDelete = false,
+                                systemType = S.systemType,
+                                system_commission_value = S.system_commission_value,
+                                system_commission_ratio = S.system_commission_ratio,
+                                office_commission_value = S.office_commission_value,
+                                office_commission_ratio = S.office_commission_ratio,
+                                company_commission_value = S.company_commission_value,
+                                company_commission_ratio = S.company_commission_ratio,
+                                totalnet = S.totalnet,
+                                passengerPaid = S.passengerPaid,
+                                passengerUnpaid = S.passengerUnpaid,
+                                officePaid = S.officePaid,
+                                officeUnpaid = S.officeUnpaid,
+                                airlinePaid = S.airlinePaid,
+                                airlineUnpaid = S.airlineUnpaid,
+                                systemPaid = S.systemPaid,
+                                systemUnpaid = S.systemUnpaid,
+                                exchangeId = S.exchangeId,
+                                osId = S.osId,
+                                systemId = S.systemId,
+                                syValue = S.syValue,
+                                tax_ratio = S.tax_ratio,
+                                tax_value = S.tax_value,
+                                systemName = SYS.name,
 
-                     }).FirstOrDefault();
+                            }).FirstOrDefault();
                     return row;
                 }
 

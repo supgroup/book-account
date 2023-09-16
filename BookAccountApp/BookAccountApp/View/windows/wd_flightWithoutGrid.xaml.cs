@@ -109,8 +109,8 @@ namespace BookAccountApp.View.windows
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
        
             txt_title.Text = MainWindow.resourcemanager.GetString("flightInfo");
-
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_airline, MainWindow.resourcemanager.GetString("airlineHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_airline, MainWindow.resourcemanager.GetString("airlineHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_airline, MainWindow.resourcemanager.GetString("airlineHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightTableId, MainWindow.resourcemanager.GetString("flightHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightFrom, MainWindow.resourcemanager.GetString("fromHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightTo, MainWindow.resourcemanager.GetString("toHint"));
@@ -354,8 +354,15 @@ namespace BookAccountApp.View.windows
                 if (HelpClass.validate(requiredControlList, this))
                 {
                     //tb_custCode.Text = await flights.generateCodeNumber("cu");
-
-                    flights.airline = tb_airline.Text;
+                    if (Convert.ToInt32(cb_airline.SelectedValue) == 0)
+                    {
+                        flights.systemId = null;
+                    }
+                    else
+                    {
+                        flights.systemId = Convert.ToInt32(cb_airline.SelectedValue);
+                    }
+                    //flights.airline = tb_airline.Text;
                     if (Convert.ToInt32(cb_flightTableId.SelectedValue) == 0)
                     {
                         flights.flightTableId = null;
@@ -420,8 +427,15 @@ namespace BookAccountApp.View.windows
                     if (HelpClass.validate(requiredControlList, this))
                     {
 
-
-                        flights.airline = tb_airline.Text;
+                        if (Convert.ToInt32(cb_airline.SelectedValue) == 0)
+                        {
+                            flights.systemId = null;
+                        }
+                        else
+                        {
+                            flights.systemId = Convert.ToInt32(cb_airline.SelectedValue);
+                        }
+                        //flights.airline = tb_airline.Text;
                         if (Convert.ToInt32(cb_flightTableId.SelectedValue) == 0)
                         {
                             flights.flightTableId = null;

@@ -18,6 +18,7 @@ namespace BookAccountApp
         public exchange()
         {
             this.serviceData = new HashSet<serviceData>();
+            this.payOp = new HashSet<payOp>();
         }
     
         public int exchangeId { get; set; }
@@ -29,5 +30,7 @@ namespace BookAccountApp
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<serviceData> serviceData { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<payOp> payOp { get; set; }
     }
 }

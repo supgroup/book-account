@@ -36,7 +36,7 @@ namespace BookAccountApp.View.sectionData
         IEnumerable<Systems> operationsQuery;
         IEnumerable<Flights> flightsQuery;
         IEnumerable<ServiceData> serviceDatasQuery;
-
+        IEnumerable<PayOp>payOpQuery;
         List<double> chartList;
         List<double> PiechartList;
         List<double> ColumnchartList;
@@ -122,6 +122,21 @@ namespace BookAccountApp.View.sectionData
             {
                 InitializeComponent();
                 serviceDatasQuery = _serviceDatasQuery;
+                data = _data;
+                isSameList = _isSameList;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        public win_lvc(IEnumerable<PayOp> _payOpQuery, int _data, bool _isSameList)
+        {
+
+            try
+            {
+                InitializeComponent();
+                payOpQuery = _payOpQuery;
                 data = _data;
                 isSameList = _isSameList;
             }
@@ -269,7 +284,15 @@ namespace BookAccountApp.View.sectionData
                             else
                                 label = MainWindow.resourcemanager.GetString("soto");
                         }
-                    
+                        else if (data == 7)
+                        {
+                            var Draw = payOpQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            chartList.Add(Draw);
+                            if (isSameList)
+                                label = MainWindow.resourcemanager.GetString("trPayments");
+                            else
+                                label = MainWindow.resourcemanager.GetString("trReceived");
+                        }
                         MyAxis.Separator.Step = 2;
                         MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
@@ -337,7 +360,15 @@ namespace BookAccountApp.View.sectionData
                         else
                             label = MainWindow.resourcemanager.GetString("soto");
                     }
-
+                    else if (data == 7)
+                    {
+                        var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        chartList.Add(Draw);
+                        if (isSameList)
+                            label = MainWindow.resourcemanager.GetString("trPayments");
+                        else
+                            label = MainWindow.resourcemanager.GetString("trReceived");
+                    }
                     MyAxis.Separator.Step = 1;
                     MyAxis.Labels.Add(year.ToString());
                 }
@@ -433,6 +464,15 @@ namespace BookAccountApp.View.sectionData
                             else
                                 label = MainWindow.resourcemanager.GetString("soto");
                         }
+                        else if (data == 7)
+                        {
+                            var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            PiechartList.Add(Draw);
+                            if (isSameList)
+                                label = MainWindow.resourcemanager.GetString("trPayments");
+                            else
+                                label = MainWindow.resourcemanager.GetString("trReceived");
+                        }
                         titles.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
                         {
@@ -491,7 +531,19 @@ namespace BookAccountApp.View.sectionData
                     {
                         var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("flights");
+                        if (isSameList)
+                            label = MainWindow.resourcemanager.GetString("syr");
+                        else
+                            label = MainWindow.resourcemanager.GetString("soto");
+                    }
+                    else if (data == 7)
+                    {
+                        var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        PiechartList.Add(Draw);
+                        if (isSameList)
+                            label = MainWindow.resourcemanager.GetString("trPayments");
+                        else
+                            label = MainWindow.resourcemanager.GetString("trReceived");
                     }
                     titles.Add(year.ToString());
                 }
@@ -590,6 +642,15 @@ namespace BookAccountApp.View.sectionData
                             else
                                 label = MainWindow.resourcemanager.GetString("soto");
                         }
+                        else if (data == 7)
+                        {
+                            var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            ColumnchartList.Add(Draw);
+                            if (isSameList)
+                                label = MainWindow.resourcemanager.GetString("trPayments");
+                            else
+                                label = MainWindow.resourcemanager.GetString("trReceived");
+                        }
                         columnAxis.Separator.Step = 2;
                         columnAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
@@ -655,6 +716,15 @@ namespace BookAccountApp.View.sectionData
                             label = MainWindow.resourcemanager.GetString("syr");
                         else
                             label = MainWindow.resourcemanager.GetString("soto");
+                    }
+                    else if (data == 6)
+                    {
+                        var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        ColumnchartList.Add(Draw);
+                        if (isSameList)
+                            label = MainWindow.resourcemanager.GetString("trPayments");
+                        else
+                            label = MainWindow.resourcemanager.GetString("trReceived");
                     }
                     columnAxis.Separator.Step = 1;
                     columnAxis.Labels.Add(year.ToString());

@@ -35,6 +35,12 @@ namespace BookAccountApp
         public Nullable<int> paysideId { get; set; }
         public Nullable<int> flightId { get; set; }
         public string opName { get; set; }
+        public Nullable<int> systemId { get; set; }
+        public string systemType { get; set; }
+        public string currency { get; set; }
+        public Nullable<decimal> syValue { get; set; }
+        public Nullable<int> exchangeId { get; set; }
+        public string fromSide { get; set; }
     
         public virtual office office { get; set; }
         public virtual passengers passengers { get; set; }
@@ -44,5 +50,7 @@ namespace BookAccountApp
         public virtual users users2 { get; set; }
         public virtual paySides paySides { get; set; }
         public virtual flights flights { get; set; }
+        public virtual systems systems { get; set; }
+        public virtual exchange exchange { get; set; }
     }
 }

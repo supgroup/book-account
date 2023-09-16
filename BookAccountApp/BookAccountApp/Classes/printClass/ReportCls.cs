@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-
+﻿using BookAccountApp.ApiClasses;
 using Microsoft.Reporting.WinForms;
-using System.Resources;
-using System.Reflection;
-using System.Globalization;
+using System;
 using System.Collections;
-using BookAccountApp.ApiClasses;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Reflection;
+using System.Resources;
+using System.Text;
 namespace BookAccountApp.Classes
 {
     class ReportCls
     {
-      List<CurrencyInfo> currencies = new List<CurrencyInfo>();
+        List<CurrencyInfo> currencies = new List<CurrencyInfo>();
         public static void clearFolder(string FolderName)
         {
             string filename = "";
@@ -25,7 +22,7 @@ namespace BookAccountApp.Classes
             {
                 filename = fi.FullName;
 
-                if (!FileIsLocked(filename) && (fi.Extension==".PDF"|| fi.Extension == ".pdf"))
+                if (!FileIsLocked(filename) && (fi.Extension == ".PDF" || fi.Extension == ".pdf"))
                 {
                     fi.Delete();
                 }
@@ -69,7 +66,7 @@ namespace BookAccountApp.Classes
             currencies.Add(new CurrencyInfo(CurrencyInfo.Currencies.Bahrain));
             currencies.Add(new CurrencyInfo(CurrencyInfo.Currencies.Iraq));
             currencies.Add(new CurrencyInfo(CurrencyInfo.Currencies.Lebanon));
-            currencies.Add(new CurrencyInfo(CurrencyInfo.Currencies.Syria));
+            currencies.Add(new CurrencyInfo(CurrencyInfo.Currencies.Syria));//8
             currencies.Add(new CurrencyInfo(CurrencyInfo.Currencies.Yemen));
             currencies.Add(new CurrencyInfo(CurrencyInfo.Currencies.Jordan));
             currencies.Add(new CurrencyInfo(CurrencyInfo.Currencies.Algeria));
@@ -80,6 +77,7 @@ namespace BookAccountApp.Classes
             currencies.Add(new CurrencyInfo(CurrencyInfo.Currencies.Libya));
             currencies.Add(new CurrencyInfo(CurrencyInfo.Currencies.Somalia));
             currencies.Add(new CurrencyInfo(CurrencyInfo.Currencies.Turkey));
+            currencies.Add(new CurrencyInfo(CurrencyInfo.Currencies.USA));//19
 
 
         }
@@ -100,7 +98,7 @@ namespace BookAccountApp.Classes
         //}
         public string PathUp(string path, int levelnum, string addtopath)
         {
-           
+
             //for (int i = 1; i <= levelnum; i++)
             //{
             //    //pos1 = path.LastIndexOf("\\");
@@ -331,168 +329,172 @@ namespace BookAccountApp.Classes
             return isArabic;
         }
 
-        //public List<ReportParameter> fillPayReport(CashTransfer cashtrans)
-        //{
-        //    bool isArabic = checkLang();
-        //    Fillcurrency();
-        //    string title;
-        //    if (cashtrans.transType == "p")
-        //        title = MainWindow.resourcemanagerreport.GetString("trPayVocher");
-        //    else
-        //        title = MainWindow.resourcemanagerreport.GetString("trReceiptVoucher");
+        public List<ReportParameter> fillPayReport(PayOp cashtrans, ServiceData servicemodel)
+        {
+            bool isArabic = checkLang();
+            Fillcurrency();
+            string company_name = FillCombo.companyName;
+            string comapny_address = FillCombo.Address;
+            string company_phone = FillCombo.Phone;
+            string company_fax = FillCombo.Fax;
+            string company_email = FillCombo.Email;
+            //   string company_logo_img = GetLogoImagePath();
+            //string amount = cashtrans.cash.ToString();
+            string amount = DecTostring(cashtrans.cash);
+            string voucher_num = cashtrans.code.ToString();
+            string type = "";
+            string isCash = "0";
+            string trans_num_txt = "";
+            string check_num = servicemodel.ticketNum;
+            //string date = cashtrans.createDate.ToString();
+            string date = DateToString(cashtrans.createDate);
+            string from = "";
+            string amount_in_words = "";
+            // string purpose = "";
+            string recived_by = "";
+            string user_name = "";
+            string job = MainWindow.resourcemanagerreport.GetString("trAccoutant");
+            string pay_to = "";
+            string recivedFrom = "";
+          
+            string title;
+            string purposeval = "";
+            recivedFrom = cashtrans.recivedFrom;
+            user_name = cashtrans.recipient;
+            if (cashtrans.opType == "p")
+            {
+                title = MainWindow.resourcemanagerreport.GetString("trPayVocher");
+          
+                //if (cashtrans.isInvPurpose)
+                //{
+                //    clsReports.ConvertInvType(cashtrans.invType);
+                //    purposeval = MainWindow.resourcemanagerreport.GetString("Paymentfor") + " " + clsReports.ConvertInvType(cashtrans.invType) + " " + MainWindow.resourcemanagerreport.GetString("invoicenumber") + " : " + cashtrans.invNumber;
+                //}
+                //else
+                //{
+                //    purposeval = cashtrans.purpose;
+                //}
+            }
+
+            else
+            {
+                title = MainWindow.resourcemanagerreport.GetString("trReceiptVoucher");
+     
+                //if (cashtrans.isInvPurpose)
+                //{
+
+                //    purposeval = MainWindow.resourcemanagerreport.GetString("Depositfor") + " " + clsReports.ConvertInvType(cashtrans.invType) + " " + MainWindow.resourcemanagerreport.GetString("invoicenumber") + " : " + cashtrans.invNumber;
+                //}
+                //else
+                //{
+                //    purposeval = cashtrans.purpose;
+                //}
+            }
+
+       
+            type = MainWindow.resourcemanagerreport.GetString(cashtrans.systemType);
+            trans_num_txt = MainWindow.resourcemanagerreport.GetString("ticketNum");
+            if (cashtrans.side == "office")
+            {
+                pay_to = cashtrans.officeName;
+            }
+            else if (cashtrans.side == "passenger")
+            {
+                pay_to = cashtrans.passenger;
+
+            }
+            else if (cashtrans.side == "system")//شركة الطيران
+            {
+                pay_to = cashtrans.systemName;
+            }
+            else if (cashtrans.side == "syr")
+            {
+                pay_to = MainWindow.resourcemanagerreport.GetString(cashtrans.side);
+            }
+            else if (cashtrans.side == "soto")
+            {
+                pay_to = MainWindow.resourcemanagerreport.GetString(cashtrans.side);
+            }
+        
+            try
+            {
+                int id = 8;
+                if (cashtrans.currency=="usd")
+                {
+                    id = 19;
+                }
+                else
+                {
+                    id = 8;
+                }
+               
+                ToWord toWord = new ToWord(Convert.ToDecimal(amount), currencies[id]);
+
+                //if (isArabic)
+                //{
+                    amount_in_words = toWord.ConvertToArabic();
+                    // cashtrans.cash
+                //}
+                //else
+                //{
+                //    amount_in_words = toWord.ConvertToEnglish(); ;
+                //}
+
+            }
+            catch (Exception ex)
+            {
+                amount_in_words = String.Empty;
+
+            }
+
+            //  rep.DataSources.Add(new ReportDataSource("DataSetBank", banksQuery));
+
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+            clsReports.Header(paramarr);
+            paramarr.Add(new ReportParameter("lang", "ar"));
+            paramarr.Add(new ReportParameter("title", title));
+            paramarr.Add(new ReportParameter("company_name", company_name));
+            paramarr.Add(new ReportParameter("comapny_address", comapny_address));
+            paramarr.Add(new ReportParameter("company_phone", company_phone));
+            paramarr.Add(new ReportParameter("company_fax", company_fax));
+            paramarr.Add(new ReportParameter("company_email", company_email));
+            paramarr.Add(new ReportParameter("company_logo_img", "file:\\" + GetLogoImagePath()));
+            paramarr.Add(new ReportParameter("amount", amount));
+            paramarr.Add(new ReportParameter("voucher_num", voucher_num));
+            paramarr.Add(new ReportParameter("type", type));
+            paramarr.Add(new ReportParameter("check_num", check_num));
+            paramarr.Add(new ReportParameter("date", date));
+            paramarr.Add(new ReportParameter("from", from));
 
 
-        //    string company_name = MainWindow.companyName;
-        //    string comapny_address = MainWindow.Address;
-        //    string company_phone = MainWindow.Phone;
-        //    string company_fax = MainWindow.Fax;
-        //    string company_email = MainWindow.Email;
-        //    //   string company_logo_img = GetLogoImagePath();
-        //    //string amount = cashtrans.cash.ToString();
-        //    string amount = DecTostring(cashtrans.cash);
-
-        //    string voucher_num = cashtrans.transNum.ToString();
-        //    string type = "";
-        //    string isCash = "0";
-        //    string trans_num_txt = "";
-
-        //    string check_num = cashtrans.docNum;
-        //    //string date = cashtrans.createDate.ToString();
-        //    string date = DateToString(cashtrans.createDate);
-        //    string from = "";
-        //    string amount_in_words = "";
-        //    string purpose = "";
-        //    string recived_by = "";
-        //    string user_name = cashtrans.createUserName + " " + cashtrans.createUserLName;
-        //    string job = "Employee"; //cashtrans.createUserJob;
-        //    string pay_to;
-
-        //    if (cashtrans.side == "u")
-        //    {
-        //        pay_to = cashtrans.usersName + " " + cashtrans.usersLName;
-
-        //    }
-        //    else if (cashtrans.side == "v" || cashtrans.side == "c")
-        //    {
-        //        pay_to = cashtrans.agentName;
-        //    }
-        //    else if (cashtrans.side == "sh")
-        //    {
-        //        pay_to = cashtrans.shippingCompanyName;
-        //    }
-        //    else
-        //    {
-        //        pay_to = "";
-        //    }
-        //    if (cashtrans.processType == "cheque")
-        //    {
-
-        //        type = MainWindow.resourcemanagerreport.GetString("trCheque");
-        //        if (isArabic)
-        //        {
-        //            trans_num_txt = "رقم الشيك:";
-        //        }
-        //        else
-        //        {
-        //            trans_num_txt = "Cheque Num:";
-        //        }
-
-        //        //    MainWindow.resourcemanagerreport.GetString("trCheque");
-        //    }
-        //    else if (cashtrans.processType == "card")
-        //    {
-        //        type = cashtrans.cardName;
-
-        //        if (isArabic)
-        //        {
-        //            trans_num_txt = "رقم العملية:";
-        //        }
-        //        else
-        //        {
-        //            trans_num_txt = "Transfer Num:";
-        //        }
+            paramarr.Add(new ReportParameter("amount_in_words", amount_in_words));
+            paramarr.Add(new ReportParameter("purpose", purposeval));
+            paramarr.Add(new ReportParameter("recived_by", recived_by));
+            paramarr.Add(new ReportParameter("recivedFrom", recivedFrom));
+           
+            //paramarr.Add(new ReportParameter("purpose", purpose));
+            //paramarr.Add(new ReportParameter("user_name", user_name));
+            paramarr.Add(new ReportParameter("pay_to", pay_to));
+            paramarr.Add(new ReportParameter("job", job));
+            paramarr.Add(new ReportParameter("isCash", isCash));
+            paramarr.Add(new ReportParameter("trans_num_txt", trans_num_txt));
 
 
-        //        // card name and number
-        //    }
-        //    else if (cashtrans.processType == "cash")
-        //    {
-        //        type = "Cash";
-        //        isCash = "1";
-
-        //    }
-        //    else if (cashtrans.processType == "doc")
-        //    {
-        //        if (isArabic)
-        //        {
-        //            type = "مستند";
-        //            trans_num_txt = "رقم المستند:";
-        //        }
-        //        else
-        //        {
-        //            type = "Document";
-        //            trans_num_txt = "Document Num:";
-        //        }
-
-
-
-
-        //    }
-        //    /////
-        //    try
-        //    {
-
-        //        int id = MainWindow.CurrencyId;
-        //        ToWord toWord = new ToWord(Convert.ToDecimal(amount), currencies[id]);
-
-        //        if (isArabic)
-        //        {
-        //            amount_in_words = toWord.ConvertToArabic();
-        //            // cashtrans.cash
-        //        }
-        //        else
-        //        {
-        //            amount_in_words = toWord.ConvertToEnglish(); ;
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        amount_in_words = String.Empty;
-
-        //    }
-
-        //    //  rep.DataSources.Add(new ReportDataSource("DataSetBank", banksQuery));
-
-        //    List<ReportParameter> paramarr = new List<ReportParameter>();
-        //    paramarr.Add(new ReportParameter("lang", MainWindow.Reportlang));
-        //    paramarr.Add(new ReportParameter("title", title));
-        //    paramarr.Add(new ReportParameter("company_name", company_name));
-        //    paramarr.Add(new ReportParameter("comapny_address", comapny_address));
-        //    paramarr.Add(new ReportParameter("company_phone", company_phone));
-        //    paramarr.Add(new ReportParameter("company_fax", company_fax));
-        //    paramarr.Add(new ReportParameter("company_email", company_email));
-        //    paramarr.Add(new ReportParameter("company_logo_img", "file:\\" + GetLogoImagePath()));
-        //    paramarr.Add(new ReportParameter("amount", amount));
-        //    paramarr.Add(new ReportParameter("voucher_num", voucher_num));
-        //    paramarr.Add(new ReportParameter("type", type));
-        //    paramarr.Add(new ReportParameter("check_num", check_num));
-        //    paramarr.Add(new ReportParameter("date", date));
-        //    paramarr.Add(new ReportParameter("from", from));
-
-
-        //    paramarr.Add(new ReportParameter("amount_in_words", amount_in_words));
-        //    paramarr.Add(new ReportParameter("purpose", purpose));
-        //    paramarr.Add(new ReportParameter("recived_by", recived_by));
-        //    paramarr.Add(new ReportParameter("purpose", purpose));
-        //    paramarr.Add(new ReportParameter("user_name", user_name));
-        //    paramarr.Add(new ReportParameter("pay_to", pay_to));
-        //    paramarr.Add(new ReportParameter("job", job));
-        //    paramarr.Add(new ReportParameter("isCash", isCash));
-        //    paramarr.Add(new ReportParameter("trans_num_txt", trans_num_txt));
-        //    return paramarr;
-        //}
-        public string ConvertAmountToWords(Nullable<decimal>  amount)
+            paramarr.Add(new ReportParameter("show_header", true.ToString()));
+            //
+            paramarr.Add(new ReportParameter("trcashAmount", MainWindow.resourcemanagerreport.GetString("cashAmount")));
+            paramarr.Add(new ReportParameter("trVoucherno", MainWindow.resourcemanagerreport.GetString("Voucherno")));
+            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trRecivedFromMr", MainWindow.resourcemanagerreport.GetString("RecivedFromMr")));
+            paramarr.Add(new ReportParameter("trPaytoMr", MainWindow.resourcemanagerreport.GetString("PaytoMr")));
+            paramarr.Add(new ReportParameter("trAmountInWords", MainWindow.resourcemanagerreport.GetString("AmountInWords")));
+            paramarr.Add(new ReportParameter("trRecivedPurpose", MainWindow.resourcemanagerreport.GetString("RecivedPurpose")));
+            paramarr.Add(new ReportParameter("trPaymentPurpose", MainWindow.resourcemanagerreport.GetString("PaymentPurpose")));
+            paramarr.Add(new ReportParameter("trReceiver", MainWindow.resourcemanagerreport.GetString("Receiver")));
+            //paramarr.Add(new ReportParameter("currency", FillCombo.c));
+            return paramarr;
+        }
+        public string ConvertAmountToWords(Nullable<decimal> amount)
         {
             Fillcurrency();
             string amount_in_words = "";
@@ -1301,7 +1303,7 @@ namespace BookAccountApp.Classes
             return (Decrypt(text));
         }
         //////////
-        public  bool decodefile(string Source, string DestPath)
+        public bool decodefile(string Source, string DestPath)
         {
             try
             {

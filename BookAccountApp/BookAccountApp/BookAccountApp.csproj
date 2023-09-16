@@ -711,6 +711,18 @@
     <Content Include="Reports\SectionData\Ar\ArSystems.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Account\Ar\Voucher\ArPayReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Ar\Voucher\ArPayReportA4.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Ar\Voucher\ArReciveReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Ar\Voucher\ArReciveReportA4.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\logo.png" />
     <Content Include="Thumb\office\tmp.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

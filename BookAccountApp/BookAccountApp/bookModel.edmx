@@ -234,6 +234,12 @@
           <Property Name="paysideId" Type="int" />
           <Property Name="flightId" Type="int" />
           <Property Name="opName" Type="nvarchar" MaxLength="500" />
+          <Property Name="systemId" Type="int" />
+          <Property Name="systemType" Type="nvarchar" MaxLength="50" />
+          <Property Name="currency" Type="nvarchar" MaxLength="50" />
+          <Property Name="syValue" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="exchangeId" Type="int" />
+          <Property Name="fromSide" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="paySides">
           <Key>
@@ -302,6 +308,7 @@
           <Property Name="syValue" Type="decimal" Precision="20" Scale="3" />
           <Property Name="tax_ratio" Type="decimal" Precision="20" Scale="3" />
           <Property Name="tax_value" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="currency" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="serviceDataFiles">
           <Key>
@@ -616,6 +623,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_payOp_exchange">
+          <End Role="exchange" Type="Self.exchange" Multiplicity="0..1" />
+          <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="exchange">
+              <PropertyRef Name="exchangeId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="exchangeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_payOp_flights">
           <End Role="flights" Type="Self.flights" Multiplicity="0..1" />
           <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
@@ -673,6 +692,18 @@
             </Principal>
             <Dependent Role="payOp">
               <PropertyRef Name="serviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_systems">
+          <End Role="systems" Type="Self.systems" Multiplicity="0..1" />
+          <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="systems">
+              <PropertyRef Name="systemId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="systemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -987,6 +1018,10 @@
             <End Role="passengers" EntitySet="passengers" />
             <End Role="passengerFiles" EntitySet="passengerFiles" />
           </AssociationSet>
+          <AssociationSet Name="FK_payOp_exchange" Association="Self.FK_payOp_exchange">
+            <End Role="exchange" EntitySet="exchange" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
           <AssociationSet Name="FK_payOp_flights" Association="Self.FK_payOp_flights">
             <End Role="flights" EntitySet="flights" />
             <End Role="payOp" EntitySet="payOp" />
@@ -1005,6 +1040,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_payOp_serviceData" Association="Self.FK_payOp_serviceData">
             <End Role="serviceData" EntitySet="serviceData" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_systems" Association="Self.FK_payOp_systems">
+            <End Role="systems" EntitySet="systems" />
             <End Role="payOp" EntitySet="payOp" />
           </AssociationSet>
           <AssociationSet Name="FK_payOp_users" Association="Self.FK_payOp_users">
@@ -1304,6 +1343,14 @@
           <Property Name="flightId" Type="Int32" />
           <NavigationProperty Name="flights" Relationship="bookModel.FK_payOp_flights" FromRole="payOp" ToRole="flights" />
           <Property Name="opName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="systemId" Type="Int32" />
+          <NavigationProperty Name="systems" Relationship="bookModel.FK_payOp_systems" FromRole="payOp" ToRole="systems" />
+          <Property Name="systemType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="currency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="syValue" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="exchangeId" Type="Int32" />
+          <NavigationProperty Name="exchange" Relationship="bookModel.FK_payOp_exchange" FromRole="payOp" ToRole="exchange" />
+          <Property Name="fromSide" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="serviceData">
           <Key>
@@ -1371,6 +1418,7 @@
           <Property Name="syValue" Type="Decimal" Precision="20" Scale="3" />
           <Property Name="tax_ratio" Type="Decimal" Precision="20" Scale="3" />
           <Property Name="tax_value" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="currency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="setting">
           <Key>
@@ -1985,6 +2033,14 @@
             <End Role="systems" EntitySet="systems" />
             <End Role="flights" EntitySet="flights" />
           </AssociationSet>
+          <AssociationSet Name="FK_payOp_systems" Association="bookModel.FK_payOp_systems">
+            <End Role="systems" EntitySet="systems" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_exchange" Association="bookModel.FK_payOp_exchange">
+            <End Role="exchange" EntitySet="exchange" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="officeFiles">
           <Key>
@@ -2109,6 +2165,7 @@
           <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="createUserId" Type="Int32" />
           <NavigationProperty Name="serviceData" Relationship="bookModel.FK_serviceData_exchange" FromRole="exchange" ToRole="serviceData" />
+          <NavigationProperty Name="payOp" Relationship="bookModel.FK_payOp_exchange" FromRole="exchange" ToRole="payOp" />
         </EntityType>
         <Association Name="FK_serviceData_exchange">
           <End Type="bookModel.exchange" Role="exchange" Multiplicity="0..1" />
@@ -2154,6 +2211,7 @@
           <NavigationProperty Name="users1" Relationship="bookModel.FK_systems_users1" FromRole="systems" ToRole="users" />
           <NavigationProperty Name="serviceData" Relationship="bookModel.FK_serviceData_systems" FromRole="systems" ToRole="serviceData" />
           <NavigationProperty Name="flights" Relationship="bookModel.FK_flights_systems" FromRole="systems" ToRole="flights" />
+          <NavigationProperty Name="payOp" Relationship="bookModel.FK_payOp_systems" FromRole="systems" ToRole="payOp" />
         </EntityType>
         <Association Name="FK_officeSystem_office">
           <End Type="bookModel.office" Role="office" Multiplicity="0..1" />
@@ -2236,6 +2294,30 @@
             </Principal>
             <Dependent Role="flights">
               <PropertyRef Name="systemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_systems">
+          <End Type="bookModel.systems" Role="systems" Multiplicity="0..1" />
+          <End Type="bookModel.payOp" Role="payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="systems">
+              <PropertyRef Name="systemId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="systemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_exchange">
+          <End Type="bookModel.exchange" Role="exchange" Multiplicity="0..1" />
+          <End Type="bookModel.payOp" Role="payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="exchange">
+              <PropertyRef Name="exchangeId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="exchangeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2417,6 +2499,12 @@
           <EntitySetMapping Name="payOp">
             <EntityTypeMapping TypeName="bookModel.payOp">
               <MappingFragment StoreEntitySet="payOp">
+                <ScalarProperty Name="fromSide" ColumnName="fromSide" />
+                <ScalarProperty Name="exchangeId" ColumnName="exchangeId" />
+                <ScalarProperty Name="syValue" ColumnName="syValue" />
+                <ScalarProperty Name="currency" ColumnName="currency" />
+                <ScalarProperty Name="systemType" ColumnName="systemType" />
+                <ScalarProperty Name="systemId" ColumnName="systemId" />
                 <ScalarProperty Name="opName" ColumnName="opName" />
                 <ScalarProperty Name="flightId" ColumnName="flightId" />
                 <ScalarProperty Name="paysideId" ColumnName="paysideId" />
@@ -2444,6 +2532,7 @@
           <EntitySetMapping Name="serviceData">
             <EntityTypeMapping TypeName="bookModel.serviceData">
               <MappingFragment StoreEntitySet="serviceData">
+                <ScalarProperty Name="currency" ColumnName="currency" />
                 <ScalarProperty Name="tax_value" ColumnName="tax_value" />
                 <ScalarProperty Name="tax_ratio" ColumnName="tax_ratio" />
                 <ScalarProperty Name="syValue" ColumnName="syValue" />

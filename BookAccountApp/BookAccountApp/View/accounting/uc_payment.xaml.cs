@@ -590,46 +590,46 @@ namespace BookAccountApp.View.accounting
         }
 
         #region reports
-
+        ServiceData servicemodel = new ServiceData();
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
    //     SaveFileDialog saveFileDialog = new SaveFileDialog();
 
-        public void BuildReport()
-        {
-            /*
-            //string firstTitle = "paymentsReport";
-            ////string secondTitle = "";
-            ////string subTitle = "";
-            //string Title = "";
+        //public void BuildReport()
+        //{
+        //    /*
+        //    //string firstTitle = "paymentsReport";
+        //    ////string secondTitle = "";
+        //    ////string subTitle = "";
+        //    //string Title = "";
 
-            List<ReportParameter> paramarr = new List<ReportParameter>();
+        //    List<ReportParameter> paramarr = new List<ReportParameter>();
 
-            string addpath;
-            bool isArabic = ReportCls.checkLang();
-            //if (isArabic)
-            //{
-            addpath = @"\Reports\Sale\ArSales.rdlc";
+        //    string addpath;
+        //    bool isArabic = ReportCls.checkLang();
+        //    //if (isArabic)
+        //    //{
+        //    addpath = @"\Reports\Sale\ArSales.rdlc";
 
-            //}
-            //else
-            //{
-            //    addpath = @"\Reports\SectionData\En\EnPayOps.rdlc";
-            //}
-            //D:\myproj\posproject3\BookAccountApp\BookAccountApp\Reports\statisticReports\En\EnBook.rdlc
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-            //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-            string title = MainWindow.resourcemanagerreport.GetString("book_sales") + " / " + MainWindow.resourcemanagerreport.GetString("syr");
-            paramarr.Add(new ReportParameter("trTitle", title));
-            clsReports.SaleReport(payOpsQuery, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
+        //    //}
+        //    //else
+        //    //{
+        //    //    addpath = @"\Reports\SectionData\En\EnPayOps.rdlc";
+        //    //}
+        //    //D:\myproj\posproject3\BookAccountApp\BookAccountApp\Reports\statisticReports\En\EnBook.rdlc
+        //    string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+        //    //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+        //    string title = MainWindow.resourcemanagerreport.GetString("book_sales") + " / " + MainWindow.resourcemanagerreport.GetString("syr");
+        //    paramarr.Add(new ReportParameter("trTitle", title));
+        //    clsReports.SaleReport(payOpsQuery, rep, reppath, paramarr);
+        //    clsReports.setReportLanguage(paramarr);
+        //    clsReports.Header(paramarr);
 
-            rep.SetParameters(paramarr);
+        //    rep.SetParameters(paramarr);
 
-            rep.Refresh();
-            */
-        }
+        //    rep.Refresh();
+        //    */
+        //}
 
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {
@@ -763,17 +763,211 @@ namespace BookAccountApp.View.accounting
 
         private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
+                //{
+                #region
+                Window.GetWindow(this).Opacity = 0.2;
+                win_lvc win = new win_lvc(payOpsQuery, 6, true);
+                win.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                #endregion
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
+        public void BuildReport()
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+            string startDate = "";
+            string endDate = "";
+            string searchval = "";
+            string Allchk = "";
+            //  List<string> invTypelist = new List<string>();
+            bool isArabic = ReportCls.checkLang();
+            string all = MainWindow.resourcemanagerreport.GetString("trAll");
+            string addpath;
 
+            if (isArabic)
+            {
+                addpath = @"\Reports\Account\Ar\ArPayAccReport.rdlc";
+            }
+            else addpath = @"\Reports\Account\En\PayAccReport.rdlc";
 
+            //filter
+            startDate = dp_fromDateSearch.SelectedDate != null ? clsReports.dateFrameConverter(dp_fromDateSearch.SelectedDate) : "";
+            endDate = dp_toDateSearch.SelectedDate != null ? clsReports.dateFrameConverter(dp_toDateSearch.SelectedDate) : "";
+            //Allchk = chb_all.IsChecked == true ? all : "";
+            paramarr.Add(new ReportParameter("StartDateVal", startDate));
+            paramarr.Add(new ReportParameter("EndDateVal", endDate));
+            //paramarr.Add(new ReportParameter("alldateval", Allchk));
+            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trSearch", MainWindow.resourcemanagerreport.GetString("trSearch")));
+            paramarr.Add(new ReportParameter("trStartDate", MainWindow.resourcemanagerreport.GetString("trStartDate")));
+            paramarr.Add(new ReportParameter("trEndDate", MainWindow.resourcemanagerreport.GetString("trEndDate")));
+            searchval = tb_search.Text;
+            paramarr.Add(new ReportParameter("searchVal", searchval));
+            //end filter
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
+            ReportCls.checkLang();
+            //cashesQueryExcel = cashesQuery.ToList();
+            clsReports.paymentAccReport(payOpsQuery, rep, reppath, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+            rep.Refresh();
+        }
 
         #endregion
 
 
+        #region reports Voucher
 
+        public async Task BuildVoucherReport()
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            //if (isArabic)
+            //{
+                if (FillCombo.docPapersize == "A4")
+                {
+                    addpath = @"\Reports\Account\Ar\Voucher\ArPayReportA4.rdlc";
+                }
+                else //A5
+                {
+                    addpath = @"\Reports\Account\Ar\Voucher\ArPayReport.rdlc";
+                }
+
+            //}
+            //else
+            //{
+            //    if (FillCombo.docPapersize == "A4")
+            //    {
+            //        addpath = @"\Reports\Account\En\PayReportA4.rdlc";
+            //    }
+            //    else //A5
+            //    {
+            //        addpath = @"\Reports\Account\En\PayReport.rdlc";
+            //    }
+            //}
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            rep.ReportPath = reppath;
+            rep.DataSources.Clear();
+            rep.EnableExternalImages = true;
+            servicemodel= await servicemodel.GetByID((int)payOp.serviceId);
+            paramarr = reportclass.fillPayReport(payOp,servicemodel);
+            clsReports.Header(paramarr);
+            rep.SetParameters(paramarr);
+            rep.Refresh();
+        }
+        private void Btn_invoicePrint_Click(object sender, RoutedEventArgs e)
+        {
+            //print
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                #region
+                BuildVoucherReport();
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        private void Btn_invoicePreview_Click(object sender, RoutedEventArgs e)
+        {
+            //preview
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                #region
+                Window.GetWindow(this).Opacity = 0.2;
+
+                string pdfpath = "";
+                //
+                pdfpath = @"\Thumb\report\temp.pdf";
+                pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                BuildVoucherReport();
+
+                LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                wd_previewPdf w = new wd_previewPdf();
+                w.pdfPath = pdfpath;
+                if (!string.IsNullOrEmpty(w.pdfPath))
+                {
+                    w.ShowDialog();
+                    w.wb_pdfWebViewer.Dispose();
+
+
+                }
+                Window.GetWindow(this).Opacity = 1;
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        private void Btn_invoicePdf_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                #region
+                BuildVoucherReport();
+
+                saveFileDialog.Filter = "PDF|*.pdf;";
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string filepath = saveFileDialog.FileName;
+                    LocalReportExtensions.ExportToPDF(rep, filepath);
+                }
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        #endregion
 
         private void Btn_addAirline_Click(object sender, RoutedEventArgs e)
         {
@@ -886,21 +1080,7 @@ namespace BookAccountApp.View.accounting
        */
         }
 
-        private void Btn_invoicePrint_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Btn_invoicePreview_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Btn_invoicePdf_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+      
         private async void Cb_side_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try

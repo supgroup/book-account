@@ -72,6 +72,7 @@ namespace BookAccountApp
         public Nullable<decimal> syValue { get; set; }
         public Nullable<decimal> tax_ratio { get; set; }
         public Nullable<decimal> tax_value { get; set; }
+        public string currency { get; set; }
     
         public virtual flights flights { get; set; }
         public virtual office office { get; set; }

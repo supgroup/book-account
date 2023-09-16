@@ -23,7 +23,8 @@ namespace BookAccountApp.Classes
             Morocco,//15
             Libya,//16
             Somalia,//17
-            Turkey
+            Turkey,//18
+            USA,//19
         };
 
         #region Constructors
@@ -405,6 +406,26 @@ namespace BookAccountApp.Classes
                     Arabic2CurrencyPartName = "قرشان";
                     Arabic310CurrencyPartName = "قروش";
                     Arabic1199CurrencyPartName = "قرش";
+                    PartPrecision = 2;
+                    IsCurrencyPartNameFeminine = false;
+                    break;
+
+                case Currencies.USA:
+                    CurrencyID = 19;
+                    CurrencyCode = "USD";
+                    IsCurrencyNameFeminine = false;
+                    EnglishCurrencyName = "USD";
+                    EnglishPluralCurrencyName = "USD";
+                    EnglishCurrencyPartName = "CENT";
+                    EnglishPluralCurrencyPartName = "CENTS";
+                    Arabic1CurrencyName = "دولار";
+                    Arabic2CurrencyName = "دولاران";
+                    Arabic310CurrencyName = "دولارات";
+                    Arabic1199CurrencyName = "دولار";
+                    Arabic1CurrencyPartName = "سنت";
+                    Arabic2CurrencyPartName = "سنتان";
+                    Arabic310CurrencyPartName = "سنتات";
+                    Arabic1199CurrencyPartName = "سنت";
                     PartPrecision = 2;
                     IsCurrencyPartNameFeminine = false;
                     break;

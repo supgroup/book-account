@@ -39,6 +39,17 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> flightId { get; set; }
         public string opName { get; set; }
         //    
+        public string passenger { get; set; }
+        public string airline { get; set; }
+
+        public string officeName { get; set; }
+        public string systemType { get; set; }
+        public Nullable<int> systemId { get; set; }
+        public string systemName { get; set; }
+        public string currency { get; set; }
+        public Nullable<decimal> syValue { get; set; }
+        public Nullable<int> exchangeId { get; set; }
+        public string fromSide { get; set; }
         public bool canDelete { get; set; }
         /// <summary>
         /// ///////////////////////////////////////
@@ -77,7 +88,7 @@ namespace BookAccountApp.ApiClasses
                                 recivedFrom = S.recivedFrom,
                                 paysideId = S.paysideId,
                                 flightId = S.flightId,
-                                opName=S.opName,
+                                opName = S.opName,
                                 sideAr = S.paySides.sideAr,
                             }).ToList();
 
@@ -101,7 +112,7 @@ namespace BookAccountApp.ApiClasses
                 using (bookdbEntities entity = new bookdbEntities())
                 {
                     List = (from S in entity.payOp
-                            where S.opType==opType
+                            where S.opType == opType
                             select new PayOp()
                             {
                                 payOpId = S.payOpId,
@@ -123,9 +134,19 @@ namespace BookAccountApp.ApiClasses
                                 recipient = S.recipient,
                                 recivedFrom = S.recivedFrom,
                                 paysideId = S.paysideId,
-                                sideAr=S.paySides.sideAr,
+                                sideAr = S.paySides.sideAr,
                                 flightId = S.flightId,
                                 opName = S.opName,
+                                passenger = S.passengers.name + " " + S.passengers.lastName,
+                                airline = S.systems.name + "/" + S.flights.flightTable.name,
+                                officeName = S.office.name,
+                                systemType = S.systemType,
+                                systemId = S.systemId,
+                                systemName = S.systems.name,
+                                syValue = S.syValue,
+                                exchangeId = S.exchangeId,
+                                currency=S.currency,
+                                fromSide=S.fromSide,
                             }).ToList();
 
                     return List;
@@ -223,6 +244,12 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.paysideId = newObject.paysideId;
                             tmpObject.flightId = newObject.flightId;
                             tmpObject.opName = newObject.opName;
+                            tmpObject.systemType = newObject.systemType;
+                            tmpObject.systemId = newObject.systemId;
+                            tmpObject.syValue = newObject.syValue;
+                            tmpObject.exchangeId = newObject.exchangeId;
+                            tmpObject.currency = newObject.currency;
+                            tmpObject.fromSide = newObject.fromSide;
 
                             entity.SaveChanges();
 
@@ -277,7 +304,7 @@ namespace BookAccountApp.ApiClasses
                           recipient = S.recipient,
                           recivedFrom = S.recivedFrom,
                           paysideId = S.paysideId,
-                        flightId=S.flightId,
+                          flightId = S.flightId,
                           opName = S.opName,
                       }).FirstOrDefault();
                     return row;
@@ -414,7 +441,7 @@ namespace BookAccountApp.ApiClasses
 
         public async Task<int> GetLastNum(string payOpCode)
         {
-           
+
 
             List<string> numberList;
             int lastNum = 0;
@@ -437,24 +464,24 @@ namespace BookAccountApp.ApiClasses
             return lastNum;
         }
 
-           
-       
 
-    public async Task<string> generateNumber(string payOpCode)
-    {
-        int sequence = await GetLastNum(payOpCode);
-        sequence++;
-        string strSeq = sequence.ToString();
-        if (sequence <= 999999)
-            strSeq = sequence.ToString().PadLeft(6, '0');
-        string payOpNum = payOpCode + "-" + strSeq;
-        return payOpNum;
+
+
+        public async Task<string> generateNumber(string payOpCode)
+        {
+            int sequence = await GetLastNum(payOpCode);
+            sequence++;
+            string strSeq = sequence.ToString();
+            if (sequence <= 999999)
+                strSeq = sequence.ToString().PadLeft(6, '0');
+            string payOpNum = payOpCode + "-" + strSeq;
+            return payOpNum;
+        }
+
+
+        /// ////
+
+
+
     }
-
-
-    /// ////
-
-
-
-}
 }

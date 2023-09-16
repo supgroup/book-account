@@ -309,6 +309,45 @@ passwordSoto
 
         }
 
+        public static void paymentAccReport(IEnumerable<PayOp> query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            List<PayOp> cash = JsonConvert.DeserializeObject<List<PayOp>>(JsonConvert.SerializeObject(query));
+
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+
+           
+
+
+            //AccountSideConv(paramarr);
+
+            //cashTransTypeConv(paramarr);
+            //   cashTransferProcessTypeConv(paramarr);
+
+            paramarr.Add(new ReportParameter("trTransferNumberTooltip", MainWindow.resourcemanagerreport.GetString("trTransferNumberTooltip")));
+            paramarr.Add(new ReportParameter("trRecepient", MainWindow.resourcemanagerreport.GetString("trRecepient")));
+            paramarr.Add(new ReportParameter("trPaymentTypeTooltip", MainWindow.resourcemanagerreport.GetString("trPaymentTypeTooltip")));
+            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trCashTooltip", MainWindow.resourcemanagerreport.GetString("trCashTooltip")));
+            paramarr.Add(new ReportParameter("accuracy", MainWindow.accuracy));
+            paramarr.Add(new ReportParameter("trUnKnown", MainWindow.resourcemanagerreport.GetString("trUnKnown")));
+            paramarr.Add(new ReportParameter("trCashCustomer", MainWindow.resourcemanagerreport.GetString("trCashCustomer")));
+            paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trPayments")));
+
+            DateFormConv(paramarr);
+
+
+            foreach (var c in cash)
+            {
+                //c.notes = depositorNameConverter(c);
+                //c.cash = decimal.Parse(SectionData.DecTostring(c.cash));
+                //// c.notes = SectionData.DecTostring(c.cash);
+                //c.agentName = AgentUnKnownConvert(c.agentId, c.side, c.agentName);
+                //c.processType = processTypeConvswitch(c.processType, c.cardName);
+            }
+            rep.DataSources.Add(new ReportDataSource("DataSetBankAcc", cash));
+        }
         //public static void CustomersReport(IEnumerable<Customers> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         //{
         //    rep.ReportPath = reppath;
