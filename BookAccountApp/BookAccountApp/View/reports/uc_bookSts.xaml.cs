@@ -398,7 +398,7 @@ namespace BookAccountApp.View.reports
 
         public void BuildReport()
         {
-            /*
+          
             //string firstTitle = "paymentsReport";
             ////string secondTitle = "";
             ////string subTitle = "";
@@ -410,7 +410,7 @@ namespace BookAccountApp.View.reports
             bool isArabic = ReportCls.checkLang();
             //if (isArabic)
             //{
-            addpath = @"\Reports\Sale\ArSales.rdlc";
+            addpath = @"\Reports\statisticReports\Ar\ArBook.rdlc";
 
             //}
             //else
@@ -420,16 +420,16 @@ namespace BookAccountApp.View.reports
             //D:\myproj\posproject3\BookAccountApp\BookAccountApp\Reports\statisticReports\En\EnBook.rdlc
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
             //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-            string title = MainWindow.resourcemanagerreport.GetString("book_sales") + " / " + MainWindow.resourcemanagerreport.GetString("syr");
+            string title = MainWindow.resourcemanagerreport.GetString("bookProfits") ;
             paramarr.Add(new ReportParameter("trTitle", title));
-            clsReports.SaleReport(bookStssQuery, rep, reppath, paramarr);
+            clsReports.BookStsReport(bookStssQuery, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
             rep.SetParameters(paramarr);
 
             rep.Refresh();
-            */
+         
         }
 
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)

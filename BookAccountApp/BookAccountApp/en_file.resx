@@ -3154,4 +3154,13 @@ Please add Email in setting</value>
   <data name="yearMonth" xml:space="preserve">
     <value>Year/Half/Quarter/Month</value>
   </data>
+  <data name="bookProfits" xml:space="preserve">
+    <value>Book Profits</value>
+  </data>
+  <data name="financeChange" xml:space="preserve">
+    <value>Finance Changes</value>
+  </data>
+  <data name="paySysTrans" xml:space="preserve">
+    <value>Pay Systems Transfer</value>
+  </data>
 </root>

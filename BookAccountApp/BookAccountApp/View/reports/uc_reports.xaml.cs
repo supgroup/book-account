@@ -64,8 +64,13 @@ namespace BookAccountApp.View.reports
 
         private void translate()
         {
-            //btn_bookSts.Content = MainWindow.resourcemanager.GetString("");
-            //btn_paymentsSts.Content = MainWindow.resourcemanager.GetString("");
+            /*
+             * financeChange
+bookProfits
+paySysTrans
+             * */
+            btn_bookSts.Content = MainWindow.resourcemanager.GetString("bookProfits");
+            btn_paymentsSts.Content = MainWindow.resourcemanager.GetString("financeChange"); 
         }
 
         void colorButtonRefreash(string str)

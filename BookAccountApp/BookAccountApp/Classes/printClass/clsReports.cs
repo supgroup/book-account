@@ -348,6 +348,37 @@ passwordSoto
             }
             rep.DataSources.Add(new ReportDataSource("DataSetBankAcc", cash));
         }
+
+        public static void BookStsReport(IEnumerable<BookSts> QueryList, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            List<BookSts> Query = JsonConvert.DeserializeObject<List<BookSts>>(JsonConvert.SerializeObject(QueryList));
+            foreach (BookSts row in Query)
+            {
+                row.strServiceDate = dateFrameConverter(row.createDate);
+                row.priceBeforTax = decimal.Parse(HelpClass.DecTostring(row.priceBeforTax));
+                row.profit = decimal.Parse(HelpClass.DecTostring(row.profit));
+                row.strCreateDate = dateFrameConverter(row.createDate);
+            }
+
+            rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+            //title
+
+            //table columns
+            paramarr.Add(new ReportParameter("trNo", MainWindow.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("bookSystem", MainWindow.resourcemanagerreport.GetString("bookSystem")));
+            paramarr.Add(new ReportParameter("airlineFlightSys", MainWindow.resourcemanagerreport.GetString("airlineFlightSys")));
+            paramarr.Add(new ReportParameter("trOffice", MainWindow.resourcemanagerreport.GetString("trOffice")));
+            paramarr.Add(new ReportParameter("priceBeforTax", MainWindow.resourcemanagerreport.GetString("priceBeforTax")));
+            paramarr.Add(new ReportParameter("profits", MainWindow.resourcemanagerreport.GetString("profits")));
+            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
+
+         
+
+        }
+
         //public static void CustomersReport(IEnumerable<Customers> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         //{
         //    rep.ReportPath = reppath;

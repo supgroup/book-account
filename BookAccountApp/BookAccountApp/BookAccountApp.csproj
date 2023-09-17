@@ -723,6 +723,9 @@
     <Content Include="Reports\Account\Ar\Voucher\ArReciveReportA4.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\statisticReports\Ar\ArBook.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\logo.png" />
     <Content Include="Thumb\office\tmp.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -782,7 +785,7 @@
     <Content Include="Reports\Applications\En\EnVersions.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\statisticReports\Ar\ArBook.rdlc">
+    <Content Include="Reports\statisticReports\Ar\ArBook222.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\statisticReports\En\EnBook.rdlc">

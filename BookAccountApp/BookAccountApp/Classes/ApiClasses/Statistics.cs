@@ -75,6 +75,8 @@ namespace BookAccountApp.ApiClasses
         public string recivedFrom { get; set; }
         public string sideAr { get; set; }
         public string side { get; set; }
+        public string strCreateDate { get; set; }
+        
 
     }
     public class PaymentsSts 
