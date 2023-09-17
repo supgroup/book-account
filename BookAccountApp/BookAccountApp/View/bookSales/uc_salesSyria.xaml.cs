@@ -453,13 +453,15 @@ trTaxHint
                     {
                         //tb_custCode.Text = serviceData.custCode;
                          cb_passenger.SelectedValue = serviceData.passengerId;
-                        cb_airline.SelectedValue = serviceData.flightId;
+                 
                         cb_office.SelectedValue = serviceData.officeId;
                         cb_system.SelectedValue = serviceData.systemId;
+                        cb_airline.SelectedValue = serviceData.flightId;
                         tb_total.Text = HelpClass.DecTostring(serviceData.total);
                         tb_priceBeforTax.Text = HelpClass.DecTostring(serviceData.priceBeforTax);
                         tb_charge.Text = HelpClass.DecTostring(serviceData.tax_value);
                         this.DataContext = serviceData;
+
                         #region delete
                         if (serviceData.canDelete)
                             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");

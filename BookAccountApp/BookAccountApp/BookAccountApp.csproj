@@ -785,9 +785,6 @@
     <Content Include="Reports\Applications\En\EnVersions.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\statisticReports\Ar\ArBook222.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Reports\statisticReports\En\EnBook.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -461,11 +461,12 @@ namespace BookAccountApp.View.bookSales
                     if (serviceData != null)
                     {
                         //tb_custCode.Text = serviceData.custCode;
-                        cb_passenger.SelectedValue = serviceData.passengerId;
-                        cb_airline.SelectedValue = serviceData.flightId;
+                        cb_system.SelectedValue = serviceData.systemId;
+                        cb_passenger.SelectedValue = serviceData.passengerId;                       
                         cb_office.SelectedValue = serviceData.officeId;
+                        cb_airline.SelectedValue = serviceData.flightId;
                         //cb_operation.SelectedValue = serviceData.operationId;
-                      
+
                         tb_total.Text = HelpClass.DecTostring(serviceData.total);
                       this.DataContext = serviceData;
                         #region delete
