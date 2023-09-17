@@ -87,24 +87,27 @@ namespace BookAccountApp.View.reports
             }
         }
         private void translate()
-        {
-            /*
+        {        
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            txt_title.Text = MainWindow.resourcemanager.GetString("payInvoice");
-        
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_opName, MainWindow.resourcemanager.GetString("operationNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_side, MainWindow.resourcemanager.GetString("sideOrResponsebleHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_recipient, MainWindow.resourcemanager.GetString("trRecepientHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_recivedFrom, MainWindow.resourcemanager.GetString("recivedFromHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, MainWindow.resourcemanager.GetString("trCashHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_opDate, MainWindow.resourcemanager.GetString("opDateHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            txt_title.Text = MainWindow.resourcemanager.GetString("accountPerson");
+            btn_for.Content = MainWindow.resourcemanager.GetString("for");
+            btn_to.Content = MainWindow.resourcemanager.GetString("onhim");
+            txt_totalPayTitle.Text = MainWindow.resourcemanager.GetString("totalPaid");
+            txt_totalWorthyTitle.Text = MainWindow.resourcemanager.GetString("totalOperations");
+            //officeSysAirline totalOperations totalPaid
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_side, MainWindow.resourcemanager.GetString("officeSysAirline"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_name, MainWindow.resourcemanager.GetString("trCompanyName"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_recipient, MainWindow.resourcemanager.GetString("trRecepientHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_recivedFrom, MainWindow.resourcemanager.GetString("recivedFromHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, MainWindow.resourcemanager.GetString("trCashHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_opDate, MainWindow.resourcemanager.GetString("opDateHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
             txt_invoicePrintButton.Text = MainWindow.resourcemanager.GetString("printInvoice");
             txt_invoicePreviewButton.Text = MainWindow.resourcemanager.GetString("previewInvoice");
             txt_invoicePdfButton.Text = MainWindow.resourcemanager.GetString("electronicInvoice");
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            //btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_fromDateSearch, MainWindow.resourcemanager.GetString("fromDate"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_toDateSearch, MainWindow.resourcemanager.GetString("toDate"));
             //txt_exportDocsButton.Text = MainWindow.resourcemanager.GetString("docExport");
@@ -119,8 +122,9 @@ namespace BookAccountApp.View.reports
             //   paymentsStss            
             dg_paymentsSts.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
             dg_paymentsSts.Columns[1].Header = MainWindow.resourcemanager.GetString("sideOrResponseble");
-            dg_paymentsSts.Columns[2].Header = MainWindow.resourcemanager.GetString("trRecepient");
-            dg_paymentsSts.Columns[3].Header = MainWindow.resourcemanager.GetString("recivedFrom");
+            dg_paymentsSts.Columns[2].Header = MainWindow.resourcemanager.GetString("recivedFrom");
+            dg_paymentsSts.Columns[3].Header = MainWindow.resourcemanager.GetString("trRecepient");
+     
             dg_paymentsSts.Columns[4].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
             dg_paymentsSts.Columns[5].Header = MainWindow.resourcemanager.GetString("payDate");
             //dg_paymentsSts.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
@@ -130,10 +134,7 @@ namespace BookAccountApp.View.reports
             tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
             tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
             tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            //tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
-
-
-            */
+            //tt_count.Content = MainWindow.resourcemanager.GetString("trCount"); 
         }
       
 

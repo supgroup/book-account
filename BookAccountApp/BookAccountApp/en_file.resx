@@ -3163,4 +3163,19 @@ Please add Email in setting</value>
   <data name="paySysTrans" xml:space="preserve">
     <value>Pay Systems Transfer</value>
   </data>
+  <data name="accountPerson" xml:space="preserve">
+    <value>Account Person</value>
+  </data>
+  <data name="for" xml:space="preserve">
+    <value>for</value>
+  </data>
+  <data name="officeSysAirline" xml:space="preserve">
+    <value>Office/System/Airline</value>
+  </data>
+  <data name="onhim" xml:space="preserve">
+    <value>to</value>
+  </data>
+  <data name="totalPaid" xml:space="preserve">
+    <value>Total Paid</value>
+  </data>
 </root>

@@ -3172,4 +3172,19 @@
   <data name="paySysTrans" xml:space="preserve">
     <value>حركة انظمة الدفع</value>
   </data>
+  <data name="accountPerson" xml:space="preserve">
+    <value>صاحب الذمة المالية</value>
+  </data>
+  <data name="for" xml:space="preserve">
+    <value>له</value>
+  </data>
+  <data name="officeSysAirline" xml:space="preserve">
+    <value>مكتب/نظام حجز/شركة طيران</value>
+  </data>
+  <data name="onhim" xml:space="preserve">
+    <value>عليه</value>
+  </data>
+  <data name="totalPaid" xml:space="preserve">
+    <value>اجمالي الدفع</value>
+  </data>
 </root>
