@@ -3187,4 +3187,22 @@
   <data name="totalPaid" xml:space="preserve">
     <value>اجمالي الدفع</value>
   </data>
+  <data name="currency" xml:space="preserve">
+    <value>العملة</value>
+  </data>
+  <data name="currencyHint" xml:space="preserve">
+    <value>العملة ...</value>
+  </data>
+  <data name="msgpaid" xml:space="preserve">
+    <value>لايمكن ان يكون المبلغ المدفوع اكبر من الاجمالي!</value>
+  </data>
+  <data name="PaidAmount" xml:space="preserve">
+    <value>المبلغ المدفوع</value>
+  </data>
+  <data name="PaidAmountHint" xml:space="preserve">
+    <value>المبلغ المدفوع ...</value>
+  </data>
+  <data name="send" xml:space="preserve">
+    <value>ارسال</value>
+  </data>
 </root>

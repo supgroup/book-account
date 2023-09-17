@@ -253,7 +253,7 @@ namespace BookAccountApp.ApiClasses
                                 tax_ratio = S.tax_ratio,
                                 tax_value = S.tax_value,
                                 systemName=SYS.name,
-                               
+                                currency=S.currency,
                             }).ToList();
                     List = List.Where(S => ((fromDate == null && toDate == null) ? ((DateTime)S.createDate).Date == now.Date :
                             ((fromDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date >= fromDate.Value.Date) : true)
@@ -382,7 +382,7 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.syValue = newObject.syValue;
                             tmpObject.tax_ratio = newObject.tax_ratio;
                             tmpObject.tax_value = newObject.tax_value;
-
+                            tmpObject.currency = newObject.currency;
                             entity.SaveChanges();
 
                             message = tmpObject.serviceId;
@@ -477,7 +477,7 @@ namespace BookAccountApp.ApiClasses
                                 tax_ratio = S.tax_ratio,
                                 tax_value = S.tax_value,
                                 systemName = SYS.name,
-
+                                currency=S.currency,
                             }).FirstOrDefault();
                     return row;
                 }

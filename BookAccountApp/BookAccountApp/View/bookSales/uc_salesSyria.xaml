@@ -704,7 +704,7 @@ Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 
               MaxLength="50" BorderThickness="0"
               materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
               Height="40"  Margin="4,0"  
-              LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Number_PreviewTextInput"/>
+             LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Number_PreviewTextInput"/>
                                     <Path x:Name="p_error_paid"
            Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
            HorizontalAlignment="Right" Visibility="Collapsed"   
@@ -716,7 +716,7 @@ Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 
                             <Border Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                 <Grid>
                                     <ComboBox x:Name="cb_currency"  Grid.Row="1"
-             SelectedValue="{Binding flightId,Mode=OneWay}"
+             SelectedValue="{Binding currency,Mode=OneWay}"
          Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
          materialDesign:HintAssist.Hint="currency..."  

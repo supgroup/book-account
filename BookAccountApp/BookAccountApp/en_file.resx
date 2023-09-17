@@ -3178,4 +3178,22 @@ Please add Email in setting</value>
   <data name="totalPaid" xml:space="preserve">
     <value>Total Paid</value>
   </data>
+  <data name="currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="currencyHint" xml:space="preserve">
+    <value>Currency ...</value>
+  </data>
+  <data name="msgpaid" xml:space="preserve">
+    <value>msgpaid</value>
+  </data>
+  <data name="PaidAmount" xml:space="preserve">
+    <value>Paid Amount</value>
+  </data>
+  <data name="PaidAmountHint" xml:space="preserve">
+    <value>Paid Amount ...</value>
+  </data>
+  <data name="send" xml:space="preserve">
+    <value>Send</value>
+  </data>
 </root>

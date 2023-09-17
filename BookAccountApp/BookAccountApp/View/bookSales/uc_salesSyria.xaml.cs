@@ -69,7 +69,7 @@ namespace BookAccountApp.View.sales
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "airline", "passenger" ,"total", "system" };
+                requiredControlList = new List<string> { "airline", "passenger" ,"total", "system", "paid", "currency" };
       
                 #region translate
                 //if (MainWindow.lang.Equals("en"))
@@ -110,7 +110,7 @@ namespace BookAccountApp.View.sales
              
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
+            txt_active.Text = MainWindow.resourcemanager.GetString("trDraft");
             txt_title.Text = MainWindow.resourcemanager.GetString("bookInfoSyr");
             /*
 trTaxHint
@@ -123,7 +123,7 @@ trTaxHint
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_priceBeforTax, MainWindow.resourcemanager.GetString("priceBeforTaxHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_charge, MainWindow.resourcemanager.GetString("trTaxHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_total, MainWindow.resourcemanager.GetString("totalHint"));
-
+    
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_fromDateSearch, MainWindow.resourcemanager.GetString("fromDate"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_toDateSearch, MainWindow.resourcemanager.GetString("toDate"));
@@ -149,6 +149,10 @@ trTaxHint
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
             btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_paid, MainWindow.resourcemanager.GetString("PaidAmount"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_currency, MainWindow.resourcemanager.GetString("currencyHint"));
+
+            btn_send.Content = MainWindow.resourcemanager.GetString("send");
             
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
@@ -167,8 +171,16 @@ trTaxHint
                 if (HelpClass.validate(requiredControlList, this))
                 {
                     //tb_custCode.Text = await serviceData.generateCodeNumber("cu");
-                await prepareModel();
+                    int res = await prepareModel("add");
+                    serviceData.state = "draft";
                     //
+                    if (res == 0)
+                    {
+
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("msgpaid"), animation: ToasterAnimation.FadeIn);
+                    }
+                    else
+                    {
                     decimal s = await serviceData.Save(serviceData);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -181,6 +193,7 @@ trTaxHint
                         await RefreshServiceDatasList();
                         await Search();
                     }
+                }
                 }
             
                 HelpClass.EndAwait(grid_main);
@@ -199,17 +212,66 @@ trTaxHint
                 if (serviceData.serviceId>0) { 
                     if (HelpClass.validate(requiredControlList, this))
                 {
-                      await  prepareModel();
+                    int res=  await  prepareModel("update");
+                        serviceData.state = "draft";
                         //
-                        decimal s = await serviceData.Save(serviceData);
-                        if (s <= 0)
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        if (res == 0)
+                        {
+
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("msgpaid"), animation: ToasterAnimation.FadeIn);
+                        }
                         else
                         {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                            Clear();
-                            await RefreshServiceDatasList();
-                            await Search();
+                            decimal s = await serviceData.Save(serviceData);
+                            if (s <= 0)
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                Clear();
+                                await RefreshServiceDatasList();
+                                await Search();
+                            }
+                        }
+                    }
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Btn_send_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (serviceData.serviceId > 0)
+                {
+                    if (HelpClass.validate(requiredControlList, this))
+                    {
+                        int res = await prepareModel("send");
+                        serviceData.state = "confirmd";
+                        //
+                        if (res == 0)
+                        {
+
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("msgpaid"), animation: ToasterAnimation.FadeIn);
+                        }
+                        else
+                        {
+                            decimal s = await serviceData.Save(serviceData);
+                            if (s <= 0)
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                Clear();
+                                await RefreshServiceDatasList();
+                                await Search();
+                            }
                         }
                     }
                 }
@@ -287,9 +349,14 @@ trTaxHint
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async Task prepareModel()
+        private async Task<int> prepareModel(string  process)
         {
-            serviceData.serviceNum = await serviceData.generateCodeNumber("SY");
+            int res = 0;
+            if (process=="add")
+            {
+                serviceData.serviceNum = await serviceData.generateCodeNumber("SY");
+            }
+          
             serviceData.systemType = "syr";
             serviceData.passengerId = Convert.ToInt32(cb_passenger.SelectedValue);
             serviceData.ticketNum = tb_ticketNum.Text;
@@ -297,13 +364,19 @@ trTaxHint
             serviceData.officeId = Convert.ToInt32(cb_office.SelectedValue);
             serviceData.systemId = Convert.ToInt32(cb_system.SelectedValue);
 
+            serviceData.currency = cb_currency.SelectedValue == null ? "syp" : cb_currency.SelectedValue.ToString();//
+            serviceData.paid = (tb_paid.Text == null || tb_paid.Text == "") ? 0 : Convert.ToDecimal(tb_paid.Text);//
+
             //serviceData.serviceDate = dp_serviceDate.SelectedDate;
             serviceData.total = (tb_total.Text == null || tb_total.Text == "") ? 0 : Convert.ToDecimal(tb_total.Text);
+            if (serviceData.paid <= serviceData.total)           
+            {
+                res = 1;
             serviceData.priceBeforTax = (tb_priceBeforTax.Text == null || tb_priceBeforTax.Text == "") ? 0 : Convert.ToDecimal(tb_priceBeforTax.Text);
             serviceData.tax_value = (tb_charge.Text == null || tb_charge.Text == "") ? 0 : Convert.ToDecimal(tb_charge.Text);
 
             serviceData.notes = tb_notes.Text;
-      
+
             serviceData.createUserId = MainWindow.userLogin.userId;
             serviceData.updateUserId = MainWindow.userLogin.userId;
             // calc comm
@@ -320,8 +393,8 @@ trTaxHint
                 serviceData.office_commission_ratio = OfficeSystemModel.office_commission;
                 serviceData.office_commission_value = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)OfficeSystemModel.office_commission);
 
-               serviceData.commitionRatio = SystemModel.company_commission - OfficeSystemModel.office_commission;
-                 serviceData.commitionValue = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)serviceData.commitionRatio);
+                serviceData.commitionRatio = SystemModel.company_commission - OfficeSystemModel.office_commission;
+                serviceData.commitionValue = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)serviceData.commitionRatio);
                 serviceData.profit = serviceData.company_commission_value;
             }
             else
@@ -329,7 +402,7 @@ trTaxHint
                 serviceData.commitionRatio = SystemModel.company_commission;
                 serviceData.commitionValue = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)serviceData.commitionRatio);
                 serviceData.office_commission_ratio = 0;
-                serviceData.office_commission_value = 0;              
+                serviceData.office_commission_value = 0;
             }
             serviceData.company_commission_ratio = SystemModel.company_commission;
             serviceData.company_commission_value = HelpClass.calcPercentage((decimal)serviceData.priceBeforTax, (decimal)SystemModel.company_commission);
@@ -347,6 +420,9 @@ trTaxHint
             serviceData.systemUnpaid = serviceData.system_commission_value;
             serviceData.exchangeId = FillCombo.ExchangeModel.exchangeId;
             serviceData.syValue = FillCombo.exchangeValue;
+
+        }
+            return res;
         }
             private async Task activate()
         {//activate
@@ -386,6 +462,7 @@ trTaxHint
                 if (serviceDatas is null)
                     await RefreshServiceDatasList();
                 tgl_serviceDatastate = true;
+                txt_active.Text = MainWindow.resourcemanager.GetString("trDraft");
                 if (first)
                 {
                     first = false;
@@ -409,6 +486,7 @@ trTaxHint
             try
             {
                 HelpClass.StartAwait(grid_main);
+                txt_active.Text = MainWindow.resourcemanager.GetString("trConfirmed");
                 if (serviceDatas is null)
                     await RefreshServiceDatasList();
                 tgl_serviceDatastate = false;
@@ -453,13 +531,14 @@ trTaxHint
                     {
                         //tb_custCode.Text = serviceData.custCode;
                          cb_passenger.SelectedValue = serviceData.passengerId;
-                 
+                        cb_currency.SelectedValue = serviceData.currency;
                         cb_office.SelectedValue = serviceData.officeId;
                         cb_system.SelectedValue = serviceData.systemId;
                         cb_airline.SelectedValue = serviceData.flightId;
                         tb_total.Text = HelpClass.DecTostring(serviceData.total);
                         tb_priceBeforTax.Text = HelpClass.DecTostring(serviceData.priceBeforTax);
                         tb_charge.Text = HelpClass.DecTostring(serviceData.tax_value);
+                        tb_paid.Text = HelpClass.DecTostring(serviceData.paid);
                         this.DataContext = serviceData;
 
                         #region delete
@@ -535,7 +614,9 @@ trTaxHint
             //((dp_toDateSearch.SelectedDate != null || dp_toDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
 
             //)
-            ) && s.isActive == tgl_serviceDatastate
+            ) &&
+            //s.isActive == tgl_serviceDatastate
+           (  tgl_serviceDatastate==true? (s.state=="draft") : (s.state == "confirmd"))
             );
           
             //);
@@ -563,6 +644,7 @@ trTaxHint
             await FillCombo.fillFlightsBySysId(cb_airline, Convert.ToInt32(cb_system.SelectedValue));
             await FillCombo.fillOffice(cb_office);
             await FillCombo.fillSystems(cb_system);
+            FillCombo.fillCurrency(cb_currency);
         }
 
         #endregion
@@ -576,12 +658,14 @@ trTaxHint
             cb_airline.SelectedIndex = -1;
             cb_office.SelectedIndex = -1;
             cb_system.SelectedIndex = -1;
+            cb_currency.SelectedIndex = -1;
             //cb_passenger.Text ="";
             //cb_airline.Text = "";
             //cb_office.Text = "";
             tb_total.Text = "";
             tb_priceBeforTax.Text = "";
             tb_charge.Text = "";
+            tb_paid.Text = "";
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
@@ -1138,9 +1222,6 @@ trTaxHint
             }
         }
 
-        private void Btn_send_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+      
     }
 }

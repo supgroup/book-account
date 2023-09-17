@@ -161,7 +161,22 @@ namespace BookAccountApp.Classes
         /// </summary>
         static Users user = new Users();
         static IEnumerable<Users> users;
+        static public void fillCurrency (ComboBox combo)
+        {
+           
+            //    cb_invlang
+            // replangList = await setvalueModel.GetBySetName("report_lang");
 
+            var CurrencyList = new[] {
+                new { Text = "SYP" , Value = "syp" },
+                new { Text ="$" , Value = "usd" },
+          
+                 };
+            combo.DisplayMemberPath = "Text";
+            combo.SelectedValuePath = "Value";
+            combo.ItemsSource = CurrencyList;
+ 
+        }
         static public async Task fillAgent(ComboBox combo)
         {
             users = await user.GetAll();
