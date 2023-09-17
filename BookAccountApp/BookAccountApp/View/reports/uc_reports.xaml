@@ -28,7 +28,11 @@
              Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
                  Content="bookSts" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
                        x:Name="btn_bookSts" Click="Btn_bookSts_Click" Tag="bookSts"/>
-          
+            <Button   Grid.Column="2"
+        Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
+            Content="systemTransactions" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
+           x:Name="btn_systemTransactions" Click="Btn_systemTransactions_Click" Tag="systemTransactions"/>
+
 
         </Grid>
         <Grid Grid.Row="1" x:Name="grid_main"/>

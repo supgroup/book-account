@@ -45,7 +45,7 @@ namespace BookAccountApp.View.reports
             {
                 HelpClass.StartAwait(grid_mainGrid);
 
-                menuList = new List<string> { "paymentsSts", "bookSts" };
+                menuList = new List<string> { "paymentsSts", "bookSts", "systemTransactions" };
 
                 #region translate
                 translate();
@@ -122,6 +122,23 @@ paySysTrans
                 MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_bookSts.Instance);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+      private void Btn_systemTransactions_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+                colorButtonRefreash(button.Tag.ToString());
+                MainWindow.mainWindow.second = button.Tag.ToString();
+                MainWindow.mainWindow.setMainPath();
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_systemTransactions.Instance);
             }
             catch (Exception ex)
             {
