@@ -356,6 +356,9 @@
     <Compile Include="View\bookSales\uc_salesSyria.xaml.cs">
       <DependentUpon>uc_salesSyria.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\reports\uc_systemTransactions.xaml.cs">
+      <DependentUpon>uc_systemTransactions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\sectionData\uc_flights.xaml.cs">
       <DependentUpon>uc_flights.xaml</DependentUpon>
     </Compile>
@@ -527,6 +530,10 @@
     <Page Include="View\bookSales\uc_salesSyria.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\uc_systemTransactions.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\sectionData\uc_flights.xaml">
       <SubType>Designer</SubType>
