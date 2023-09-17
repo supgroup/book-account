@@ -1137,5 +1137,10 @@ trTaxHint
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private void Btn_send_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
