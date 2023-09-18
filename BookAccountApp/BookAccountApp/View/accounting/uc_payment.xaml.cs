@@ -69,7 +69,7 @@ namespace BookAccountApp.View.accounting
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "opName", "side", "cash", "opDate" };
+                requiredControlList = new List<string> { "opName", "side", "cash", "opDate", "currency" };
 
                 #region translate
                 //if (MainWindow.lang.Equals("en"))
@@ -156,7 +156,7 @@ namespace BookAccountApp.View.accounting
             tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
             tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
             //tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
-
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_currency, MainWindow.resourcemanager.GetString("currencyHint"));
 
 
         }
@@ -173,10 +173,10 @@ namespace BookAccountApp.View.accounting
                 {
                     //tb_custCode.Text = await serviceData.generateCodeNumber("cu");
                     payOp.opName = tb_opName.Text.Trim();
-                    payOp.code = await payOp.generateNumber(("p"+ (cb_side.SelectedValue).ToString().Substring(0,2)).ToUpper()); 
+                    payOp.code = await payOp.generateNumber(("p"+ (cb_side.SelectedValue).ToString().Substring(0,3)).ToUpper()); 
                     payOp.cash = (tb_cash.Text == null || tb_cash.Text == "") ? 0 : Convert.ToDecimal(tb_cash.Text);//
                     payOp.opType = "p";
-                    payOp.side = cb_side.Text;
+                    payOp.side = (cb_side.SelectedValue).ToString();
                     payOp.serviceId = null;//
                     payOp.opStatus = "draft";
                     payOp.opDate = dp_opDate.SelectedDate;
@@ -200,12 +200,17 @@ namespace BookAccountApp.View.accounting
                         else if ((cb_side.SelectedValue).ToString() == "soto")
                         {
                             payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "soto").FirstOrDefault().paysideId;
-
+                            payOp.systemType = "soto";
                         }
                         else if ((cb_side.SelectedValue).ToString() == "syr")
                         {
                             payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "syr").FirstOrDefault().paysideId;
-
+                            payOp.systemType = "syr";
+                        }
+                        else if ((cb_side.SelectedValue).ToString() == "system")
+                        {
+                            payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "system").FirstOrDefault().paysideId;
+                            payOp.systemId = Convert.ToInt32(cb_sideValue.SelectedValue);
                         }
                         else if ((cb_side.SelectedValue).ToString() == "other")
                         {
@@ -221,9 +226,10 @@ namespace BookAccountApp.View.accounting
                     payOp.userId = null;//note used
                     payOp.recipient = tb_recipient.Text;
                     payOp.recivedFrom = tb_recivedFrom.Text;
-
-
-
+                    payOp.currency = cb_currency.SelectedValue == null ? "syp" : cb_currency.SelectedValue.ToString();//
+                    payOp.syValue = FillCombo.exchangeValue;
+                    payOp.exchangeId = FillCombo.ExchangeModel.exchangeId;
+                    payOp.fromSide = "";
                     //payOp.passengerId = Convert.ToInt32(cb_passenger.SelectedValue);
                     //payOp.ticketNum = tb_ticketNum.Text;
                     //payOp.flightId = Convert.ToInt32(cb_airline.SelectedValue);
@@ -237,10 +243,20 @@ namespace BookAccountApp.View.accounting
 
 
                     decimal s = await payOp.Save(payOp);
+                   
                     if (s <= 0)
+                    {
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
+                    }
                     else
                     {
+                        //balance
+                        if (payOp.side== "syr"|| payOp.side == "soto")
+                        {
+                            s= await  payOp.updateSideBalance(payOp.side, (decimal)payOp.cash);
+                            
+                        }
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
 
@@ -373,7 +389,7 @@ namespace BookAccountApp.View.accounting
                        tb_recipient .IsEnabled = false;
                        tb_recivedFrom .IsEnabled = false;                    
                       dp_opDate.IsEnabled = false;
-                       
+                        cb_currency.IsEnabled = false;
                         //await getImg();
                         #region delete
                         //if (payOp.canDelete)
@@ -464,6 +480,7 @@ namespace BookAccountApp.View.accounting
         public async Task fillcombos()
         {
             await FillCombo.fillpaySide(cb_side, "p");
+            FillCombo.fillCurrency(cb_currency);
             //await FillCombo.fillPassengers(cb_passenger);
             //await FillCombo.fillFlights(cb_airline);
             //await FillCombo.fillOffice(cb_office);
@@ -502,8 +519,10 @@ namespace BookAccountApp.View.accounting
             tb_recipient.IsEnabled = true;
             tb_recivedFrom.IsEnabled = true;
             dp_opDate.IsEnabled = true;
-            // last 
-            HelpClass.clearValidate(requiredControlList, this);
+            cb_currency.SelectedIndex = -1;
+            cb_currency.IsEnabled = true;
+           // last 
+           HelpClass.clearValidate(requiredControlList, this);
         }
         string input;
         decimal _decimal = 0;
@@ -876,7 +895,7 @@ namespace BookAccountApp.View.accounting
             rep.SetParameters(paramarr);
             rep.Refresh();
         }
-        private void Btn_invoicePrint_Click(object sender, RoutedEventArgs e)
+        private async void Btn_invoicePrint_Click(object sender, RoutedEventArgs e)
         {
             //print
             try
@@ -884,7 +903,7 @@ namespace BookAccountApp.View.accounting
                 HelpClass.StartAwait(grid_main);
 
                 #region
-                BuildVoucherReport();
+             await   BuildVoucherReport();
                 LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
                 #endregion
 
@@ -1098,7 +1117,11 @@ namespace BookAccountApp.View.accounting
                         if (payOp.payOpId > 0)
                         {
                             cb_sideValue.SelectedValue = payOp.passengerId;
+                            
+                                cb_currency.SelectedValue = payOp.currency;
+                             
                         }
+                        cb_currency.IsEnabled = true;
 
                     }
                     else if ((cb_side.SelectedValue).ToString() == "office")
@@ -1110,7 +1133,9 @@ namespace BookAccountApp.View.accounting
                         if (payOp.payOpId>0)
                         {
                             cb_sideValue.SelectedValue = payOp.officeId;
+                            cb_currency.SelectedValue = payOp.currency;
                         }
+                        cb_currency.IsEnabled = true;
                     }
                     else if ((cb_side.SelectedValue).ToString() == "system")
                     {
@@ -1120,23 +1145,29 @@ namespace BookAccountApp.View.accounting
                         btn_invoicesSide.Visibility = Visibility.Collapsed;
                         if (payOp.payOpId > 0)
                         {
-                            cb_sideValue.SelectedValue = payOp.officeId;
+                         
+                            cb_currency.SelectedValue = payOp.currency;
                         }
+                        cb_currency.IsEnabled = true;
                     }
-                    //else if ((cb_side.SelectedValue).ToString() == "soto")
-                    //{
-                    //    cb_sideValue.SelectedItem = null;
-                    //    grid_sideValue.Visibility = Visibility.Collapsed;
-                    //    btn_invoicesSide.Visibility = Visibility.Visible;
+                    else if ((cb_side.SelectedValue).ToString() == "soto")
+                    {
+                        cb_sideValue.SelectedItem = null;
+                        grid_sideValue.Visibility = Visibility.Collapsed;
+                        btn_invoicesSide.Visibility = Visibility.Collapsed;
+                        cb_currency.SelectedValue = "usd";
+                        cb_currency.IsEnabled = false;
 
-                    //}
-                    //else if ((cb_side.SelectedValue).ToString() == "syr")
-                    //{
-                    //    cb_sideValue.SelectedItem = null;
-                    //    grid_sideValue.Visibility = Visibility.Collapsed;
-                    //    btn_invoicesSide.Visibility = Visibility.Visible;
+                    }
+                    else if ((cb_side.SelectedValue).ToString() == "syr")
+                    {
+                        cb_sideValue.SelectedItem = null;
+                        grid_sideValue.Visibility = Visibility.Collapsed;
+                        btn_invoicesSide.Visibility = Visibility.Collapsed;
+                        cb_currency.SelectedValue = "usd";
+                        cb_currency.IsEnabled = false;
 
-                    //}
+                    }
                     //else if ((cb_side.SelectedValue).ToString() == "syr")
                     //{
                     //    cb_sideValue.SelectedItem = null;
@@ -1150,6 +1181,13 @@ namespace BookAccountApp.View.accounting
                         cb_sideValue.SelectedItem = null;
                         grid_sideValue.Visibility = Visibility.Collapsed;
                         btn_invoicesSide.Visibility = Visibility.Collapsed;
+                        cb_currency.IsEnabled = true;
+                        if (payOp.payOpId > 0)
+                        {
+
+                            cb_currency.SelectedValue = payOp.currency;
+                        }
+                        
                     }
                 }
                 else
@@ -1157,6 +1195,7 @@ namespace BookAccountApp.View.accounting
                     cb_sideValue.SelectedItem = null;
                     //    grid_sideValue.Visibility = Visibility.Collapsed;
                     grid_sideValue.Visibility = Visibility.Collapsed;
+                    cb_currency.IsEnabled = true;
                 }
 
             }
