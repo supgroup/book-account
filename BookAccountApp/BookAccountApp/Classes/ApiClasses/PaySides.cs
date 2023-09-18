@@ -218,6 +218,68 @@ namespace BookAccountApp.ApiClasses
 
         }
 
-         
+        public async Task<int> updateSideBalance(string  side,decimal cash)
+        {
+
+            paySides newObject = new paySides();
+
+            int message = 0;
+            try
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        var locationEntity = entity.Set<paySides>();
+                        
+                            var tmpObject = entity.paySides.Where(p => p.code == side).FirstOrDefault();
+                    decimal sum= (decimal)tmpObject.balance + cash;
+                    if (sum<0)
+                    {
+                        return  -1;
+                    }
+                    else
+                    {
+                        tmpObject.balance = sum;
+                        entity.SaveChanges();
+                        message = tmpObject.paysideId;
+                    }                       
+                    }
+                    return message;
+                }
+                catch
+                {
+                    return 0;
+                }
+           
+        }
+        public async Task<PaySides> GetByCode(string code)
+        {
+            PaySides row = new PaySides();
+            try
+            {
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    var list = entity.paySides.ToList();
+                    row = list.Where(u => u.code == code)
+                     .Select(S => new PaySides()
+                     {
+                         paysideId = S.paysideId,
+                         side = S.side,
+                         sideAr = S.sideAr,
+                         notes = S.notes,
+                         isActive = S.isActive,
+                         code = S.code,
+                        balance=S.balance,
+                     }).FirstOrDefault();
+                    return row;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                row = new PaySides();
+                //userrow.name = ex.ToString();
+                return row;
+            }
+        }
     }
 }

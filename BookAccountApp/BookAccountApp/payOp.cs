@@ -14,6 +14,12 @@ namespace BookAccountApp
     
     public partial class payOp
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public payOp()
+        {
+            this.payOp1 = new HashSet<payOp>();
+        }
+    
         public int payOpId { get; set; }
         public string code { get; set; }
         public Nullable<decimal> cash { get; set; }
@@ -41,6 +47,10 @@ namespace BookAccountApp
         public Nullable<decimal> syValue { get; set; }
         public Nullable<int> exchangeId { get; set; }
         public string fromSide { get; set; }
+        public string processType { get; set; }
+        public Nullable<int> sourceId { get; set; }
+        public Nullable<decimal> paid { get; set; }
+        public Nullable<bool> isPaid { get; set; }
     
         public virtual office office { get; set; }
         public virtual passengers passengers { get; set; }
@@ -52,5 +62,8 @@ namespace BookAccountApp
         public virtual flights flights { get; set; }
         public virtual systems systems { get; set; }
         public virtual exchange exchange { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<payOp> payOp1 { get; set; }
+        public virtual payOp payOp2 { get; set; }
     }
 }

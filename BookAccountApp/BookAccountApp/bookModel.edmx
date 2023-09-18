@@ -240,6 +240,10 @@
           <Property Name="syValue" Type="decimal" Precision="20" Scale="3" />
           <Property Name="exchangeId" Type="int" />
           <Property Name="fromSide" Type="nvarchar" MaxLength="50" />
+          <Property Name="processType" Type="nvarchar" MaxLength="50" />
+          <Property Name="sourceId" Type="int" />
+          <Property Name="paid" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="isPaid" Type="bit" />
         </EntityType>
         <EntityType Name="paySides">
           <Key>
@@ -671,6 +675,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_payOp_payOp">
+          <End Role="payOp" Type="Self.payOp" Multiplicity="0..1" />
+          <End Role="payOp1" Type="Self.payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="payOp">
+              <PropertyRef Name="payOpId" />
+            </Principal>
+            <Dependent Role="payOp1">
+              <PropertyRef Name="sourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_payOp_paySides">
           <End Role="paySides" Type="Self.paySides" Multiplicity="0..1" />
           <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
@@ -1034,6 +1050,10 @@
             <End Role="passengers" EntitySet="passengers" />
             <End Role="payOp" EntitySet="payOp" />
           </AssociationSet>
+          <AssociationSet Name="FK_payOp_payOp" Association="Self.FK_payOp_payOp">
+            <End Role="payOp" EntitySet="payOp" />
+            <End Role="payOp1" EntitySet="payOp" />
+          </AssociationSet>
           <AssociationSet Name="FK_payOp_paySides" Association="Self.FK_payOp_paySides">
             <End Role="paySides" EntitySet="paySides" />
             <End Role="payOp" EntitySet="payOp" />
@@ -1351,6 +1371,12 @@
           <Property Name="exchangeId" Type="Int32" />
           <NavigationProperty Name="exchange" Relationship="bookModel.FK_payOp_exchange" FromRole="payOp" ToRole="exchange" />
           <Property Name="fromSide" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="processType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sourceId" Type="Int32" />
+          <Property Name="paid" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="isPaid" Type="Boolean" />
+          <NavigationProperty Name="payOp1" Relationship="bookModel.FK_payOp_payOp" FromRole="payOp" ToRole="payOp1" />
+          <NavigationProperty Name="payOp2" Relationship="bookModel.FK_payOp_payOp" FromRole="payOp1" ToRole="payOp" />
         </EntityType>
         <EntityType Name="serviceData">
           <Key>
@@ -2041,6 +2067,10 @@
             <End Role="exchange" EntitySet="exchange" />
             <End Role="payOp" EntitySet="payOp" />
           </AssociationSet>
+          <AssociationSet Name="FK_payOp_payOp" Association="bookModel.FK_payOp_payOp">
+            <End Role="payOp" EntitySet="payOp" />
+            <End Role="payOp1" EntitySet="payOp" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="officeFiles">
           <Key>
@@ -2321,6 +2351,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_payOp_payOp">
+          <End Type="bookModel.payOp" Role="payOp" Multiplicity="0..1" />
+          <End Type="bookModel.payOp" Role="payOp1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="payOp">
+              <PropertyRef Name="payOpId" />
+            </Principal>
+            <Dependent Role="payOp1">
+              <PropertyRef Name="sourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2499,6 +2541,10 @@
           <EntitySetMapping Name="payOp">
             <EntityTypeMapping TypeName="bookModel.payOp">
               <MappingFragment StoreEntitySet="payOp">
+                <ScalarProperty Name="isPaid" ColumnName="isPaid" />
+                <ScalarProperty Name="paid" ColumnName="paid" />
+                <ScalarProperty Name="sourceId" ColumnName="sourceId" />
+                <ScalarProperty Name="processType" ColumnName="processType" />
                 <ScalarProperty Name="fromSide" ColumnName="fromSide" />
                 <ScalarProperty Name="exchangeId" ColumnName="exchangeId" />
                 <ScalarProperty Name="syValue" ColumnName="syValue" />

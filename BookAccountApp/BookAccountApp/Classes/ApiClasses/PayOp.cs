@@ -50,6 +50,11 @@ namespace BookAccountApp.ApiClasses
         public Nullable<decimal> syValue { get; set; }
         public Nullable<int> exchangeId { get; set; }
         public string fromSide { get; set; }
+        public string processType { get; set; }
+
+        public Nullable<int> sourceId { get; set; }
+        public Nullable<decimal> paid { get; set; }
+        public Nullable<bool> isPaid { get; set; }
         public bool canDelete { get; set; }
         /// <summary>
         /// ///////////////////////////////////////
@@ -145,8 +150,13 @@ namespace BookAccountApp.ApiClasses
                                 systemName = S.systems.name,
                                 syValue = S.syValue,
                                 exchangeId = S.exchangeId,
-                                currency=S.currency,
-                                fromSide=S.fromSide,
+                                currency = S.currency,
+                                fromSide = S.fromSide,
+                                processType = S.processType,
+                                sourceId = S.sourceId,
+                                paid = S.paid,
+                                isPaid = S.isPaid,
+
                             }).ToList();
 
                     return List;
@@ -250,7 +260,10 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.exchangeId = newObject.exchangeId;
                             tmpObject.currency = newObject.currency;
                             tmpObject.fromSide = newObject.fromSide;
-
+                            tmpObject.processType = newObject.processType;
+                            tmpObject.sourceId = newObject.sourceId;
+                               tmpObject. paid = newObject.paid;
+                                tmpObject.isPaid = newObject.isPaid;
                             entity.SaveChanges();
 
                             message = tmpObject.payOpId;
@@ -306,6 +319,10 @@ namespace BookAccountApp.ApiClasses
                           paysideId = S.paysideId,
                           flightId = S.flightId,
                           opName = S.opName,
+                          processType = S.processType,
+                          sourceId = S.sourceId,
+                          paid = S.paid,
+                          isPaid = S.isPaid,
                       }).FirstOrDefault();
                     return row;
                 }
@@ -478,10 +495,185 @@ namespace BookAccountApp.ApiClasses
             return payOpNum;
         }
 
+        public async Task<int> AddSideRecord(ServiceData serviceModel, PaySides paysideModel)
+        {
+            //   paySides newObject = new paySides();
+            PayOp payOpModel = new PayOp();
 
-        /// ////
+            int message = 0;
+            try
+            {
+                payOpModel.code = await generateNumber("P" + "BK");
+                payOpModel.cash = serviceModel.total;
+                payOpModel.opType = "p";
+                payOpModel.side = "system";
+                payOpModel.serviceId = serviceModel.serviceId;
+                payOpModel.opStatus = "draft";
+                payOpModel.opDate = DateTime.Now;
+                payOpModel.notes = serviceModel.notes;
+                payOpModel.createUserId = serviceModel.updateUserId;
+                payOpModel.updateUserId = serviceModel.updateUserId;
+                // //payOpModel.createDate = serviceModel.createDate;
+                //  payOpModel.updateDate = DateTime.Now;
+                payOpModel.officeId = serviceModel.officeId;
+                payOpModel.passengerId = serviceModel.passengerId;
+                // payOpModel.userId = serviceModel.updateUserId;
+                payOpModel.recipient = "";
+                payOpModel.recivedFrom = "";
+                payOpModel.paysideId = paysideModel.paysideId;
+                payOpModel.flightId = serviceModel.flightId;
+                payOpModel.opName = "";
+                payOpModel.systemType = serviceModel.systemType;
+                payOpModel.systemId = serviceModel.systemId;
+                payOpModel.syValue = serviceModel.syValue;
+                payOpModel.exchangeId = serviceModel.exchangeId;
+                payOpModel.currency = serviceModel.currency;
+                payOpModel.fromSide = serviceModel.systemType;
+                payOpModel.processType = "book";
+                payOpModel.isPaid = true;
+                await Save(payOpModel);
+                return message;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public async Task<int> AddCompanyCommRecord(ServiceData serviceModel)
+        {
+            //   paySides newObject = new paySides();
+            PayOp payOpModel = new PayOp();
 
+            int message = 0;
+            try
+            {
+                payOpModel.code = await generateNumber("P" + "CC");//company_commission
+                payOpModel.cash = serviceModel.company_commission_value;
+                payOpModel.opType = "p";
+                payOpModel.side = "system";
+                payOpModel.serviceId = serviceModel.serviceId;
+                payOpModel.opStatus = "draft";
+                payOpModel.opDate = DateTime.Now;
+                payOpModel.notes = serviceModel.notes;
+                payOpModel.createUserId = serviceModel.updateUserId;
+                payOpModel.updateUserId = serviceModel.updateUserId;
+                // //payOpModel.createDate = serviceModel.createDate;
+                //  payOpModel.updateDate = DateTime.Now;
+                payOpModel.officeId = null;
+                payOpModel.passengerId = null;
+                // payOpModel.userId = serviceModel.updateUserId;
+                payOpModel.recipient = "";
+                payOpModel.recivedFrom = "";
+                payOpModel.paysideId = null;
+                payOpModel.flightId = null;
+                payOpModel.opName = "";
+                payOpModel.systemType = serviceModel.systemType;
+                payOpModel.systemId = serviceModel.systemId;
+                payOpModel.syValue = serviceModel.syValue;
+                payOpModel.exchangeId = serviceModel.exchangeId;
+                payOpModel.currency = serviceModel.currency;
+                payOpModel.fromSide = serviceModel.systemType;
+                payOpModel.processType = "company_commission";
+                // payOpModel.sourceId = null,
+                payOpModel.paid = 0;
+                payOpModel.isPaid = false;
+              
+               
+                decimal res = await Save(payOpModel);
+                message = Convert.ToInt32(res);
+                return message;
+          
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public async Task<int> AddOfficeCommRecord(ServiceData serviceModel)
+        {
+            //   paySides newObject = new paySides();
+            PayOp payOpModel = new PayOp();
 
+            int message = 0;
+            try
+            {
+                if (serviceModel.officeId>0)
+                {
+
+              
+                payOpModel.code = await generateNumber("D" + "OC");//company_commission
+                payOpModel.cash = serviceModel.office_commission_value;
+                payOpModel.opType = "d";
+                payOpModel.side = "office";
+                payOpModel.serviceId = serviceModel.serviceId;
+                payOpModel.opStatus = "draft";
+                payOpModel.opDate = DateTime.Now;
+                payOpModel.notes = serviceModel.notes;
+                payOpModel.createUserId = serviceModel.updateUserId;
+                payOpModel.updateUserId = serviceModel.updateUserId;
+                // //payOpModel.createDate = serviceModel.createDate;
+                //  payOpModel.updateDate = DateTime.Now;
+                payOpModel.officeId = serviceModel.officeId;
+                payOpModel.passengerId = null;
+                // payOpModel.userId = serviceModel.updateUserId;
+                payOpModel.recipient = "";
+                payOpModel.recivedFrom = "";
+                payOpModel.paysideId = null;
+                payOpModel.flightId = null;
+                payOpModel.opName = "";
+                payOpModel.systemType = serviceModel.systemType;
+                payOpModel.systemId = serviceModel.systemId;
+                payOpModel.syValue = serviceModel.syValue;
+                payOpModel.exchangeId = serviceModel.exchangeId;
+                payOpModel.currency = serviceModel.currency;
+                payOpModel.fromSide = serviceModel.systemType;
+                payOpModel.processType = "office_commission";
+                // payOpModel.sourceId = null,
+                payOpModel.paid = 0;
+                payOpModel.isPaid = false;
+                 decimal   res= await Save(payOpModel);
+                    message = Convert.ToInt32(res);
+                }
+                return message;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public async Task<int> updateSideBalance(string side, decimal cash)
+        {
+
+            //   paySides newObject = new paySides();
+
+            int message = 0;
+            try
+            {
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    var locationEntity = entity.Set<paySides>();
+
+                    var tmpObject = entity.paySides.Where(p => p.code == side).FirstOrDefault();
+                    decimal sum = (decimal)tmpObject.balance + cash;
+                    if (sum < 0)
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                        tmpObject.balance = sum;
+                        entity.SaveChanges();
+                        message = tmpObject.paysideId;
+                    }
+                }
+                return message;
+            }
+            catch
+            {
+                return 0;
+            }
+
+        }
 
     }
 }

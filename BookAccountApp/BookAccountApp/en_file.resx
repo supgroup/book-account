@@ -3196,4 +3196,7 @@ Please add Email in setting</value>
   <data name="send" xml:space="preserve">
     <value>Send</value>
   </data>
+  <data name="msgpaySysBalance" xml:space="preserve">
+    <value>Balance is less than total</value>
+  </data>
 </root>

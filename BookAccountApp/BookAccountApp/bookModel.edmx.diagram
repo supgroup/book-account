@@ -73,6 +73,7 @@
         <AssociationConnector Association="bookModel.FK_flights_systems" />
         <AssociationConnector Association="bookModel.FK_payOp_systems" />
         <AssociationConnector Association="bookModel.FK_payOp_exchange" />
+        <AssociationConnector Association="bookModel.FK_payOp_payOp" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
