@@ -58,6 +58,8 @@ namespace BookAccountApp.View.bookSales
         Systems SystemModel = new Systems();
         IEnumerable<ServiceData> serviceDatasQuery;
         IEnumerable<ServiceData> serviceDatas;
+        PaySides paysideModel = new PaySides();
+        PayOp payOpModel = new PayOp();
         bool first = true;
         bool tgl_serviceDatastate = true;
         string searchText = "";
@@ -178,7 +180,7 @@ namespace BookAccountApp.View.bookSales
                 serviceData = new ServiceData();
                 if (HelpClass.validate(requiredControlList, this))
                 {
-                    int res = await prepareModel();
+                    int res = await prepareModel("add");
                     serviceData.state = "draft";
                     //
                     if (res == 0)
@@ -219,7 +221,7 @@ namespace BookAccountApp.View.bookSales
                     if (HelpClass.validate(requiredControlList, this))
                     {
                         //tb_custCode.Text = await serviceData.generateCodeNumber("cu");
-                       await prepareModel();
+                       await prepareModel("update");
                         serviceData.state = "draft";
                         decimal s = await serviceData.Save(serviceData);
                         if (s <= 0)
@@ -252,7 +254,7 @@ namespace BookAccountApp.View.bookSales
                 {
                     if (HelpClass.validate(requiredControlList, this))
                     {
-                        int res = await prepareModel();
+                        int res = await prepareModel("send");
                         serviceData.state = "confirmd";
                         //
                         if (res == 0)
@@ -260,6 +262,13 @@ namespace BookAccountApp.View.bookSales
 
                             Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("msgpaid"), animation: ToasterAnimation.FadeIn);
                         }
+                        else if (res == -1)
+                        {
+                            //balance less than total
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("msgpaySysBalance"), animation: ToasterAnimation.FadeIn);
+
+
+                        }                         
                         else
                         {
                             decimal s = await serviceData.Save(serviceData);
@@ -267,6 +276,9 @@ namespace BookAccountApp.View.bookSales
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
+                                //add payop
+                                s = await AddPayRecords();
+                                //
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                                 Clear();
                                 await RefreshServiceDatasList();
@@ -348,10 +360,13 @@ namespace BookAccountApp.View.bookSales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async Task<int> prepareModel()
+        private async Task<int> prepareModel(string process)
         {
             int res = 0;
-            serviceData.serviceNum = await serviceData.generateCodeNumber("SOTO");
+            if (process == "add")
+            {
+                serviceData.serviceNum = await serviceData.generateCodeNumber("SOTO");
+            }
             serviceData.systemType = "soto";
             serviceData.passengerId = Convert.ToInt32(cb_passenger.SelectedValue);
             serviceData.ticketNum = tb_ticketNum.Text;
@@ -359,13 +374,23 @@ namespace BookAccountApp.View.bookSales
             serviceData.officeId = Convert.ToInt32(cb_office.SelectedValue);
             serviceData.systemId = Convert.ToInt32(cb_system.SelectedValue);
 
-            //serviceData.serviceDate = dp_serviceDate.SelectedDate;
-            serviceData.total = (tb_total.Text == null || tb_total.Text == "") ? 0 : Convert.ToDecimal(tb_total.Text);
             serviceData.currency = cb_currency.SelectedValue == null ? "syp" : cb_currency.SelectedValue.ToString();//
             serviceData.paid = (tb_paid.Text == null || tb_paid.Text == "") ? 0 : Convert.ToDecimal(tb_paid.Text);//
+
+            //serviceData.serviceDate = dp_serviceDate.SelectedDate;
+            serviceData.total = (tb_total.Text == null || tb_total.Text == "") ? 0 : Convert.ToDecimal(tb_total.Text);
+
             if (serviceData.paid <= serviceData.total)
             {
                 res = 1;
+                if (process == "send")//////////////////////////
+                {
+                    paysideModel = await paysideModel.GetByCode(serviceData.systemType);
+                    if (paysideModel.balance < serviceData.total)
+                    {
+                        return -1;
+                    }
+                }
                 serviceData.priceBeforTax = (tb_priceBeforTax.Text == null || tb_priceBeforTax.Text == "") ? 0 : Convert.ToDecimal(tb_priceBeforTax.Text);
                 serviceData.tax_value = (tb_charge.Text == null || tb_charge.Text == "") ? 0 : Convert.ToDecimal(tb_charge.Text);
 
@@ -414,7 +439,21 @@ namespace BookAccountApp.View.bookSales
                 serviceData.systemUnpaid = serviceData.system_commission_value;
                 serviceData.exchangeId = FillCombo.ExchangeModel.exchangeId;
                 serviceData.syValue = FillCombo.exchangeValue;
+
             }
+            return res;
+        }
+        private async Task<int> AddPayRecords()
+        {
+            int res = 0;
+            res = await payOpModel.updateSideBalance(serviceData.systemType, -(decimal)serviceData.total);
+            res = await payOpModel.AddSideRecord(serviceData, paysideModel);
+            res = await payOpModel.AddCompanyCommRecord(serviceData);
+            if (serviceData.officeId > 0)
+            {
+                res = await payOpModel.AddOfficeCommRecord(serviceData);
+            }
+
             return res;
         }
         private async Task activate()
@@ -461,6 +500,7 @@ namespace BookAccountApp.View.bookSales
                 }
                 else
                 {
+                    enableEdit();
                     await Search();
 
                 }
@@ -479,6 +519,7 @@ namespace BookAccountApp.View.bookSales
             {
                 HelpClass.StartAwait(grid_main);
                 txt_active.Text = MainWindow.resourcemanager.GetString("trConfirmed");
+                disableEdit();
                 if (serviceDatas is null)
                     await RefreshServiceDatasList();
                 tgl_serviceDatastate = false;
@@ -592,7 +633,6 @@ namespace BookAccountApp.View.bookSales
            (s.passenger == null ? false : (s.passenger.ToLower().Contains(searchText))) ||
              (s.ticketNum == null ? false : (s.ticketNum.ToLower().Contains(searchText))) ||
          (s.officeName == null ? false : (s.officeName.ToLower().Contains(searchText)))
-
             )
             //&& (
             ////start date
@@ -652,6 +692,60 @@ namespace BookAccountApp.View.bookSales
             tb_paid.Text = "";
             // last 
             HelpClass.clearValidate(requiredControlList, this);
+        }
+        void disableEdit()
+        {
+
+            cb_passenger.IsEnabled = false;
+            btn_addPassenger.IsEnabled = false;
+            cb_system.IsEnabled = false;
+            btn_addSystem.IsEnabled = false;
+            tb_ticketNum.IsEnabled = false;
+            cb_airline.IsEnabled = false;
+            btn_addAirline.IsEnabled = false;
+            cb_office.IsEnabled = false;
+            btn_addOffice.IsEnabled = false;
+            tb_priceBeforTax.IsEnabled = false;
+            tb_charge.IsEnabled = false;
+            tb_total.IsEnabled = false;
+            tb_paid.IsEnabled = false;
+            cb_currency.IsEnabled = false;
+            tb_notes.IsEnabled = false;
+            btn_uploadDocs.IsEnabled = false;
+            btn_exportDocs.IsEnabled = false;
+            btn_send.IsEnabled = false;
+            btn_add.IsEnabled = false;
+            btn_update.IsEnabled = false;
+            btn_delete.IsEnabled = false;
+            Clear();
+
+        }
+        void enableEdit()
+        {
+
+            cb_passenger.IsEnabled = true;
+            btn_addPassenger.IsEnabled = true;
+            cb_system.IsEnabled = true;
+            btn_addSystem.IsEnabled = true;
+            tb_ticketNum.IsEnabled = true;
+            cb_airline.IsEnabled = true;
+            btn_addAirline.IsEnabled = true;
+            cb_office.IsEnabled = true;
+            btn_addOffice.IsEnabled = true;
+            tb_priceBeforTax.IsEnabled = true;
+            tb_charge.IsEnabled = true;
+            tb_total.IsEnabled = true;
+            tb_paid.IsEnabled = true;
+            cb_currency.IsEnabled = true;
+            tb_notes.IsEnabled = true;
+            //btn_uploadDocs.IsEnabled = true;
+            //btn_exportDocs.IsEnabled = true;
+            btn_send.IsEnabled = true;
+            btn_add.IsEnabled = true;
+            btn_update.IsEnabled = true;
+            btn_delete.IsEnabled = true;
+            Clear();
+
         }
         string input;
         decimal _decimal = 0;
