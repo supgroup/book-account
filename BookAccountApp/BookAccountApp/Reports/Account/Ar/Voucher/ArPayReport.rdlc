@@ -745,9 +745,6 @@
               <KeepTogether>true</KeepTogether>
               <Height>0.17391in</Height>
               <Width>21cm</Width>
-              <Visibility>
-                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
-              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -764,9 +761,6 @@
               <Height>3cm</Height>
               <Width>3cm</Width>
               <ZIndex>1</ZIndex>
-              <Visibility>
-                <Hidden>=IIf(Parameters!show_header.Value = 1, False, True)</Hidden>
-              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -800,9 +794,6 @@
               <Height>0.3587in</Height>
               <Width>2.95282in</Width>
               <ZIndex>2</ZIndex>
-              <Visibility>
-                <Hidden>=IIf(Parameters!show_header.Value = 1, False, True)</Hidden>
-              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -856,7 +847,7 @@
               <Width>2.95282in</Width>
               <ZIndex>3</ZIndex>
               <Visibility>
-                <Hidden>=IIf(Parameters!show_header.Value = 1 And Len(Parameters!Fax.Value) &gt; 7, False, True)</Hidden>
+                <Hidden>=IIf( Len(Parameters!Fax.Value) &gt; 7, False, True)</Hidden>
               </Visibility>
               <Style>
                 <Border>
@@ -911,7 +902,7 @@
               <Width>2.95282in</Width>
               <ZIndex>4</ZIndex>
               <Visibility>
-                <Hidden>=IIf(Parameters!show_header.Value = 1 And Parameters!Email.Value &lt;&gt; "", False, True)</Hidden>
+                <Hidden>=IIf(Parameters!Email.Value &lt;&gt; "", False, True)</Hidden>
               </Visibility>
               <Style>
                 <Border>
@@ -966,7 +957,7 @@
               <Width>2.95282in</Width>
               <ZIndex>5</ZIndex>
               <Visibility>
-                <Hidden>=IIf(Parameters!show_header.Value = 1 And Parameters!Address.Value &lt;&gt; "", False, True)</Hidden>
+                <Hidden>=IIf(Parameters!Address.Value &lt;&gt; "", False, True)</Hidden>
               </Visibility>
               <Style>
                 <Border>
@@ -1029,7 +1020,7 @@
               <Width>2.95282in</Width>
               <ZIndex>6</ZIndex>
               <Visibility>
-                <Hidden>=IIf(Parameters!show_header.Value = 1 And Len(Parameters!Tel.Value) &gt; 7, False, True)</Hidden>
+                <Hidden>=IIf(Len(Parameters!Tel.Value) &gt; 7, False, True)</Hidden>
               </Visibility>
               <Style>
                 <Border>
@@ -1058,9 +1049,6 @@
               <Top>0.59803in</Top>
               <Height>0.2cm</Height>
               <Width>21cm</Width>
-              <Visibility>
-                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
-              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>

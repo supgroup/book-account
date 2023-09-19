@@ -3208,8 +3208,17 @@
   <data name="msgpaySysBalance" xml:space="preserve">
     <value>الرصيد المتبقي اقل من المبلغ الاجمالي</value>
   </data>
+  <data name="cashAmount" xml:space="preserve">
+    <value>المبلغ</value>
+  </data>
   <data name="Commissions" xml:space="preserve">
     <value>العمولات</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>بريد الكتروني</value>
+  </data>
+  <data name="fax" xml:space="preserve">
+    <value>فاكس</value>
   </data>
   <data name="officeCommission" xml:space="preserve">
     <value>عمولة المكتب</value>
@@ -3219,6 +3228,9 @@
   </data>
   <data name="selectedCommissions" xml:space="preserve">
     <value>العمولات المختارة</value>
+  </data>
+  <data name="tel" xml:space="preserve">
+    <value>هاتف</value>
   </data>
   <data name="theCommission" xml:space="preserve">
     <value>العمولة</value>

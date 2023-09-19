@@ -329,7 +329,7 @@ namespace BookAccountApp.Classes
             return isArabic;
         }
 
-        public List<ReportParameter> fillPayReport(PayOp cashtrans, ServiceData servicemodel)
+        public List<ReportParameter> fillPayReport(PayOp cashtrans )
         {
             bool isArabic = checkLang();
             Fillcurrency();
@@ -345,7 +345,7 @@ namespace BookAccountApp.Classes
             string type = "";
             string isCash = "0";
             string trans_num_txt = "";
-            string check_num = servicemodel.ticketNum;
+            string check_num = cashtrans.ticketNum;
             //string date = cashtrans.createDate.ToString();
             string date = DateToString(cashtrans.createDate);
             string from = "";
@@ -392,7 +392,7 @@ namespace BookAccountApp.Classes
             }
 
        
-            type = MainWindow.resourcemanagerreport.GetString(cashtrans.systemType);
+            type = cashtrans.systemType==null?"":MainWindow.resourcemanagerreport.GetString(cashtrans.systemType);
             trans_num_txt = MainWindow.resourcemanagerreport.GetString("ticketNum");
             if (cashtrans.side == "office")
             {

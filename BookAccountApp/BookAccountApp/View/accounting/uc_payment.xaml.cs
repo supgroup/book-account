@@ -911,8 +911,8 @@ namespace BookAccountApp.View.accounting
             rep.ReportPath = reppath;
             rep.DataSources.Clear();
             rep.EnableExternalImages = true;
-            servicemodel= await servicemodel.GetByID((int)payOp.serviceId);
-            paramarr = reportclass.fillPayReport(payOp,servicemodel);
+          //  servicemodel= await servicemodel.GetByID((int)payOp.serviceId);
+            paramarr = reportclass.fillPayReport(payOp);
             clsReports.Header(paramarr);
             rep.SetParameters(paramarr);
             rep.Refresh();

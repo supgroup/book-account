@@ -30,6 +30,11 @@ namespace BookAccountApp.Classes
             paramarr.Add(new ReportParameter("Address", FillCombo.Address));
             paramarr.Add(new ReportParameter("Email", FillCombo.Email));
             paramarr.Add(new ReportParameter("logoImage", "file:\\" + rep.GetLogoImagePath()));
+            paramarr.Add(new ReportParameter("trcomAddress", MainWindow.resourcemanagerreport.GetString("trAddress")));
+            paramarr.Add(new ReportParameter("trcomTel", MainWindow.resourcemanagerreport.GetString("tel")));
+            paramarr.Add(new ReportParameter("trcomFax", MainWindow.resourcemanagerreport.GetString("fax")));
+            paramarr.Add(new ReportParameter("trcomEmail", MainWindow.resourcemanagerreport.GetString("email")));
+
 
         }
         public static void HeaderNoLogo(List<ReportParameter> paramarr)
