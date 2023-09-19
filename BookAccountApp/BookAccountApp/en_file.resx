@@ -3199,4 +3199,19 @@ Please add Email in setting</value>
   <data name="msgpaySysBalance" xml:space="preserve">
     <value>Balance is less than total</value>
   </data>
+  <data name="Commissions" xml:space="preserve">
+    <value>Commissions</value>
+  </data>
+  <data name="officeCommission" xml:space="preserve">
+    <value>Office Commission</value>
+  </data>
+  <data name="oneofficeCommissions" xml:space="preserve">
+    <value>Office Commissions</value>
+  </data>
+  <data name="selectedCommissions" xml:space="preserve">
+    <value>Selected Commissions</value>
+  </data>
+  <data name="theCommission" xml:space="preserve">
+    <value>Commission</value>
+  </data>
 </root>

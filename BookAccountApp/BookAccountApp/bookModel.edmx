@@ -244,6 +244,7 @@
           <Property Name="sourceId" Type="int" />
           <Property Name="paid" Type="decimal" Precision="20" Scale="3" />
           <Property Name="isPaid" Type="bit" />
+          <Property Name="deserved" Type="decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="paySides">
           <Key>
@@ -1377,6 +1378,7 @@
           <Property Name="isPaid" Type="Boolean" />
           <NavigationProperty Name="payOp1" Relationship="bookModel.FK_payOp_payOp" FromRole="payOp" ToRole="payOp1" />
           <NavigationProperty Name="payOp2" Relationship="bookModel.FK_payOp_payOp" FromRole="payOp1" ToRole="payOp" />
+          <Property Name="deserved" Type="Decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="serviceData">
           <Key>
@@ -2541,6 +2543,7 @@
           <EntitySetMapping Name="payOp">
             <EntityTypeMapping TypeName="bookModel.payOp">
               <MappingFragment StoreEntitySet="payOp">
+                <ScalarProperty Name="deserved" ColumnName="deserved" />
                 <ScalarProperty Name="isPaid" ColumnName="isPaid" />
                 <ScalarProperty Name="paid" ColumnName="paid" />
                 <ScalarProperty Name="sourceId" ColumnName="sourceId" />

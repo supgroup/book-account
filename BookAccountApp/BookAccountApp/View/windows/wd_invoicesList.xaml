@@ -92,7 +92,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Invoice Number" Binding="{Binding Path=invNumber}"/>
                             <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Total" Binding="{Binding Path =deserved,Converter={StaticResource accuracyConverter }}"/>
-                            <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Process Number" Binding="{Binding Path=transNum}" Visibility="Collapsed"/>
+                            <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Process Number" Binding="{Binding Path=serviceNum}" Visibility="Collapsed"/>
                             <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Total" Visibility="Collapsed" Binding="{Binding Path =deserved,Converter={StaticResource accuracyConverter }}"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -185,7 +185,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Invoice Number" Binding="{Binding Path=invNumber}"/>
                             <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Total" Binding="{Binding Path =deserved,Converter={StaticResource accuracyConverter }}"/>
-                            <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Process Number" Visibility="Collapsed" Binding="{Binding Path=transNum}"/>
+                            <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Process Number" Visibility="Collapsed" Binding="{Binding Path=serviceNum}"/>
                             <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Total" Visibility="Collapsed" Binding="{Binding Path =deserved,Converter={StaticResource accuracyConverter }}"/>
                         </DataGrid.Columns>
                     </DataGrid>

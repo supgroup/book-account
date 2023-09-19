@@ -51,6 +51,7 @@ namespace BookAccountApp
         public Nullable<int> sourceId { get; set; }
         public Nullable<decimal> paid { get; set; }
         public Nullable<bool> isPaid { get; set; }
+        public Nullable<decimal> deserved { get; set; }
     
         public virtual office office { get; set; }
         public virtual passengers passengers { get; set; }

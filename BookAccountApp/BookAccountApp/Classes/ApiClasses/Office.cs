@@ -136,7 +136,7 @@ namespace BookAccountApp.ApiClasses
                             newObject.updateDate = newObject.createDate;
                             newObject.updateUserId = newObject.createUserId;
                             newObject.isActive = true;
-
+                            newObject.balance = 0;
                             locationEntity.Add(newObject);
                             entity.SaveChanges();
                             message = newObject.officeId;

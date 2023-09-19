@@ -196,6 +196,7 @@ namespace BookAccountApp.View.accounting
                         {
                             payOp.officeId = Convert.ToInt32(cb_sideValue.SelectedValue);
                             payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "office").FirstOrDefault().paysideId;
+
                         }
                         else if ((cb_side.SelectedValue).ToString() == "soto")
                         {
@@ -240,9 +241,21 @@ namespace BookAccountApp.View.accounting
                     //payOp.systemType = "syr";
                     payOp.createUserId = MainWindow.userLogin.userId;
                     payOp.updateUserId = MainWindow.userLogin.userId;
-
-
-                    decimal s = await payOp.Save(payOp);
+                    decimal s = 0;
+                    if ( (cb_side.SelectedValue).ToString() == "office" && cashesLst.Count>0)
+                    {
+                        //  tb_cash.IsReadOnly = true;
+                     //pay by list
+                        s = await payOp.payListCommissionCashes(cashesLst, payOp);
+                    }else if ((cb_side.SelectedValue).ToString() == "office" && tb_cash.IsReadOnly ==false)
+                    {
+                        s = await payOp.payCommissionCashesByAmount((int)payOp.officeId,(decimal)payOp.cash,payOp);
+                    }
+                    else
+                    {
+                     s  = await payOp.Save(payOp);
+                    }
+                   
                    
                     if (s <= 0)
                     {
@@ -523,6 +536,15 @@ namespace BookAccountApp.View.accounting
             cb_currency.IsEnabled = true;
            // last 
            HelpClass.clearValidate(requiredControlList, this);
+        }
+        void disableforOffice()
+        {
+            cb_side.IsEnabled = false;
+            cb_sideValue.IsEnabled = false;
+            tb_cash.IsEnabled = false;
+            cb_currency.IsEnabled = false;
+            cb_currency.SelectedValue = "usd";
+            tb_cash.IsReadOnly = true;
         }
         string input;
         decimal _decimal = 0;
@@ -1234,7 +1256,8 @@ namespace BookAccountApp.View.accounting
                     if (w.isActive)
                     {
                         tb_cash.Text = HelpClass.DecTostring(w.sum);
-                    tb_cash.IsReadOnly = true;
+                    //tb_cash.IsReadOnly = true;
+
                     //cb_recipientC.IsEnabled = false;
                     //cb_recipientV.IsEnabled = false;
                     //cb_recipientU.IsEnabled = false;
@@ -1242,6 +1265,7 @@ namespace BookAccountApp.View.accounting
                     //tb_recipientText.IsEnabled = false;
                     serviceLst.AddRange(w.selectedInvoices);
                     cashesLst.AddRange(w.selectedCashtansfers);
+                        disableforOffice();
                     }
                     Window.GetWindow(this).Opacity = 1;
                 }

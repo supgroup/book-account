@@ -72,6 +72,31 @@ namespace BookAccountApp.View.windows
                 //}
                 translate();
                 #endregion
+                if (side=="office")
+                {
+                    allCashtransfersSource = await cashTransfer.GetUnpaidOffice(selectedId);
+                }
+                allCashtransfers.AddRange(allCashtransfersSource);
+                if (side == "office")
+                {
+                    lst_allInvoices.Columns[0].Visibility = Visibility.Collapsed;
+                    lst_allInvoices.Columns[1].Visibility = Visibility.Collapsed;
+                    lst_allInvoices.Columns[2].Visibility = Visibility.Visible;
+                    lst_allInvoices.Columns[3].Visibility = Visibility.Visible;
+
+                    lst_selectedInvoices.Columns[0].Visibility = Visibility.Collapsed;
+                    lst_selectedInvoices.Columns[1].Visibility = Visibility.Collapsed;
+                    lst_selectedInvoices.Columns[2].Visibility = Visibility.Visible;
+                    lst_selectedInvoices.Columns[3].Visibility = Visibility.Visible;
+
+                    lst_allInvoices.ItemsSource = allCashtransfers;
+                    lst_allInvoices.SelectedValuePath = "payOpId";
+                    lst_allInvoices.DisplayMemberPath = "serviceNum";
+
+                    lst_selectedInvoices.ItemsSource = selectedCashtansfers;
+                    lst_selectedInvoices.SelectedValuePath = "payOpId";
+                    lst_selectedInvoices.DisplayMemberPath = "serviceNum";
+                }
                 /*
                 if (agentId != 0)
                     allInvoicesSource = await invoiceModel.getAgentInvoices(MainWindow.branchID.Value, agentId, invType);
@@ -132,9 +157,9 @@ namespace BookAccountApp.View.windows
                 }
                 #endregion
                 */
-                
-               
-                    
+
+
+
             }
             catch (Exception ex)
             {
@@ -146,6 +171,24 @@ namespace BookAccountApp.View.windows
 
         private void translate()
         {
+            //   trBookNum officeCommission     theCommission  
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            txt_invoice.Text = MainWindow.resourcemanager.GetString("oneofficeCommissions");
+            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            txt_invoices.Text = MainWindow.resourcemanager.GetString("Commissions");
+
+            txt_selectedInvoices.Text = MainWindow.resourcemanager.GetString("selectedCommissions");
+
+            lst_allInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
+            lst_allInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("theCommission");
+            lst_selectedInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
+            lst_selectedInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("theCommission");
+            txt_sum.Text = MainWindow.resourcemanager.GetString("trSum");
+            tt_selectAllItem.Content = MainWindow.resourcemanager.GetString("trSelectAllItems");
+            tt_unselectAllItem.Content = MainWindow.resourcemanager.GetString("trUnSelectAllItems");
+            tt_selectItem.Content = MainWindow.resourcemanager.GetString("trSelectOneItem");
+            tt_unselectItem.Content = MainWindow.resourcemanager.GetString("trUnSelectOneItem");
             /*
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             txt_invoice.Text = MainWindow.resourcemanager.GetString("trInvoices");
@@ -214,17 +257,18 @@ namespace BookAccountApp.View.windows
         }
         private void Txb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
-            /*
+           
             try
             {
-                lst_allInvoices.ItemsSource = allInvoices.Where(x => (x.invNumber.ToLower().Contains(txb_search.Text.ToLower())) ||
-                                                                     (x.total.ToString().ToLower().Contains(txb_search.Text.ToLower())));
+
+                lst_allInvoices.ItemsSource = allCashtransfers.Where(x => (x.serviceNum.ToLower().Contains(txb_search.Text.ToLower())) ||
+                                                                     (x.cash.ToString().ToLower().Contains(txb_search.Text.ToLower())));
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+            
         }
         #endregion
 
@@ -261,10 +305,20 @@ namespace BookAccountApp.View.windows
         }
         private void Btn_selectedAll_Click(object sender, RoutedEventArgs e)
         {//select all
-            /*
+           
             try
             {
-                if (agentId != 0 || (shippingCompanyId != 0 && invType.Equals("feed")))
+                if (side == "office")
+                {
+                    int x = allCashtransfers.Count;
+                    for (int i = 0; i < x; i++)
+                    {
+                        lst_allInvoices.SelectedIndex = 0;
+                        Btn_selectedInvoice_Click(null, null);
+                    }
+                }
+                /*
+                    if (agentId != 0 || (shippingCompanyId != 0 && invType.Equals("feed")))
                 {
                     int x = allInvoices.Count;
                     for (int i = 0; i < x; i++)
@@ -282,22 +336,37 @@ namespace BookAccountApp.View.windows
                         Btn_selectedInvoice_Click(null, null);
                     }
                 }
+                */
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+            
         }
         private void Btn_selectedInvoice_Click(object sender, RoutedEventArgs e)
         {//select one
             try
             {
-               
-                    
-
-                /*
                  decimal x = 0;
+                if (side == "office"){
+                    cashTransfer = lst_allInvoices.SelectedItem as PayOp;
+                    if (cashTransfer != null)
+                    {
+                        allCashtransfers.Remove(cashTransfer);
+
+                        selectedCashtansfers.Add(cashTransfer);
+
+                        lst_allInvoices.ItemsSource = allCashtransfers;
+                        lst_selectedInvoices.ItemsSource = selectedCashtansfers;
+
+                        lst_allInvoices.Items.Refresh();
+                        lst_selectedInvoices.Items.Refresh();
+
+                        x = cashTransfer.deserved.Value;
+                    }
+                }
+                /*
                 if (agentId != 0 || (shippingCompanyId != 0 && invType.Equals("feed")))
                 {
                     invoice = lst_allInvoices.SelectedItem as ServiceData;
@@ -331,15 +400,15 @@ namespace BookAccountApp.View.windows
                         lst_allInvoices.Items.Refresh();
                         lst_selectedInvoices.Items.Refresh();
 
-                        x = cashTransfer.deserved.Value;
+                        x = cashTransfer.cash.Value;
                     }
                 }
-
+                */
                 sum += x;
 
                 tb_sum.Text = " " + HelpClass.DecTostring(sum) + " ";
 
-               */
+              
                     
             }
             catch (Exception ex)
@@ -351,13 +420,30 @@ namespace BookAccountApp.View.windows
         }
         private void Btn_unSelectedInvoice_Click(object sender, RoutedEventArgs e)
         {//unselect one
-            /*
+          
             try
             {
-               
-                    
-
                 decimal x = 0;
+                if (side == "office")
+                {
+                    cashTransfer = lst_selectedInvoices.SelectedItem as PayOp;
+
+                    if (cashTransfer != null)
+                    {
+                        selectedCashtansfers.Remove(cashTransfer);
+
+                        allCashtransfers.Add(cashTransfer);
+
+                        lst_allInvoices.ItemsSource = allCashtransfers;
+                        lst_selectedInvoices.ItemsSource = selectedCashtansfers;
+
+                        lst_allInvoices.Items.Refresh();
+                        lst_selectedInvoices.Items.Refresh();
+
+                        x = cashTransfer.deserved.Value;
+                    }
+                }
+                /*
                 if (agentId != 0 || (shippingCompanyId != 0 && invType.Equals("feed")))
                 {
                     invoice = lst_selectedInvoices.SelectedItem as ServiceData;
@@ -396,6 +482,7 @@ namespace BookAccountApp.View.windows
                         x = cashTransfer.deserved.Value;
                     }
                 }
+                */
                 sum -= x;
 
                 tb_sum.Text = " " + HelpClass.DecTostring(sum) + " ";
@@ -410,14 +497,25 @@ namespace BookAccountApp.View.windows
 
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+           
         }
         private void Btn_unSelectedAll_Click(object sender, RoutedEventArgs e)
         {//unselect all
-            /*
+            
             try
             {
-                if (agentId != 0 || (shippingCompanyId != 0 && invType.Equals("feed")))
+                if (side == "office")
+                {
+                    int x = selectedCashtansfers.Count;
+                    for (int i = 0; i < x; i++)
+                    {
+                        lst_selectedInvoices.SelectedIndex = 0;
+                        Btn_unSelectedInvoice_Click(null, null);
+                    }
+
+                }
+                /*
+                    if (agentId != 0 || (shippingCompanyId != 0 && invType.Equals("feed")))
                 {
                     int x = selectedInvoices.Count;
                     for (int i = 0; i < x; i++)
@@ -435,12 +533,13 @@ namespace BookAccountApp.View.windows
                         Btn_unSelectedInvoice_Click(null, null);
                     }
                 }
+                */
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+           
         }
         #endregion
     }
