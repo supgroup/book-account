@@ -11,6 +11,7 @@ using System.Web;
 
 using System.Security.Claims;
 using Newtonsoft.Json.Converters;
+using BookAccountApp.Classes;
 
 namespace BookAccountApp.ApiClasses
 {
@@ -121,7 +122,8 @@ namespace BookAccountApp.ApiClasses
                 using (bookdbEntities entity = new bookdbEntities())
                 {
                     List = (from S in entity.payOp
-                            where (S.opType == opType && S.processType!= "company_commission" && S.processType != "office_commission")
+                            where (S.opType == opType && S.processType!= "company_commission" && S.processType != "office_commission" && S.processType != "service")
+
                             select new PayOp()
                             {
                                 payOpId = S.payOpId,
@@ -955,6 +957,154 @@ namespace BookAccountApp.ApiClasses
                 }
            
 
+        }
+
+        public async Task<int> AddServiceRecord(ServiceData serviceModel)
+        {
+            //   paySides newObject = new paySides();
+            PayOp payOpModel = new PayOp();
+
+            int message = 0;
+            try
+            {
+                payOpModel.opType = "p";
+                if (serviceModel.officeId > 0)
+                {
+                    //office
+
+                    payOpModel.code = await generateNumber("P" + "OB");//office book
+                    payOpModel.officeId = serviceModel.officeId;
+                    payOpModel.side = "office";
+                }
+                else
+                {
+                    //passenger
+                    payOpModel.code = await generateNumber("P" + "PB");//passenger Book
+                    payOpModel.side = "passenger";
+
+                }
+                payOpModel.passengerId = serviceModel.passengerId;
+
+                payOpModel.cash = serviceModel.total;
+                payOpModel.paysideId = serviceModel.paysideId;
+                
+                payOpModel.serviceId = serviceModel.serviceId;
+                payOpModel.opStatus = "draft";
+                payOpModel.opDate = DateTime.Now;
+                payOpModel.notes = serviceModel.notes;
+                payOpModel.createUserId = serviceModel.updateUserId;
+                payOpModel.updateUserId = serviceModel.updateUserId;
+                // //payOpModel.createDate = serviceModel.createDate;
+                //  payOpModel.updateDate = DateTime.Now;
+               
+              
+                // payOpModel.userId = serviceModel.updateUserId;
+                payOpModel.recipient = "";
+                payOpModel.recivedFrom = "";
+            
+                payOpModel.flightId = null;
+                payOpModel.opName = "";
+                payOpModel.systemType = serviceModel.systemType;
+                payOpModel.systemId = serviceModel.systemId;
+                payOpModel.syValue = serviceModel.syValue;
+                payOpModel.exchangeId = serviceModel.exchangeId;
+                payOpModel.currency = serviceModel.currency;
+                payOpModel.fromSide = "";
+                payOpModel.processType = "service";
+                // payOpModel.sourceId = null,
+
+                payOpModel.paid = serviceModel.total;
+                payOpModel.isPaid = true;
+                payOpModel.deserved =0;
+
+                decimal res = await Save(payOpModel);
+                message = Convert.ToInt32(res);
+                return message;
+
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public async Task<int> AddPaidRecord(ServiceData serviceModel)
+        {
+            PayOp payOpModel = new PayOp();
+
+            int message = 0;
+            try
+            {
+                payOpModel.opType = "d";
+                if (serviceModel.officeId > 0)
+                {
+                    //office
+                    payOpModel.code = await generateNumber("P" + "OB");//office book
+                    payOpModel.officeId = serviceModel.officeId;
+                    payOpModel.side = "office";
+                }
+                else
+                {
+                    //passenger
+                    payOpModel.code = await generateNumber("P" + "PB");//passenger Book
+                    payOpModel.side = "passenger";
+                }
+                payOpModel.passengerId = serviceModel.passengerId;              
+                payOpModel.paysideId = serviceModel.paysideId;
+                payOpModel.serviceId = serviceModel.serviceId;
+                payOpModel.opStatus = "draft";
+                payOpModel.opDate = DateTime.Now;
+                payOpModel.notes = serviceModel.notes;
+                payOpModel.createUserId = serviceModel.updateUserId;
+                payOpModel.updateUserId = serviceModel.updateUserId;
+                // //payOpModel.createDate = serviceModel.createDate;
+                //  payOpModel.updateDate = DateTime.Now;
+                // payOpModel.userId = serviceModel.updateUserId;
+                payOpModel.recipient = "";
+                payOpModel.recivedFrom = "";
+
+                payOpModel.flightId = null;
+                payOpModel.opName = "";
+                payOpModel.systemType = serviceModel.systemType;
+                payOpModel.systemId = serviceModel.systemId;
+                payOpModel.syValue = serviceModel.syValue;
+                payOpModel.exchangeId = serviceModel.exchangeId;
+                payOpModel.currency = serviceModel.currency;
+                payOpModel.fromSide = "";
+                payOpModel.processType = "cashservice";
+                // payOpModel.sourceId = null,
+                decimal totalsame = 0;
+                //convert total to same selected currency to compare
+                if (payOpModel.currency=="usd")
+                {
+                    totalsame = (decimal)serviceModel.total;
+                }
+                else
+                {
+                    //  currency == "syp"
+                    totalsame = HelpClass.ConvertToSYP(serviceModel.total, "usd", payOpModel.syValue);
+                }
+                if (serviceModel.paid < totalsame)
+                    {
+                        payOpModel.cash = serviceModel.paid;
+                        payOpModel.paid = serviceModel.paid;
+                        payOpModel.isPaid = false;
+                        payOpModel.deserved = totalsame - serviceModel.paid;
+                    }
+                    else
+                    {//equal
+                        payOpModel.cash = serviceModel.paid;
+                        payOpModel.paid = serviceModel.paid;
+                        payOpModel.isPaid = true;
+                        payOpModel.deserved = 0;
+                    }  
+                decimal res = await Save(payOpModel);
+                message = Convert.ToInt32(res);
+                return message;
+            }
+            catch
+            {
+                return 0;
+            }
         }
         public string CashNumber(string cashCode)
         {

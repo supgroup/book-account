@@ -1022,7 +1022,119 @@ namespace BookAccountApp.Classes
             return sdc;
         }
 
+        public static decimal exchangeConvert(decimal? cash,string currency,decimal? syValue)
+        {
+            decimal result = 0;
+          
+           if(syValue == null)
+            {
+                syValue = 1;
+            }
+           if(syValue == 0)
+            {
+                syValue = 1;
+            }
+            decimal operatval = (decimal)syValue;
+            if (cash == null)
+            {
+                //go to return result =0
+            }
+            else
+            {
+                decimal dccash = (decimal)cash;
+                if (currency == "usd")
+                {
+                    result = dccash * operatval;
+                }
+                else if (currency == "syp")
+                {
+                    result = dccash / operatval;
+                }
+            }
+            return result;
+        }
 
+        public static decimal ConvertToUSD(decimal? cash, string currency, decimal? syValue)
+        {
+            decimal result = 0;
+            if (cash == null)
+            {
+                //go to return result =0
+            }
+            else
+            {
+                if (currency == "usd")
+                {
+                    result = (decimal)cash;//no change
+                }
+                else if (currency == "syp")
+                {
+                    result = exchangeConvert(cash, currency, syValue);
+                }
+            }
+        
+            
+
+
+            return result;
+        }
+
+        public static decimal ConvertToSYP(decimal? cash, string currency, decimal? syValue)
+        {
+            decimal result = 0;
+            if (cash == null)
+            {
+                //go to return result =0
+            }
+            else
+            {
+                if (currency == "syp")
+                {
+                    result = (decimal)cash;//no change
+                }
+                else if (currency == "usd")
+                {
+                    result = exchangeConvert(cash, currency, syValue);
+                }
+            }
+
+
+
+
+            return result;
+        }
+        public static int ComparePaid(ServiceData serviceModel)
+        {
+            int result = -1;
+            decimal totalsame = 0;
+            //convert total to same selected currency to compare
+            if (serviceModel.currency == "usd")
+            {
+                totalsame = (decimal)serviceModel.total;
+            }
+            else
+            {
+                //  currency == "syp"
+                totalsame = HelpClass.ConvertToSYP(serviceModel.total, "usd", serviceModel.syValue);
+            }
+
+            if (serviceModel.paid < totalsame)
+            {
+                result = -1;
+            }else if (serviceModel.paid > totalsame)
+            {
+                result =1;
+            }
+            else
+            {//equal
+                result = 0;
+            }
+            return result;
+        }
+
+        /*
+         
+         * */
         public static string AddNewConnectionString(string servername, string dbName = "bookdb")
         {
             string messg = "ok";

@@ -74,6 +74,7 @@ namespace BookAccountApp.ApiClasses
         public Nullable<decimal> tax_ratio { get; set; }
         public Nullable<decimal> tax_value { get; set; }
         public string systemName { get; set; }
+        public Nullable<int> paysideId { get; set; }
         public string currency { get; set; }
         /// <summary>
         /// ///////////////////////////////////////

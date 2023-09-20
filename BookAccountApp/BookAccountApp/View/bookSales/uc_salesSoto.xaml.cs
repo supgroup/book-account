@@ -374,18 +374,23 @@ namespace BookAccountApp.View.bookSales
             serviceData.officeId = Convert.ToInt32(cb_office.SelectedValue);
             serviceData.systemId = Convert.ToInt32(cb_system.SelectedValue);
 
+            serviceData.exchangeId = FillCombo.ExchangeModel.exchangeId;
+            serviceData.syValue = FillCombo.exchangeValue;
             serviceData.currency = cb_currency.SelectedValue == null ? "syp" : cb_currency.SelectedValue.ToString();//
             serviceData.paid = (tb_paid.Text == null || tb_paid.Text == "") ? 0 : Convert.ToDecimal(tb_paid.Text);//
 
             //serviceData.serviceDate = dp_serviceDate.SelectedDate;
             serviceData.total = (tb_total.Text == null || tb_total.Text == "") ? 0 : Convert.ToDecimal(tb_total.Text);
 
-            if (serviceData.paid <= serviceData.total)
+            int cmpres = HelpClass.ComparePaid(serviceData);
+            //  if (serviceData.paid <= serviceData.total)
+            if (cmpres == -1 || cmpres == 0)
             {
                 res = 1;
                 if (process == "send")//////////////////////////
                 {
                     paysideModel = await paysideModel.GetByCode(serviceData.systemType);
+                    serviceData.paysideId = paysideModel.paysideId;
                     if (paysideModel.balance < serviceData.total)
                     {
                         return -1;
@@ -437,9 +442,6 @@ namespace BookAccountApp.View.bookSales
                 serviceData.passengerUnpaid = serviceData.total;//passenger
                 serviceData.systemPaid = 0;
                 serviceData.systemUnpaid = serviceData.system_commission_value;
-                serviceData.exchangeId = FillCombo.ExchangeModel.exchangeId;
-                serviceData.syValue = FillCombo.exchangeValue;
-
             }
             return res;
         }
@@ -449,6 +451,8 @@ namespace BookAccountApp.View.bookSales
             res = await payOpModel.updateSideBalance(serviceData.systemType, -(decimal)serviceData.total);
             res = await payOpModel.AddSideRecord(serviceData, paysideModel);
             res = await payOpModel.AddCompanyCommRecord(serviceData);
+            res = await payOpModel.AddServiceRecord(serviceData);
+            res = await payOpModel.AddPaidRecord(serviceData);
             if (serviceData.officeId > 0)
             {
                 res = await payOpModel.AddOfficeCommRecord(serviceData);
