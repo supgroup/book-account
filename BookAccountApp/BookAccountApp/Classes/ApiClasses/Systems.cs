@@ -28,6 +28,7 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public Nullable<decimal> company_commission { get; set; }
+        public Nullable<decimal> balance { get; set; }
         public bool canDelete { get; set; }
 
         /// <summary>
@@ -123,7 +124,7 @@ namespace BookAccountApp.ApiClasses
                             newObject.updateDate = newObject.createDate;
                             newObject.updateUserId = newObject.createUserId;
                             newObject.isActive = true;
-
+                            newObject.balance =0;
                             locationEntity.Add(newObject);
                             entity.SaveChanges();
                             message = newObject.systemId;

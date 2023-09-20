@@ -173,7 +173,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*"  Header="side" Binding="{Binding Path=sideAr}">
+                            <DataGridTextColumn Width="*"  Header="side" Binding="{Binding Path=side}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>

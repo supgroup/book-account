@@ -1265,7 +1265,11 @@ namespace BookAccountApp.View.accounting
                     //tb_recipientText.IsEnabled = false;
                     serviceLst.AddRange(w.selectedInvoices);
                     cashesLst.AddRange(w.selectedCashtansfers);
-                        disableforOffice();
+                        if (cashesLst.Count>0 || serviceLst.Count>0)
+                        {
+                            disableforOffice();
+                        }
+                       
                     }
                     Window.GetWindow(this).Opacity = 1;
                 }

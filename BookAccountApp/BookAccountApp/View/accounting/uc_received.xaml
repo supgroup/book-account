@@ -161,7 +161,7 @@
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="*"  Header="serviceNum" Binding="{Binding Path=payOpId}">
+                            <DataGridTextColumn Width="*"  Header="serviceNum" Binding="{Binding Path=code}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -450,13 +450,13 @@
                                           L13,15 L13,17 Z"/>
                             </Grid>
                         </Border>
-                        <Grid>
+                        <Grid Name="brdr_sideValue">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <Border Grid.Row="1" Name="brdr_sideValue" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                            <Border Grid.Row="1"  CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                 <Grid>
                                     <ComboBox x:Name="cb_sideValue"  Grid.Row="1"
                SelectedValue="{Binding sideValue,Mode=OneWay}"

@@ -368,6 +368,7 @@
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
           <Property Name="company_commission" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="balance" Type="decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="toTable">
           <Key>
@@ -2244,6 +2245,7 @@
           <NavigationProperty Name="serviceData" Relationship="bookModel.FK_serviceData_systems" FromRole="systems" ToRole="serviceData" />
           <NavigationProperty Name="flights" Relationship="bookModel.FK_flights_systems" FromRole="systems" ToRole="flights" />
           <NavigationProperty Name="payOp" Relationship="bookModel.FK_payOp_systems" FromRole="systems" ToRole="payOp" />
+          <Property Name="balance" Type="Decimal" Precision="20" Scale="3" />
         </EntityType>
         <Association Name="FK_officeSystem_office">
           <End Type="bookModel.office" Role="office" Multiplicity="0..1" />
@@ -2804,6 +2806,7 @@
           <EntitySetMapping Name="systems">
             <EntityTypeMapping TypeName="bookModel.systems">
               <MappingFragment StoreEntitySet="systems">
+                <ScalarProperty Name="balance" ColumnName="balance" />
                 <ScalarProperty Name="company_commission" ColumnName="company_commission" />
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
                 <ScalarProperty Name="createUserId" ColumnName="createUserId" />

@@ -3235,4 +3235,16 @@
   <data name="theCommission" xml:space="preserve">
     <value>العمولة</value>
   </data>
+  <data name="thePassenger" xml:space="preserve">
+    <value>المسافر</value>
+  </data>
+  <data name="books" xml:space="preserve">
+    <value>الحجوزات</value>
+  </data>
+  <data name="recieveDeserved" xml:space="preserve">
+    <value>قبض المستحقات</value>
+  </data>
+  <data name="selectedBooks" xml:space="preserve">
+    <value>الحجوزات المختارة</value>
+  </data>
 </root>

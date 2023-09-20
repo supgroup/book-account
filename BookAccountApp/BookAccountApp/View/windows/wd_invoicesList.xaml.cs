@@ -72,13 +72,25 @@ namespace BookAccountApp.View.windows
                 //}
                 translate();
                 #endregion
-                if (side=="office")
+                if (side=="office" && opType=="p")
                 {
                     allCashtransfersSource = await cashTransfer.GetUnpaidOffice(selectedId);
                 }
-                allCashtransfers.AddRange(allCashtransfersSource);
-                if (side == "office")
+                else if (side == "system" && opType == "d")
                 {
+                    allCashtransfersSource = await cashTransfer.GetUnpaidSystem(selectedId);
+                }
+                else if (side == "passenger" && opType == "d")
+                {
+                    allCashtransfersSource = await cashTransfer.GetUnpaidPassenger(selectedId);
+                }
+                else if (side == "office" && opType == "d")
+                {
+                    allCashtransfersSource = await cashTransfer.GetUnpaidBookOffice(selectedId);
+                }
+                allCashtransfers.AddRange(allCashtransfersSource);
+                //if (side == "office" && opType == "p")
+                //{
                     lst_allInvoices.Columns[0].Visibility = Visibility.Collapsed;
                     lst_allInvoices.Columns[1].Visibility = Visibility.Collapsed;
                     lst_allInvoices.Columns[2].Visibility = Visibility.Visible;
@@ -96,7 +108,11 @@ namespace BookAccountApp.View.windows
                     lst_selectedInvoices.ItemsSource = selectedCashtansfers;
                     lst_selectedInvoices.SelectedValuePath = "payOpId";
                     lst_selectedInvoices.DisplayMemberPath = "serviceNum";
-                }
+                //}
+                //else if (side == "system" && opType == "d")
+                //{
+                    
+                //}
                 /*
                 if (agentId != 0)
                     allInvoicesSource = await invoiceModel.getAgentInvoices(MainWindow.branchID.Value, agentId, invType);
@@ -157,14 +173,9 @@ namespace BookAccountApp.View.windows
                 }
                 #endregion
                 */
-
-
-
             }
             catch (Exception ex)
-            {
-               
-                    
+            {  
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -172,23 +183,66 @@ namespace BookAccountApp.View.windows
         private void translate()
         {
             //   trBookNum officeCommission     theCommission  
-
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            txt_invoice.Text = MainWindow.resourcemanager.GetString("oneofficeCommissions");
             btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
-            txt_invoices.Text = MainWindow.resourcemanager.GetString("Commissions");
-
-            txt_selectedInvoices.Text = MainWindow.resourcemanager.GetString("selectedCommissions");
-
-            lst_allInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
-            lst_allInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("theCommission");
-            lst_selectedInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
-            lst_selectedInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("theCommission");
             txt_sum.Text = MainWindow.resourcemanager.GetString("trSum");
             tt_selectAllItem.Content = MainWindow.resourcemanager.GetString("trSelectAllItems");
             tt_unselectAllItem.Content = MainWindow.resourcemanager.GetString("trUnSelectAllItems");
             tt_selectItem.Content = MainWindow.resourcemanager.GetString("trSelectOneItem");
             tt_unselectItem.Content = MainWindow.resourcemanager.GetString("trUnSelectOneItem");
+            if (side == "office" && opType == "p")
+            {
+            
+                txt_invoice.Text = MainWindow.resourcemanager.GetString("oneofficeCommissions");
+              
+                txt_invoices.Text = MainWindow.resourcemanager.GetString("Commissions");
+
+                txt_selectedInvoices.Text = MainWindow.resourcemanager.GetString("selectedCommissions");
+
+                lst_allInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                lst_allInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("theCommission");
+                lst_selectedInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                lst_selectedInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("theCommission");             
+            }
+            else if (side == "system" && opType == "d")
+            {
+                txt_selectedInvoices.Text = MainWindow.resourcemanager.GetString("selectedCommissions");
+                txt_invoice.Text = MainWindow.resourcemanager.GetString("companyCommissions");
+                txt_invoices.Text = MainWindow.resourcemanager.GetString("Commissions");
+               
+                lst_allInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                lst_allInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("theCommission");
+                lst_selectedInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                lst_selectedInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("theCommission");
+            }
+            else if (side == "passenger" && opType == "d")
+            {
+                //books
+                //selectedBooks
+                //recieveDeserved
+                txt_selectedInvoices.Text = MainWindow.resourcemanager.GetString("selectedBooks");
+                txt_invoice.Text = MainWindow.resourcemanager.GetString("recieveDeserved");
+                txt_invoices.Text = MainWindow.resourcemanager.GetString("books");
+
+                lst_allInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                lst_allInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("total");
+                lst_selectedInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                lst_selectedInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("total");
+            }
+            else if (side == "office" && opType == "d")
+            {
+                //books
+                //selectedBooks
+                //recieveDeserved
+                txt_selectedInvoices.Text = MainWindow.resourcemanager.GetString("selectedBooks");
+                txt_invoice.Text = MainWindow.resourcemanager.GetString("recieveDeserved");
+                txt_invoices.Text = MainWindow.resourcemanager.GetString("books");
+
+                lst_allInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                lst_allInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("total");
+                lst_selectedInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                lst_selectedInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("total");
+            }
             /*
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             txt_invoice.Text = MainWindow.resourcemanager.GetString("trInvoices");
@@ -308,15 +362,15 @@ namespace BookAccountApp.View.windows
            
             try
             {
-                if (side == "office")
-                {
+                //if (side == "office")
+                //{
                     int x = allCashtransfers.Count;
                     for (int i = 0; i < x; i++)
                     {
                         lst_allInvoices.SelectedIndex = 0;
                         Btn_selectedInvoice_Click(null, null);
                     }
-                }
+                //}
                 /*
                     if (agentId != 0 || (shippingCompanyId != 0 && invType.Equals("feed")))
                 {
@@ -349,7 +403,7 @@ namespace BookAccountApp.View.windows
             try
             {
                  decimal x = 0;
-                if (side == "office"){
+                //if (side == "office"){
                     cashTransfer = lst_allInvoices.SelectedItem as PayOp;
                     if (cashTransfer != null)
                     {
@@ -365,7 +419,7 @@ namespace BookAccountApp.View.windows
 
                         x = cashTransfer.deserved.Value;
                     }
-                }
+                //}
                 /*
                 if (agentId != 0 || (shippingCompanyId != 0 && invType.Equals("feed")))
                 {
@@ -424,8 +478,8 @@ namespace BookAccountApp.View.windows
             try
             {
                 decimal x = 0;
-                if (side == "office")
-                {
+                //if (side == "office")
+                //{
                     cashTransfer = lst_selectedInvoices.SelectedItem as PayOp;
 
                     if (cashTransfer != null)
@@ -442,7 +496,7 @@ namespace BookAccountApp.View.windows
 
                         x = cashTransfer.deserved.Value;
                     }
-                }
+                //}
                 /*
                 if (agentId != 0 || (shippingCompanyId != 0 && invType.Equals("feed")))
                 {
@@ -504,8 +558,8 @@ namespace BookAccountApp.View.windows
             
             try
             {
-                if (side == "office")
-                {
+                //if (side == "office")
+                //{
                     int x = selectedCashtansfers.Count;
                     for (int i = 0; i < x; i++)
                     {
@@ -513,7 +567,7 @@ namespace BookAccountApp.View.windows
                         Btn_unSelectedInvoice_Click(null, null);
                     }
 
-                }
+                //}
                 /*
                     if (agentId != 0 || (shippingCompanyId != 0 && invType.Equals("feed")))
                 {

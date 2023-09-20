@@ -32,6 +32,7 @@ namespace BookAccountApp
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public Nullable<decimal> company_commission { get; set; }
+        public Nullable<decimal> balance { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<officeSystem> officeSystem { get; set; }

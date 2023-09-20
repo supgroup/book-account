@@ -3226,4 +3226,16 @@ Please add Email in setting</value>
   <data name="theCommission" xml:space="preserve">
     <value>Commission</value>
   </data>
+  <data name="books" xml:space="preserve">
+    <value>Books</value>
+  </data>
+  <data name="recieveDeserved" xml:space="preserve">
+    <value>Recieve Deserved</value>
+  </data>
+  <data name="selectedBooks" xml:space="preserve">
+    <value>Selected Books</value>
+  </data>
+  <data name="thePassenger" xml:space="preserve">
+    <value>Passenger</value>
+  </data>
 </root>
