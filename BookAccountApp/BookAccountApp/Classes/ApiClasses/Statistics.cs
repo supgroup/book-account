@@ -140,7 +140,7 @@ namespace BookAccountApp.ApiClasses
                             from OFF in JOF.DefaultIfEmpty()
                             from P in JP.DefaultIfEmpty()
                             from SYS in Syst.DefaultIfEmpty()
-                          //  where (S.systemType == systemType)
+                           where (S.state == "confirmd")
                             select new BookSts()
                             {
                                 serviceId = S.serviceId,
