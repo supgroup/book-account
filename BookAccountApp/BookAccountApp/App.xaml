@@ -18,6 +18,7 @@
             <converters:unlimitedConverter x:Key="unlimitedConverter"/>
             <converters:countConverter x:Key="countConverter"/>
             <converters:accuracyConverter x:Key="accuracyConverter"/>
+            <converters:currencyConverter x:Key="currencyConverter"/>
             <!--#region Fonts-->
             <FontFamily x:Key="Font-cairo-light" >cairo light, /BookAccountApp;component/fonts/cairo-font/#cairo light, Arial</FontFamily>
             <FontFamily x:Key="Font-cairo-bold" >cairo bold , /BookAccountApp;component/fonts/cairo-font/#cairo bold, Arial</FontFamily>

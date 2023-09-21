@@ -393,6 +393,19 @@ namespace BookAccountApp.View.accounting
 
                         btn_save.IsEnabled = false;
                         cb_side.IsEnabled = false;
+                        MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sideValue, MainWindow.resourcemanager.GetString("trn"+ payOp.side));
+                        if (payOp.side == "system")
+                        {
+                            cb_side.IsEditable = true;
+                           cb_side.Text = MainWindow.resourcemanager.GetString("trn" + payOp.side);
+                          
+                            await FillCombo.fillSystems(cb_sideValue);
+                            cb_sideValue.SelectedValue = payOp.systemId;
+                            grid_sideValue.Visibility = Visibility.Visible;
+                            btn_invoicesSide.Visibility = Visibility.Collapsed;
+
+                        }
+                        
                         cb_sideValue.IsEnabled = false;
                         tb_opName.IsEnabled = false;
                         btn_invoices.IsEnabled = false;
@@ -510,7 +523,7 @@ namespace BookAccountApp.View.accounting
             this.DataContext = new PayOp();
             tb_cash.IsReadOnly = false;
             tb_cash.Text = "";
-            
+           
             cb_side.SelectedIndex = -1;
             cb_sideValue.SelectedIndex = -1;
             //cb_airline.SelectedIndex = -1;
@@ -534,8 +547,9 @@ namespace BookAccountApp.View.accounting
             dp_opDate.IsEnabled = true;
             cb_currency.SelectedIndex = -1;
             cb_currency.IsEnabled = true;
-           // last 
-           HelpClass.clearValidate(requiredControlList, this);
+            cb_side.IsEditable = false;
+            // last 
+            HelpClass.clearValidate(requiredControlList, this);
         }
         void disableforOffice()
         {

@@ -3238,4 +3238,22 @@ Please add Email in setting</value>
   <data name="thePassenger" xml:space="preserve">
     <value>Passenger</value>
   </data>
+  <data name="trnoffice" xml:space="preserve">
+    <value>office</value>
+  </data>
+  <data name="trnother" xml:space="preserve">
+    <value>ther</value>
+  </data>
+  <data name="trnpassenger" xml:space="preserve">
+    <value>passenger</value>
+  </data>
+  <data name="trnsoto" xml:space="preserve">
+    <value>soto</value>
+  </data>
+  <data name="trnsyr" xml:space="preserve">
+    <value>syr</value>
+  </data>
+  <data name="trnsystem" xml:space="preserve">
+    <value>system</value>
+  </data>
 </root>

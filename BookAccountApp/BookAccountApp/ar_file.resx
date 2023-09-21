@@ -3247,4 +3247,22 @@
   <data name="selectedBooks" xml:space="preserve">
     <value>الحجوزات المختارة</value>
   </data>
+  <data name="trnoffice" xml:space="preserve">
+    <value>مكتب</value>
+  </data>
+  <data name="trnother" xml:space="preserve">
+    <value>جهة أخرى</value>
+  </data>
+  <data name="trnpassenger" xml:space="preserve">
+    <value>مسافر</value>
+  </data>
+  <data name="trnsoto" xml:space="preserve">
+    <value>نظام السوتو</value>
+  </data>
+  <data name="trnsyr" xml:space="preserve">
+    <value>نظام السوري</value>
+  </data>
+  <data name="trnsystem" xml:space="preserve">
+    <value>نظام الحجز</value>
+  </data>
 </root>

@@ -237,6 +237,7 @@
     <Compile Include="Classes\printClass\numberToWord\ToWord.cs" />
     <Compile Include="Classes\printClass\ReportCls.cs" />
     <Compile Include="Classes\printClass\rptSectionData.cs" />
+    <Compile Include="converters\currencyConverter.cs" />
     <Compile Include="converters\accuracyConverter.cs" />
     <Compile Include="converters\agentNameConverter.cs" />
     <Compile Include="converters\BooleanReverseConverter.cs" />
