@@ -179,7 +179,6 @@ namespace BookAccountApp.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private void translate()
         {
             //   trBookNum officeCommission     theCommission  
@@ -269,7 +268,6 @@ namespace BookAccountApp.View.windows
             tt_unselectItem.Content = MainWindow.resourcemanager.GetString("trUnSelectOneItem");
             */
         }
-
         #region events
         private void HandleKeyPress(object sender, KeyEventArgs e)
         {
@@ -325,7 +323,6 @@ namespace BookAccountApp.View.windows
             
         }
         #endregion
-
         private void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
              
@@ -333,7 +330,6 @@ namespace BookAccountApp.View.windows
             this.Close();
                   
         }
-
         #region selection
         private void Lst_allInvoices_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
