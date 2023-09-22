@@ -55,7 +55,7 @@ namespace BookAccountApp.View.windows
                 {
                     txtUserName.Text = Properties.Settings.Default.userName;
                     txtPassword.Password = Properties.Settings.Default.password;
-                   // MainWindow.lang = "en";
+                    // MainWindow.lang = "en";
                     MainWindow.lang = Properties.Settings.Default.Lang;
                     //menuIsOpen = Properties.Settings.Default.menuIsOpen;
                     cbxRemmemberMe.IsChecked = true;
@@ -77,15 +77,15 @@ namespace BookAccountApp.View.windows
                 {
                     MainWindow.resourcemanager = new ResourceManager("BookAccountApp.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
-                    //bdr_imageAr.Visibility = Visibility.Hidden;
-                    //bdr_image.Visibility = Visibility.Visible;
+                    bdr_imageAr.Visibility = Visibility.Hidden;
+                    bdr_image.Visibility = Visibility.Visible;
                 }
                 else
                 {
                     MainWindow.resourcemanager = new ResourceManager("BookAccountApp.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
-                    //bdr_imageAr.Visibility = Visibility.Visible;
-                    //bdr_image.Visibility = Visibility.Hidden;
+                    bdr_imageAr.Visibility = Visibility.Visible;
+                    bdr_image.Visibility = Visibility.Hidden;
                 }
                 translate();
                 #endregion
@@ -102,7 +102,7 @@ namespace BookAccountApp.View.windows
                     Keyboard.Focus(txtUserName);
                 else if (txtPassword.Password.Equals(""))
                     Keyboard.Focus(txtPassword);
-              
+
             }
             catch (Exception ex)
             {
