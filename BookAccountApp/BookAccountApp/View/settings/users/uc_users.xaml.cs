@@ -88,8 +88,8 @@ namespace BookAccountApp.View.settings.users
             txt_addUserHint.Text = MainWindow.resourcemanager.GetString("addNewuserHint");
             txt_passwordChangeInfo.Text = MainWindow.resourcemanager.GetString("Changepass");
             txt_passwordChangeHint.Text = MainWindow.resourcemanager.GetString("ChangepassHint");
-            txt_permissionInfo.Text = MainWindow.resourcemanager.GetString("usersPermissions");
-            txt_permissionHint.Text = MainWindow.resourcemanager.GetString("usersPermissionsHint");
+            //txt_permissionInfo.Text = MainWindow.resourcemanager.GetString("usersPermissions");
+            //txt_permissionHint.Text = MainWindow.resourcemanager.GetString("usersPermissionsHint");
             //txt_comHint.Text = MainWindow.resourcemanager.GetString("trSettingHint");
         }
 
@@ -99,12 +99,10 @@ namespace BookAccountApp.View.settings.users
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
                 Window.GetWindow(this).Opacity = 0.2;
-                wd_addUser w = new wd_addUser();
+                wd_user w = new wd_user();
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
-                */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -133,17 +131,15 @@ namespace BookAccountApp.View.settings.users
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-         private void Btn_permission_Click(object sender, RoutedEventArgs e)
+         private void Btn_company_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
                 Window.GetWindow(this).Opacity = 0.2;
-                wd_permission w = new wd_permission();
+                wd_companyInfo w = new wd_companyInfo();
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
-                */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
