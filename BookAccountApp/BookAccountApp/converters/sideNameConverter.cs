@@ -1,0 +1,48 @@
+﻿using BookAccountApp.Classes;
+using BookAccountApp;
+using BookAccountApp.ApiClasses;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Data;
+
+namespace BookAccountApp.converters
+{
+    class sideNameConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            try
+            {
+                PayOp s = value as PayOp;
+                string name = "";
+                switch (s.side)
+                {
+                   
+                    case "passenger": name = MainWindow.resourcemanager.GetString("thePassenger")+" "+s.passenger; break;
+                    case "office": name = MainWindow.resourcemanager.GetString("trnoffice") + " " + s.officeName; break;
+                    case "system": name = s.systemName; break;
+                    case "syr": name = MainWindow.resourcemanager.GetString("trnsyr"); break;
+                    case "soto": name = MainWindow.resourcemanager.GetString("trnsoto"); break;
+                  
+                    default: break;
+                }
+                return name;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    
+
+}

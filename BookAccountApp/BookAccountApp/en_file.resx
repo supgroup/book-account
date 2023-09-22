@@ -3256,4 +3256,22 @@ Please add Email in setting</value>
   <data name="trnsystem" xml:space="preserve">
     <value>system</value>
   </data>
+  <data name="AmountInWords" xml:space="preserve">
+    <value>Amount In Words</value>
+  </data>
+  <data name="msgEmptyList" xml:space="preserve">
+    <value>Empty List</value>
+  </data>
+  <data name="PaytoMr" xml:space="preserve">
+    <value>Payt to </value>
+  </data>
+  <data name="Receiver" xml:space="preserve">
+    <value>Receiver</value>
+  </data>
+  <data name="RecivedFromMr" xml:space="preserve">
+    <value>Recived From</value>
+  </data>
+  <data name="Voucherno" xml:space="preserve">
+    <value>Voucher no</value>
+  </data>
 </root>

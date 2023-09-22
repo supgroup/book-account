@@ -3265,4 +3265,22 @@
   <data name="trnsystem" xml:space="preserve">
     <value>نظام الحجز</value>
   </data>
+  <data name="AmountInWords" xml:space="preserve">
+    <value>المبلغ كتابة</value>
+  </data>
+  <data name="msgEmptyList" xml:space="preserve">
+    <value>لايوجد سجلات محددة من القائمة</value>
+  </data>
+  <data name="PaytoMr" xml:space="preserve">
+    <value>دفع الى</value>
+  </data>
+  <data name="Receiver" xml:space="preserve">
+    <value>المستلم</value>
+  </data>
+  <data name="RecivedFromMr" xml:space="preserve">
+    <value>استلم من</value>
+  </data>
+  <data name="Voucherno" xml:space="preserve">
+    <value>رقم السند</value>
+  </data>
 </root>

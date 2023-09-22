@@ -353,7 +353,7 @@ namespace BookAccountApp.Classes
             // string purpose = "";
             string recived_by = "";
             string user_name = "";
-            string job = MainWindow.resourcemanagerreport.GetString("trAccoutant");
+            string job = MainWindow.resourcemanagerreport.GetString("recivedFrom");
             string pay_to = "";
             string recivedFrom = "";
           
@@ -391,30 +391,45 @@ namespace BookAccountApp.Classes
                 //}
             }
 
-       
-            type = cashtrans.systemType==null?"":MainWindow.resourcemanagerreport.GetString(cashtrans.systemType);
-            trans_num_txt = MainWindow.resourcemanagerreport.GetString("ticketNum");
-            if (cashtrans.side == "office")
+       //type
+       if((cashtrans.opType=="p" && (cashtrans.side=="syr"|| cashtrans.side == "soto")) ||
+                (cashtrans.opType == "p" && (cashtrans.side == "system")&& (cashtrans.fromSide== "syr"|| cashtrans.fromSide == "soto")&& cashtrans.processType=="book")
+                )
             {
-                pay_to = cashtrans.officeName;
+                type = paySysConverter(cashtrans.systemType);
             }
-            else if (cashtrans.side == "passenger")
+            else
+            {
+                type = "";
+            }
+           
+            trans_num_txt = MainWindow.resourcemanagerreport.GetString("ticketNum");
+            //if (cashtrans.side == "office")
+            //{
+            //    pay_to = cashtrans.officeName;
+            //}
+            //else
+            if (cashtrans.side == "passenger")
             {
                 pay_to = cashtrans.passenger;
 
             }
-            else if (cashtrans.side == "system")//شركة الطيران
+            else
             {
-                pay_to = cashtrans.systemName;
+                pay_to = sideNameConverter(cashtrans);
             }
-            else if (cashtrans.side == "syr")
-            {
-                pay_to = MainWindow.resourcemanagerreport.GetString(cashtrans.side);
-            }
-            else if (cashtrans.side == "soto")
-            {
-                pay_to = MainWindow.resourcemanagerreport.GetString(cashtrans.side);
-            }
+            //else if (cashtrans.side == "system")//شركة الطيران
+            //{
+            //    pay_to = cashtrans.systemName;
+            //}
+            //else if (cashtrans.side == "syr")
+            //{
+            //    pay_to = MainWindow.resourcemanagerreport.GetString(cashtrans.side);
+            //}
+            //else if (cashtrans.side == "soto")
+            //{
+            //    pay_to = MainWindow.resourcemanagerreport.GetString(cashtrans.side);
+            //}
         
             try
             {
@@ -451,8 +466,10 @@ namespace BookAccountApp.Classes
 
             List<ReportParameter> paramarr = new List<ReportParameter>();
             clsReports.Header(paramarr);
+
             paramarr.Add(new ReportParameter("lang", "ar"));
             paramarr.Add(new ReportParameter("title", title));
+            paramarr.Add(new ReportParameter("currency", currencyConverter(cashtrans.currency)));
             paramarr.Add(new ReportParameter("company_name", company_name));
             paramarr.Add(new ReportParameter("comapny_address", comapny_address));
             paramarr.Add(new ReportParameter("company_phone", company_phone));
@@ -465,7 +482,16 @@ namespace BookAccountApp.Classes
             paramarr.Add(new ReportParameter("check_num", check_num));
             paramarr.Add(new ReportParameter("date", date));
             paramarr.Add(new ReportParameter("from", from));
-
+            if (cashtrans.opType=="p")
+            {
+                paramarr.Add(new ReportParameter("trPaytoMr", MainWindow.resourcemanagerreport.GetString("PaytoMr")));
+            }
+            else
+            {
+                //d
+                paramarr.Add(new ReportParameter("trPaytoMr", MainWindow.resourcemanagerreport.GetString("RecivedFromMr")));
+            }
+          
 
             paramarr.Add(new ReportParameter("amount_in_words", amount_in_words));
             paramarr.Add(new ReportParameter("purpose", purposeval));
@@ -473,7 +499,7 @@ namespace BookAccountApp.Classes
             paramarr.Add(new ReportParameter("recivedFrom", recivedFrom));
            
             //paramarr.Add(new ReportParameter("purpose", purpose));
-            //paramarr.Add(new ReportParameter("user_name", user_name));
+             paramarr.Add(new ReportParameter("user_name", user_name));
             paramarr.Add(new ReportParameter("pay_to", pay_to));
             paramarr.Add(new ReportParameter("job", job));
             paramarr.Add(new ReportParameter("isCash", isCash));
@@ -486,7 +512,7 @@ namespace BookAccountApp.Classes
             paramarr.Add(new ReportParameter("trVoucherno", MainWindow.resourcemanagerreport.GetString("Voucherno")));
             paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
             paramarr.Add(new ReportParameter("trRecivedFromMr", MainWindow.resourcemanagerreport.GetString("RecivedFromMr")));
-            paramarr.Add(new ReportParameter("trPaytoMr", MainWindow.resourcemanagerreport.GetString("PaytoMr")));
+          
             paramarr.Add(new ReportParameter("trAmountInWords", MainWindow.resourcemanagerreport.GetString("AmountInWords")));
             paramarr.Add(new ReportParameter("trRecivedPurpose", MainWindow.resourcemanagerreport.GetString("RecivedPurpose")));
             paramarr.Add(new ReportParameter("trPaymentPurpose", MainWindow.resourcemanagerreport.GetString("PaymentPurpose")));
@@ -1339,11 +1365,81 @@ namespace BookAccountApp.Classes
         }
 
 
-
+        public string currencyConverter(string currency)
+        {
+            if (!string.IsNullOrEmpty(currency))
+            {
+                
+                string s = "";
+                switch (currency)
+                {
+                    case "usd":
+                        s = "$";
+                        break;
+                    case "syp":
+                        s = "SYP";
+                        break;
+                    default:
+                        s = "";
+                        break;
+                }
+                return s;
+            }
+            else return "";
+        }
         //////////
+        public string sideNameConverter(PayOp payModel)
+        {
+            try
+            {
+                
+                string name = "";
+                switch (payModel.side)
+                {
 
+                    case "passenger": name = MainWindow.resourcemanager.GetString("thePassenger") + " " + payModel.passenger; break;
+                    case "office": name = MainWindow.resourcemanager.GetString("trnoffice") + " " + payModel.officeName; break;
+                    case "system": name = payModel.systemName; break;
+                    case "syr": name = MainWindow.resourcemanager.GetString("trnsyr"); break;
+                    case "soto": name = MainWindow.resourcemanager.GetString("trnsoto"); break;
 
+                    default: break;
+                }
+                return name;
+            }
+            catch
+            {
+                return "";
+            }
+        }
 
+        public string paySysConverter(string systemType)
+        {
+            try
+            {
+                string name = "";
+                if (!string.IsNullOrEmpty(systemType))
+                {
+                    switch (systemType)
+                    { 
+                        case "syr": name = MainWindow.resourcemanager.GetString("trnsyr"); break;
+                        case "soto": name = MainWindow.resourcemanager.GetString("trnsoto"); break;
+
+                        default: break;
+                    }
+                    return name;
+                }
+                else
+                {
+                    return "";
+                }
+              
+            }
+            catch
+            {
+                return "";
+            }
+        }
 
 
     }

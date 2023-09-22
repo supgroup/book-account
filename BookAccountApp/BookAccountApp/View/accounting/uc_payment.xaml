@@ -173,7 +173,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*"  Header="side" Binding="{Binding Path=side}">
+                            <DataGridTextColumn Width="*"  Header="side" Binding="{Binding Path=.,Converter={StaticResource sideNameConverter }}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>

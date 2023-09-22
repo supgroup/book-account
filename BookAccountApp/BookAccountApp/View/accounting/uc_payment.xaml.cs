@@ -147,7 +147,8 @@ namespace BookAccountApp.View.accounting
             dg_payOp.Columns[2].Header = MainWindow.resourcemanager.GetString("trRecepient");
             dg_payOp.Columns[3].Header = MainWindow.resourcemanager.GetString("recivedFrom");
             dg_payOp.Columns[4].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
-            dg_payOp.Columns[5].Header = MainWindow.resourcemanager.GetString("payDate");
+            dg_payOp.Columns[5].Header = MainWindow.resourcemanager.GetString("currency");
+            dg_payOp.Columns[6].Header = MainWindow.resourcemanager.GetString("payDate");
             //dg_payOp.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
@@ -242,27 +243,38 @@ namespace BookAccountApp.View.accounting
                     payOp.createUserId = MainWindow.userLogin.userId;
                     payOp.updateUserId = MainWindow.userLogin.userId;
                     decimal s = 0;
-                    if ( (cb_side.SelectedValue).ToString() == "office" && cashesLst.Count>0)
+                    int msglist = 0;
+                    if ( (cb_side.SelectedValue).ToString() == "office" )
                     {
-                        //  tb_cash.IsReadOnly = true;
-                     //pay by list
-                        s = await payOp.payListCommissionCashes(cashesLst, payOp);
-                    }else if ((cb_side.SelectedValue).ToString() == "office" && tb_cash.IsReadOnly ==false)
-                    {
-                        s = await payOp.payCommissionCashesByAmount((int)payOp.officeId,(decimal)payOp.cash,payOp);
+                        if( cashesLst.Count > 0)
+                        {
+                            //  tb_cash.IsReadOnly = true;
+                            //pay by list
+                            s = await payOp.payListCommissionCashes(cashesLst, payOp);
+                        }
+                        else
+                        {
+                            msglist = 1;
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("msgEmptyList"), animation: ToasterAnimation.FadeIn);
+
+                        }
                     }
+                    //else if ((cb_side.SelectedValue).ToString() == "office" && tb_cash.IsReadOnly ==false)
+                    //{
+                    //    s = await payOp.payCommissionCashesByAmount((int)payOp.officeId,(decimal)payOp.cash,payOp);
+                    //}
                     else
                     {
                      s  = await payOp.Save(payOp);
                     }
                    
                    
-                    if (s <= 0)
+                    if (s <= 0 && msglist==0)
                     {
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                     }
-                    else
+                    else if(msglist == 0)
                     {
                         //balance
                         if (payOp.side== "syr"|| payOp.side == "soto")
