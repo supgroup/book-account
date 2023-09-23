@@ -623,7 +623,7 @@ namespace BookAccountApp.ApiClasses
                 payOpModel.systemId = serviceModel.systemId;
                 payOpModel.syValue = serviceModel.syValue;
                 payOpModel.exchangeId = serviceModel.exchangeId;
-                payOpModel.currency = serviceModel.currency;
+                payOpModel.currency = "usd";
                 payOpModel.fromSide = serviceModel.systemType;
                 payOpModel.processType = "company_commission";
                 // payOpModel.sourceId = null,
@@ -651,8 +651,6 @@ namespace BookAccountApp.ApiClasses
             {
                 if (serviceModel.officeId>0)
                 {
-
-              
                 payOpModel.code = await generateNumber("D" + "OC");//company_commission
                 payOpModel.cash = serviceModel.office_commission_value;
                 payOpModel.opType = "d";
@@ -677,7 +675,7 @@ namespace BookAccountApp.ApiClasses
                 payOpModel.systemId = serviceModel.systemId;
                 payOpModel.syValue = serviceModel.syValue;
                 payOpModel.exchangeId = serviceModel.exchangeId;
-                payOpModel.currency = serviceModel.currency;
+                payOpModel.currency = "usd";
                 payOpModel.fromSide = serviceModel.systemType;
                 payOpModel.processType = "office_commission";
                 // payOpModel.sourceId = null,

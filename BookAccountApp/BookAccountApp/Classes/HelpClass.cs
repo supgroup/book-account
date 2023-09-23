@@ -1053,7 +1053,28 @@ namespace BookAccountApp.Classes
             }
             return result;
         }
+        public static string currencyConverter(string currency)
+        {
+            if (!string.IsNullOrEmpty(currency))
+            {
 
+                string s = "";
+                switch (currency)
+                {
+                    case "usd":
+                        s = "$";
+                        break;
+                    case "syp":
+                        s = "SYP";
+                        break;
+                    default:
+                        s = "";
+                        break;
+                }
+                return s;
+            }
+            else return "";
+        }
         public static decimal ConvertToUSD(decimal? cash, string currency, decimal? syValue)
         {
             decimal result = 0;

@@ -43,13 +43,18 @@ namespace BookAccountApp.View.windows
 
         List<PayOp> allCashtransfersSource = new List<PayOp>();
         List<PayOp> allCashtransfers = new List<PayOp>();
+        List<PayOp> allCashtransfersQuery = new List<PayOp>();
         public List<PayOp> selectedCashtansfers = new List<PayOp>();
         PayOp cashTransfer = new PayOp();
         public int selectedId = 0;
         public string opType = "";
         public string side = "";
+        public string currency = "";
+        string searchText = "";
+        bool firsttime = true;
         //  public int agentId = 0, userId = 0, shippingCompanyId = 0;
         public decimal sum = 0;
+
         //public string invType;
        
         #endregion
@@ -72,36 +77,55 @@ namespace BookAccountApp.View.windows
                 //}
                 translate();
                 #endregion
-                if (side=="office" && opType=="p")
+                FillCombo.fillCurrency(cb_currency);
+                cb_currency.SelectedValue = "usd";
+
+                //if (side=="office" && opType=="p")
+                //{
+                //    allCashtransfersSource = await cashTransfer.GetUnpaidOffice(selectedId);
+                //    cb_currency.SelectedValue = "usd";
+
+                //    cb_currency.IsEnabled = false;
+                //    currency= "usd";
+                //}
+                //else if (side == "system" && opType == "d")
+                //{
+                //    allCashtransfersSource = await cashTransfer.GetUnpaidSystem(selectedId);
+                //    cb_currency.SelectedValue = "usd";
+                //    cb_currency.IsEnabled = false;
+                //    currency = "usd";
+                //}
+                //else if (side == "passenger" && opType == "d")
+                //{
+                //    allCashtransfersSource = await cashTransfer.GetUnpaidPassenger(selectedId);
+
+                //}
+                //else if (side == "office" && opType == "d")
+                //{
+                //    allCashtransfersSource = await cashTransfer.GetUnpaidBookOffice(selectedId);
+                //}
+                //allCashtransfers.AddRange(allCashtransfersSource);
+                if (firsttime)
                 {
-                    allCashtransfersSource = await cashTransfer.GetUnpaidOffice(selectedId);
-                }
-                else if (side == "system" && opType == "d")
-                {
-                    allCashtransfersSource = await cashTransfer.GetUnpaidSystem(selectedId);
-                }
-                else if (side == "passenger" && opType == "d")
-                {
-                    allCashtransfersSource = await cashTransfer.GetUnpaidPassenger(selectedId);
-                }
-                else if (side == "office" && opType == "d")
-                {
-                    allCashtransfersSource = await cashTransfer.GetUnpaidBookOffice(selectedId);
+                    await RefreshPayOpsList();
+                    firsttime = false;
                 }
                 allCashtransfers.AddRange(allCashtransfersSource);
+                await Search();
+
                 //if (side == "office" && opType == "p")
                 //{
-                    lst_allInvoices.Columns[0].Visibility = Visibility.Collapsed;
-                    lst_allInvoices.Columns[1].Visibility = Visibility.Collapsed;
-                    lst_allInvoices.Columns[2].Visibility = Visibility.Visible;
-                    lst_allInvoices.Columns[3].Visibility = Visibility.Visible;
+                    //lst_allInvoices.Columns[0].Visibility = Visibility.Collapsed;
+                    //lst_allInvoices.Columns[1].Visibility = Visibility.Collapsed;
+                    //lst_allInvoices.Columns[2].Visibility = Visibility.Visible;
+                    //lst_allInvoices.Columns[3].Visibility = Visibility.Visible;
 
-                    lst_selectedInvoices.Columns[0].Visibility = Visibility.Collapsed;
-                    lst_selectedInvoices.Columns[1].Visibility = Visibility.Collapsed;
-                    lst_selectedInvoices.Columns[2].Visibility = Visibility.Visible;
-                    lst_selectedInvoices.Columns[3].Visibility = Visibility.Visible;
+                    //lst_selectedInvoices.Columns[0].Visibility = Visibility.Collapsed;
+                    //lst_selectedInvoices.Columns[1].Visibility = Visibility.Collapsed;
+                    //lst_selectedInvoices.Columns[2].Visibility = Visibility.Visible;
+                    //lst_selectedInvoices.Columns[3].Visibility = Visibility.Visible;
 
-                    lst_allInvoices.ItemsSource = allCashtransfers;
+                 //   lst_allInvoices.ItemsSource = allCashtransfers;
                     lst_allInvoices.SelectedValuePath = "payOpId";
                     lst_allInvoices.DisplayMemberPath = "serviceNum";
 
@@ -198,10 +222,10 @@ namespace BookAccountApp.View.windows
 
                 txt_selectedInvoices.Text = MainWindow.resourcemanager.GetString("selectedCommissions");
 
-                lst_allInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
-                lst_allInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("theCommission");
-                lst_selectedInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
-                lst_selectedInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("theCommission");             
+                lst_allInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                lst_allInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("theCommission");
+                lst_selectedInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                lst_selectedInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("theCommission");             
             }
             else if (side == "system" && opType == "d")
             {
@@ -209,10 +233,10 @@ namespace BookAccountApp.View.windows
                 txt_invoice.Text = MainWindow.resourcemanager.GetString("companyCommissions");
                 txt_invoices.Text = MainWindow.resourcemanager.GetString("Commissions");
                
-                lst_allInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
-                lst_allInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("theCommission");
-                lst_selectedInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
-                lst_selectedInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("theCommission");
+                lst_allInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                lst_allInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("theCommission");
+                lst_selectedInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                lst_selectedInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("theCommission");
             }
             else if (side == "passenger" && opType == "d")
             {
@@ -223,10 +247,10 @@ namespace BookAccountApp.View.windows
                 txt_invoice.Text = MainWindow.resourcemanager.GetString("recieveDeserved");
                 txt_invoices.Text = MainWindow.resourcemanager.GetString("books");
 
-                lst_allInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
-                lst_allInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("total");
-                lst_selectedInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
-                lst_selectedInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("total");
+                lst_allInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                lst_allInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("total");
+                lst_selectedInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                lst_selectedInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("total");
             }
             else if (side == "office" && opType == "d")
             {
@@ -237,11 +261,14 @@ namespace BookAccountApp.View.windows
                 txt_invoice.Text = MainWindow.resourcemanager.GetString("recieveDeserved");
                 txt_invoices.Text = MainWindow.resourcemanager.GetString("books");
 
-                lst_allInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
-                lst_allInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("total");
-                lst_selectedInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("trBookNum");
-                lst_selectedInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("total");
+                lst_allInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                lst_allInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("total");
+                lst_selectedInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                lst_selectedInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("total");
             }
+            lst_allInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("currency");
+            lst_selectedInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("currency");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_currency, MainWindow.resourcemanager.GetString("currencyHint"));
             /*
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             txt_invoice.Text = MainWindow.resourcemanager.GetString("trInvoices");
@@ -307,6 +334,58 @@ namespace BookAccountApp.View.windows
             //// and causes a crash 'EditItem is not allowed'
             e.Cancel = true;
         }
+        async Task Search()
+        {
+            //search
+         
+               
+
+            searchText = txb_search.Text.ToLower();
+            currency = cb_currency.SelectedValue == null ? "usd" : cb_currency.SelectedValue.ToString();//
+           // currency = cb_currency.SelectedValue.ToString();
+            allCashtransfersQuery = allCashtransfers.Where(x => (searchText == "" ? true : ((x.serviceNum.ToLower().Contains(searchText)) ||
+                                                                     (x.cash.ToString().ToLower().Contains(searchText))))
+                                                                     && x.currency==currency).ToList();
+
+            RefreshPayOpsView();
+        }
+        async Task<IEnumerable<PayOp>> RefreshPayOpsList()
+        {
+
+            
+            //  payOps = payOps;
+            if (side == "office" && opType == "p")
+            {
+                allCashtransfersSource = await cashTransfer.GetUnpaidOffice(selectedId);
+                cb_currency.SelectedValue = "usd";
+
+                cb_currency.IsEnabled = false;
+                currency = "usd";
+            }
+            else if (side == "system" && opType == "d")
+            {
+                allCashtransfersSource = await cashTransfer.GetUnpaidSystem(selectedId);
+                cb_currency.SelectedValue = "usd";
+                cb_currency.IsEnabled = false;
+                currency = "usd";
+            }
+            else if (side == "passenger" && opType == "d")
+            {
+                allCashtransfersSource = await cashTransfer.GetUnpaidPassenger(selectedId);
+
+            }
+            else if (side == "office" && opType == "d")
+            {
+                allCashtransfersSource = await cashTransfer.GetUnpaidBookOffice(selectedId);
+            }
+        
+            return allCashtransfers;
+        }
+        void RefreshPayOpsView()
+        {
+            lst_allInvoices.ItemsSource = allCashtransfersQuery;
+            // txt_count.Text = payOpsQuery.Count().ToString();
+        }
         private void Txb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
            
@@ -325,8 +404,8 @@ namespace BookAccountApp.View.windows
         #endregion
         private void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
-             
-            isActive = true;
+            currency = cb_currency.SelectedValue == null ? "usd" : cb_currency.SelectedValue.ToString();
+        isActive = true;
             this.Close();
                   
         }
@@ -403,11 +482,11 @@ namespace BookAccountApp.View.windows
                     cashTransfer = lst_allInvoices.SelectedItem as PayOp;
                     if (cashTransfer != null)
                     {
-                        allCashtransfers.Remove(cashTransfer);
+                        allCashtransfersQuery.Remove(cashTransfer);
 
                         selectedCashtansfers.Add(cashTransfer);
 
-                        lst_allInvoices.ItemsSource = allCashtransfers;
+                        lst_allInvoices.ItemsSource = allCashtransfersQuery;
                         lst_selectedInvoices.ItemsSource = selectedCashtansfers;
 
                         lst_allInvoices.Items.Refresh();
@@ -482,9 +561,9 @@ namespace BookAccountApp.View.windows
                     {
                         selectedCashtansfers.Remove(cashTransfer);
 
-                        allCashtransfers.Add(cashTransfer);
+                    allCashtransfersQuery.Add(cashTransfer);
 
-                        lst_allInvoices.ItemsSource = allCashtransfers;
+                        lst_allInvoices.ItemsSource = allCashtransfersQuery;
                         lst_selectedInvoices.ItemsSource = selectedCashtansfers;
 
                         lst_allInvoices.Items.Refresh();
@@ -592,5 +671,24 @@ namespace BookAccountApp.View.windows
            
         }
         #endregion
+
+        private async void Cb_currency_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (cb_currency.SelectedItem != null)
+                {
+                    Btn_unSelectedAll_Click(null, null);
+                    await Search();
+                    tb_moneyIcon.Text = HelpClass.currencyConverter(cb_currency.SelectedValue.ToString());
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

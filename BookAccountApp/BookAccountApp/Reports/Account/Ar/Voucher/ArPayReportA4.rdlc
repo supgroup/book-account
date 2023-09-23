@@ -2407,7 +2407,6 @@
           <ReportItems>
             <Rectangle Name="Rectangle6">
               <KeepTogether>true</KeepTogether>
-              <Top>0in</Top>
               <Height>0.2cm</Height>
               <Width>21cm</Width>
               <Style>
@@ -2424,8 +2423,8 @@
             </Border>
           </Style>
         </PageFooter>
-        <PageHeight>21cm</PageHeight>
-        <PageWidth>29.7cm</PageWidth>
+        <PageHeight>29.7cm</PageHeight>
+        <PageWidth>21cm</PageWidth>
         <InteractiveHeight>0cm</InteractiveHeight>
         <InteractiveWidth>0cm</InteractiveWidth>
         <LeftMargin>0cm</LeftMargin>

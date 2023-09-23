@@ -582,6 +582,7 @@ namespace BookAccountApp.View.accounting
             cb_sideValue.IsEnabled = false;
             tb_cash.IsEnabled = false;         
             tb_cash.IsReadOnly = true;
+            cb_currency.IsEnabled = false;
         }
         void disableforSystem()
         {           
@@ -1291,6 +1292,7 @@ namespace BookAccountApp.View.accounting
                         cashesLst.AddRange(w.selectedCashtansfers);
                         if (cashesLst.Count > 0 || serviceLst.Count > 0)
                         {
+                            cb_currency.SelectedValue = w.currency;
                             disableforAll();
                             if (w.side == "system")
                             {
