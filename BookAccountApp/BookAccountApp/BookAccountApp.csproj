@@ -439,6 +439,12 @@
     <Compile Include="View\windows\wd_officeSystem.xaml.cs">
       <DependentUpon>wd_officeSystem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_reportCopyCountSetting.xaml.cs">
+      <DependentUpon>wd_reportCopyCountSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_reportPrinterSetting.xaml.cs">
+      <DependentUpon>wd_reportPrinterSetting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_systems.xaml.cs">
       <DependentUpon>wd_systems.xaml</DependentUpon>
     </Compile>
@@ -644,6 +650,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\windows\wd_reportCopyCountSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_reportPrinterSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\windows\wd_systems.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -730,16 +744,10 @@
     <Content Include="Reports\Account\Ar\Voucher\ArPayReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\Account\Ar\Voucher\ArPayReportA4.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Account\Ar\Voucher\ArReciveReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Account\Ar\Voucher\ArReciveReportA4.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Reports\statisticReports\Ar\ArBook.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Ar\Voucher\ArPayReportA4.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="pic\logo.png" />
