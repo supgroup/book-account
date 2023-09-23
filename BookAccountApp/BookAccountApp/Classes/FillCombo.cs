@@ -516,6 +516,7 @@ namespace BookAccountApp.Classes
         static SetValues valueModel = new SetValues();
         public static List<SettingCls> settingsCls;
         public static List<SetValues> settingsValues;
+        public static List<Country> regionList;
         static int nameId, addressId, emailId, mobileId, phoneId, faxId, logoId, taxId;
         public static string logoImage;
         public static string companyName;
@@ -542,6 +543,8 @@ namespace BookAccountApp.Classes
                 SettingCls set = new SettingCls();
                 SetValues setV = new SetValues();
                 List<char> charsToRemove = new List<char>() { '@', '_', ',', '.', '-' };
+                regionList = await MainWindow.Region.GetAllRegion();
+                MainWindow.Region = regionList.Where(x => x.name == "Syria").FirstOrDefault();
                 #region get company name
 
                 //get company name

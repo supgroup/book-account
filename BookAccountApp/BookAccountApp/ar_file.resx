@@ -3301,4 +3301,10 @@
   <data name="trReportPrinterName" xml:space="preserve">
     <value>طابعة التقارير</value>
   </data>
+  <data name="dbSetting" xml:space="preserve">
+    <value>قاعدة البيانات</value>
+  </data>
+  <data name="dbSettingHint" xml:space="preserve">
+    <value>قاعدة البيانات,السيرفر</value>
+  </data>
 </root>

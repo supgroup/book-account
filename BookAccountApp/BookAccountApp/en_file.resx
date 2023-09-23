@@ -3292,4 +3292,10 @@ Please add Email in setting</value>
   <data name="trReportPrinterName" xml:space="preserve">
     <value>Report Printer</value>
   </data>
+  <data name="dbSetting" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="dbSettingHint" xml:space="preserve">
+    <value>Database,server</value>
+  </data>
 </root>

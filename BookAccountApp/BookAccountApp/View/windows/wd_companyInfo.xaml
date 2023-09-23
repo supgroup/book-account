@@ -151,7 +151,7 @@
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
                                           TextBlock.Foreground="#4E4E4E"  TextBlock.FontSize="12" Margin="4,0"
                                           VerticalAlignment="Center" BorderThickness="0"
-                                          Height="40" Width="60"    />
+                                          Height="40" Width="60" IsEnabled="False"    />
                         </Grid>
                     </Border>
 
@@ -186,11 +186,11 @@
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
                                       
                        Height="40" Margin="4,0"   Width="60"   BorderThickness="0" 
-                                      SelectionChanged="Cb_areaPhone_SelectionChanged"/>
+                                      SelectionChanged="Cb_areaPhone_SelectionChanged" IsEnabled="False"/>
                         </Grid>
                     </Border>
 
-                    <Border Visibility="Collapsed" x:Name="brd_areaPhoneLocal" Grid.Row="1" Grid.Column="1" 
+                    <Border Visibility="Visible" x:Name="brd_areaPhoneLocal" Grid.Row="1" Grid.Column="1" 
                                 CornerRadius="10" Margin="5,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid>
                             <ComboBox  x:Name="cb_areaPhoneLocal" Padding="10,0,5,0"
@@ -232,11 +232,11 @@
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
                                    
                           Margin="4,0"  Height="40" Width="60"    BorderThickness="0" 
-                                   SelectionChanged="Cb_areaFax_SelectionChanged"/>
+                                   SelectionChanged="Cb_areaFax_SelectionChanged" IsEnabled="False"/>
                         </Grid>
                     </Border>
 
-                    <Border Visibility="Collapsed" x:Name="brd_areaFaxLocal" Grid.Row="1"
+                    <Border Visibility="Visible" x:Name="brd_areaFaxLocal" Grid.Row="1"
                                 Grid.Column="1" CornerRadius="10" Margin="5,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid>
                             <ComboBox  x:Name="cb_areaFaxLocal" Padding="10,0,5,0" TextBlock.Foreground="#4E4E4E"

@@ -88,6 +88,8 @@ namespace BookAccountApp.View.windows
                 requiredControlList = new List<string> { "name", "address", "email", "mobile"  };
                 await fillCountries();
                 await fillCity();
+                await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid, brd_areaPhoneLocal);
+                await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (int)countryid, brd_areaFaxLocal);
 
                 List<SettingCls> settingsCls = await setModel.GetAll();
                 List<SetValues> settingsValues = await valueModel.GetAll();
@@ -238,7 +240,7 @@ namespace BookAccountApp.View.windows
         {
             if (countrynum is null)
                 await RefreshCountry();
-
+            countryid = MainWindow.Region.countryId;
             cb_areaPhone.ItemsSource = countrynum.ToList();
             cb_areaPhone.SelectedValuePath = "countryId";
             cb_areaPhone.DisplayMemberPath = "code";
@@ -261,13 +263,15 @@ namespace BookAccountApp.View.windows
 
         async Task<IEnumerable<City>> RefreshCity()
         {
-            citynum = await cityCodes.Get();
+          var  citynumlist = await cityCodes.Get();
+            citynum = citynumlist.Where(c => c.countryId == MainWindow.Region.countryId).ToList();
             return citynum;
         }
         private async Task fillCity()
         {
             if (citynum is null)
                 await RefreshCity();
+           
         }
    
         //end areacod
@@ -443,7 +447,7 @@ namespace BookAccountApp.View.windows
                     if (!isFirstTime)
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                        await Task.Delay(1500);
+                        await Task.Delay(500);
                       
                     }
                   await  FillCombo.loading_getDefaultSystemInfo();

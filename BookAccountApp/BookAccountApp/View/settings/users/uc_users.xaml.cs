@@ -88,6 +88,14 @@ namespace BookAccountApp.View.settings.users
             txt_addUserHint.Text = MainWindow.resourcemanager.GetString("addNewuserHint");
             txt_passwordChangeInfo.Text = MainWindow.resourcemanager.GetString("Changepass");
             txt_passwordChangeHint.Text = MainWindow.resourcemanager.GetString("ChangepassHint");
+            txt_companyInfo.Text = MainWindow.resourcemanager.GetString("trComInfo");
+            txt_companyHint.Text = MainWindow.resourcemanager.GetString("trSettingHint");
+            txt_dataBaseInfo.Text = MainWindow.resourcemanager.GetString("dbSetting");
+            txt_dataBaseHint.Text = MainWindow.resourcemanager.GetString("dbSettingHint");
+          
+
+
+
             //txt_permissionInfo.Text = MainWindow.resourcemanager.GetString("usersPermissions");
             //txt_permissionHint.Text = MainWindow.resourcemanager.GetString("usersPermissionsHint");
             //txt_comHint.Text = MainWindow.resourcemanager.GetString("trSettingHint");
@@ -117,12 +125,12 @@ namespace BookAccountApp.View.settings.users
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
+                
                 Window.GetWindow(this).Opacity = 0.2;
-                wd_passwordChange w = new wd_passwordChange();
+                wd_changePassword w = new wd_changePassword();
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
-                */
+                 
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

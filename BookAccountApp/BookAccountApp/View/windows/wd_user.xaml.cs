@@ -67,6 +67,7 @@ namespace BookAccountApp.View.windows
                 //    MainWindow.resourcemanager = new ResourceManager("DataEntryApp.ar_file", Assembly.GetExecutingAssembly());
                 //    grid_main.FlowDirection = FlowDirection.RightToLeft;
                 //}
+                grid_main.FlowDirection = FlowDirection.RightToLeft;
                 translate();
                 #endregion
 
