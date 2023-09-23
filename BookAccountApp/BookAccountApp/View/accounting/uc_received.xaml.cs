@@ -478,6 +478,9 @@ namespace BookAccountApp.View.accounting
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
+                dp_toDateSearch.SelectedDate = null;
+                dp_fromDateSearch.SelectedDate = null;
+                tb_search.Text = "";
                 await RefreshPayOpsList();
                 await Search();
                 HelpClass.EndAwait(grid_main);
@@ -497,29 +500,24 @@ namespace BookAccountApp.View.accounting
             //search
             if (payOps is null)
                 await RefreshPayOpsList();
-            /*
-            searchText = tb_search.Text.ToLower();
-            payOpsQuery = payOps.Where(s => searchText == "" ? true :
-            (
-          (s.airline == null ? false : (s.airline.ToLower().Contains(searchText))) ||
-           (s.passenger == null ? false : (s.passenger.ToLower().Contains(searchText))) ||
-             (s.ticketNum == null ? false : (s.ticketNum.ToLower().Contains(searchText))) ||
-         (s.officeName == null ? false : (s.officeName.ToLower().Contains(searchText)))
 
-            )
+            searchText = tb_search.Text.ToLower();
+            payOpsQuery = payOps.Where(s => (searchText == "" ? true :
+            (
+          (s.code == null ? false : (s.code.ToLower().Contains(searchText))) ||
+           //(s.sideAr == null ? false : (s.sideAr.ToLower().Contains(searchText))) ||
+             (s.recipient == null ? false : (s.recipient.ToLower().Contains(searchText))) ||
+         (s.recivedFrom == null ? false : (s.recivedFrom.ToLower().Contains(searchText)))
+            ))
             && (
             //start date
-            ((dp_fromDateSearch.SelectedDate != null || dp_fromDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date >= dp_fromDateSearch.SelectedDate.Value.Date) : true)
+            ((dp_fromDateSearch.SelectedDate != null || dp_fromDateSearch.Text != "") ? s.opDate == null ? false : (s.opDate.Value.Date >= dp_fromDateSearch.SelectedDate.Value.Date) : true)
             &&
             //end date
-            ((dp_toDateSearch.SelectedDate != null || dp_toDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
-
+            ((dp_toDateSearch.SelectedDate != null || dp_toDateSearch.Text != "") ? s.opDate == null ? false : (s.opDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
             )
             );
 
-            //);
-            */
-            payOpsQuery = payOps;
             RefreshPayOpsView();
         }
         async Task<IEnumerable<PayOp>> RefreshPayOpsList()
@@ -795,7 +793,7 @@ namespace BookAccountApp.View.accounting
 
                 #region
                 BuildReport();
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
                 #endregion
 
                 HelpClass.EndAwait(grid_main);
@@ -855,7 +853,7 @@ namespace BookAccountApp.View.accounting
                 //{
                 #region
                 Window.GetWindow(this).Opacity = 0.2;
-                win_lvc win = new win_lvc(payOpsQuery, 6, true);
+                win_lvc win = new win_lvc(payOpsQuery, 7, false);
                 win.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
                 #endregion
@@ -885,19 +883,19 @@ namespace BookAccountApp.View.accounting
             string all = MainWindow.resourcemanagerreport.GetString("trAll");
             string addpath;
 
-            if (isArabic)
-            {
-                addpath = @"\Reports\Account\Ar\ArPayAccReport.rdlc";
-            }
-            else addpath = @"\Reports\Account\En\PayAccReport.rdlc";
+            //if (isArabic)
+            //{
+            addpath = @"\Reports\Account\Ar\Grid\Arpayment.rdlc";
+            //}
+            //else addpath = @"\Reports\Account\En\PayAccReport.rdlc";
 
             //filter
             startDate = dp_fromDateSearch.SelectedDate != null ? clsReports.dateFrameConverter(dp_fromDateSearch.SelectedDate) : "";
             endDate = dp_toDateSearch.SelectedDate != null ? clsReports.dateFrameConverter(dp_toDateSearch.SelectedDate) : "";
-            //Allchk = chb_all.IsChecked == true ? all : "";
+            Allchk = dp_fromDateSearch.SelectedDate == null && dp_toDateSearch.SelectedDate == null ? all : "";
             paramarr.Add(new ReportParameter("StartDateVal", startDate));
             paramarr.Add(new ReportParameter("EndDateVal", endDate));
-            //paramarr.Add(new ReportParameter("alldateval", Allchk));
+            paramarr.Add(new ReportParameter("alldateval", Allchk));
             paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
             paramarr.Add(new ReportParameter("trSearch", MainWindow.resourcemanagerreport.GetString("trSearch")));
             paramarr.Add(new ReportParameter("trStartDate", MainWindow.resourcemanagerreport.GetString("trStartDate")));
@@ -905,12 +903,12 @@ namespace BookAccountApp.View.accounting
             searchval = tb_search.Text;
             paramarr.Add(new ReportParameter("searchVal", searchval));
             //end filter
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trReceived")));
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
             ReportCls.checkLang();
             //cashesQueryExcel = cashesQuery.ToList();
             clsReports.paymentAccReport(payOpsQuery, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
+            //clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
             rep.SetParameters(paramarr);
@@ -969,7 +967,7 @@ namespace BookAccountApp.View.accounting
 
                 #region
                 BuildVoucherReport();
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
                 #endregion
 
                 HelpClass.EndAwait(grid_main);

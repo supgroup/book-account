@@ -463,6 +463,9 @@ namespace BookAccountApp.View.accounting
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
+                dp_toDateSearch.SelectedDate = null;
+                dp_fromDateSearch.SelectedDate = null;
+                tb_search.Text = "";
                 await RefreshPayOpsList();
                 await Search();
                 HelpClass.EndAwait(grid_main);
@@ -487,7 +490,7 @@ namespace BookAccountApp.View.accounting
             payOpsQuery = payOps.Where(s =>( searchText == "" ? true :
             (
           (s.code == null ? false : (s.code.ToLower().Contains(searchText))) ||
-           (s.sideAr == null ? false : (s.sideAr.ToLower().Contains(searchText))) ||
+           //(s.sideAr == null ? false : (s.sideAr.ToLower().Contains(searchText))) ||
              (s.recipient == null ? false : (s.recipient.ToLower().Contains(searchText))) ||
          (s.recivedFrom == null ? false : (s.recivedFrom.ToLower().Contains(searchText)))
             ))
@@ -778,7 +781,7 @@ namespace BookAccountApp.View.accounting
 
                 #region
                 BuildReport();
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
                 #endregion
 
                 HelpClass.EndAwait(grid_main);
@@ -838,7 +841,7 @@ namespace BookAccountApp.View.accounting
                 //{
                 #region
                 Window.GetWindow(this).Opacity = 0.2;
-                win_lvc win = new win_lvc(payOpsQuery, 6, true);
+                win_lvc win = new win_lvc(payOpsQuery, 7, true);
                 win.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
                 #endregion
@@ -888,6 +891,7 @@ namespace BookAccountApp.View.accounting
             searchval = tb_search.Text;
             paramarr.Add(new ReportParameter("searchVal", searchval));
             //end filter
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trPayments")));
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
             ReportCls.checkLang();
@@ -952,7 +956,7 @@ namespace BookAccountApp.View.accounting
 
                 #region
               BuildVoucherReport();
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
                 #endregion
 
                 HelpClass.EndAwait(grid_main);

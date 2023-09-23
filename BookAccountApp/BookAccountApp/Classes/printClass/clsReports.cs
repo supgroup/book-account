@@ -341,8 +341,6 @@ passwordSoto
             paramarr.Add(new ReportParameter("payDate", MainWindow.resourcemanagerreport.GetString("payDate")));
             
 
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trPayments")));
-
            // DateFormConv(paramarr);
 
 

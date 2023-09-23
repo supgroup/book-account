@@ -362,7 +362,7 @@ namespace BookAccountApp.View.sectionData
                     }
                     else if (data == 7)
                     {
-                        var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        var Draw = payOpQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
                         if (isSameList)
                             label = MainWindow.resourcemanager.GetString("trPayments");
@@ -466,7 +466,7 @@ namespace BookAccountApp.View.sectionData
                         }
                         else if (data == 7)
                         {
-                            var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            var Draw = payOpQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
                             if (isSameList)
                                 label = MainWindow.resourcemanager.GetString("trPayments");
@@ -538,7 +538,7 @@ namespace BookAccountApp.View.sectionData
                     }
                     else if (data == 7)
                     {
-                        var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        var Draw = payOpQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
                         if (isSameList)
                             label = MainWindow.resourcemanager.GetString("trPayments");
@@ -644,7 +644,7 @@ namespace BookAccountApp.View.sectionData
                         }
                         else if (data == 7)
                         {
-                            var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
+                            var Draw = payOpQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             ColumnchartList.Add(Draw);
                             if (isSameList)
                                 label = MainWindow.resourcemanager.GetString("trPayments");
@@ -719,7 +719,7 @@ namespace BookAccountApp.View.sectionData
                     }
                     else if (data == 6)
                     {
-                        var Draw = serviceDatasQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
+                        var Draw = payOpQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
                         if (isSameList)
                             label = MainWindow.resourcemanager.GetString("trPayments");
