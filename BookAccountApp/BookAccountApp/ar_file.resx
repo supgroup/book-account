@@ -3283,4 +3283,22 @@
   <data name="Voucherno" xml:space="preserve">
     <value>رقم السند</value>
   </data>
+  <data name="PaymentPurpose" xml:space="preserve">
+    <value>سبب الدفع</value>
+  </data>
+  <data name="RecivedPurpose" xml:space="preserve">
+    <value>سبب االاستلام</value>
+  </data>
+  <data name="trCommission" xml:space="preserve">
+    <value>عمولة</value>
+  </data>
+  <data name="thePrint" xml:space="preserve">
+    <value>الطباعة</value>
+  </data>
+  <data name="trDocPaperSize" xml:space="preserve">
+    <value>قياس ورق المستند</value>
+  </data>
+  <data name="trReportPrinterName" xml:space="preserve">
+    <value>طابعة التقارير</value>
+  </data>
 </root>

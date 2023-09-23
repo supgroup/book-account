@@ -905,7 +905,7 @@ namespace BookAccountApp.View.accounting
 
         #region reports Voucher
 
-        public async Task BuildVoucherReport()
+        public void BuildVoucherReport()
         {
             List<ReportParameter> paramarr = new List<ReportParameter>();
             string addpath;
@@ -951,7 +951,7 @@ namespace BookAccountApp.View.accounting
                 HelpClass.StartAwait(grid_main);
 
                 #region
-             await   BuildVoucherReport();
+              BuildVoucherReport();
                 LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
                 #endregion
 

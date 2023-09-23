@@ -192,7 +192,7 @@
             <Width>0.39746in</Width>
             <ZIndex>4</ZIndex>
             <Visibility>
-              <Hidden>=(Parameters!isCash.Value &lt;&gt; "1")</Hidden>
+              <Hidden>=Parameters!type.Value=""</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -222,10 +222,13 @@
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
             <Top>1.28336in</Top>
-            <Left>6.28619in</Left>
+            <Left>6.13342in</Left>
             <Height>0.25in</Height>
-            <Width>0.85918in</Width>
+            <Width>1.01195in</Width>
             <ZIndex>5</ZIndex>
+            <Visibility>
+              <Hidden>=Parameters!type.Value=""</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -246,7 +249,7 @@
             <Width>0.39746in</Width>
             <ZIndex>6</ZIndex>
             <Visibility>
-              <Hidden>=(Parameters!isCash.Value = "1")</Hidden>
+              <Hidden>=Parameters!type.Value=""</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -327,7 +330,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>2.23167in</Top>
+            <Top>2.19417in</Top>
             <Left>6.83125in</Left>
             <Height>0.25in</Height>
             <Width>0.77498in</Width>
@@ -371,10 +374,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>2.65548in</Top>
-            <Left>6.66891in</Left>
+            <Top>2.68048in</Top>
+            <Left>6.83125in</Left>
             <Height>0.25in</Height>
-            <Width>0.93731in</Width>
+            <Width>0.77497in</Width>
             <ZIndex>9</ZIndex>
             <Style>
               <Border>
@@ -416,9 +419,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
             <Top>1.69098in</Top>
-            <Left>6.16431in</Left>
+            <Left>6.83125in</Left>
             <Height>0.25in</Height>
-            <Width>1.44192in</Width>
+            <Width>0.77498in</Width>
             <ZIndex>10</ZIndex>
             <Style>
               <Border>
@@ -495,7 +498,7 @@
             <Width>1.51364in</Width>
             <ZIndex>12</ZIndex>
             <Visibility>
-              <Hidden>=Parameters!check_num.Value=""</Hidden>
+              <Hidden>true</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -573,7 +576,7 @@
             <Top>1.69098in</Top>
             <Left>0.4265in</Left>
             <Height>0.25in</Height>
-            <Width>5.7378in</Width>
+            <Width>6.40475in</Width>
             <ZIndex>14</ZIndex>
             <Style>
               <Border>
@@ -609,7 +612,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox7</rd:DefaultName>
-            <Top>2.23167in</Top>
+            <Top>2.19417in</Top>
             <Left>0.4265in</Left>
             <Height>0.25in</Height>
             <Width>6.40475in</Width>
@@ -648,10 +651,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox7</rd:DefaultName>
-            <Top>2.65548in</Top>
+            <Top>2.68048in</Top>
             <Left>0.4265in</Left>
             <Height>0.25in</Height>
-            <Width>6.24241in</Width>
+            <Width>6.40475in</Width>
             <ZIndex>16</ZIndex>
             <Style>
               <Border>
@@ -700,10 +703,10 @@
             <Top>1.28336in</Top>
             <Left>4.99994in</Left>
             <Height>0.25in</Height>
-            <Width>1.30015in</Width>
+            <Width>1.13348in</Width>
             <ZIndex>17</ZIndex>
             <Visibility>
-              <Hidden>=Parameters!check_num.Value=""</Hidden>
+              <Hidden>true</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -724,6 +727,9 @@
             <Height>0.7982cm</Height>
             <Width>0.83316cm</Width>
             <ZIndex>18</ZIndex>
+            <Visibility>
+              <Hidden>=Parameters!type.Value=""</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -731,7 +737,7 @@
             </Style>
           </Image>
         </ReportItems>
-        <Height>7.5563cm</Height>
+        <Height>7.44342cm</Height>
         <Style />
       </Body>
       <Width>21cm</Width>
@@ -1085,7 +1091,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.21339in</Top>
+              <Top>0.01339in</Top>
               <Left>6.93488in</Left>
               <Height>0.25in</Height>
               <Width>0.77498in</Width>
@@ -1120,7 +1126,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox7</rd:DefaultName>
-              <Top>0.21339in</Top>
+              <Top>0.01339in</Top>
               <Left>4.49331in</Left>
               <Height>0.25in</Height>
               <Width>2.44988in</Width>
@@ -1167,7 +1173,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.21339in</Top>
+              <Top>0.01339in</Top>
               <Left>3.27907in</Left>
               <Height>0.25in</Height>
               <Width>1.02773in</Width>
@@ -1202,7 +1208,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox7</rd:DefaultName>
-              <Top>0.21339in</Top>
+              <Top>0.01339in</Top>
               <Left>0.55786in</Left>
               <Height>0.25in</Height>
               <Width>2.72121in</Width>

@@ -245,6 +245,7 @@
           <Property Name="paid" Type="decimal" Precision="20" Scale="3" />
           <Property Name="isPaid" Type="bit" />
           <Property Name="deserved" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="purpose" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="paySides">
           <Key>
@@ -1380,6 +1381,7 @@
           <NavigationProperty Name="payOp1" Relationship="bookModel.FK_payOp_payOp" FromRole="payOp" ToRole="payOp1" />
           <NavigationProperty Name="payOp2" Relationship="bookModel.FK_payOp_payOp" FromRole="payOp1" ToRole="payOp" />
           <Property Name="deserved" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="purpose" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="serviceData">
           <Key>
@@ -2545,6 +2547,7 @@
           <EntitySetMapping Name="payOp">
             <EntityTypeMapping TypeName="bookModel.payOp">
               <MappingFragment StoreEntitySet="payOp">
+                <ScalarProperty Name="purpose" ColumnName="purpose" />
                 <ScalarProperty Name="deserved" ColumnName="deserved" />
                 <ScalarProperty Name="isPaid" ColumnName="isPaid" />
                 <ScalarProperty Name="paid" ColumnName="paid" />

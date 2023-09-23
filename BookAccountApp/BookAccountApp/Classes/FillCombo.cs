@@ -177,6 +177,7 @@ namespace BookAccountApp.Classes
             combo.ItemsSource = CurrencyList;
  
         }
+      
         static public async Task fillAgent(ComboBox combo)
         {
             users = await user.GetAll();
@@ -412,7 +413,21 @@ namespace BookAccountApp.Classes
 
             return defaultPrinterName;
         }
+     
+        static public string getsettingPrinter()
+        {
 
+            string printer = "";
+            if (string.IsNullOrEmpty(rep_printer_name))
+            {
+                printer = getdefaultPrinters();
+            }
+            else
+            {
+                printer = rep_printer_name;
+            }
+            return printer;
+        }
         public static async Task Getprintparameter()
         {
 
@@ -445,6 +460,42 @@ namespace BookAccountApp.Classes
             }
         }
 
+        public static void fillcb_repname(ComboBox combo)
+        {
+            List<string> printersList = new List<string>();
+            printersList = getsystemPrinters();
+            combo.ItemsSource = printersList;
+            //cb_repname.DisplayMemberPath = "name";
+            //cb_repname.SelectedValuePath = "name";
+
+            combo.SelectedValue =rep_printer_name;
+        }
+        static public void fillcb_docpapersize(ComboBox combo)
+        {
+            var sizelist = new[] {
+                new { Text = "A4", Value = "A4" },
+                new { Text ="A5" , Value = "A5" }
+                 };
+            combo.DisplayMemberPath = "Text";
+            combo.SelectedValuePath = "Value";
+            combo.ItemsSource = sizelist;
+            combo.SelectedValue = docPapersize;
+
+        }
+        public static List<string> getsystemPrinters()
+        {
+            List<string> printerList = new List<string>();
+
+            for (int i = 0; i < PrinterSettings.InstalledPrinters.Count; i++)
+            {
+
+                string printername = (string)PrinterSettings.InstalledPrinters[i];
+
+                printerList.Add(printername);
+
+            }
+            return printerList;
+        }
         static public void FillSideCombo(ComboBox COMBO)
         {
             #region fill deposit to combo
@@ -463,6 +514,8 @@ namespace BookAccountApp.Classes
 
         static SettingCls setModel = new SettingCls();
         static SetValues valueModel = new SetValues();
+        public static List<SettingCls> settingsCls;
+        public static List<SetValues> settingsValues;
         static int nameId, addressId, emailId, mobileId, phoneId, faxId, logoId, taxId;
         public static string logoImage;
         public static string companyName;
@@ -478,12 +531,14 @@ namespace BookAccountApp.Classes
         public static decimal company_syr_commission;
         public static decimal company_soto_commission;
         public static decimal exchangeValue;
+        public static string rep_copy_count = "1";
+
         public static async Task<int> loading_getDefaultSystemInfo()
         {
             try
             {
-                List<SettingCls> settingsCls = await setModel.GetAll();
-                List<SetValues> settingsValues = await valueModel.GetAll();
+                  settingsCls = await setModel.GetAll();
+                 settingsValues = await valueModel.GetAll();
                 SettingCls set = new SettingCls();
                 SetValues setV = new SetValues();
                 List<char> charsToRemove = new List<char>() { '@', '_', ',', '.', '-' };
@@ -703,8 +758,81 @@ namespace BookAccountApp.Classes
                 //
 
                 #endregion
-
+                 
+                #region getExchange
                await getExchange();
+                #endregion
+                #region  get docPapersize
+
+                //get company fax
+                set = settingsCls.Where(s => s.name == "docPapersize").FirstOrDefault<SettingCls>();
+               var docId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == docId).FirstOrDefault();
+                if (setV != null)
+                {
+                    if (string.IsNullOrEmpty(setV.value))
+                    {
+                        docPapersize = "A4";
+                    }
+                    else
+                    {
+                        docPapersize = setV.value;
+                    }
+                  
+                }
+                else
+                {
+                    docPapersize = "A4";
+                }
+
+                #endregion
+                #region get repcopy count
+
+                //get company name
+                set = settingsCls.Where(s => s.name == "rep_copy_count").FirstOrDefault<SettingCls>();
+                nameId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == nameId).FirstOrDefault();
+                if (setV != null)
+                {
+                    if (!string.IsNullOrEmpty(setV.value))
+                    {
+                        rep_copy_count = setV.value;
+                    }
+                    else
+                    {
+                        rep_copy_count = "1";
+                    }
+
+                }
+                else
+                {
+                    rep_copy_count = "1";
+                }
+                #endregion
+
+                #region get rep_printer_name
+
+                //get company name
+                set = settingsCls.Where(s => s.name == "rep_printer_name").FirstOrDefault<SettingCls>();
+                nameId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == nameId).FirstOrDefault();
+                if (setV != null)
+                {
+                    if (!string.IsNullOrEmpty(setV.value))
+                    {
+                        rep_printer_name = setV.value;
+                    }
+                    else
+                    {
+                        rep_printer_name = getdefaultPrinters();
+                    }
+
+                }
+                else
+                {
+                    rep_printer_name = getdefaultPrinters();
+                }
+                #endregion
                 return 1;
             }
             catch (Exception)

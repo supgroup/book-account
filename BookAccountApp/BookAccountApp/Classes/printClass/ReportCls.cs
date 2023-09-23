@@ -418,6 +418,16 @@ namespace BookAccountApp.Classes
             {
                 pay_to = sideNameConverter(cashtrans);
             }
+            // purpose
+            if ((cashtrans.opType=="p"&& cashtrans.side=="office" && cashtrans.sourceId>0 )||
+                (cashtrans.opType == "d" && cashtrans.side == "system" && cashtrans.sourceId > 0))
+            {
+                purposeval= MainWindow.resourcemanagerreport.GetString("trCommission");
+            }
+            else
+            {
+                purposeval = "";
+            }
             //else if (cashtrans.side == "system")//شركة الطيران
             //{
             //    pay_to = cashtrans.systemName;
@@ -485,10 +495,13 @@ namespace BookAccountApp.Classes
             if (cashtrans.opType=="p")
             {
                 paramarr.Add(new ReportParameter("trPaytoMr", MainWindow.resourcemanagerreport.GetString("PaytoMr")));
+  
+                paramarr.Add(new ReportParameter("trPaymentPurpose", MainWindow.resourcemanagerreport.GetString("PaymentPurpose")));
             }
             else
             {
                 //d
+                paramarr.Add(new ReportParameter("trPaymentPurpose", MainWindow.resourcemanagerreport.GetString("RecivedPurpose")));
                 paramarr.Add(new ReportParameter("trPaytoMr", MainWindow.resourcemanagerreport.GetString("RecivedFromMr")));
             }
           
@@ -514,9 +527,14 @@ namespace BookAccountApp.Classes
             paramarr.Add(new ReportParameter("trRecivedFromMr", MainWindow.resourcemanagerreport.GetString("RecivedFromMr")));
           
             paramarr.Add(new ReportParameter("trAmountInWords", MainWindow.resourcemanagerreport.GetString("AmountInWords")));
-            paramarr.Add(new ReportParameter("trRecivedPurpose", MainWindow.resourcemanagerreport.GetString("RecivedPurpose")));
-            paramarr.Add(new ReportParameter("trPaymentPurpose", MainWindow.resourcemanagerreport.GetString("PaymentPurpose")));
+            ////////////////
+          
+            //////////////////
             paramarr.Add(new ReportParameter("trReceiver", MainWindow.resourcemanagerreport.GetString("Receiver")));
+            /*
+            PaymentPurpose
+RecivedPurpose
+*/
             //paramarr.Add(new ReportParameter("currency", FillCombo.c));
             return paramarr;
         }

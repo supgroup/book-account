@@ -3274,4 +3274,22 @@ Please add Email in setting</value>
   <data name="Voucherno" xml:space="preserve">
     <value>Voucher no</value>
   </data>
+  <data name="PaymentPurpose" xml:space="preserve">
+    <value>Payment Purpose</value>
+  </data>
+  <data name="RecivedPurpose" xml:space="preserve">
+    <value>Recived Purpose</value>
+  </data>
+  <data name="trCommission" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="thePrint" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="trDocPaperSize" xml:space="preserve">
+    <value>Document paper size</value>
+  </data>
+  <data name="trReportPrinterName" xml:space="preserve">
+    <value>Report Printer</value>
+  </data>
 </root>

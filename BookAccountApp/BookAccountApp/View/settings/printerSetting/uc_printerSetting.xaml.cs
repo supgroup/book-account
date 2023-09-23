@@ -93,12 +93,12 @@ namespace BookAccountApp.View.settings.printerSetting
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
+               
                 Window.GetWindow(this).Opacity = 0.2;
-                wd_printerSetting w = new wd_printerSetting();
+                wd_reportPrinterSetting w = new wd_reportPrinterSetting();
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
-                */
+               
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -113,12 +113,12 @@ namespace BookAccountApp.View.settings.printerSetting
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
+                 
                 Window.GetWindow(this).Opacity = 0.2;
-                wd_copyCount w = new wd_copyCount();
+                wd_reportCopyCountSetting w = new wd_reportCopyCountSetting();
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
-                */
+               
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
