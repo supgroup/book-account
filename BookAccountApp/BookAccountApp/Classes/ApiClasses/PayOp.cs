@@ -60,6 +60,8 @@ namespace BookAccountApp.ApiClasses
         public string ticketNum { get; set; }
         public Nullable<decimal> deserved { get; set; }
         public string purpose { get; set; }
+        public string stropDate { get; set; }
+        
         public bool canDelete { get; set; }
         /// <summary>
         /// ///////////////////////////////////////

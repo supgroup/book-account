@@ -309,9 +309,7 @@ passwordSoto
             paramarr.Add(new ReportParameter("officeName", MainWindow.resourcemanagerreport.GetString("officeName")));
             paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
             paramarr.Add(new ReportParameter("total", MainWindow.resourcemanagerreport.GetString("total")));
-           
-
-
+        
         }
 
         public static void paymentAccReport(IEnumerable<PayOp> query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -321,37 +319,35 @@ passwordSoto
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
-
-           
-
-
-            //AccountSideConv(paramarr);
-
-            //cashTransTypeConv(paramarr);
-            //   cashTransferProcessTypeConv(paramarr);
-
-            paramarr.Add(new ReportParameter("trTransferNumberTooltip", MainWindow.resourcemanagerreport.GetString("trTransferNumberTooltip")));
-            paramarr.Add(new ReportParameter("trRecepient", MainWindow.resourcemanagerreport.GetString("trRecepient")));
-            paramarr.Add(new ReportParameter("trPaymentTypeTooltip", MainWindow.resourcemanagerreport.GetString("trPaymentTypeTooltip")));
-            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
-            paramarr.Add(new ReportParameter("trCashTooltip", MainWindow.resourcemanagerreport.GetString("trCashTooltip")));
-            paramarr.Add(new ReportParameter("accuracy", MainWindow.accuracy));
-            paramarr.Add(new ReportParameter("trUnKnown", MainWindow.resourcemanagerreport.GetString("trUnKnown")));
-            paramarr.Add(new ReportParameter("trCashCustomer", MainWindow.resourcemanagerreport.GetString("trCashCustomer")));
-            paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trPayments")));
-
-            DateFormConv(paramarr);
-
-
+            
+            ReportCls repcls = new ReportCls();
             foreach (var c in cash)
             {
-                //c.notes = depositorNameConverter(c);
-                //c.cash = decimal.Parse(SectionData.DecTostring(c.cash));
-                //// c.notes = SectionData.DecTostring(c.cash);
-                //c.agentName = AgentUnKnownConvert(c.agentId, c.side, c.agentName);
-                //c.processType = processTypeConvswitch(c.processType, c.cardName);
+           
+               c.cash = decimal.Parse(HelpClass.DecTostring(c.cash));
+                c.sideAr = repcls.sideNameConverter(c);
+                c.currency = repcls.currencyConverter(c.currency);
+                c.stropDate = dateFrameConverter(c.opDate);
+               
             }
-            rep.DataSources.Add(new ReportDataSource("DataSetBankAcc", cash));
+
+            paramarr.Add(new ReportParameter("trNo", MainWindow.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("sideOrResponseble", MainWindow.resourcemanagerreport.GetString("sideOrResponseble")));
+
+            paramarr.Add(new ReportParameter("trRecepient", MainWindow.resourcemanagerreport.GetString("trRecepient")));
+            paramarr.Add(new ReportParameter("recivedFrom", MainWindow.resourcemanagerreport.GetString("recivedFrom")));
+            paramarr.Add(new ReportParameter("trCashTooltip", MainWindow.resourcemanagerreport.GetString("trCashTooltip")));
+            paramarr.Add(new ReportParameter("currency", MainWindow.resourcemanagerreport.GetString("currency")));
+            paramarr.Add(new ReportParameter("payDate", MainWindow.resourcemanagerreport.GetString("payDate")));
+            
+
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trPayments")));
+
+           // DateFormConv(paramarr);
+
+
+         
+            rep.DataSources.Add(new ReportDataSource("DataSet", cash));
         }
 
         public static void BookStsReport(IEnumerable<BookSts> QueryList, LocalReport rep, string reppath, List<ReportParameter> paramarr)

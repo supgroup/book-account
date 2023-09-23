@@ -750,6 +750,9 @@
     <Content Include="Reports\Account\Ar\Voucher\ArPayReportA4.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Account\Ar\Grid\Arpayment.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\logo.png" />
     <Content Include="Thumb\office\tmp.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

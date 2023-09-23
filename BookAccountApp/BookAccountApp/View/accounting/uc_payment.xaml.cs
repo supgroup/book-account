@@ -868,19 +868,19 @@ namespace BookAccountApp.View.accounting
             string all = MainWindow.resourcemanagerreport.GetString("trAll");
             string addpath;
 
-            if (isArabic)
-            {
-                addpath = @"\Reports\Account\Ar\ArPayAccReport.rdlc";
-            }
-            else addpath = @"\Reports\Account\En\PayAccReport.rdlc";
+            //if (isArabic)
+            //{
+                addpath = @"\Reports\Account\Ar\Grid\Arpayment.rdlc";
+            //}
+            //else addpath = @"\Reports\Account\En\PayAccReport.rdlc";
 
             //filter
             startDate = dp_fromDateSearch.SelectedDate != null ? clsReports.dateFrameConverter(dp_fromDateSearch.SelectedDate) : "";
             endDate = dp_toDateSearch.SelectedDate != null ? clsReports.dateFrameConverter(dp_toDateSearch.SelectedDate) : "";
-            //Allchk = chb_all.IsChecked == true ? all : "";
+             Allchk = dp_fromDateSearch.SelectedDate == null && dp_toDateSearch.SelectedDate == null ? all : "";
             paramarr.Add(new ReportParameter("StartDateVal", startDate));
             paramarr.Add(new ReportParameter("EndDateVal", endDate));
-            //paramarr.Add(new ReportParameter("alldateval", Allchk));
+            paramarr.Add(new ReportParameter("alldateval", Allchk));
             paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
             paramarr.Add(new ReportParameter("trSearch", MainWindow.resourcemanagerreport.GetString("trSearch")));
             paramarr.Add(new ReportParameter("trStartDate", MainWindow.resourcemanagerreport.GetString("trStartDate")));
@@ -893,7 +893,7 @@ namespace BookAccountApp.View.accounting
             ReportCls.checkLang();
             //cashesQueryExcel = cashesQuery.ToList();
             clsReports.paymentAccReport(payOpsQuery, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
+            //clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
             rep.SetParameters(paramarr);
