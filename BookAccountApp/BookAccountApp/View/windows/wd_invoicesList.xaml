@@ -52,7 +52,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -191,8 +191,10 @@
                     </DataGrid>
                 </Border>
 
-                <Border Grid.Row="2" Grid.RowSpan="2"  Grid.ColumnSpan="3" Width="125"   
-                        CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}"
+                
+                <Separator Grid.ColumnSpan="5" Margin="5,0" Grid.Row="4"  Background="#DFDFDF" VerticalAlignment="Center" Width="auto" />
+                <Border Grid.Row="5" Grid.Column="0" 
+                        CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}"
                         VerticalAlignment="Top">
                     <Grid>
                         <ComboBox x:Name="cb_currency"  Grid.Row="1"
@@ -216,8 +218,7 @@ VerticalAlignment="Center" Width="15"  Height="15"
                     </Grid>
                 </Border>
 
-                <Separator Grid.ColumnSpan="5" Margin="5,0" Grid.Row="4"  Background="#DFDFDF" VerticalAlignment="Center" Width="auto" />
-                <StackPanel Grid.ColumnSpan="5" Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,5">
+                <StackPanel Grid.Column="2" Grid.ColumnSpan="5" Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,5">
                     <TextBlock Grid.Row="0"  Text="SUM" x:Name="txt_sum" Foreground="#178DD2" FontWeight="Bold" FontSize="18"  
                                   VerticalAlignment="Center" 
                                        HorizontalAlignment="Left" Margin="10,5,5,5"/>
