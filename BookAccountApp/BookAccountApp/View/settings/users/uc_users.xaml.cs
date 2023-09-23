@@ -148,6 +148,25 @@ namespace BookAccountApp.View.settings.users
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void Btn_dataBase_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                /*
+                HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_dataBase w = new wd_dataBase();
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+                */
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
 
     }
 }
