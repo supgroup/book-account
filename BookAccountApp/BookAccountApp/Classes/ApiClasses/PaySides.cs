@@ -53,7 +53,7 @@ namespace BookAccountApp.ApiClasses
                                 notes = S.notes,
                                 isActive = S.isActive,
                                 code = S.code,
-
+                                balance=S.balance,
 
                             }).ToList();
 

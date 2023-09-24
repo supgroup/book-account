@@ -296,7 +296,9 @@ namespace BookAccountApp.ApiClasses
                                 code = S.code,
                                 cash = S.cash,
                                 opType = S.opType,
-                                side = S.paySides.code,
+                                side = S.side,
+                                fromSide=S.fromSide,
+                                processType= S.processType,
                                 serviceId = S.serviceId,
                                 opStatus = S.opStatus,
                                 opDate = S.opDate,
@@ -319,10 +321,10 @@ namespace BookAccountApp.ApiClasses
                                 officeName= S.officeId==null?"":S.office.name,
                                 currency=S.currency,
                             }).ToList();
-                    List = List.Where(S => ((fromDate == null && toDate == null) ? true :
-                           ((fromDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date >= fromDate.Value.Date) : true)
-                           && ((toDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date <= toDate.Value.Date) : true)
-                          )).ToList();
+                    //List = List.Where(S => ((fromDate == null && toDate == null) ? true :
+                    //       ((fromDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date >= fromDate.Value.Date) : true)
+                    //       && ((toDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date <= toDate.Value.Date) : true)
+                    //      )).ToList();
                     return List;
                 }
 

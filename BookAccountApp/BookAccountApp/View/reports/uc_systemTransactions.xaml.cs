@@ -209,7 +209,7 @@ namespace BookAccountApp.View.reports
                     //  this.DataContext = bookSts;
                     if (bookSts != null)
                     {
-                        this.DataContext = bookSts;
+                       // this.DataContext = bookSts;
 
 
                     }
@@ -256,24 +256,27 @@ namespace BookAccountApp.View.reports
                 RefreshPaymentsList();
             string booksale = cb_bookSales.SelectedValue == null ? "" : cb_bookSales.SelectedValue.ToString();
             searchText = tb_search.Text.ToLower();
-            paymentsQuery = paymentsList.Where(s => s.sideAr== booksale && (searchText == "" ? true :
+            paymentsQuery = paymentsList.Where(s => (s.sideAr== booksale && (searchText == "" ? true :
             (
           (s.code == null ? false : (s.code.ToLower().Contains(searchText))) ||
            (s.systemName == null ? false : (s.systemName.ToLower().Contains(searchText))) ||
              (s.airline == null ? false : (s.airline.ToLower().Contains(searchText))) ||
          (s.officeName == null ? false : (s.officeName.ToLower().Contains(searchText)))
+            )))
+            &&( (dp_fromDate.SelectedDate == null && dp_toDate.SelectedDate == null) ? true:(
+            //start date
+            ((dp_fromDate.SelectedDate != null  ) ? s.createDate == null ? false : (s.createDate.Value.Date >= dp_fromDate.SelectedDate.Value.Date) : true)
+            &&
+            //end date
+            ((dp_toDate.SelectedDate != null ) ? s.createDate == null ? false : (s.createDate.Value.Date <= dp_toDate.SelectedDate.Value.Date) : true)
             ))
-            //&& (
-            ////start date
-            //((dp_fromDateSearch.SelectedDate != null || dp_fromDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date >= dp_fromDateSearch.SelectedDate.Value.Date) : true)
-            //&&
-            ////end date
-            //((dp_toDateSearch.SelectedDate != null || dp_toDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
-            //)
             );
 
             RefreshPaymentsView();
+            viewPeriodSum();
+            viewTotalSum(booksale);
         }
+
         private  IEnumerable<PaymentsSts> RefreshPaymentsList()
         {
 
@@ -285,7 +288,39 @@ namespace BookAccountApp.View.reports
         {
             dg_bookSts.ItemsSource = paymentsQuery;
         }
-      
+        private void viewPeriodSum( )
+        {         
+                txt_durationPaid.Text = getperiodPayments( );
+        }
+    
+private string getBalance(string code)
+        {
+            string balance = "";
+         decimal amount= (decimal)  FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
+            balance= HelpClass.DecTostring(amount);
+            return balance;
+        }
+        private string getperiodPayments()
+        {
+            string balance = "";
+            //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
+            decimal amount = (decimal)paymentsQuery.Where(x => x.side == "system" && x.processType == "book").Sum(s => s.cash);
+            balance = HelpClass.DecTostring(amount);
+            return balance;
+        }
+
+        private string getTotalPayments( string side)
+        {
+            string balance = "";
+            //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
+            decimal amount = (decimal)paymentsList.Where(x => x.side == "system" && x.processType == "book" && x.sideAr == side).Sum(s => s.cash);
+            balance = HelpClass.DecTostring(amount);
+            return balance;
+        }
+        private void viewTotalSum(string side)
+        {
+            txt_totalPaid.Text = getTotalPayments(side);
+        }
 
         #endregion
 
@@ -592,6 +627,11 @@ namespace BookAccountApp.View.reports
                 if (cb_bookSales.SelectedItem != null)
                 {//passenger office soto other
                   Search();
+                    txt_balance.Text = getBalance(cb_bookSales.SelectedValue.ToString());
+                }
+                else
+                {
+                    txt_balance.Text = "0";
                 }
 
             
