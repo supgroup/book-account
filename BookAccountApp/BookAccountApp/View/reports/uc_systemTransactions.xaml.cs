@@ -19,7 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using Newtonsoft.Json;
 namespace BookAccountApp.View.reports
 {
     /// <summary>
@@ -54,6 +54,7 @@ namespace BookAccountApp.View.reports
         IEnumerable<PaymentsSts> paymentsQuery ;
         IEnumerable<PaymentsSts> paymentsList ;
         Statistics StatisticsModel = new Statistics();
+        PayOp PayOpRow = new PayOp();
         byte tgl_bookStsstate;
         string searchText = "";
         public static List<string> requiredControlList;
@@ -206,6 +207,8 @@ namespace BookAccountApp.View.reports
                 if (dg_bookSts.SelectedIndex != -1)
                 {
                     bookSts = dg_bookSts.SelectedItem as PaymentsSts;
+                    PayOpRow = JsonConvert.DeserializeObject<PayOp>(JsonConvert.SerializeObject(bookSts));
+                    //PayOpRow = dg_bookSts.SelectedItem as PayOp;
                     //  this.DataContext = bookSts;
                     if (bookSts != null)
                     {
@@ -256,11 +259,11 @@ namespace BookAccountApp.View.reports
                 RefreshPaymentsList();
             string booksale = cb_bookSales.SelectedValue == null ? "" : cb_bookSales.SelectedValue.ToString();
             searchText = tb_search.Text.ToLower();
-            paymentsQuery = paymentsList.Where(s => (s.sideAr== booksale && (searchText == "" ? true :
+            paymentsQuery = paymentsList.Where(s => (s.sideStr== booksale && (searchText == "" ? true :
             (
           (s.code == null ? false : (s.code.ToLower().Contains(searchText))) ||
            (s.systemName == null ? false : (s.systemName.ToLower().Contains(searchText))) ||
-             (s.airline == null ? false : (s.airline.ToLower().Contains(searchText))) ||
+             (s.airlineStr == null ? false : (s.airlineStr.ToLower().Contains(searchText))) ||
          (s.officeName == null ? false : (s.officeName.ToLower().Contains(searchText)))
             )))
             &&( (dp_fromDate.SelectedDate == null && dp_toDate.SelectedDate == null) ? true:(
@@ -313,7 +316,7 @@ private string getBalance(string code)
         {
             string balance = "";
             //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
-            decimal amount = (decimal)paymentsList.Where(x => x.side == "system" && x.processType == "book" && x.sideAr == side).Sum(s => s.cash);
+            decimal amount = (decimal)paymentsList.Where(x => x.side == "system" && x.processType == "book" && x.sideStr == side).Sum(s => s.cash);
             balance = HelpClass.DecTostring(amount);
             return balance;
         }
@@ -599,20 +602,141 @@ private string getBalance(string code)
 
 
         //
+       
+
+        #region VoucherReport
+        public void BuildVoucherReport()
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            //if (isArabic)
+            //{
+            if (FillCombo.docPapersize == "A4")
+            {
+                addpath = @"\Reports\Account\Ar\Voucher\ArPayReportA4.rdlc";
+            }
+            else //A5
+            {
+                addpath = @"\Reports\Account\Ar\Voucher\ArPayReport.rdlc";
+            }
+
+            //}
+            //else
+            //{
+            //    if (FillCombo.docPapersize == "A4")
+            //    {
+            //        addpath = @"\Reports\Account\En\PayReportA4.rdlc";
+            //    }
+            //    else //A5
+            //    {
+            //        addpath = @"\Reports\Account\En\PayReport.rdlc";
+            //    }
+            //}
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            rep.ReportPath = reppath;
+            rep.DataSources.Clear();
+            rep.EnableExternalImages = true;
+            //  servicemodel= await servicemodel.GetByID((int)payOp.serviceId);
+            paramarr = reportclass.fillPayReport(PayOpRow);
+            clsReports.Header(paramarr);
+            rep.SetParameters(paramarr);
+            rep.Refresh();
+        }
+
         private void Btn_invoicePrint_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (dg_bookSts.SelectedIndex != -1)
+                {
 
+             
+                    #region
+                    BuildVoucherReport();
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
+                    #endregion
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_invoicePreview_Click(object sender, RoutedEventArgs e)
         {
+            //preview
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (dg_bookSts.SelectedIndex != -1)
+                {
 
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+
+                    string pdfpath = "";
+                    //
+                    pdfpath = @"\Thumb\report\temp.pdf";
+                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                    BuildVoucherReport();
+
+                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                    wd_previewPdf w = new wd_previewPdf();
+                    w.pdfPath = pdfpath;
+                    if (!string.IsNullOrEmpty(w.pdfPath))
+                    {
+                        w.ShowDialog();
+                        w.wb_pdfWebViewer.Dispose();
+
+
+                    }
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_invoicePdf_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (dg_bookSts.SelectedIndex != -1)
+                {
 
+                    #region
+                    BuildVoucherReport();
+
+                    saveFileDialog.Filter = "PDF|*.pdf;";
+
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        string filepath = saveFileDialog.FileName;
+                        LocalReportExtensions.ExportToPDF(rep, filepath);
+                    }
+                    #endregion
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
+        #endregion
         #endregion
 
 

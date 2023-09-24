@@ -160,7 +160,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="System" Binding="{Binding Path=airline}">
+                            <DataGridTextColumn Width="*"  Header="System" Binding="{Binding Path=airlineStr}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>

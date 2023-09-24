@@ -102,12 +102,13 @@ namespace BookAccountApp.ApiClasses
         public string recivedFrom { get; set; }
         public Nullable<int> paysideId { get; set; }
         public string sideAr { get; set; }
+        public string  sideStr { get; set; }
         public Nullable<int> flightId { get; set; }
         public string opName { get; set; }
         //    
         public string passenger { get; set; }
         public string airline { get; set; }
-
+        public string airlineStr { get; set; }
         public string officeName { get; set; }
         public string systemType { get; set; }
         public Nullable<int> systemId { get; set; }
@@ -291,7 +292,8 @@ namespace BookAccountApp.ApiClasses
                             where ((S.opType == "p" && (S.side == "soto" || S.side == "syr")) ||
                             (S.opType == "p" && S.side == "system" && (S.fromSide == "soto" || S.fromSide == "syr") && S.processType == "book"))
                             select new PaymentsSts()
-                            {
+                            { 
+                                //
                                 payOpId = S.payOpId,
                                 code = S.code,
                                 cash = S.cash,
@@ -313,13 +315,32 @@ namespace BookAccountApp.ApiClasses
                                 recipient = S.recipient,
                                 recivedFrom = S.recivedFrom,
                                 paysideId = S.paysideId,
-                                sideAr = S.side == "system" ? S.fromSide : S.side,
+                                //  sideAr = S.side == "system" ? S.fromSide : S.side,
+                                sideStr = S.side == "system" ? S.fromSide : S.side,
                                 flightId = S.flightId,
                                 opName = S.opName,
                                 systemName = S.systems.name,
-                                airline =S.processType=="book"? S.systems.name + "/" + S.flights.flightTable.name + "/" + S.paySides.sideAr : S.paySides.sideAr,
-                                officeName= S.officeId==null?"":S.office.name,
+                              //  airline =S.processType=="book"? S.systems.name + "/" + S.flights.flightTable.name + "/" + S.paySides.sideAr : S.paySides.sideAr,
+                                airlineStr = S.processType == "book" ? S.systems.name + "/" + S.flights.flightTable.name + "/" + S.paySides.sideAr : S.paySides.sideAr,
+
+                                officeName = S.officeId==null?"":S.office.name,
                                 currency=S.currency,
+ 
+                                sideAr = S.paySides.sideAr,
+                              
+                                passenger = S.passengers.name + " " + S.passengers.lastName,
+                                airline = S.systems.name + "/" + S.flights.flightTable.name,
+                              
+                                systemType = S.systemType,
+                                systemId = S.systemId,
+                               
+                                syValue = S.syValue,
+                                exchangeId = S.exchangeId,
+                             
+                                sourceId = S.sourceId,
+                                paid = S.paid,
+                                isPaid = S.isPaid,
+                                deserved = S.deserved,
                             }).ToList();
                     //List = List.Where(S => ((fromDate == null && toDate == null) ? true :
                     //       ((fromDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date >= fromDate.Value.Date) : true)
