@@ -81,6 +81,7 @@ namespace BookAccountApp.ApiClasses
     }
     public class PaymentsSts 
     {
+
         public int payOpId { get; set; }
         public string code { get; set; }
         public Nullable<decimal> cash { get; set; }
@@ -104,8 +105,6 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> flightId { get; set; }
         public string opName { get; set; }
         //    
-    
-        //    
         public string passenger { get; set; }
         public string airline { get; set; }
 
@@ -116,6 +115,21 @@ namespace BookAccountApp.ApiClasses
         public string currency { get; set; }
         public Nullable<decimal> syValue { get; set; }
         public Nullable<int> exchangeId { get; set; }
+        public string fromSide { get; set; }
+        public string processType { get; set; }
+
+        public Nullable<int> sourceId { get; set; }
+        public Nullable<decimal> paid { get; set; }
+        public Nullable<bool> isPaid { get; set; }
+        public string serviceNum { get; set; }
+        public string ticketNum { get; set; }
+        public Nullable<decimal> deserved { get; set; }
+        public string purpose { get; set; }
+        public string stropDate { get; set; }
+
+      
+  
+  
         public Nullable<decimal> priceBeforTax { get; set; }
     }
     public class Statistics
@@ -264,7 +278,7 @@ namespace BookAccountApp.ApiClasses
             }
 
         }
-        public async Task<List<PaymentsSts>> GetPaySystemsTransfer()
+        public List<PaymentsSts> GetPaySystemsTransfer(DateTime? fromDate, DateTime? toDate)
         {
 
             List<PaymentsSts> List = new List<PaymentsSts>();
@@ -274,7 +288,8 @@ namespace BookAccountApp.ApiClasses
                 using (bookdbEntities entity = new bookdbEntities())
                 {
                     List = (from S in entity.payOp
-                                // where S.opType == opType
+                            where ((S.opType == "p" && (S.side == "soto" || S.side == "syr")) ||
+                            (S.opType == "p" && S.side == "system" && (S.fromSide == "soto" || S.fromSide == "syr") && S.processType == "book"))
                             select new PaymentsSts()
                             {
                                 payOpId = S.payOpId,
@@ -296,14 +311,18 @@ namespace BookAccountApp.ApiClasses
                                 recipient = S.recipient,
                                 recivedFrom = S.recivedFrom,
                                 paysideId = S.paysideId,
-                                sideAr = S.paySides.sideAr,
+                                sideAr = S.side == "system" ? S.fromSide : S.side,
                                 flightId = S.flightId,
                                 opName = S.opName,
+                                systemName = S.systems.name,
+                                airline =S.processType=="book"? S.systems.name + "/" + S.flights.flightTable.name + "/" + S.paySides.sideAr : S.paySides.sideAr,
+                                officeName= S.officeId==null?"":S.office.name,
+                                currency=S.currency,
                             }).ToList();
-                    //List = List.Where(S => ((fromDate == null && toDate == null) ? true :
-                    //       ((fromDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date >= fromDate.Value.Date) : true)
-                    //       && ((toDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date <= toDate.Value.Date) : true)
-                    //      )).ToList();
+                    List = List.Where(S => ((fromDate == null && toDate == null) ? true :
+                           ((fromDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date >= fromDate.Value.Date) : true)
+                           && ((toDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date <= toDate.Value.Date) : true)
+                          )).ToList();
                     return List;
                 }
 

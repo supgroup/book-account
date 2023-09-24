@@ -3307,4 +3307,16 @@
   <data name="dbSettingHint" xml:space="preserve">
     <value>قاعدة البيانات,السيرفر</value>
   </data>
+  <data name="currentBalance" xml:space="preserve">
+    <value>الرصيد الحالي</value>
+  </data>
+  <data name="durationPayments" xml:space="preserve">
+    <value>مدفوعات المدة</value>
+  </data>
+  <data name="totalPayments" xml:space="preserve">
+    <value>مجموع المدفوعات</value>
+  </data>
+  <data name="transaction" xml:space="preserve">
+    <value>الحركة</value>
+  </data>
 </root>

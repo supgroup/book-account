@@ -50,9 +50,9 @@ namespace BookAccountApp.View.reports
         }
 
         SaveFileDialog saveFileDialog = new SaveFileDialog();
-        BookSts bookSts = new BookSts();
-        IEnumerable<BookSts> bookStssQuery;
-        IEnumerable<BookSts> bookStss;
+        PaymentsSts bookSts = new PaymentsSts();
+        IEnumerable<PaymentsSts> paymentsQuery ;
+        IEnumerable<PaymentsSts> paymentsList ;
         Statistics StatisticsModel = new Statistics();
         byte tgl_bookStsstate;
         string searchText = "";
@@ -70,10 +70,10 @@ namespace BookAccountApp.View.reports
                 translate();
                 #endregion
 
-
+                await FillCombo.fillpaySideSys(cb_bookSales, "p");
                 //Keyboard.Focus(cb_duration);
-                await RefreshBookStssList();
-                await Search();
+                 RefreshPaymentsList();
+                  Search();
 
                 Clear();
                 //await fillcombos();
@@ -87,41 +87,33 @@ namespace BookAccountApp.View.reports
         }
         private void translate()
         {
-            //durationProfits yearMonth quarter1234 profitsNet totalOperations profitsNet
+            //transaction syrSoto currentBalance  durationPayments totalPayments
+          
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            txt_title.Text = MainWindow.resourcemanager.GetString("durationProfits");
-            //txt_totalSaleTitle.Text = MainWindow.resourcemanager.GetString("totalOperations");
-            //txt_totalProfitTitle.Text = MainWindow.resourcemanager.GetString("profitsNet");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_duration, MainWindow.resourcemanager.GetString("yearMonth"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_quarter, MainWindow.resourcemanager.GetString("quarter1234"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_bookSales, MainWindow.resourcemanager.GetString("syrSoto"));
 
+            txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
+            txt_title.Text = MainWindow.resourcemanager.GetString("transaction");
+           txt_balanceTitle.Text = MainWindow.resourcemanager.GetString("currentBalance");
+            txt_durationPaidTitle.Text = MainWindow.resourcemanager.GetString("durationPayments");
+            txt_totalPaidTitle.Text = MainWindow.resourcemanager.GetString("totalPayments");
+             
 
             txt_invoicePrintButton.Text = MainWindow.resourcemanager.GetString("printInvoice");
             txt_invoicePreviewButton.Text = MainWindow.resourcemanager.GetString("previewInvoice");
             txt_invoicePdfButton.Text = MainWindow.resourcemanager.GetString("electronicInvoice");
-            //btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_fromDateSearch, MainWindow.resourcemanager.GetString("fromDate"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_toDateSearch, MainWindow.resourcemanager.GetString("toDate"));
-            //txt_exportDocsButton.Text = MainWindow.resourcemanager.GetString("docExport");
-            //txt_uploadDocsButton.Text = MainWindow.resourcemanager.GetString("docUpload");
-            //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
-
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_custlevel, MainWindow.resourcemanager.GetString("trLevelHint"));
-            //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
-
-            //   bookStss            
+ 
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_fromDate, MainWindow.resourcemanager.GetString("fromDate"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_toDate, MainWindow.resourcemanager.GetString("toDate"));
+            //   paymentsList            
             dg_bookSts.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
             dg_bookSts.Columns[1].Header = MainWindow.resourcemanager.GetString("bookSystem");
             dg_bookSts.Columns[2].Header = MainWindow.resourcemanager.GetString("airlineFlightSys");
             dg_bookSts.Columns[3].Header = MainWindow.resourcemanager.GetString("trOffice");
-            dg_bookSts.Columns[4].Header = MainWindow.resourcemanager.GetString("priceBeforTax");
-            dg_bookSts.Columns[5].Header = MainWindow.resourcemanager.GetString("profits");
+            dg_bookSts.Columns[4].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
+            dg_bookSts.Columns[5].Header = MainWindow.resourcemanager.GetString("currency");
             dg_bookSts.Columns[6].Header = MainWindow.resourcemanager.GetString("trDate");
 
-            //dg_bookSts.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
             tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
@@ -135,12 +127,12 @@ namespace BookAccountApp.View.reports
 
 
         #region events
-        private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
+        private   void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
-                await Search();
+                 Search();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -155,8 +147,8 @@ namespace BookAccountApp.View.reports
             {
                 HelpClass.StartAwait(grid_main);
                 /*
-                if (bookStss is null)
-                    await RefreshBookStssList();
+                if (paymentsList is null)
+                    await RefreshPaymentsList();
                 tgl_bookStsstate = 1;
                 await Search();
                 */
@@ -168,15 +160,15 @@ namespace BookAccountApp.View.reports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
+        private   void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (bookStss is null)
-                    await RefreshBookStssList();
+                if (paymentsList is null)
+                      RefreshPaymentsList();
                 tgl_bookStsstate = 0;
-                await Search();
+                  Search();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -192,6 +184,8 @@ namespace BookAccountApp.View.reports
             {
                 HelpClass.StartAwait(grid_main);
                 Clear();
+                RefreshPaymentsList();
+                Search();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -211,7 +205,7 @@ namespace BookAccountApp.View.reports
 
                 if (dg_bookSts.SelectedIndex != -1)
                 {
-                    bookSts = dg_bookSts.SelectedItem as BookSts;
+                    bookSts = dg_bookSts.SelectedItem as PaymentsSts;
                     //  this.DataContext = bookSts;
                     if (bookSts != null)
                     {
@@ -238,8 +232,11 @@ namespace BookAccountApp.View.reports
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
-                await RefreshBookStssList();
-                await Search();
+                dp_toDate.SelectedDate = null;
+                dp_fromDate.SelectedDate = null;
+                tb_search.Text = "";
+                 RefreshPaymentsList();
+                  Search();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -252,19 +249,19 @@ namespace BookAccountApp.View.reports
         #endregion
 
         #region Refresh & Search
-        async Task Search()
+        void Search()
         {
             //search
-            if (bookStss is null)
-                await RefreshBookStssList();
-
+            if (paymentsList is null)
+                RefreshPaymentsList();
+            string booksale = cb_bookSales.SelectedValue == null ? "" : cb_bookSales.SelectedValue.ToString();
             searchText = tb_search.Text.ToLower();
-            bookStssQuery = bookStss.Where(s => (searchText == "" ? true :
+            paymentsQuery = paymentsList.Where(s => s.sideAr== booksale && (searchText == "" ? true :
             (
-          (s.serviceNum == null ? false : (s.serviceNum.ToLower().Contains(searchText))) ||
-           (s.sideAr == null ? false : (s.sideAr.ToLower().Contains(searchText))) ||
-             (s.recipient == null ? false : (s.recipient.ToLower().Contains(searchText))) ||
-         (s.recivedFrom == null ? false : (s.recivedFrom.ToLower().Contains(searchText)))
+          (s.code == null ? false : (s.code.ToLower().Contains(searchText))) ||
+           (s.systemName == null ? false : (s.systemName.ToLower().Contains(searchText))) ||
+             (s.airline == null ? false : (s.airline.ToLower().Contains(searchText))) ||
+         (s.officeName == null ? false : (s.officeName.ToLower().Contains(searchText)))
             ))
             //&& (
             ////start date
@@ -275,23 +272,20 @@ namespace BookAccountApp.View.reports
             //)
             );
 
-            RefreshBookStssView();
+            RefreshPaymentsView();
         }
-        async Task<IEnumerable<BookSts>> RefreshBookStssList()
+        private  IEnumerable<PaymentsSts> RefreshPaymentsList()
         {
 
-            //bookStss = await StatisticsModel.GetBookProfit(dp_fromDateSearch.SelectedDate, dp_toDateSearch.SelectedDate);
+             paymentsList =  StatisticsModel.GetPaySystemsTransfer(dp_fromDate.SelectedDate, dp_toDate.SelectedDate);
 
-            return bookStss;
+            return paymentsList;
         }
-        void RefreshBookStssView()
+        void RefreshPaymentsView()
         {
-            dg_bookSts.ItemsSource = bookStssQuery;
+            dg_bookSts.ItemsSource = paymentsQuery;
         }
-        public async Task fillcombos()
-        {
-
-        }
+      
 
         #endregion
 
@@ -299,12 +293,13 @@ namespace BookAccountApp.View.reports
 
         void Clear()
         {
-            this.DataContext = new BookSts();
-
-
+            //this.DataContext = new PaymentsSts();
+            cb_bookSales.SelectedIndex = -1;
+            dp_toDate.SelectedDate = null;
+            dp_fromDate.SelectedDate = null;
 
             // last 
-            HelpClass.clearValidate(requiredControlList, this);
+            //  HelpClass.clearValidate(requiredControlList, this);
         }
         string input;
         decimal _decimal = 0;
@@ -422,7 +417,7 @@ namespace BookAccountApp.View.reports
             //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
             string title = MainWindow.resourcemanagerreport.GetString("bookProfits");
             paramarr.Add(new ReportParameter("trTitle", title));
-            clsReports.BookStsReport(bookStssQuery, rep, reppath, paramarr);
+            clsReports.PaymentssysTrans(paymentsQuery, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
@@ -568,125 +563,7 @@ namespace BookAccountApp.View.reports
         }
 
 
-
-
-
-        #endregion
-
-
-
-
-        private void Btn_addAirline_Click(object sender, RoutedEventArgs e)
-        {
-            /*
-          try
-          {
-              if (sender != null)
-                  HelpClass.StartAwait(grid_main);
-              Window.GetWindow(this).Opacity = 0.2;
-              wd_flight w = new wd_flight();
-              w.ShowDialog();
-              await FillCombo.fillFlightTable(cb_flight);
-              Window.GetWindow(this).Opacity = 1;
-
-              if (sender != null)
-                  HelpClass.EndAwait(grid_main);
-          }
-          catch (Exception ex)
-          {
-              Window.GetWindow(this).Opacity = 1;
-              if (sender != null)
-                  HelpClass.EndAwait(grid_main);
-              HelpClass.ExceptionMessage(ex, this);
-          }
-          */
-        }
-
-
-        private void Btn_uploadDocs_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Btn_exportDocs_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-
-
-
-
-        private async void Dp_fromDateSearch_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                //if (cb_custname.SelectedItem != null)
-                //{
-
-                //}
-                await RefreshBookStssList();
-                await Search();
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private async void Dp_toDateSearch_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                //if (cb_custname.SelectedItem != null)
-                //{
-
-                //}
-                await RefreshBookStssList();
-                await Search();
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-
-
-        private void Btn_addOperation_Click(object sender, RoutedEventArgs e)
-        {
-            /*  
-      try
-      {
-          if (sender != null)
-              HelpClass.StartAwait(grid_main);
-          Window.GetWindow(this).Opacity = 0.2;
-          wd_flight w = new wd_flight();
-          w.ShowDialog();
-          await FillCombo.fillFlightTable(cb_flight);
-          Window.GetWindow(this).Opacity = 1;
-
-          if (sender != null)
-              HelpClass.EndAwait(grid_main);
-      }
-      catch (Exception ex)
-      {
-          Window.GetWindow(this).Opacity = 1;
-          if (sender != null)
-              HelpClass.EndAwait(grid_main);
-          HelpClass.ExceptionMessage(ex, this);
-      }
-       */
-        }
-
+        //
         private void Btn_invoicePrint_Click(object sender, RoutedEventArgs e)
         {
 
@@ -701,7 +578,71 @@ namespace BookAccountApp.View.reports
         {
 
         }
+        #endregion
 
 
+
+
+
+        private void Cb_bookSales_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (cb_bookSales.SelectedItem != null)
+                {//passenger office soto other
+                  Search();
+                }
+
+            
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+       
+        }
+
+        private void Dp_fromDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                RefreshPaymentsList();
+                Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Dp_toDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //if (cb_custname.SelectedItem != null)
+                //{
+
+                //}
+                RefreshPaymentsList();
+                Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

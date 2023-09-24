@@ -70,7 +70,9 @@ bookProfits
 paySysTrans
              * */
             btn_bookSts.Content = MainWindow.resourcemanager.GetString("bookProfits");
-            btn_paymentsSts.Content = MainWindow.resourcemanager.GetString("financeChange"); 
+            btn_paymentsSts.Content = MainWindow.resourcemanager.GetString("financeChange");
+            btn_systemTransactions.Content = MainWindow.resourcemanager.GetString("paySysTrans");
+             
         }
 
         void colorButtonRefreash(string str)
@@ -138,7 +140,8 @@ paySysTrans
                 MainWindow.mainWindow.second = button.Tag.ToString();
                 MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
-                grid_main.Children.Add(uc_systemTransactions.Instance);
+                uc_systemTransactions ucsys = new uc_systemTransactions();
+                grid_main.Children.Add(ucsys);
             }
             catch (Exception ex)
             {

@@ -3298,4 +3298,16 @@ Please add Email in setting</value>
   <data name="dbSettingHint" xml:space="preserve">
     <value>Database,server</value>
   </data>
+  <data name="currentBalance" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="durationPayments" xml:space="preserve">
+    <value>Duration Payments</value>
+  </data>
+  <data name="totalPayments" xml:space="preserve">
+    <value>Total Payments</value>
+  </data>
+  <data name="transaction" xml:space="preserve">
+    <value>transaction</value>
+  </data>
 </root>
