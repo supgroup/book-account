@@ -431,38 +431,47 @@ private string getBalance(string code)
 
         public void BuildReport()
         {
-
-            //string firstTitle = "paymentsReport";
-            ////string secondTitle = "";
-            ////string subTitle = "";
-            //string Title = "";
-
             List<ReportParameter> paramarr = new List<ReportParameter>();
-
-            string addpath;
+            string startDate = "";
+            string endDate = "";
+            string searchval = "";
+            string Allchk = "";
+            //  List<string> invTypelist = new List<string>();
             bool isArabic = ReportCls.checkLang();
+            string all = MainWindow.resourcemanagerreport.GetString("trAll");
+            string addpath;
+
             //if (isArabic)
             //{
-            addpath = @"\Reports\statisticReports\Ar\ArBook.rdlc";
+            addpath = @"\Reports\statisticReports\Ar\ArPaytrans.rdlc";
+            //}
+            //else addpath = @"\Reports\Account\En\PayAccReport.rdlc";
 
-            //}
-            //else
-            //{
-            //    addpath = @"\Reports\SectionData\En\EnBookStss.rdlc";
-            //}
-            //D:\myproj\posproject3\BookAccountApp\BookAccountApp\Reports\statisticReports\En\EnBook.rdlc
+            //filter
+            startDate = dp_fromDate.SelectedDate != null ? clsReports.dateFrameConverter(dp_fromDate.SelectedDate) : "";
+            endDate = dp_toDate.SelectedDate != null ? clsReports.dateFrameConverter(dp_toDate.SelectedDate) : "";
+            Allchk = dp_fromDate.SelectedDate == null && dp_toDate.SelectedDate == null ? all : "";
+            paramarr.Add(new ReportParameter("StartDateVal", startDate));
+            paramarr.Add(new ReportParameter("EndDateVal", endDate));
+            paramarr.Add(new ReportParameter("alldateval", Allchk));
+            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trSearch", MainWindow.resourcemanagerreport.GetString("trSearch")));
+            paramarr.Add(new ReportParameter("trStartDate", MainWindow.resourcemanagerreport.GetString("trStartDate")));
+            paramarr.Add(new ReportParameter("trEndDate", MainWindow.resourcemanagerreport.GetString("trEndDate")));
+            searchval = tb_search.Text;
+            paramarr.Add(new ReportParameter("searchVal", searchval));
+            //end filter
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("paySysTrans")));
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-            //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-            string title = MainWindow.resourcemanagerreport.GetString("bookProfits");
-            paramarr.Add(new ReportParameter("trTitle", title));
-            clsReports.PaymentssysTrans(paymentsQuery, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
+
+            ReportCls.checkLang();
+            //cashesQueryExcel = cashesQuery.ToList();
+            clsReports.PaymentssysTrans( paymentsQuery , rep, reppath, paramarr);
+            //clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
             rep.SetParameters(paramarr);
-
             rep.Refresh();
-
         }
 
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)

@@ -81,7 +81,7 @@ namespace BookAccountApp.ApiClasses
     }
     public class PaymentsSts 
     {
-
+     
         public int payOpId { get; set; }
         public string code { get; set; }
         public Nullable<decimal> cash { get; set; }
@@ -90,6 +90,7 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> serviceId { get; set; }
         public string opStatus { get; set; }
         public Nullable<System.DateTime> opDate { get; set; }
+        public string stropDate { get; set; }
         public string notes { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
@@ -126,7 +127,7 @@ namespace BookAccountApp.ApiClasses
         public string ticketNum { get; set; }
         public Nullable<decimal> deserved { get; set; }
         public string purpose { get; set; }
-        public string stropDate { get; set; }
+     
 
       
   
