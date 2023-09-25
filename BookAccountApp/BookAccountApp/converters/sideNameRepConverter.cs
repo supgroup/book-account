@@ -28,7 +28,7 @@ namespace BookAccountApp.converters
                     case "system": name = s.systemName; break;
                     case "syr": name = MainWindow.resourcemanager.GetString("trnsyr"); break;
                     case "soto": name = MainWindow.resourcemanager.GetString("trnsoto"); break;
-                  
+                    case "other": name = MainWindow.resourcemanager.GetString("trnother"); break;
                     default: break;
                 }
                 return name;

@@ -117,27 +117,14 @@ namespace BookAccountApp.View.reports
             //officeSysAirline totalOperations totalPaid
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_side, MainWindow.resourcemanager.GetString("officeSysAirline"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sideValue, MainWindow.resourcemanager.GetString("trCompanyName"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_recipient, MainWindow.resourcemanager.GetString("trRecepientHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_recivedFrom, MainWindow.resourcemanager.GetString("recivedFromHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, MainWindow.resourcemanager.GetString("trCashHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_opDate, MainWindow.resourcemanager.GetString("opDateHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-
+        
             txt_invoicePrintButton.Text = MainWindow.resourcemanager.GetString("printInvoice");
             txt_invoicePreviewButton.Text = MainWindow.resourcemanager.GetString("previewInvoice");
             txt_invoicePdfButton.Text = MainWindow.resourcemanager.GetString("electronicInvoice");
             //btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_fromDateSearch, MainWindow.resourcemanager.GetString("fromDate"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_toDateSearch, MainWindow.resourcemanager.GetString("toDate"));
-            //txt_exportDocsButton.Text = MainWindow.resourcemanager.GetString("docExport");
-            //txt_uploadDocsButton.Text = MainWindow.resourcemanager.GetString("docUpload");
-            //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
-
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_custlevel, MainWindow.resourcemanager.GetString("trLevelHint"));
-            //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
-
+       
             //   paymentsStss            
             dg_paymentsSts.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
             dg_paymentsSts.Columns[1].Header = MainWindow.resourcemanager.GetString("sideOrResponseble");
@@ -483,30 +470,53 @@ namespace BookAccountApp.View.reports
 
             txt_totalWorthy.Text = HelpClass.DecTostring(totalUsd);
             txt_totalWorthysyp.Text = HelpClass.DecTostring(totalSyp);
-            if (totalUsd==0)
+
+         
+            if (btnState == "to")
+            {
+              
+
+                txt_totalPay.Text = HelpClass.DecTostring(sumdepositUsd);
+                txt_totalPaysyp.Text = HelpClass.DecTostring(sumdepositSyp);
+                txt_totalPayTitle.Text = MainWindow.resourcemanager.GetString("totalDeposit");
+            }
+            else
+            {
+                //on
+             
+                txt_totalPay.Text = HelpClass.DecTostring(sumpayUsd);
+                txt_totalPaysyp.Text = HelpClass.DecTostring(sumpaySyp);
+
+                txt_totalPayTitle.Text = MainWindow.resourcemanager.GetString("totalPaid");
+            }
+            totalvisiblity();
+        }
+        private void totalvisiblity()
+        {
+            if (totalUsd == 0)
             {
                 txt_totalWorthy.Visibility = Visibility.Collapsed;
                 tb_moneyIconwusd.Visibility = Visibility.Collapsed;
-          
+
             }
             else
             {
                 txt_totalWorthy.Visibility = Visibility.Visible;
                 tb_moneyIconwusd.Visibility = Visibility.Visible;
-                tb_plusw.Visibility = Visibility.Visible;
+
             }
             if (totalSyp == 0)
             {
                 txt_totalWorthysyp.Visibility = Visibility.Collapsed;
                 tb_moneyIconwsyp.Visibility = Visibility.Collapsed;
-           
+
             }
             else
             {
                 txt_totalWorthysyp.Visibility = Visibility.Visible;
                 tb_moneyIconwsyp.Visibility = Visibility.Visible;
             }
-            if (totalUsd==0|| totalSyp==0)
+            if (totalUsd == 0 || totalSyp == 0)
             {
                 tb_plusw.Visibility = Visibility.Collapsed;
             }
@@ -514,9 +524,10 @@ namespace BookAccountApp.View.reports
             {
                 tb_plusw.Visibility = Visibility.Visible;
             }
+
             if (btnState == "to")
             {
-                if (sumdepositUsd==0)
+                if (sumdepositUsd == 0)
                 {
                     txt_totalPay.Visibility = Visibility.Collapsed;
                     tb_moneyIcon.Visibility = Visibility.Collapsed;
@@ -544,9 +555,6 @@ namespace BookAccountApp.View.reports
                 {
                     tb_plus.Visibility = Visibility.Visible;
                 }
-                txt_totalPay.Text = HelpClass.DecTostring(sumdepositUsd);
-                txt_totalPaysyp.Text = HelpClass.DecTostring(sumdepositSyp);
-                txt_totalPayTitle.Text = MainWindow.resourcemanager.GetString("totalDeposit");
             }
             else
             {
@@ -580,18 +588,14 @@ namespace BookAccountApp.View.reports
                 {
                     tb_plus.Visibility = Visibility.Visible;
                 }
-                txt_totalPay.Text = HelpClass.DecTostring(sumpayUsd);
-                txt_totalPaysyp.Text = HelpClass.DecTostring(sumpaySyp);
-
-                txt_totalPayTitle.Text = MainWindow.resourcemanager.GetString("totalPaid");
             }
-        }
-        #endregion
-        #endregion
+    }
+            #endregion
+            #endregion
 
-        #region validate - clearValidate - textChange - lostFocus - . . . . 
+            #region validate - clearValidate - textChange - lostFocus - . . . . 
 
-        void Clear()
+            void Clear()
         {
             //this.DataContext = new PaymentsSts();
             cb_side.SelectedIndex = -1;
@@ -694,38 +698,47 @@ namespace BookAccountApp.View.reports
 
         public void BuildReport()
         {
-            /*
-            //string firstTitle = "paymentsReport";
-            ////string secondTitle = "";
-            ////string subTitle = "";
-            //string Title = "";
-
             List<ReportParameter> paramarr = new List<ReportParameter>();
-
-            string addpath;
+            string startDate = "";
+            string endDate = "";
+            string searchval = "";
+            string Allchk = "";
+            //  List<string> invTypelist = new List<string>();
             bool isArabic = ReportCls.checkLang();
+            string all = MainWindow.resourcemanagerreport.GetString("trAll");
+            string addpath;
+
             //if (isArabic)
             //{
-            addpath = @"\Reports\Sale\ArSales.rdlc";
+            addpath = @"\Reports\statisticReports\Ar\ArPayments.rdlc";
+            //}
+            //else addpath = @"\Reports\Account\En\PayAccReport.rdlc";
 
-            //}
-            //else
-            //{
-            //    addpath = @"\Reports\SectionData\En\EnPaymentsStss.rdlc";
-            //}
-            //D:\myproj\posproject3\BookAccountApp\BookAccountApp\Reports\statisticReports\En\EnBook.rdlc
+            //filter
+            startDate = dp_fromDateSearch.SelectedDate != null ? clsReports.dateFrameConverter(dp_fromDateSearch.SelectedDate) : "";
+            endDate = dp_toDateSearch.SelectedDate != null ? clsReports.dateFrameConverter(dp_toDateSearch.SelectedDate) : "";
+            Allchk = dp_fromDateSearch.SelectedDate == null && dp_toDateSearch.SelectedDate == null ? all : "";
+            paramarr.Add(new ReportParameter("StartDateVal", startDate));
+            paramarr.Add(new ReportParameter("EndDateVal", endDate));
+            paramarr.Add(new ReportParameter("alldateval", Allchk));
+            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trSearch", MainWindow.resourcemanagerreport.GetString("trSearch")));
+            paramarr.Add(new ReportParameter("trStartDate", MainWindow.resourcemanagerreport.GetString("trStartDate")));
+            paramarr.Add(new ReportParameter("trEndDate", MainWindow.resourcemanagerreport.GetString("trEndDate")));
+            searchval = tb_search.Text;
+            paramarr.Add(new ReportParameter("searchVal", searchval));
+            //end filter
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("financeChange")));
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-            //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-            string title = MainWindow.resourcemanagerreport.GetString("book_sales") + " / " + MainWindow.resourcemanagerreport.GetString("syr");
-            paramarr.Add(new ReportParameter("trTitle", title));
-            clsReports.SaleReport(paymentsStssQuery, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
+
+            ReportCls.checkLang();
+            //cashesQueryExcel = cashesQuery.ToList();
+            clsReports.PaymentsChange(paymentsStssQuery, rep, reppath, paramarr);
+            //clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
             rep.SetParameters(paramarr);
-
             rep.Refresh();
-            */
         }
 
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
@@ -857,6 +870,7 @@ namespace BookAccountApp.View.reports
             }
 
         }
+
 
         private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
         {

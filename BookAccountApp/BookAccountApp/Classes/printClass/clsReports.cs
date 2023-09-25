@@ -494,8 +494,39 @@ passwordSoto
      
             rep.DataSources.Add(new ReportDataSource("DataSet", cash));
         }
+        public static void PaymentsChange(IEnumerable<PaymentsSts> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            List<PaymentsSts> cash = JsonConvert.DeserializeObject<List<PaymentsSts>>(JsonConvert.SerializeObject(Query));
 
- 
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+
+            ReportCls repcls = new ReportCls();
+            foreach (var c in cash)
+            {
+
+                c.cash = decimal.Parse(HelpClass.DecTostring(c.cash));
+                 c.sideAr = repcls.sideNameConverterRep(c);
+                c.currency = repcls.currencyConverter(c.currency);
+                c.stropDate = dateFrameConverter(c.opDate);
+
+            }
+
+            paramarr.Add(new ReportParameter("trNo", MainWindow.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("sideOrResponseble", MainWindow.resourcemanagerreport.GetString("sideOrResponseble")));
+            //paramarr.Add(new ReportParameter("bookSystem", MainWindow.resourcemanagerreport.GetString("bookSystem")));
+
+            //paramarr.Add(new ReportParameter("airlineFlightSys", MainWindow.resourcemanagerreport.GetString("airlineFlightSys")));
+            paramarr.Add(new ReportParameter("trOffice", MainWindow.resourcemanagerreport.GetString("trDescription")));
+            paramarr.Add(new ReportParameter("trCashTooltip", MainWindow.resourcemanagerreport.GetString("trCashTooltip")));
+            paramarr.Add(new ReportParameter("currency", MainWindow.resourcemanagerreport.GetString("currency")));
+            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
+
+            rep.DataSources.Add(new ReportDataSource("DataSet", cash));
+        }
+
+
 
         public static void PaymentsSale(IEnumerable<PayOp> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {

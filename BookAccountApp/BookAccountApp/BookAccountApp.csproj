@@ -757,6 +757,9 @@
     <Content Include="Reports\statisticReports\Ar\ArPaytrans.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\statisticReports\Ar\ArPayments.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\logo.png" />
     <Content Include="Thumb\office\tmp.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -817,9 +820,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\statisticReports\En\EnBook.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\statisticReports\Ar\ArPayments.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\statisticReports\En\EnPayments.rdlc">

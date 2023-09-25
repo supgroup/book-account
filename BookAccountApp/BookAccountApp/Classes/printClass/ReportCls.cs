@@ -1420,7 +1420,31 @@ RecivedPurpose
                     case "system": name = payModel.systemName; break;
                     case "syr": name = MainWindow.resourcemanager.GetString("trnsyr"); break;
                     case "soto": name = MainWindow.resourcemanager.GetString("trnsoto"); break;
+                    case "other": name = MainWindow.resourcemanager.GetString("trnother"); break;
+                    default: break;
+                }
+                return name;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+        public string sideNameConverterRep(PaymentsSts payModel)
+        {
+            try
+            {
 
+                string name = "";
+                switch (payModel.side)
+                {
+
+                    case "passenger": name = MainWindow.resourcemanager.GetString("thePassenger") + " " + payModel.passenger; break;
+                    case "office": name = MainWindow.resourcemanager.GetString("trnoffice") + " " + payModel.officeName; break;
+                    case "system": name = payModel.systemName; break;
+                    case "syr": name = MainWindow.resourcemanager.GetString("trnsyr"); break;
+                    case "soto": name = MainWindow.resourcemanager.GetString("trnsoto"); break;
+                    case "other": name = MainWindow.resourcemanager.GetString("trnother"); break;
                     default: break;
                 }
                 return name;
