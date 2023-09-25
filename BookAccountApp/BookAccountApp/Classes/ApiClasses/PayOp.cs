@@ -1515,7 +1515,8 @@ namespace BookAccountApp.ApiClasses
                 payOpModel.systemId = serviceModel.systemId;
                 payOpModel.syValue = serviceModel.syValue;
                 payOpModel.exchangeId = serviceModel.exchangeId;
-                payOpModel.currency = serviceModel.currency;
+                //payOpModel.currency = serviceModel.currency;
+                payOpModel.currency = "usd";
                 payOpModel.fromSide = "";
                 payOpModel.processType = "service";
                 // payOpModel.sourceId = null,

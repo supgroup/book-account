@@ -218,6 +218,18 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
+                            <DataGridTextColumn Width="*"  Header="currency"  Binding="{Binding Path=currency,Converter={StaticResource currencyConverter}}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding isActive}" Value="0">
+                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
                             <DataGridTextColumn Width="*"  Header="opDate" Binding="{Binding Path=opDate,Converter={StaticResource dateFrameConverter}}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -472,18 +484,18 @@
                                 Background="{x:Null}" 
                                     Height="40" 
                                     BorderBrush="{StaticResource MainColor}" 
-                x:Name="btn_for" Click="Btn_for_Click"
-            Margin="5,1,5,1" IsEnabled="True"  Content="for"
-                                    Foreground="{StaticResource MainColor}">
+                x:Name="btn_to"  
+            Margin="5,1,5,1" IsEnabled="True"  Content="to"
+                                    Foreground="{StaticResource MainColor}" Click="Btn_to_Click" >
                             </Button>
                             <Button Grid.Column="2"  Padding="10 5" 
                         Background="{x:Null}" 
                                     Height="40" 
                         BorderBrush="{StaticResource LightGrey}" 
-                            x:Name="btn_to" Click="Btn_to_Click"
+                            x:Name="btn_on"  
                         Margin="5,1,10,1" IsEnabled="True" 
-                                    Content="to"
-                        Foreground="{StaticResource LightGrey}">
+                                    Content="on"
+                        Foreground="{StaticResource LightGrey}" Click="Btn_on_Click">
                             </Button>
                         </Grid>
                     </StackPanel>
@@ -501,6 +513,10 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                   
                     
@@ -508,17 +524,30 @@
                     FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
                                Foreground="{StaticResource MainColor}"
                     FontWeight="Bold" />
-                  
-                    <TextBlock Text="0" x:Name="txt_totalPay" Margin="10" Padding="1,0,1,0"
-                                Grid.Column="1"
+
+                    <TextBlock Text="0" x:Name="txt_totalPay" Margin="10" Padding="1,0,1,0" Grid.Column="1"
+                                
                                FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
            Foreground="{StaticResource Grey}"
             FontWeight="Regular" />
-                    <TextBlock Grid.Row="1"   x:Name="tb_moneyIcon" Grid.Column="1" Margin="0,0,1,0"  
+                    <TextBlock Grid.Row="1"   x:Name="tb_moneyIcon" Grid.Column="2" Margin="0,0,1,0"  
                        Foreground="#4E4E4E" Text="$" 
                         HorizontalAlignment="Right" VerticalAlignment="Center"
+                                  FontWeight="Bold"  FontSize="14"/>
+                    <TextBlock Grid.Row="1"   x:Name="tb_plus" Grid.Column="3" Margin="0,0,1,0"  
+                       Foreground="#4E4E4E" Text="+" 
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
                                   FontWeight="Bold"  FontSize="12"/>
-                    
+                    <TextBlock Text="0" x:Name="txt_totalPaysyp" Margin="10" Padding="1,0,1,0" Grid.Column="4"
+                                
+                               FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+           Foreground="{StaticResource Grey}"
+            FontWeight="Regular" />
+                    <TextBlock Grid.Row="1"   x:Name="tb_moneyIconsyp" Grid.Column="5" Margin="0,0,1,0"  
+                       Foreground="#4E4E4E" Text="SYP" 
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                                  FontWeight="Bold"  FontSize="12"/>
+
                 </Grid>
             </Border>
             <Border Grid.Row="2"
@@ -529,17 +558,38 @@ Background="White">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="totalWorthy" x:Name="txt_totalWorthyTitle" Margin="10" 
                 FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
                            Foreground="{StaticResource MainColor}"
                 FontWeight="Bold" />
-                    <TextBlock Text="0" x:Name="txt_totalWorthy" Margin="10" 
-                            Grid.Column="1"
+                    <TextBlock Text="0" x:Name="txt_totalWorthy" Margin="10" Grid.Column="1"
+                            
                            FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
        Foreground="{StaticResource Grey}"
         FontWeight="Regular" />
-
+                    <TextBlock Grid.Row="1"   x:Name="tb_moneyIconwusd" Grid.Column="2" Margin="0,0,1,0"  
+                       Foreground="#4E4E4E" Text="$" 
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                                  FontWeight="Bold"  FontSize="14"/>
+                    <TextBlock Grid.Row="1"   x:Name="tb_plusw" Grid.Column="3" Margin="0,0,1,0"  
+                       Foreground="#4E4E4E" Text="+" 
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                                  FontWeight="Bold"  FontSize="12"/>
+                  
+                    <TextBlock Text="0" x:Name="txt_totalWorthysyp" Margin="10" Grid.Column="4"
+                            
+                           FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+       Foreground="{StaticResource Grey}"
+        FontWeight="Regular" />
+                    <TextBlock Grid.Row="1"   x:Name="tb_moneyIconwsyp" Grid.Column="5" Margin="0,0,1,0"  
+                       Foreground="#4E4E4E" Text="SYP" 
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                                  FontWeight="Bold"  FontSize="14"/>
                 </Grid>
             </Border>
             <Border Grid.Row="3"

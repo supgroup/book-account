@@ -3310,4 +3310,10 @@ Please add Email in setting</value>
   <data name="transaction" xml:space="preserve">
     <value>transaction</value>
   </data>
+  <data name="paySys" xml:space="preserve">
+    <value>Pay System</value>
+  </data>
+  <data name="totalDeposit" xml:space="preserve">
+    <value>Total Deposit</value>
+  </data>
 </root>

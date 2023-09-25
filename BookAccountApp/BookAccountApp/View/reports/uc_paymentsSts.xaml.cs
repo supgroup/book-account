@@ -67,9 +67,15 @@ namespace BookAccountApp.View.reports
         decimal sumpaySyp = 0;
         decimal sumdepositUsd = 0;
         decimal sumdepositSyp = 0;
+          decimal totalUsd = 0;
+        decimal totalSyp = 0;
+        string side = "";
+        string paysysValue = "";
+
         PayOp PayOpRow = new PayOp();
         byte tgl_paymentsStsstate;
         string searchText = "";
+        string btnState = "to";//"to"-"on"
         public static List<string> requiredControlList;
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -104,8 +110,8 @@ namespace BookAccountApp.View.reports
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
             txt_title.Text = MainWindow.resourcemanager.GetString("accountPerson");
-            btn_for.Content = MainWindow.resourcemanager.GetString("for");
-            btn_to.Content = MainWindow.resourcemanager.GetString("onhim");
+            btn_to.Content = MainWindow.resourcemanager.GetString("for");
+            btn_on.Content = MainWindow.resourcemanager.GetString("onhim");
             txt_totalPayTitle.Text = MainWindow.resourcemanager.GetString("totalPaid");
             txt_totalWorthyTitle.Text = MainWindow.resourcemanager.GetString("totalOperations");
             //officeSysAirline totalOperations totalPaid
@@ -139,7 +145,8 @@ namespace BookAccountApp.View.reports
             dg_paymentsSts.Columns[3].Header = MainWindow.resourcemanager.GetString("trRecepient");
      
             dg_paymentsSts.Columns[4].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
-            dg_paymentsSts.Columns[5].Header = MainWindow.resourcemanager.GetString("payDate");
+            dg_paymentsSts.Columns[5].Header = MainWindow.resourcemanager.GetString("currency");
+            dg_paymentsSts.Columns[6].Header = MainWindow.resourcemanager.GetString("payDate");
             //dg_paymentsSts.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
@@ -283,9 +290,9 @@ namespace BookAccountApp.View.reports
                 await RefreshPaymentsStssList();
 
             searchText = tb_search.Text.ToLower();
-            string side = cb_side.SelectedItem == null ? "" : (cb_side.SelectedValue).ToString();
+            side = cb_side.SelectedItem == null ? "" : (cb_side.SelectedValue).ToString();
             int sidevalId =( side != "paysys" && side != "other" && side != "") ? Convert.ToInt32(cb_sideValue.SelectedValue) : 0;
-            string paysysValue = (side == "paysys" && cb_sideValue.SelectedItem != null )? (cb_sideValue.SelectedValue).ToString() : "";
+             paysysValue = (side == "paysys" && cb_sideValue.SelectedItem != null )? (cb_sideValue.SelectedValue).ToString() : "";
             paymentsStssQuery = paymentsStss.Where(s =>( (searchText == "" ? true :
             (
           (s.code == null ? false : (s.code.ToLower().Contains(searchText))) ||
@@ -314,6 +321,8 @@ namespace BookAccountApp.View.reports
             );
             //(cb_side.SelectedValue).ToString() == "passenger"
             RefreshPaymentsStssView();
+
+            sumAll();
         }
         async Task<IEnumerable<PaymentsSts>> RefreshPaymentsStssList()
         {
@@ -369,19 +378,13 @@ namespace BookAccountApp.View.reports
             cb_sideValue.DisplayMemberPath = "systemName";
             cb_sideValue.ItemsSource = bookSysList;
         }
+
+
         #endregion
 
         #region sum
-        private void viewontoSumUsd(string side)
-        {
-            //txt_totalPay.Text = getTotalPayUsd(side);
-            
-        }
-        private void viewTotalSum(string side)
-        {
-            //txt_totalWorthy.Text = getTotalPayments(side);
-             
-        }
+        
+
         private decimal getTotalPayUsd(string side,string paysys)
         {
           //  string balance = "";
@@ -450,18 +453,138 @@ namespace BookAccountApp.View.reports
             // balance = HelpClass.DecTostring(amount);
             return amount;
         }
-        private decimal getTotalUsd()
-        {
-            decimal amount = 0;
-            amount = sumpayUsd - sumdepositUsd;
-            return amount;
-        }
+        //private decimal getTotalUsd()
+        //{
+        //    sumpayUsd = getTotalPayUsd(side, paysysValue);
+        //    sumdepositUsd = getTotalDepositUsd(side);
+        //    sumpaySyp = getTotalPaySyp(side);
+        //    sumdepositSyp = getTotalDepositSyp(side);
 
-        private decimal getTotalSyp()
+
+        //   amount = sumpayUsd - sumdepositUsd;
+
+        //    return amount;
+        //}
+
+        //private decimal getTotalSyp()
+        //{
+        //    decimal amount = 0;
+        //    amount = sumpaySyp - sumdepositSyp;
+        //    return amount;
+        //}
+        private void sumAll()
         {
-            decimal amount = 0;
-            amount = sumpaySyp - sumdepositSyp;
-            return amount;
+            sumpayUsd = getTotalPayUsd(side, paysysValue);
+            sumdepositUsd = getTotalDepositUsd(side);
+            sumpaySyp = getTotalPaySyp(side);
+            sumdepositSyp = getTotalDepositSyp(side);
+            totalUsd = sumpayUsd - sumdepositUsd;
+            totalSyp = sumpaySyp - sumdepositSyp;
+
+            txt_totalWorthy.Text = HelpClass.DecTostring(totalUsd);
+            txt_totalWorthysyp.Text = HelpClass.DecTostring(totalSyp);
+            if (totalUsd==0)
+            {
+                txt_totalWorthy.Visibility = Visibility.Collapsed;
+                tb_moneyIconwusd.Visibility = Visibility.Collapsed;
+          
+            }
+            else
+            {
+                txt_totalWorthy.Visibility = Visibility.Visible;
+                tb_moneyIconwusd.Visibility = Visibility.Visible;
+                tb_plusw.Visibility = Visibility.Visible;
+            }
+            if (totalSyp == 0)
+            {
+                txt_totalWorthysyp.Visibility = Visibility.Collapsed;
+                tb_moneyIconwsyp.Visibility = Visibility.Collapsed;
+           
+            }
+            else
+            {
+                txt_totalWorthysyp.Visibility = Visibility.Visible;
+                tb_moneyIconwsyp.Visibility = Visibility.Visible;
+            }
+            if (totalUsd==0|| totalSyp==0)
+            {
+                tb_plusw.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                tb_plusw.Visibility = Visibility.Visible;
+            }
+            if (btnState == "to")
+            {
+                if (sumdepositUsd==0)
+                {
+                    txt_totalPay.Visibility = Visibility.Collapsed;
+                    tb_moneyIcon.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    txt_totalPay.Visibility = Visibility.Visible;
+                    tb_moneyIcon.Visibility = Visibility.Visible;
+                }
+                if (sumdepositSyp == 0)
+                {
+                    txt_totalPaysyp.Visibility = Visibility.Collapsed;
+                    tb_moneyIconsyp.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    txt_totalPaysyp.Visibility = Visibility.Visible;
+                    tb_moneyIconsyp.Visibility = Visibility.Visible;
+                }
+                if (sumdepositUsd == 0 || sumdepositSyp == 0)
+                {
+                    tb_plus.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    tb_plus.Visibility = Visibility.Visible;
+                }
+                txt_totalPay.Text = HelpClass.DecTostring(sumdepositUsd);
+                txt_totalPaysyp.Text = HelpClass.DecTostring(sumdepositSyp);
+                txt_totalPayTitle.Text = MainWindow.resourcemanager.GetString("totalDeposit");
+            }
+            else
+            {
+                //on
+                if (sumpayUsd == 0)
+                {
+                    txt_totalPay.Visibility = Visibility.Collapsed;
+                    tb_moneyIcon.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    txt_totalPay.Visibility = Visibility.Visible;
+                    tb_moneyIcon.Visibility = Visibility.Visible;
+                }
+                if (sumpaySyp == 0)
+                {
+                    txt_totalPaysyp.Visibility = Visibility.Collapsed;
+                    tb_moneyIconsyp.Visibility = Visibility.Collapsed;
+
+                }
+                else
+                {
+                    txt_totalPaysyp.Visibility = Visibility.Visible;
+                    tb_moneyIconsyp.Visibility = Visibility.Visible;
+                }
+                if (sumpayUsd == 0 || sumpaySyp == 0)
+                {
+                    tb_plus.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    tb_plus.Visibility = Visibility.Visible;
+                }
+                txt_totalPay.Text = HelpClass.DecTostring(sumpayUsd);
+                txt_totalPaysyp.Text = HelpClass.DecTostring(sumpaySyp);
+
+                txt_totalPayTitle.Text = MainWindow.resourcemanager.GetString("totalPaid");
+            }
         }
         #endregion
         #endregion
@@ -741,6 +864,139 @@ namespace BookAccountApp.View.reports
         }
 
 
+        #region VoucherReport
+        public void BuildVoucherReport()
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            //if (isArabic)
+            //{
+            if (FillCombo.docPapersize == "A4")
+            {
+                addpath = @"\Reports\Account\Ar\Voucher\ArPayReportA4.rdlc";
+            }
+            else //A5
+            {
+                addpath = @"\Reports\Account\Ar\Voucher\ArPayReport.rdlc";
+            }
+
+            //}
+            //else
+            //{
+            //    if (FillCombo.docPapersize == "A4")
+            //    {
+            //        addpath = @"\Reports\Account\En\PayReportA4.rdlc";
+            //    }
+            //    else //A5
+            //    {
+            //        addpath = @"\Reports\Account\En\PayReport.rdlc";
+            //    }
+            //}
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            rep.ReportPath = reppath;
+            rep.DataSources.Clear();
+            rep.EnableExternalImages = true;
+            //  servicemodel= await servicemodel.GetByID((int)payOp.serviceId);
+            paramarr = reportclass.fillPayReport(PayOpRow);
+            clsReports.Header(paramarr);
+            rep.SetParameters(paramarr);
+            rep.Refresh();
+        }
+
+        private void Btn_invoicePrint_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (dg_paymentsSts.SelectedIndex != -1)
+                {
+
+
+                    #region
+                    BuildVoucherReport();
+                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
+                    #endregion
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_invoicePreview_Click(object sender, RoutedEventArgs e)
+        {
+            //preview
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (dg_paymentsSts.SelectedIndex != -1)
+                {
+
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+
+                    string pdfpath = "";
+                    //
+                    pdfpath = @"\Thumb\report\temp.pdf";
+                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                    BuildVoucherReport();
+
+                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                    wd_previewPdf w = new wd_previewPdf();
+                    w.pdfPath = pdfpath;
+                    if (!string.IsNullOrEmpty(w.pdfPath))
+                    {
+                        w.ShowDialog();
+                        w.wb_pdfWebViewer.Dispose();
+
+
+                    }
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_invoicePdf_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (dg_paymentsSts.SelectedIndex != -1)
+                {
+
+                    #region
+                    BuildVoucherReport();
+
+                    saveFileDialog.Filter = "PDF|*.pdf;";
+
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        string filepath = saveFileDialog.FileName;
+                        LocalReportExtensions.ExportToPDF(rep, filepath);
+                    }
+                    #endregion
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        #endregion
 
 
 
@@ -749,42 +1005,10 @@ namespace BookAccountApp.View.reports
 
 
 
-        private void Btn_addAirline_Click(object sender, RoutedEventArgs e)
-        {
-            /*
-          try
-          {
-              if (sender != null)
-                  HelpClass.StartAwait(grid_main);
-              Window.GetWindow(this).Opacity = 0.2;
-              wd_flight w = new wd_flight();
-              w.ShowDialog();
-              await FillCombo.fillFlightTable(cb_flight);
-              Window.GetWindow(this).Opacity = 1;
-
-              if (sender != null)
-                  HelpClass.EndAwait(grid_main);
-          }
-          catch (Exception ex)
-          {
-              Window.GetWindow(this).Opacity = 1;
-              if (sender != null)
-                  HelpClass.EndAwait(grid_main);
-              HelpClass.ExceptionMessage(ex, this);
-          }
-          */
-        }
 
 
-        private void Btn_uploadDocs_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
 
-        private void Btn_exportDocs_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
         private async void Dp_fromDateSearch_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -829,66 +1053,10 @@ namespace BookAccountApp.View.reports
 
 
 
-        private void Btn_addOperation_Click(object sender, RoutedEventArgs e)
-        {
-            /*  
-      try
-      {
-          if (sender != null)
-              HelpClass.StartAwait(grid_main);
-          Window.GetWindow(this).Opacity = 0.2;
-          wd_flight w = new wd_flight();
-          w.ShowDialog();
-          await FillCombo.fillFlightTable(cb_flight);
-          Window.GetWindow(this).Opacity = 1;
+    
+    
 
-          if (sender != null)
-              HelpClass.EndAwait(grid_main);
-      }
-      catch (Exception ex)
-      {
-          Window.GetWindow(this).Opacity = 1;
-          if (sender != null)
-              HelpClass.EndAwait(grid_main);
-          HelpClass.ExceptionMessage(ex, this);
-      }
-       */
-        }
-
-        private void Btn_invoicePrint_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Btn_invoicePreview_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Btn_invoicePdf_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Btn_for_Click(object sender, RoutedEventArgs e)
-        {
-            #region
-            btn_for.BorderBrush =
-            btn_for.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
-            btn_to.BorderBrush =
-            btn_to.Foreground = Application.Current.Resources["LightGrey"] as SolidColorBrush;
-            #endregion
-        }
-
-        private void Btn_to_Click(object sender, RoutedEventArgs e)
-        {
-            #region
-            btn_for.BorderBrush =
-            btn_for.Foreground = Application.Current.Resources["LightGrey"] as SolidColorBrush;
-            btn_to.BorderBrush =
-            btn_to.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
-            #endregion
-        }
+     
 
         private async void Cb_side_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -924,6 +1092,8 @@ namespace BookAccountApp.View.reports
                     }
                     else if ((cb_side.SelectedValue).ToString() == "paysys")
                     {
+                        MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sideValue, MainWindow.resourcemanager.GetString("paySys"));
+
                         cb_sideValue.SelectedItem = null;
                         brdr_name.Visibility = Visibility.Visible;
                         //cb_sideValue.Visibility = Visibility.Visible;
@@ -1040,6 +1210,31 @@ namespace BookAccountApp.View.reports
 
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+
+     
+        private void Btn_on_Click(object sender, RoutedEventArgs e)
+        {
+            #region
+            btn_to.BorderBrush =
+            btn_to.Foreground = Application.Current.Resources["LightGrey"] as SolidColorBrush;
+            btn_on.BorderBrush =
+            btn_on.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            #endregion
+            btnState = "on";
+            sumAll();
+        }
+
+        private void Btn_to_Click(object sender, RoutedEventArgs e)
+        {
+            #region
+            btn_to.BorderBrush =
+            btn_to.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            btn_on.BorderBrush =
+            btn_on.Foreground = Application.Current.Resources["LightGrey"] as SolidColorBrush;
+            #endregion
+            btnState = "to";
+            sumAll();
         }
     }
 }

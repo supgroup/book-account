@@ -3319,4 +3319,10 @@
   <data name="transaction" xml:space="preserve">
     <value>الحركة</value>
   </data>
+  <data name="paySys" xml:space="preserve">
+    <value>نظام الدفع</value>
+  </data>
+  <data name="totalDeposit" xml:space="preserve">
+    <value>اجمالي القبض</value>
+  </data>
 </root>

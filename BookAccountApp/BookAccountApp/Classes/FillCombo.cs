@@ -968,8 +968,10 @@ namespace BookAccountApp.Classes
         public static IEnumerable<PaySides> PaySidesSysList;
         static public async Task fillpaySideSys(ComboBox combo, string type)
         {
-            PaySidesSysList = await PaySidesModel.GetAll();
-            PaySidesSysList = PaySidesList.Where(s => s.notes.Contains(type) && s.isActive == true && (s.code=="syr"|| s.code == "soto")).ToList();
+            PaySidesList = await PaySidesModel.GetAll();
+            //PaySidesSysList = PaySidesList.Where(s => s.notes.Contains(type) && s.isActive == true && (s.code=="syr"|| s.code == "soto")).ToList();
+            PaySidesSysList = PaySidesList.Where(s => s.isActive == true && (s.code == "syr" || s.code == "soto")).ToList();
+
             combo.ItemsSource = PaySidesSysList;
             // combo.SelectedValuePath = "paysideId";
             combo.SelectedValuePath = "code";

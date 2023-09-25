@@ -125,7 +125,7 @@ paySysTrans
                 MainWindow.mainWindow.second = button.Tag.ToString();
                 MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
-                uc_systemTransactions ucbsys = new uc_systemTransactions();
+                uc_bookSts ucbsys = new uc_bookSts();
                 grid_main.Children.Add(ucbsys);
                 //grid_main.Children.Add(uc_bookSts.Instance);
             }
