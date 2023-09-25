@@ -502,15 +502,22 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
+                  
+                    
                     <TextBlock Text="totalPay" x:Name="txt_totalPayTitle" Margin="10" 
                     FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
                                Foreground="{StaticResource MainColor}"
                     FontWeight="Bold" />
-                    <TextBlock Text="0" x:Name="txt_totalPay" Margin="10" 
+                  
+                    <TextBlock Text="0" x:Name="txt_totalPay" Margin="10" Padding="1,0,1,0"
                                 Grid.Column="1"
                                FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
            Foreground="{StaticResource Grey}"
             FontWeight="Regular" />
+                    <TextBlock Grid.Row="1"   x:Name="tb_moneyIcon" Grid.Column="1" Margin="0,0,1,0"  
+                       Foreground="#4E4E4E" Text="$" 
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                                  FontWeight="Bold"  FontSize="12"/>
                     
                 </Grid>
             </Border>

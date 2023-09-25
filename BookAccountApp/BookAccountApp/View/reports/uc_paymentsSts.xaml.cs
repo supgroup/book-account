@@ -58,6 +58,15 @@ namespace BookAccountApp.View.reports
         IEnumerable<PaymentsSts> officeList;
         IEnumerable<PaymentsSts> paySysList;
         IEnumerable<PaymentsSts> bookSysList;
+        //
+        IEnumerable<PaymentsSts>payUsdList;
+        IEnumerable<PaymentsSts> paySypList;
+        IEnumerable<PaymentsSts> depositUsdList;
+        IEnumerable<PaymentsSts> depositSypList;
+        decimal sumpayUsd = 0;
+        decimal sumpaySyp = 0;
+        decimal sumdepositUsd = 0;
+        decimal sumdepositSyp = 0;
         PayOp PayOpRow = new PayOp();
         byte tgl_paymentsStsstate;
         string searchText = "";
@@ -359,6 +368,100 @@ namespace BookAccountApp.View.reports
             cb_sideValue.SelectedValuePath = "systemId";
             cb_sideValue.DisplayMemberPath = "systemName";
             cb_sideValue.ItemsSource = bookSysList;
+        }
+        #endregion
+
+        #region sum
+        private void viewontoSumUsd(string side)
+        {
+            //txt_totalPay.Text = getTotalPayUsd(side);
+            
+        }
+        private void viewTotalSum(string side)
+        {
+            //txt_totalWorthy.Text = getTotalPayments(side);
+             
+        }
+        private decimal getTotalPayUsd(string side,string paysys)
+        {
+          //  string balance = "";
+            decimal amount = 0;
+            //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
+            if (side== "paysys")
+            {
+                amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == paysys).Sum(s => s.cash);
+            }
+            else
+            {
+                amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.currency == "usd").Sum(s => s.cash);
+            }
+            
+           // balance = HelpClass.DecTostring(amount);
+            return amount;
+        }
+        private decimal getTotalPaySyp(string side )
+        {
+            string balance = "";
+            decimal amount = 0;
+            //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
+            if (side == "paysys")
+            {
+                amount =0;
+            }
+            else
+            {
+                amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.currency == "syp").Sum(s => s.cash);
+            }
+
+            balance = HelpClass.DecTostring(amount);
+            return amount;
+        }
+        private decimal getTotalDepositUsd(string side)
+        {
+            //  string balance = "";
+            decimal amount = 0;
+            //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
+            if (side == "paysys")
+            {
+                amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == "system").Sum(s => s.cash);
+            }
+            else
+            {
+                amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d" && x.currency == "usd").Sum(s => s.cash);
+            }
+
+            // balance = HelpClass.DecTostring(amount);
+            return amount;
+        }
+        private decimal getTotalDepositSyp(string side)
+        {
+            //  string balance = "";
+            decimal amount = 0;
+            //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
+            if (side == "paysys")
+            {
+                amount =0;
+            }
+            else
+            {
+                amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d" && x.currency == "syp").Sum(s => s.cash);
+            }
+
+            // balance = HelpClass.DecTostring(amount);
+            return amount;
+        }
+        private decimal getTotalUsd()
+        {
+            decimal amount = 0;
+            amount = sumpayUsd - sumdepositUsd;
+            return amount;
+        }
+
+        private decimal getTotalSyp()
+        {
+            decimal amount = 0;
+            amount = sumpaySyp - sumdepositSyp;
+            return amount;
         }
         #endregion
         #endregion
@@ -682,11 +785,6 @@ namespace BookAccountApp.View.reports
         {
 
         }
-
-
-
-
-
         private async void Dp_fromDateSearch_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             try
