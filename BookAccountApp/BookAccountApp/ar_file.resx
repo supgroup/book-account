@@ -3319,10 +3319,40 @@
   <data name="transaction" xml:space="preserve">
     <value>الحركة</value>
   </data>
+  <data name="firstHalf" xml:space="preserve">
+    <value>النصف الاول</value>
+  </data>
+  <data name="firstQuarter" xml:space="preserve">
+    <value>الربع الاول</value>
+  </data>
+  <data name="forthQuarter" xml:space="preserve">
+    <value>الربع الرابع</value>
+  </data>
+  <data name="half" xml:space="preserve">
+    <value>نصفي</value>
+  </data>
+  <data name="monthly" xml:space="preserve">
+    <value>شهري</value>
+  </data>
   <data name="paySys" xml:space="preserve">
     <value>نظام الدفع</value>
   </data>
+  <data name="quarter" xml:space="preserve">
+    <value>ربعي</value>
+  </data>
+  <data name="secondHalf" xml:space="preserve">
+    <value>النصف الثاني</value>
+  </data>
+  <data name="secondQuarter" xml:space="preserve">
+    <value>الربع الثاني</value>
+  </data>
+  <data name="therdQuarter" xml:space="preserve">
+    <value>الربع الثالث</value>
+  </data>
   <data name="totalDeposit" xml:space="preserve">
     <value>اجمالي القبض</value>
+  </data>
+  <data name="year" xml:space="preserve">
+    <value>سنة</value>
   </data>
 </root>

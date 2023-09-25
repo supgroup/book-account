@@ -72,6 +72,7 @@ namespace BookAccountApp.View.reports
 
 
                 Keyboard.Focus(cb_duration);
+                FillCombo.fillPeriodParent(cb_duration);
                 await RefreshBookStssList();
                 await Search();
 
@@ -702,6 +703,23 @@ namespace BookAccountApp.View.reports
 
         }
 
-        
+        private async void Cb_duration_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+
+                if (cb_duration.SelectedItem != null)
+                {//passenger office soto other
+                    FillCombo.fillPeriodchild(cb_quarter, cb_duration.SelectedValue.ToString());
+                }
+                //await RefreshBookStssList();
+                //await Search();
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

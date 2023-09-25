@@ -3310,10 +3310,40 @@ Please add Email in setting</value>
   <data name="transaction" xml:space="preserve">
     <value>transaction</value>
   </data>
+  <data name="firstHalf" xml:space="preserve">
+    <value>first Half</value>
+  </data>
+  <data name="firstQuarter" xml:space="preserve">
+    <value>firstQuarter</value>
+  </data>
+  <data name="forthQuarter" xml:space="preserve">
+    <value>forthQuarter</value>
+  </data>
+  <data name="half" xml:space="preserve">
+    <value>Half</value>
+  </data>
+  <data name="monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
   <data name="paySys" xml:space="preserve">
     <value>Pay System</value>
   </data>
+  <data name="quarter" xml:space="preserve">
+    <value>Quarter</value>
+  </data>
+  <data name="secondHalf" xml:space="preserve">
+    <value>second Half</value>
+  </data>
+  <data name="secondQuarter" xml:space="preserve">
+    <value>secondQuarter</value>
+  </data>
+  <data name="therdQuarter" xml:space="preserve">
+    <value>therdQuarter</value>
+  </data>
   <data name="totalDeposit" xml:space="preserve">
     <value>Total Deposit</value>
+  </data>
+  <data name="year" xml:space="preserve">
+    <value>Year</value>
   </data>
 </root>

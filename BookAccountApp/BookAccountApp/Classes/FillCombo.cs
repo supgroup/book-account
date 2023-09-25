@@ -1112,5 +1112,64 @@ namespace BookAccountApp.Classes
                 exchangeValue = (decimal)ExchangeModel.syValue;
             }
         }
+
+        static public void fillPeriodParent(ComboBox combo)
+        {
+            var typelist = new[] {
+                new { Text = MainWindow.resourcemanager.GetString("year")    , Value = "year" },
+                new { Text = MainWindow.resourcemanager.GetString("half")  , Value = "half" },
+                new { Text = MainWindow.resourcemanager.GetString("quarter")    , Value = "q" },
+                new { Text = MainWindow.resourcemanager.GetString("monthly") , Value = "month" },
+              //year
+                 };
+            combo.DisplayMemberPath = "Text";
+            combo.SelectedValuePath = "Value";
+            combo.ItemsSource = typelist;
+
+        }
+        static public void fillPeriodchild(ComboBox combo,string parent)
+        {
+            var typelist = new[] { new { Text = "", Value = "" } };
+            if (parent== "year")
+            {
+
+            }else if (parent == "half")
+            {
+                 typelist = new[] {
+                new { Text = MainWindow.resourcemanager.GetString("firstHalf")    , Value = "1" },
+                new { Text = MainWindow.resourcemanager.GetString("secondHalf")  , Value = "2" },
+                 };
+            }
+            else if (parent == "q")
+            {
+                typelist = new[] {
+                new { Text = MainWindow.resourcemanager.GetString("firstQuarter")    , Value = "1" },
+                new { Text = MainWindow.resourcemanager.GetString("secondQuarter")  , Value = "2" },
+                 new { Text = MainWindow.resourcemanager.GetString("therdQuarter")    , Value = "3" },
+                new { Text = MainWindow.resourcemanager.GetString("forthQuarter")  , Value = "4" },
+                 };
+            }else if(parent == "month")
+            {
+                typelist = new[] {
+                new { Text = "1"  , Value = "1" },
+                new { Text = "2", Value = "2" },
+                 new { Text = "3", Value = "3" },
+                new { Text ="4", Value = "4" },
+                 new { Text = "5"  , Value =  "5" },
+                new { Text = "6", Value ="6" },
+                 new { Text = "7", Value = "7" },
+                new { Text ="8", Value = "8" },
+                 new { Text = "9"  , Value = "9" },
+                new { Text = "10", Value ="10" },
+                 new { Text = "11", Value ="11" },
+                new { Text ="12", Value = "12" },
+                 };
+            }
+
+            combo.DisplayMemberPath = "Text";
+            combo.SelectedValuePath = "Value";
+            combo.ItemsSource = typelist;
+
+        }
     }
 }
