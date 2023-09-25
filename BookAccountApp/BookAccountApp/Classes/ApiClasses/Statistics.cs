@@ -243,11 +243,13 @@ namespace BookAccountApp.ApiClasses
                            // where S.opType == opType
                             select new PaymentsSts()
                             {
+
+                                //
                                 payOpId = S.payOpId,
                                 code = S.code,
                                 cash = S.cash,
                                 opType = S.opType,
-                                side = S.paySides.code,
+                                side = S.side,
                                 serviceId = S.serviceId,
                                 opStatus = S.opStatus,
                                 opDate = S.opDate,
@@ -265,6 +267,25 @@ namespace BookAccountApp.ApiClasses
                                 sideAr = S.paySides.sideAr,
                                 flightId = S.flightId,
                                 opName = S.opName,
+                                //
+                                //  side = S.paySides.code, 
+                                passenger = S.passengers.name + " " + S.passengers.lastName,
+                                airline = S.systems.name + "/" + S.flights.flightTable.name,
+                                officeName = S.office.name,
+                                systemType = S.systemType,
+                                systemId = S.systemId,
+                                systemName = S.systems.name,
+                                syValue = S.syValue,
+                                exchangeId = S.exchangeId,
+                                currency = S.currency,
+                                fromSide = S.fromSide,
+                                processType = S.processType,
+                                sourceId = S.sourceId,
+                                paid = S.paid,
+                                isPaid = S.isPaid,
+                                deserved = S.deserved,
+                                sideStr = S.side == "system" ? S.fromSide : S.side,
+
                             }).ToList();
                     List = List.Where(S => ((fromDate == null && toDate == null) ? true :
                            ((fromDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date >= fromDate.Value.Date) : true)

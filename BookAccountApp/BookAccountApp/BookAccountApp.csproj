@@ -247,6 +247,7 @@
     <Compile Include="converters\isActiveConverter.cs" />
     <Compile Include="converters\packagePeriodConverter.cs" />
     <Compile Include="converters\permissionsNameConverter.cs" />
+    <Compile Include="converters\sideNameRepConverter.cs" />
     <Compile Include="converters\sideNameConverter.cs" />
     <Compile Include="converters\unlimitedConverter.cs" />
     <Compile Include="converters\unlimitedCountConverter.cs" />

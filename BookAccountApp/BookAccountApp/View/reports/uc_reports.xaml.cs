@@ -107,7 +107,9 @@ paySysTrans
                 MainWindow.mainWindow.second = button.Tag.ToString();
                 MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
-                grid_main.Children.Add(uc_paymentsSts.Instance);
+                uc_paymentsSts ucpay = new uc_paymentsSts();
+                grid_main.Children.Add(ucpay);
+                //grid_main.Children.Add(uc_paymentsSts.Instance);
             }
             catch (Exception ex)
             {
@@ -123,7 +125,9 @@ paySysTrans
                 MainWindow.mainWindow.second = button.Tag.ToString();
                 MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
-                grid_main.Children.Add(uc_bookSts.Instance);
+                uc_systemTransactions ucbsys = new uc_systemTransactions();
+                grid_main.Children.Add(ucbsys);
+                //grid_main.Children.Add(uc_bookSts.Instance);
             }
             catch (Exception ex)
             {

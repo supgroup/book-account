@@ -11,14 +11,14 @@ using System.Windows.Data;
 
 namespace BookAccountApp.converters
 {
-    class sideNameConverter : IValueConverter
+    class sideNameRepConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
-                PayOp s = value as PayOp;
-
+                //PayOp s = value as PayOp;
+                PaymentsSts s = value as PaymentsSts;
                 string name = "";
                 switch (s.side)
                 {

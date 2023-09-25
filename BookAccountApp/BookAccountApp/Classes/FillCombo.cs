@@ -978,6 +978,17 @@ namespace BookAccountApp.Classes
 
 
         }
+        public static IEnumerable<PaySides> PaySidesRepList;
+        static public async Task fillpaySidereport(ComboBox combo)
+        {
+            PaySidesRepList = await PaySidesModel.GetAll();
+            PaySidesRepList = PaySidesRepList.Where(s => s.code!="syr" && s.code!="soto").ToList();
+            combo.ItemsSource = PaySidesRepList;
+            // combo.SelectedValuePath = "paysideId";
+            combo.SelectedValuePath = "code";
+            combo.DisplayMemberPath = "sideAr";
+            combo.SelectedIndex = -1;
+        }
         static FromTable FromTableModel = new FromTable();
         static IEnumerable<FromTable> FromTableList;
         static public async Task fillFromTable(ComboBox combo)

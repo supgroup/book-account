@@ -19,7 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using Newtonsoft.Json;
 namespace BookAccountApp.View.reports
 {
     /// <summary>
@@ -54,7 +54,11 @@ namespace BookAccountApp.View.reports
         Statistics StatisticsModel = new Statistics();
         IEnumerable<PaymentsSts> paymentsStssQuery;
         IEnumerable<PaymentsSts> paymentsStss;
-
+        IEnumerable<PaymentsSts> passengerList;
+        IEnumerable<PaymentsSts> officeList;
+        IEnumerable<PaymentsSts> paySysList;
+        IEnumerable<PaymentsSts> bookSysList;
+        PayOp PayOpRow = new PayOp();
         byte tgl_paymentsStsstate;
         string searchText = "";
         public static List<string> requiredControlList;
@@ -97,7 +101,7 @@ namespace BookAccountApp.View.reports
             txt_totalWorthyTitle.Text = MainWindow.resourcemanager.GetString("totalOperations");
             //officeSysAirline totalOperations totalPaid
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_side, MainWindow.resourcemanager.GetString("officeSysAirline"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_name, MainWindow.resourcemanager.GetString("trCompanyName"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sideValue, MainWindow.resourcemanager.GetString("trCompanyName"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_recipient, MainWindow.resourcemanager.GetString("trRecepientHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_recivedFrom, MainWindow.resourcemanager.GetString("recivedFromHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, MainWindow.resourcemanager.GetString("trCashHint"));
@@ -144,6 +148,7 @@ namespace BookAccountApp.View.reports
             try
             {
                 HelpClass.StartAwait(grid_main);
+                await RefreshPaymentsStssList();
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -190,12 +195,14 @@ namespace BookAccountApp.View.reports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_clear_Click(object sender, RoutedEventArgs e)
+        private async void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
                 Clear();
+              await  RefreshPaymentsStssList();
+               await Search();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -216,10 +223,11 @@ namespace BookAccountApp.View.reports
                 if (dg_paymentsSts.SelectedIndex != -1)
                 {
                     paymentsSts = dg_paymentsSts.SelectedItem as PaymentsSts;
+                    PayOpRow = JsonConvert.DeserializeObject<PayOp>(JsonConvert.SerializeObject(paymentsSts));
                     //  this.DataContext = paymentsSts;
                     if (paymentsSts != null)
                     {
-                        this.DataContext = paymentsSts;
+                        //this.DataContext = paymentsSts;
 
 
                     }
@@ -242,6 +250,9 @@ namespace BookAccountApp.View.reports
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
+                dp_toDateSearch.SelectedDate = null;
+                dp_fromDateSearch.SelectedDate = null;
+                tb_search.Text = "";
                 await RefreshPaymentsStssList();
                 await Search();
                 HelpClass.EndAwait(grid_main);
@@ -263,22 +274,36 @@ namespace BookAccountApp.View.reports
                 await RefreshPaymentsStssList();
 
             searchText = tb_search.Text.ToLower();
-            paymentsStssQuery = paymentsStss.Where(s => (searchText == "" ? true :
+            string side = cb_side.SelectedItem == null ? "" : (cb_side.SelectedValue).ToString();
+            int sidevalId =( side != "paysys" && side != "other" && side != "") ? Convert.ToInt32(cb_sideValue.SelectedValue) : 0;
+            string paysysValue = (side == "paysys" && cb_sideValue.SelectedItem != null )? (cb_sideValue.SelectedValue).ToString() : "";
+            paymentsStssQuery = paymentsStss.Where(s =>( (searchText == "" ? true :
             (
           (s.code == null ? false : (s.code.ToLower().Contains(searchText))) ||
-           (s.sideAr == null ? false : (s.sideAr.ToLower().Contains(searchText))) ||
+           (s.sideStr == null ? false : (s.sideStr.ToLower().Contains(searchText))) ||
              (s.recipient == null ? false : (s.recipient.ToLower().Contains(searchText))) ||
          (s.recivedFrom == null ? false : (s.recivedFrom.ToLower().Contains(searchText)))
             ))
-            && (
-            //start date
-            ((dp_fromDateSearch.SelectedDate != null || dp_fromDateSearch.Text != "") ? s.opDate == null ? false : (s.opDate.Value.Date >= dp_fromDateSearch.SelectedDate.Value.Date) : true)
-            &&
-            //end date
-            ((dp_toDateSearch.SelectedDate != null || dp_toDateSearch.Text != "") ? s.opDate == null ? false : (s.opDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
-            )
+            //&&
+            //(
+            ////start date
+            //((dp_fromDateSearch.SelectedDate != null || dp_fromDateSearch.Text != "") ? s.opDate == null ? false : (s.opDate.Value.Date >= dp_fromDateSearch.SelectedDate.Value.Date) : true)
+            //&&
+            ////end date
+            //((dp_toDateSearch.SelectedDate != null || dp_toDateSearch.Text != "") ? s.opDate == null ? false : (s.opDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
+            //)
+            )&&(
+            (side == "passenger" && sidevalId>0 )? s.passengerId == sidevalId  && s.side == "passenger" :
+           ( side == "office" && sidevalId > 0 )? s.officeId == sidevalId && s.side == "office":
+            ( side == "system" && sidevalId > 0) ? s.systemId == sidevalId && s.side == "system":
+             (side == "other"  )?  s.side == "other" :
+            ( side == "paysys" && paysysValue !="" )?
+             ((s.opType == "p" && (s.side == paysysValue)) ||
+                            (s.opType == "p" && s.side == "system" && (s.fromSide == paysysValue) && s.processType == "book"))
+             : false
+             )
             );
-
+            //(cb_side.SelectedValue).ToString() == "passenger"
             RefreshPaymentsStssView();
         }
         async Task<IEnumerable<PaymentsSts>> RefreshPaymentsStssList()
@@ -294,20 +319,59 @@ namespace BookAccountApp.View.reports
         }
         public async Task fillcombos()
         {
-            await FillCombo.fillpaySide(cb_side, "p");
+            await FillCombo.fillpaySidereport(cb_side);
            
         }
+        #region fill sideValues
+        private void fillPassenger()
+        {
+            passengerList = paymentsStss.Where(g => g.passengerId != null && g.side == "passenger").GroupBy(g => g.passengerId).Select(g => new PaymentsSts { passengerId = g.FirstOrDefault().passengerId.Value, passenger = g.FirstOrDefault().passenger }).ToList();
+            cb_sideValue.SelectedValuePath = "passengerId";
+            cb_sideValue.DisplayMemberPath = "passenger";
+            cb_sideValue.ItemsSource = passengerList;
+        }
+        private void fillOffice()
+        {
+            officeList = paymentsStss.Where(g => g.officeId != null && g.side == "office").GroupBy(g => g.officeId).Select(g => new PaymentsSts { officeId = g.FirstOrDefault().officeId.Value, officeName = g.FirstOrDefault().officeName }).ToList();
+            cb_sideValue.SelectedValuePath = "officeId";
+            cb_sideValue.DisplayMemberPath = "officeName";
+            cb_sideValue.ItemsSource = officeList;
+        }
+        private void fillpaySys()
+        {
+            paySysList = paymentsStss.Where(S => (S.opType == "p" && (S.side == "soto" || S.side == "syr")) ||
+                            (S.opType == "p" && S.side == "system" && (S.fromSide == "soto" || S.fromSide == "syr") && S.processType == "book"))
+                .GroupBy(g => g.sideStr).Select(g => new PaymentsSts { sideStr = g.FirstOrDefault().sideStr, sideAr = g.FirstOrDefault().sideAr }).ToList();
+            cb_sideValue.SelectedValuePath = "sideStr";
+            cb_sideValue.DisplayMemberPath = "sideAr"; 
+ 
 
+            cb_sideValue.ItemsSource = paySysList;
+        }
+        private void fillbookSys()
+        {
+            // d system cash (comm)
+            //p company_commission
+            //p system book
+
+            bookSysList = paymentsStss.Where(S => S.systemId != null && (S.side == "system")
+            ).GroupBy(g => g.systemId).Select(g => new PaymentsSts { systemId = g.FirstOrDefault().systemId.Value, systemName = g.FirstOrDefault().systemName }).ToList();
+            cb_sideValue.SelectedValuePath = "systemId";
+            cb_sideValue.DisplayMemberPath = "systemName";
+            cb_sideValue.ItemsSource = bookSysList;
+        }
+        #endregion
         #endregion
 
         #region validate - clearValidate - textChange - lostFocus - . . . . 
 
         void Clear()
         {
-            this.DataContext = new PaymentsSts();
-          
-
+            //this.DataContext = new PaymentsSts();
             cb_side.SelectedIndex = -1;
+            cb_sideValue.SelectedIndex = -1;
+            brdr_name.Visibility = Visibility.Collapsed;
+           
             
             // last 
             HelpClass.clearValidate(requiredControlList, this);
@@ -632,7 +696,7 @@ namespace BookAccountApp.View.reports
                 //{
 
                 //}
-
+                await RefreshPaymentsStssList();
                 await Search();
 
                 HelpClass.EndAwait(grid_main);
@@ -653,7 +717,7 @@ namespace BookAccountApp.View.reports
                 //{
 
                 //}
-
+                await RefreshPaymentsStssList();
                 await Search();
 
                 HelpClass.EndAwait(grid_main);
@@ -726,6 +790,158 @@ namespace BookAccountApp.View.reports
             btn_to.BorderBrush =
             btn_to.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
             #endregion
+        }
+
+        private async void Cb_side_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+
+                if (cb_side.SelectedItem != null)
+                {//passenger office soto other
+                    if ((cb_side.SelectedValue).ToString() == "passenger")
+                    {
+                        MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sideValue, MainWindow.resourcemanager.GetString("passenger"));
+
+                        brdr_name.Visibility = Visibility.Visible;
+                        fillPassenger();
+                        //paymentsStssQuery = new List<PaymentsSts>();
+
+                    }
+                    else if ((cb_side.SelectedValue).ToString() == "office")
+                    {
+                        MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sideValue, MainWindow.resourcemanager.GetString("trOffice"));
+
+                        brdr_name.Visibility = Visibility.Visible;
+                        fillOffice();
+                        //paymentsStssQuery = new List<PaymentsSts>();
+                    }
+                    else if ((cb_side.SelectedValue).ToString() == "system")
+                    {
+                        MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sideValue, MainWindow.resourcemanager.GetString("bookSystems"));
+
+                        brdr_name.Visibility  = Visibility.Visible;
+                        fillbookSys();
+                        //paymentsStssQuery = new List<PaymentsSts>();
+                    }
+                    else if ((cb_side.SelectedValue).ToString() == "paysys")
+                    {
+                        cb_sideValue.SelectedItem = null;
+                        brdr_name.Visibility = Visibility.Visible;
+                        //cb_sideValue.Visibility = Visibility.Visible;
+                       fillpaySys();
+                        //paymentsStssQuery = new List<PaymentsSts>();
+
+                    }
+                    //else if ((cb_side.SelectedValue).ToString() == "syr")
+                    //{
+                    //    cb_sideValue.SelectedItem = null;
+                    //    cb_sideValue.Visibility = Visibility.Collapsed;
+                       
+
+                    //}
+                    //else if ((cb_side.SelectedValue).ToString() == "syr")
+                    //{
+                    //    cb_sideValue.SelectedItem = null;
+                    //    grid_sideValue.Visibility = Visibility.Collapsed;
+                    //    btn_invoicesSide.Visibility = Visibility.Visible;
+
+                    //}
+                    else
+                    {
+                        //other
+                        cb_sideValue.SelectedItem = null;
+                        brdr_name.Visibility = Visibility.Collapsed;
+
+                      
+                    }
+                    
+
+                }
+                else
+                {
+                    cb_sideValue.SelectedItem = null;
+                    brdr_name.Visibility = Visibility.Collapsed;
+                    
+
+                }
+                await RefreshPaymentsStssList();
+                await Search();
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void Cb_sideValue_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+
+                if (cb_sideValue.SelectedItem != null)
+                {
+                    if ((cb_side.SelectedValue).ToString() != "other")
+                    {
+                        await RefreshPaymentsStssList();
+                        await Search();
+                    }
+                      
+                    //passenger office soto other
+
+                    //if ((cb_side.SelectedValue).ToString() == "passenger")
+                    //{
+                    //    MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sideValue, MainWindow.resourcemanager.GetString("passenger"));
+
+                    //    brdr_name.Visibility = Visibility.Visible;
+                    //    fillPassenger();
+
+                    //}
+                    //else if ((cb_side.SelectedValue).ToString() == "office")
+                    //{
+                    //    MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sideValue, MainWindow.resourcemanager.GetString("trOffice"));
+
+                    //    brdr_name.Visibility = Visibility.Visible;
+                    //    fillOffice();
+                    //}
+                    //else if ((cb_side.SelectedValue).ToString() == "system")
+                    //{
+                    //    MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sideValue, MainWindow.resourcemanager.GetString("bookSystems"));
+
+                    //    brdr_name.Visibility = Visibility.Visible;
+                    //    fillbookSys();
+                    //}
+                    //else if ((cb_side.SelectedValue).ToString() == "paysys")
+                    //{
+                    //    cb_sideValue.SelectedItem = null;
+                    //    brdr_name.Visibility = Visibility.Visible;
+                    //    //cb_sideValue.Visibility = Visibility.Visible;
+                    //    fillpaySys();
+
+
+                    //}
+                 
+                    //else
+                    //{
+                    //    //other
+                    //    cb_sideValue.SelectedItem = null;
+                    //    brdr_name.Visibility = Visibility.Collapsed;
+
+
+                    //}
+                }
+                else
+                {
+                  
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }
