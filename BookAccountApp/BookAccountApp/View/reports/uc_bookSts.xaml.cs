@@ -58,6 +58,8 @@ namespace BookAccountApp.View.reports
         string searchText = "";
         string parentPeriod = "";
         string childPeriod = "";
+        decimal sumpPrices = 0;
+        decimal sumpProfits = 0;
         public static List<string> requiredControlList;
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -189,12 +191,15 @@ namespace BookAccountApp.View.reports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_clear_Click(object sender, RoutedEventArgs e)
+        private async void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
+
             try
             {
                 HelpClass.StartAwait(grid_main);
                 Clear();
+                await RefreshBookStssList();
+                await Search();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -241,6 +246,9 @@ namespace BookAccountApp.View.reports
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
+                dp_toDateSearch.SelectedDate = null;
+                dp_fromDateSearch.SelectedDate = null;
+                tb_search.Text = "";
                 await RefreshBookStssList();
                 await Search();
                 HelpClass.EndAwait(grid_main);
@@ -271,9 +279,9 @@ namespace BookAccountApp.View.reports
             bookStssQuery = bookStss.Where(s => (searchText == "" ? true :
             (
           (s.serviceNum == null ? false : (s.serviceNum.ToLower().Contains(searchText))) ||
-           (s.sideAr == null ? false : (s.sideAr.ToLower().Contains(searchText))) ||
-             (s.recipient == null ? false : (s.recipient.ToLower().Contains(searchText))) ||
-         (s.recivedFrom == null ? false : (s.recivedFrom.ToLower().Contains(searchText)))
+          (s.systemName == null ? false : (s.systemName.ToLower().Contains(searchText))) ||
+           (s.airline == null ? false : (s.airline.ToLower().Contains(searchText))) ||
+             (s.officeName == null ? false : (s.officeName.ToLower().Contains(searchText)))          
             ))
             //&& (
             ////start date
@@ -303,6 +311,7 @@ namespace BookAccountApp.View.reports
             );
 
             RefreshBookStssView();
+            sumAll();
         }
         async Task<IEnumerable<BookSts>> RefreshBookStssList()
         {
@@ -315,10 +324,10 @@ namespace BookAccountApp.View.reports
         {
             dg_bookSts.ItemsSource = bookStssQuery;
         }
-        public async Task fillcombos()
-        {
+        //public async Task fillcombos()
+        //{
 
-        }
+        //}
         IEnumerable<BookSts> yearList;
         private void fillYear()
         {
@@ -327,15 +336,39 @@ namespace BookAccountApp.View.reports
             cb_quarter.DisplayMemberPath = "yearStr";
             cb_quarter.ItemsSource = yearList;
         }
-       
+
+        private decimal getsumpPrices()
+        {
+          sumpPrices =  bookStssQuery.Sum(s => (decimal)s.priceBeforTax);
+//string balance = HelpClass.DecTostring(sumpPrices);
+            return sumpPrices;
+        }
+        private decimal getsumpProfits()
+        {
+            sumpProfits= bookStssQuery.Sum(s => (decimal)s.profit);
+            //string balance = HelpClass.DecTostring(sumpPrices);
+            return sumpProfits;
+        }
+        private void sumAll()
+        {
+            getsumpPrices();
+            getsumpProfits();
+
+            txt_totalProfit.Text = HelpClass.DecTostring(sumpProfits);
+            txt_totalSale.Text = HelpClass.DecTostring(sumpPrices);
+ 
+        }
+
         #endregion
 
         #region validate - clearValidate - textChange - lostFocus - . . . . 
 
         void Clear()
         {
-            this.DataContext = new BookSts();
-
+            //this.DataContext = new PaymentsSts();
+            cb_duration.SelectedIndex = -1;
+            cb_quarter.SelectedIndex = -1;
+            
 
 
             // last 

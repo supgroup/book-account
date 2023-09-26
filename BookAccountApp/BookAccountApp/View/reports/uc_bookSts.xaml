@@ -501,7 +501,10 @@
                                FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
            Foreground="{StaticResource Grey}"
             FontWeight="Regular" />
-
+                    <TextBlock Grid.Row="1"   x:Name="tb_moneyIconSale" Grid.Column="1" Margin="0,0,1,0"  
+                       Foreground="#4E4E4E" Text="$" 
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                                  FontWeight="Bold"  FontSize="14"/>
                 </Grid>
             </Border>
             <Border Grid.Row="2"
@@ -522,7 +525,10 @@ Background="White">
                            FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
        Foreground="{StaticResource Grey}"
         FontWeight="Regular" />
-
+                    <TextBlock Grid.Row="1"   x:Name="tb_moneyIcon" Grid.Column="1" Margin="0,0,1,0"  
+                       Foreground="#4E4E4E" Text="$" 
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                                  FontWeight="Bold"  FontSize="14"/>
                 </Grid>
             </Border>
             <Border Grid.Row="3"
