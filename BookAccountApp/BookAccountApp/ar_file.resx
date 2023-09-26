@@ -3355,4 +3355,13 @@
   <data name="year" xml:space="preserve">
     <value>سنة</value>
   </data>
+  <data name="chooseMonth" xml:space="preserve">
+    <value>اختر الشهر</value>
+  </data>
+  <data name="chooseYear" xml:space="preserve">
+    <value>اختر السنة</value>
+  </data>
+  <data name="halfChoose" xml:space="preserve">
+    <value>نصف اول/نصف ثاني</value>
+  </data>
 </root>

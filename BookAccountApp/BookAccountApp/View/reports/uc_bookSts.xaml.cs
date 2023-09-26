@@ -60,6 +60,7 @@ namespace BookAccountApp.View.reports
         string childPeriod = "";
         decimal sumpPrices = 0;
         decimal sumpProfits = 0;
+        PayOp payopModel = new PayOp();
         public static List<string> requiredControlList;
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -99,7 +100,7 @@ namespace BookAccountApp.View.reports
             txt_totalSaleTitle.Text = MainWindow.resourcemanager.GetString("totalOperations");
             txt_totalProfitTitle.Text = MainWindow.resourcemanager.GetString("profitsNet");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_duration, MainWindow.resourcemanager.GetString("yearMonth"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_quarter, MainWindow.resourcemanager.GetString("quarter1234"));
+           // MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_quarter, MainWindow.resourcemanager.GetString("quarter1234"));
           
 
             txt_invoicePrintButton.Text = MainWindow.resourcemanager.GetString("printInvoice");
@@ -223,7 +224,7 @@ namespace BookAccountApp.View.reports
                     //  this.DataContext = bookSts;
                     if (bookSts != null)
                     {
-                        this.DataContext = bookSts;
+                      //  this.DataContext = bookSts;
 
 
                     }
@@ -636,6 +637,141 @@ namespace BookAccountApp.View.reports
         }
 
 
+        #region VoucherReport
+        public void BuildVoucherReport()
+        {
+            payopModel = payopModel.GetBookByserviceId((int)bookSts.serviceId);
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            //if (isArabic)
+            //{
+            if (FillCombo.docPapersize == "A4")
+            {
+                addpath = @"\Reports\Account\Ar\Voucher\ArPayReportA4.rdlc";
+            }
+            else //A5
+            {
+                addpath = @"\Reports\Account\Ar\Voucher\ArPayReport.rdlc";
+            }
+
+            //}
+            //else
+            //{
+            //    if (FillCombo.docPapersize == "A4")
+            //    {
+            //        addpath = @"\Reports\Account\En\PayReportA4.rdlc";
+            //    }
+            //    else //A5
+            //    {
+            //        addpath = @"\Reports\Account\En\PayReport.rdlc";
+            //    }
+            //}
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            rep.ReportPath = reppath;
+            rep.DataSources.Clear();
+            rep.EnableExternalImages = true;
+            //  servicemodel= await servicemodel.GetByID((int)payOp.serviceId);
+            paramarr = reportclass.fillPayReport(payopModel);
+            clsReports.Header(paramarr);
+            rep.SetParameters(paramarr);
+            rep.Refresh();
+        }
+
+        private void Btn_invoicePrint_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (dg_bookSts.SelectedIndex != -1)
+                {
+
+
+                    #region
+                    BuildVoucherReport();
+                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
+                    #endregion
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_invoicePreview_Click(object sender, RoutedEventArgs e)
+        {
+            //preview
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (dg_bookSts.SelectedIndex != -1)
+                {
+
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+
+                    string pdfpath = "";
+                    //
+                    pdfpath = @"\Thumb\report\temp.pdf";
+                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                    BuildVoucherReport();
+
+                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                    wd_previewPdf w = new wd_previewPdf();
+                    w.pdfPath = pdfpath;
+                    if (!string.IsNullOrEmpty(w.pdfPath))
+                    {
+                        w.ShowDialog();
+                        w.wb_pdfWebViewer.Dispose();
+
+
+                    }
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_invoicePdf_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (dg_bookSts.SelectedIndex != -1)
+                {
+
+                    #region
+                    BuildVoucherReport();
+
+                    saveFileDialog.Filter = "PDF|*.pdf;";
+
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        string filepath = saveFileDialog.FileName;
+                        LocalReportExtensions.ExportToPDF(rep, filepath);
+                    }
+                    #endregion
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        #endregion
+
         #endregion
 
         private async void Dp_fromDateSearch_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -682,20 +818,20 @@ namespace BookAccountApp.View.reports
 
 
 
-        private void Btn_invoicePrint_Click(object sender, RoutedEventArgs e)
-        {
+        //private void Btn_invoicePrint_Click(object sender, RoutedEventArgs e)
+        //{
 
-        }
+        //}
 
-        private void Btn_invoicePreview_Click(object sender, RoutedEventArgs e)
-        {
+        //private void Btn_invoicePreview_Click(object sender, RoutedEventArgs e)
+        //{
 
-        }
+        //}
 
-        private void Btn_invoicePdf_Click(object sender, RoutedEventArgs e)
-        {
+        //private void Btn_invoicePdf_Click(object sender, RoutedEventArgs e)
+        //{
 
-        }
+        //}
 
         private async void Cb_duration_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -714,6 +850,17 @@ namespace BookAccountApp.View.reports
                     }
                   
                 }
+                parentPeriod = cb_duration.SelectedItem == null ? "" : (cb_duration.SelectedValue).ToString();
+                switch (parentPeriod)
+                {
+
+                    case "year": MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_quarter, MainWindow.resourcemanager.GetString("chooseYear")); break;
+                    case "half": MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_quarter, MainWindow.resourcemanager.GetString("halfChoose")); break;
+                    case "q": MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_quarter, MainWindow.resourcemanager.GetString("quarter1234")); break;
+                    case "month": MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_quarter, MainWindow.resourcemanager.GetString("chooseMonth")); break;
+
+                    default: MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_quarter, "..."); break;
+                }
                 //await RefreshBookStssList();
                 //await Search();
             }
@@ -730,13 +877,12 @@ namespace BookAccountApp.View.reports
             {
 
                 if (cb_quarter.SelectedItem != null)
-                {//passenger office soto other
-                   // FillCombo.fillPeriodchild(cb_quarter, cb_duration.SelectedValue.ToString());
-               
-             
+                {
+                 
                 }
                 await RefreshBookStssList();
                 await Search();
+
             }
             catch (Exception ex)
             {

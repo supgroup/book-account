@@ -1655,5 +1655,71 @@ namespace BookAccountApp.ApiClasses
             return transNum;
         }
 
+        public  PayOp GetBookByserviceId(int serviceId)
+        {
+
+            PayOp  row = new  PayOp();
+            //List<PayOp> GList = new List<PayOp>();
+
+            try
+            {
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    row = (from S in entity.payOp
+                            where (S.serviceId == serviceId && S.processType =="book" && S.side == "system")
+
+                            select new PayOp()
+                            {
+                                payOpId = S.payOpId,
+                                code = S.code,
+                                cash = S.cash,
+                                opType = S.opType,
+                                //  side = S.paySides.code,
+                                side = S.side,
+                                serviceId = S.serviceId,
+                                opStatus = S.opStatus,
+                                opDate = S.opDate,
+                                notes = S.notes,
+                                createUserId = S.createUserId,
+                                updateUserId = S.updateUserId,
+                                createDate = S.createDate,
+                                updateDate = S.updateDate,
+                                officeId = S.officeId,
+                                passengerId = S.passengerId,
+                                userId = S.userId,
+                                recipient = S.recipient,
+                                recivedFrom = S.recivedFrom,
+                                paysideId = S.paysideId,
+                                sideAr = S.paySides.sideAr,
+                                flightId = S.flightId,
+                                opName = S.opName,
+                                passenger = S.passengers.name + " " + S.passengers.lastName,
+                                airline = S.systems.name + "/" + S.flights.flightTable.name,
+                                officeName = S.office.name,
+                                systemType = S.systemType,
+                                systemId = S.systemId,
+                                systemName = S.systems.name,
+                                syValue = S.syValue,
+                                exchangeId = S.exchangeId,
+                                currency = S.currency,
+                                fromSide = S.fromSide,
+                                processType = S.processType,
+                                sourceId = S.sourceId,
+                                paid = S.paid,
+                                isPaid = S.isPaid,
+                                deserved = S.deserved,
+                            }).FirstOrDefault();
+                    
+                    return row;
+                }
+
+            }
+            catch
+            {
+                return row;
+            }
+
+        }
+
     }
 }

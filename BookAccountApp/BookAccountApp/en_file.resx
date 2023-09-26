@@ -3346,4 +3346,13 @@ Please add Email in setting</value>
   <data name="year" xml:space="preserve">
     <value>Year</value>
   </data>
+  <data name="chooseMonth" xml:space="preserve">
+    <value>chooseMonth</value>
+  </data>
+  <data name="chooseYear" xml:space="preserve">
+    <value>chooseYear</value>
+  </data>
+  <data name="halfChoose" xml:space="preserve">
+    <value>halfChoose</value>
+  </data>
 </root>
