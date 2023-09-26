@@ -338,8 +338,6 @@ namespace BookAccountApp.View.windows
         {
             //search
          
-               
-
             searchText = txb_search.Text.ToLower();
             currency = cb_currency.SelectedValue == null ? "usd" : cb_currency.SelectedValue.ToString();//
            // currency = cb_currency.SelectedValue.ToString();
@@ -371,12 +369,12 @@ namespace BookAccountApp.View.windows
             }
             else if (side == "passenger" && opType == "d")
             {
-                allCashtransfersSource = await cashTransfer.GetUnpaidPassenger(selectedId);
+                allCashtransfersSource = await cashTransfer.GetUnpaidPassenger(selectedId);//
 
             }
             else if (side == "office" && opType == "d")
             {
-                allCashtransfersSource = await cashTransfer.GetUnpaidBookOffice(selectedId);
+                allCashtransfersSource = await cashTransfer.GetUnpaidBookOffice(selectedId);//
             }
         
             return allCashtransfers;

@@ -59,6 +59,7 @@ namespace BookAccountApp.ApiClasses
         public string serviceNum { get; set; }
         public string ticketNum { get; set; }
         public Nullable<decimal> deserved { get; set; }
+        public Nullable<decimal> total { get; set; }
         public string purpose { get; set; }
         public string stropDate { get; set; }
         
@@ -906,10 +907,12 @@ namespace BookAccountApp.ApiClasses
                                 fromSide = S.fromSide,
                                 processType = S.processType,
                                 sourceId = S.sourceId,
+                                total=S.serviceData.total,/////
                                 paid = S.paid,
                                 isPaid = S.isPaid,
                                 serviceNum = S.serviceData.serviceNum,
-                                deserved = S.deserved,
+                                //deserved = S.currency == "syp" ? (S.deserved / S.syValue) * FillCombo.exchangeValue : S.deserved,
+                                deserved = S.currency == "syp" ? ((S.serviceData.total )* FillCombo.exchangeValue ) - S.paid : S.deserved,
                             }).ToList();
 
                     return List;
@@ -974,7 +977,9 @@ namespace BookAccountApp.ApiClasses
                                 paid = S.paid,
                                 isPaid = S.isPaid,
                                 serviceNum = S.serviceData.serviceNum,
-                                deserved = S.deserved,
+                                //deserved = S.deserved,
+                                deserved = S.currency == "syp" ? ((S.serviceData.total) * FillCombo.exchangeValue) - S.paid : S.deserved,
+
                             }).ToList();
 
                     return List;
@@ -1007,12 +1012,21 @@ namespace BookAccountApp.ApiClasses
                                 decimal paid = 0;
                             //update main
                                 var deliverCash = entity.payOp.Find(cash.payOpId);
-                             deliverCash.paid += deliverCash.deserved;                     
+                            // convert to current $ value
+                            //  deliverCash.paid = deliverCash.currency == "syp" ? (deliverCash.paid / deliverCash.syValue) * FillCombo.exchangeValue : deliverCash.paid;
+
+                            //  deliverCash.deserved = deliverCash.currency == "syp" ? (deliverCash.deserved / deliverCash.syValue) * FillCombo.exchangeValue : deliverCash.deserved;
+                            deliverCash.deserved = deliverCash.currency == "syp" ? ((deliverCash.serviceData.total) * FillCombo.exchangeValue) - deliverCash.paid : deliverCash.deserved;
+
+                            deliverCash.syValue = FillCombo.exchangeValue  ;
+                            //
+                            deliverCash.paid += deliverCash.deserved;                     
                           // paid = (decimal)deliverCash.cash;
                           paid = (decimal)deliverCash.deserved;
                           //  deliverCash.paid = paid;
                                 deliverCash.isPaid = true;
                             deliverCash.deserved = 0;
+
                             entity.SaveChanges();
                             //add new
 

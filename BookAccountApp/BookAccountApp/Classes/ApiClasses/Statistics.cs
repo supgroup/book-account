@@ -133,6 +133,7 @@ namespace BookAccountApp.ApiClasses
 
 
         public Nullable<decimal> priceBeforTax { get; set; }
+        public Nullable<decimal> total { get; set; }
     }
     public class Statistics
     {
