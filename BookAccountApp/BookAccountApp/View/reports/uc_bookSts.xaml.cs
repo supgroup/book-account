@@ -56,6 +56,8 @@ namespace BookAccountApp.View.reports
         Statistics StatisticsModel = new Statistics();
         byte tgl_bookStsstate;
         string searchText = "";
+        string parentPeriod = "";
+        string childPeriod = "";
         public static List<string> requiredControlList;
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -260,6 +262,12 @@ namespace BookAccountApp.View.reports
                 await RefreshBookStssList();
 
             searchText = tb_search.Text.ToLower();
+
+            parentPeriod = cb_duration.SelectedItem == null ? "" : (cb_duration.SelectedValue).ToString();
+           // int sidevalId = (side != "paysys" && side != "other" && side != "") ? Convert.ToInt32(cb_sideValue.SelectedValue) : 0;
+            childPeriod = ( cb_quarter.SelectedItem == null) ? "":(cb_quarter.SelectedValue).ToString() ;
+            DateTime now = DateTime.Now;
+            int currentYear = now.Year;
             bookStssQuery = bookStss.Where(s => (searchText == "" ? true :
             (
           (s.serviceNum == null ? false : (s.serviceNum.ToLower().Contains(searchText))) ||
@@ -274,6 +282,24 @@ namespace BookAccountApp.View.reports
             ////end date
             //((dp_toDateSearch.SelectedDate != null || dp_toDateSearch.Text != "") ? s.serviceDate == null ? false : (s.serviceDate.Value.Date <= dp_toDateSearch.SelectedDate.Value.Date) : true)
             //)
+            &&(
+            childPeriod!=""?
+            parentPeriod == "year" ? (((DateTime)s.updateDate).Year == Convert.ToInt32(childPeriod)) :
+           (parentPeriod == "half" && ((DateTime)s.updateDate).Year == currentYear) ?(
+           childPeriod == "1" ? (((DateTime)s.updateDate).Month >= 1 && ((DateTime)s.updateDate).Month <= 6) :
+            childPeriod == "2" ? (((DateTime)s.updateDate).Month >= 7 && ((DateTime)s.updateDate).Month <= 12) :false
+            ):
+            (parentPeriod == "q" && ((DateTime)s.updateDate).Year == currentYear) ?
+            (
+            childPeriod == "1" ? (((DateTime)s.updateDate).Month >= 1 && ((DateTime)s.updateDate).Month <= 3) :
+         childPeriod == "2" ? (((DateTime)s.updateDate).Month >= 4 && ((DateTime)s.updateDate).Month <= 6) :
+           childPeriod == "3" ? (((DateTime)s.updateDate).Month >= 7 && ((DateTime)s.updateDate).Month <= 9) :
+             childPeriod == "4" ? (((DateTime)s.updateDate).Month >= 10 && ((DateTime)s.updateDate).Month <= 12) :false
+             ):
+            ( parentPeriod == "month" && ((DateTime)s.updateDate).Year == currentYear )? (((DateTime)s.updateDate).Month == Convert.ToInt32(childPeriod)) :false
+             : false
+             //:false
+            )
             );
 
             RefreshBookStssView();
@@ -293,7 +319,15 @@ namespace BookAccountApp.View.reports
         {
 
         }
-
+        IEnumerable<BookSts> yearList;
+        private void fillYear()
+        {
+            yearList = bookStss.Where(g => g.createDate != null  ).GroupBy(g =>((DateTime) g.createDate).Year).Select(g => new BookSts { year = ((DateTime)g.FirstOrDefault().updateDate).Year , yearStr = (((DateTime)g.FirstOrDefault().updateDate).Year).ToString() }).ToList();
+            cb_quarter.SelectedValuePath = "year";
+            cb_quarter.DisplayMemberPath = "yearStr";
+            cb_quarter.ItemsSource = yearList;
+        }
+       
         #endregion
 
         #region validate - clearValidate - textChange - lostFocus - . . . . 
@@ -569,54 +603,7 @@ namespace BookAccountApp.View.reports
         }
 
 
-
-
-
         #endregion
-
-
-
-
-        private void Btn_addAirline_Click(object sender, RoutedEventArgs e)
-        {
-            /*
-          try
-          {
-              if (sender != null)
-                  HelpClass.StartAwait(grid_main);
-              Window.GetWindow(this).Opacity = 0.2;
-              wd_flight w = new wd_flight();
-              w.ShowDialog();
-              await FillCombo.fillFlightTable(cb_flight);
-              Window.GetWindow(this).Opacity = 1;
-
-              if (sender != null)
-                  HelpClass.EndAwait(grid_main);
-          }
-          catch (Exception ex)
-          {
-              Window.GetWindow(this).Opacity = 1;
-              if (sender != null)
-                  HelpClass.EndAwait(grid_main);
-              HelpClass.ExceptionMessage(ex, this);
-          }
-          */
-        }
-
-
-        private void Btn_uploadDocs_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Btn_exportDocs_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-
-
-
 
         private async void Dp_fromDateSearch_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -662,32 +649,6 @@ namespace BookAccountApp.View.reports
 
 
 
-        private void Btn_addOperation_Click(object sender, RoutedEventArgs e)
-        {
-            /*  
-      try
-      {
-          if (sender != null)
-              HelpClass.StartAwait(grid_main);
-          Window.GetWindow(this).Opacity = 0.2;
-          wd_flight w = new wd_flight();
-          w.ShowDialog();
-          await FillCombo.fillFlightTable(cb_flight);
-          Window.GetWindow(this).Opacity = 1;
-
-          if (sender != null)
-              HelpClass.EndAwait(grid_main);
-      }
-      catch (Exception ex)
-      {
-          Window.GetWindow(this).Opacity = 1;
-          if (sender != null)
-              HelpClass.EndAwait(grid_main);
-          HelpClass.ExceptionMessage(ex, this);
-      }
-       */
-        }
-
         private void Btn_invoicePrint_Click(object sender, RoutedEventArgs e)
         {
 
@@ -710,10 +671,39 @@ namespace BookAccountApp.View.reports
 
                 if (cb_duration.SelectedItem != null)
                 {//passenger office soto other
-                    FillCombo.fillPeriodchild(cb_quarter, cb_duration.SelectedValue.ToString());
+                    if (cb_duration.SelectedValue.ToString()=="year")
+                    {
+                        fillYear();
+                    }
+                    else
+                    {
+                        FillCombo.fillPeriodchild(cb_quarter, cb_duration.SelectedValue.ToString());
+                    }
+                  
                 }
                 //await RefreshBookStssList();
                 //await Search();
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void Cb_quarter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+
+                if (cb_quarter.SelectedItem != null)
+                {//passenger office soto other
+                   // FillCombo.fillPeriodchild(cb_quarter, cb_duration.SelectedValue.ToString());
+               
+             
+                }
+                await RefreshBookStssList();
+                await Search();
             }
             catch (Exception ex)
             {

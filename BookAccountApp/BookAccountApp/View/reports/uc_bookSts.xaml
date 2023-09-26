@@ -230,8 +230,8 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                           
-                            <DataGridTextColumn Width="*"  Header="date" Binding="{Binding Path=createDate,Converter={StaticResource dateFrameConverter}}" >
+
+                            <DataGridTextColumn Width="*"  Header="date" Binding="{Binding Path=updateDate,Converter={StaticResource dateFrameConverter}}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -463,7 +463,7 @@
            materialDesign:HintAssist.Hint="quarter..."  
            Grid.Column="1" Height="40"   
           BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-           LostFocus="validateEmpty_LostFocus" />
+           LostFocus="validateEmpty_LostFocus" SelectionChanged="Cb_quarter_SelectionChanged" />
                                     <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
                    Name="p_error_quarter"
        HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   

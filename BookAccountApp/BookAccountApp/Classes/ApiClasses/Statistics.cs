@@ -76,8 +76,10 @@ namespace BookAccountApp.ApiClasses
         public string sideAr { get; set; }
         public string side { get; set; }
         public string strCreateDate { get; set; }
-        
 
+        public int year { get; set; }
+
+        public string yearStr { get; set; }
     }
     public class PaymentsSts 
     {
@@ -127,11 +129,9 @@ namespace BookAccountApp.ApiClasses
         public string ticketNum { get; set; }
         public Nullable<decimal> deserved { get; set; }
         public string purpose { get; set; }
-     
-
       
-  
-  
+
+
         public Nullable<decimal> priceBeforTax { get; set; }
     }
     public class Statistics
@@ -217,8 +217,8 @@ namespace BookAccountApp.ApiClasses
 
                             }).ToList();
                     List = List.Where(S => ((fromDate == null && toDate == null) ? true :
-                            ((fromDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date >= fromDate.Value.Date) : true)
-                            && ((toDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date <= toDate.Value.Date) : true)
+                            ((fromDate != null) ? S.updateDate == null ? false : (S.updateDate.Value.Date >= fromDate.Value.Date) : true)
+                            && ((toDate != null) ? S.updateDate == null ? false : (S.updateDate.Value.Date <= toDate.Value.Date) : true)
                            )).ToList();
                   
                     return List;
