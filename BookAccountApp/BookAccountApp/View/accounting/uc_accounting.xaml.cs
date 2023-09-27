@@ -114,6 +114,8 @@ namespace BookAccountApp.View.accounting
             {
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
+                MainWindow.mainWindow.second = button.Tag.ToString();
+                MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
                 uc_payment ucsy = new uc_payment();
                 grid_main.Children.Add(ucsy);
@@ -129,6 +131,8 @@ namespace BookAccountApp.View.accounting
             {
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
+                MainWindow.mainWindow.second = button.Tag.ToString();
+                MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
                 uc_received ucso = new uc_received();
                 grid_main.Children.Add(ucso);

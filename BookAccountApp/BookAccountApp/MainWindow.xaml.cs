@@ -214,8 +214,34 @@ namespace BookAccountApp
                     case "salesSoto":
                         txt_secondPath.Text = "> " + resourcemanager.GetString("soto");
                         break;
-                  
-
+                    //report
+                    case "paymentsSts":
+                        txt_secondPath.Text = "> " + resourcemanager.GetString("financeChange");
+                        break;
+                    case "bookSts":
+                        txt_secondPath.Text = "> " + resourcemanager.GetString("bookProfits");
+                        break;
+                    case "systemTransactions":
+                        txt_secondPath.Text = "> " + resourcemanager.GetString("paySysTrans");
+                        break;
+                    //setting
+                    case "commissions":
+                        txt_secondPath.Text = "> " + resourcemanager.GetString("financeSetting");
+                        break;
+                    case "users":
+                        txt_secondPath.Text = "> " + resourcemanager.GetString("trUsers");
+                        break;
+                    case "printerSetting":
+                        txt_secondPath.Text = "> " + resourcemanager.GetString("printSetting");
+                        break;
+                    //Account
+                    case "payment":
+                        txt_secondPath.Text = "> " + resourcemanager.GetString("trPayments");
+                        break;
+                    case "received":
+                        txt_secondPath.Text = "> " + resourcemanager.GetString("trReceived");
+                        break;
+                    
 
                     default:
                         txt_secondPath.Text = "";

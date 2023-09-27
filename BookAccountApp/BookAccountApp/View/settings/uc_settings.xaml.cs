@@ -122,6 +122,8 @@ namespace BookAccountApp.View.settings
                 
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
+                MainWindow.mainWindow.second = button.Tag.ToString();
+                MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
                 uc_commissions ucsy = new uc_commissions();
                 grid_main.Children.Add(ucsy);
@@ -141,6 +143,8 @@ namespace BookAccountApp.View.settings
                 
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
+                MainWindow.mainWindow.second = button.Tag.ToString();
+                MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
                 uc_users ucsy = new uc_users();
                 grid_main.Children.Add(ucsy);
@@ -159,6 +163,8 @@ namespace BookAccountApp.View.settings
                 
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
+                MainWindow.mainWindow.second = button.Tag.ToString();
+                MainWindow.mainWindow.setMainPath();
                 grid_main.Children.Clear();
                 uc_printerSetting ucsy = new uc_printerSetting();
                 grid_main.Children.Add(ucsy);
