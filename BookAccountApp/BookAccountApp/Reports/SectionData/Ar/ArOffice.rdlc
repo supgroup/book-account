@@ -707,26 +707,11 @@
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Image Name="Logo">
-              <Source>External</Source>
-              <Value>=Parameters!logoImage.Value</Value>
-              <Sizing>FitProportional</Sizing>
-              <Top>0.55928cm</Top>
-              <Left>1.18768cm</Left>
-              <Height>3cm</Height>
-              <Width>3cm</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-              </Style>
-            </Image>
             <Rectangle Name="Rectangle5">
               <KeepTogether>true</KeepTogether>
               <Top>0.00366in</Top>
               <Height>0.17391in</Height>
               <Width>21cm</Width>
-              <ZIndex>1</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -734,7 +719,22 @@
                 <BackgroundColor>#178dd2</BackgroundColor>
               </Style>
             </Rectangle>
-            <Textbox Name="Textbox14">
+            <Image Name="Logo2">
+              <Source>External</Source>
+              <Value>=Parameters!logoImage.Value</Value>
+              <Sizing>FitProportional</Sizing>
+              <Top>1.0815cm</Top>
+              <Left>16.85235cm</Left>
+              <Height>3cm</Height>
+              <Width>3cm</Width>
+              <ZIndex>1</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Image>
+            <Textbox Name="Textbox54">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
@@ -750,14 +750,16 @@
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0.24999in</Top>
-              <Left>4.86626in</Left>
+              <Top>0.26366in</Top>
+              <Left>0.25183in</Left>
               <Height>0.3587in</Height>
-              <Width>2.8848in</Width>
+              <Width>2.95282in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -769,60 +771,125 @@
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
-            <Textbox Name="Textbox19">
+            <Textbox Name="Textbox83">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Address: </Value>
+                      <Value>=Parameters!Fax.Value</Value>
                       <Style>
                         <FontFamily>Cairo</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Parameters!Address.Value</Value>
-                      <Style>
-                        <FontFamily>Cairo</FontFamily>
+                        <FontSize>8pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <Color>DimGray</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Left</TextAlign>
+                    <TextAlign>Right</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.62257in</Top>
-              <Left>4.86626in</Left>
+              <Top>1.13625in</Top>
+              <Left>0.25183in</Left>
               <Height>0.25in</Height>
-              <Width>2.8848in</Width>
+              <Width>2.48754in</Width>
               <ZIndex>3</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Len(Parameters!Fax.Value) &gt; 7, False, True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
-            <Textbox Name="Textbox20">
+            <Textbox Name="Textbox84">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Tel: </Value>
+                      <Value>=Parameters!Email.Value</Value>
                       <Style>
                         <FontFamily>Cairo</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>DimGray</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox4</rd:DefaultName>
+              <Top>1.38625in</Top>
+              <Left>0.25183in</Left>
+              <Height>0.25in</Height>
+              <Width>2.15718in</Width>
+              <ZIndex>4</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!Email.Value &lt;&gt; "", False, True)</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox86">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Parameters!Address.Value</Value>
+                      <Style>
+                        <FontFamily>Cairo</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>DimGray</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox4</rd:DefaultName>
+              <Top>0.62236in</Top>
+              <Left>0.25183in</Left>
+              <Height>0.25in</Height>
+              <Width>2.48754in</Width>
+              <ZIndex>5</ZIndex>
+              <Visibility>
+                <Hidden>=IIf( Parameters!Address.Value &lt;&gt; "", False, True)</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox87">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value xml:space="preserve"> </Value>
+                      <Style>
+                        <FontFamily>Cairo</FontFamily>
+                        <FontSize>8pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <Color>DimGray</Color>
                       </Style>
@@ -831,118 +898,210 @@
                       <Value>=Parameters!Tel.Value</Value>
                       <Style>
                         <FontFamily>Cairo</FontFamily>
+                        <FontSize>8pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <Color>DimGray</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Left</TextAlign>
+                    <TextAlign>Right</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.88646in</Top>
-              <Left>4.86626in</Left>
+              <Top>0.88625in</Top>
+              <Left>0.25183in</Left>
               <Height>0.25in</Height>
-              <Width>2.8848in</Width>
-              <ZIndex>4</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox27">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>Fax: </Value>
-                      <Style>
-                        <FontFamily>Cairo</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Parameters!Fax.Value</Value>
-                      <Style>
-                        <FontFamily>Cairo</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Left</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>1.13646in</Top>
-              <Left>4.86626in</Left>
-              <Height>0.25in</Height>
-              <Width>2.8848in</Width>
-              <ZIndex>5</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox28">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>Email: </Value>
-                      <Style>
-                        <FontFamily>Cairo</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Parameters!Email.Value</Value>
-                      <Style>
-                        <FontFamily>Cairo</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Left</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>1.38646in</Top>
-              <Left>4.86626in</Left>
-              <Height>0.25in</Height>
-              <Width>2.8848in</Width>
+              <Width>2.48754in</Width>
               <ZIndex>6</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Len(Parameters!Tel.Value) &gt; 7, False, True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox88">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>:</Value>
+                      <Style>
+                        <FontFamily>Cairo</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>DimGray</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Parameters!trcomAddress.Value</Value>
+                      <Style>
+                        <FontFamily>Cairo</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>DimGray</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox4</rd:DefaultName>
+              <Top>0.62236in</Top>
+              <Left>2.73937in</Left>
+              <Height>0.25in</Height>
+              <Width>0.46528in</Width>
+              <ZIndex>7</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!Address.Value &lt;&gt; "", False, True)</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox89">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>:</Value>
+                      <Style>
+                        <FontFamily>Cairo</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>DimGray</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Parameters!trcomTel.Value</Value>
+                      <Style>
+                        <FontFamily>Cairo</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>DimGray</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox4</rd:DefaultName>
+              <Top>0.87236in</Top>
+              <Left>2.73937in</Left>
+              <Height>0.26389in</Height>
+              <Width>0.46528in</Width>
+              <ZIndex>8</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Len(Parameters!Tel.Value) &gt; 7, False, True)</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox85">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>:</Value>
+                      <Style>
+                        <FontFamily>Cairo</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>DimGray</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Parameters!trcomFax.Value</Value>
+                      <Style>
+                        <FontFamily>Cairo</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>DimGray</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox4</rd:DefaultName>
+              <Top>1.13625in</Top>
+              <Left>2.73937in</Left>
+              <Height>0.25in</Height>
+              <Width>0.46528in</Width>
+              <ZIndex>9</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Len(Parameters!Fax.Value) &gt; 7, False, True)</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox90">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>:</Value>
+                      <Style>
+                        <FontFamily>Cairo</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>DimGray</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Parameters!trcomEmail.Value</Value>
+                      <Style>
+                        <FontFamily>Cairo</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>DimGray</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox4</rd:DefaultName>
+              <Top>1.38625in</Top>
+              <Left>2.40901in</Left>
+              <Height>0.27083in</Height>
+              <Width>0.79564in</Width>
+              <ZIndex>10</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!Email.Value &lt;&gt; "", False, True)</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
               </Style>
             </Textbox>
           </ReportItems>
