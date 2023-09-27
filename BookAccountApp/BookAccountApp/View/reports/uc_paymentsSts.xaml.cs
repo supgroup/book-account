@@ -69,8 +69,12 @@ namespace BookAccountApp.View.reports
         decimal sumdepositSyp = 0;
           decimal totalUsd = 0;
         decimal totalSyp = 0;
+        decimal totalResult = 0;
+        decimal totalPay = 0;
+        decimal totalDeposit = 0;
         string side = "";
         string paysysValue = "";
+        string currency = "";
 
         PayOp PayOpRow = new PayOp();
         byte tgl_paymentsStsstate;
@@ -325,7 +329,8 @@ namespace BookAccountApp.View.reports
         public async Task fillcombos()
         {
             await FillCombo.fillpaySidereport(cb_side);
-           
+            FillCombo.fillCurrency(cb_currency);
+
         }
         #region fill sideValues
         private void fillPassenger()
@@ -372,74 +377,181 @@ namespace BookAccountApp.View.reports
         #region sum
         
 
-        private decimal getTotalPayUsd(string side,string paysys)
-        {
-          //  string balance = "";
-            decimal amount = 0;
-            //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
-            if (side== "paysys")
-            {
-                amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == paysys).Sum(s => s.cash);
-            }
-            else
-            {
-                amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.currency == "usd").Sum(s => s.cash);
-            }
+        //private decimal getTotalPayUsd(string side,string paysys)
+        //{
+        //  //  string balance = "";
+        //    decimal amount = 0;
+        //    //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
+
+        //    if (side== "paysys")
+        //    {
+        //        amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == paysys).Sum(s => s.cash);
+        //    }
+        //    else
+        //    {
+        //        if (currency == "syp")
+        //        {
+        //            amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && s.currency == "syp").Sum(s =>
+        //           s.cash
+        //            );
+        //        }
+        //        else
+        //        {
+
+        //        }
             
-           // balance = HelpClass.DecTostring(amount);
-            return amount;
-        }
-        private decimal getTotalPaySyp(string side )
+        //    }
+            
+        //   // balance = HelpClass.DecTostring(amount);
+        //    return amount;
+        //}
+
+       
+        //private decimal getTotalPaySyp(string side )
+        //{
+        //    string balance = "";
+        //    decimal amount = 0;
+        //    //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
+        //    if (side == "paysys")
+        //    {
+        //        amount =0;
+        //    }
+        //    else
+        //    {
+        //        amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.currency == "syp").Sum(s => s.cash);
+        //    }
+
+        //    balance = HelpClass.DecTostring(amount);
+        //    return amount;
+        //}
+        //private decimal getTotalDepositUsd(string side)
+        //{
+        //    //  string balance = "";
+        //    decimal amount = 0;
+        //    //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
+        //    if (side == "paysys")
+        //    {
+        //        amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == "system").Sum(s => s.cash);
+        //    }
+        //    else
+        //    {
+        //        amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d" && x.currency == "usd").Sum(s => s.cash);
+        //    }
+
+        //    // balance = HelpClass.DecTostring(amount);
+        //    return amount;
+        //}
+
+        private decimal getTotalPay(string side, string paysys)
         {
-            string balance = "";
+            //  string balance = "";
             decimal amount = 0;
             //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
+
             if (side == "paysys")
             {
-                amount =0;
+                if (currency == "syp")
+                {
+                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == paysys).Sum(s => (s.cash * FillCombo.exchangeValue));
+                }
+                else if (currency == "usd")
+                {
+                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == paysys).Sum(s => s.cash);
+                }
+                //amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == paysys).Sum(s => s.cash);
             }
             else
             {
-                amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.currency == "syp").Sum(s => s.cash);
+                if (currency == "syp")
+                {
+                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p").Sum(s =>
+                 s.isPaid == true ? (s.currency == "syp" ? s.cash//syp paid
+                 : (s.cash * s.syValue)) //$ -> $*old xcahange paid
+                 : (s.currency == "syp" ? s.cash//syp unpaid
+                 : (s.cash * FillCombo.exchangeValue) //unpaid
+                 )
+                 );
+                }
+                else if (currency == "usd")
+                {
+                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p").Sum(s =>
+                s.isPaid == true ? (s.currency == "syp" ? (s.cash / s.syValue) //syp /old xcahange paid
+                : (s.cash)) //$ -> $*old xcahange paid
+                : (s.currency == "syp" ? (s.cash / FillCombo.exchangeValue) //syp unpaid
+                : (s.cash) //$ unpaid 
+                )
+                );
+                }
+
             }
 
-            balance = HelpClass.DecTostring(amount);
+            // balance = HelpClass.DecTostring(amount);
             return amount;
         }
-        private decimal getTotalDepositUsd(string side)
+        private decimal getTotalDeposit(string side)
         {
             //  string balance = "";
             decimal amount = 0;
             //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
             if (side == "paysys")
             {
-                amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == "system").Sum(s => s.cash);
+                if (currency == "syp")
+                {
+                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == "system").Sum(s => (s.cash*FillCombo.exchangeValue));
+                }
+                else if (currency == "usd")
+                {
+                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == "system").Sum(s => s.cash);
+                }
             }
             else
             {
-                amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d" && x.currency == "usd").Sum(s => s.cash);
+               // amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d"  ).Sum(s => s.cash);
+
+                if (currency == "syp")
+                {
+                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d").Sum(s =>
+                 s.isPaid == true ? (s.currency == "syp" ? s.cash//syp paid
+                 : (s.cash * s.syValue)) //$ -> $*old xcahange paid
+                 : (s.currency == "syp" ? s.cash//syp unpaid
+                 : (s.cash * FillCombo.exchangeValue) //unpaid
+                 )
+                 );
+                }
+                else if (currency == "usd")
+                {
+                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d").Sum(s =>
+                s.isPaid == true ? (s.currency == "syp" ? (s.cash / s.syValue) //syp /old xcahange paid
+                : (s.cash)) //$ -> $*old xcahange paid
+                : (s.currency == "syp" ? (s.cash / FillCombo.exchangeValue) //syp unpaid
+                : (s.cash) //$ unpaid 
+                )
+                );
+                }
             }
 
             // balance = HelpClass.DecTostring(amount);
             return amount;
         }
-        private decimal getTotalDepositSyp(string side)
-        {
-            //  string balance = "";
-            decimal amount = 0;
-            //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
-            if (side == "paysys")
-            {
-                amount =0;
-            }
-            else
-            {
-                amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d" && x.currency == "syp").Sum(s => s.cash);
-            }
 
-            // balance = HelpClass.DecTostring(amount);
-            return amount;
-        }
+        //private decimal getTotalDepositSyp(string side)
+        //{
+        //    //  string balance = "";
+        //    decimal amount = 0;
+        //    //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
+        //    if (side == "paysys")
+        //    {
+        //        amount =0;
+        //    }
+        //    else
+        //    {
+        //        amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d" && x.currency == "syp").Sum(s => s.cash);
+        //    }
+
+        //    // balance = HelpClass.DecTostring(amount);
+        //    return amount;
+        //}
+
         //private decimal getTotalUsd()
         //{
         //    sumpayUsd = getTotalPayUsd(side, paysysValue);
@@ -461,31 +573,35 @@ namespace BookAccountApp.View.reports
         //}
         private void sumAll()
         {
-            sumpayUsd = getTotalPayUsd(side, paysysValue);
-            sumdepositUsd = getTotalDepositUsd(side);
-            sumpaySyp = getTotalPaySyp(side);
-            sumdepositSyp = getTotalDepositSyp(side);
-            totalUsd = sumpayUsd - sumdepositUsd;
-            totalSyp = sumpaySyp - sumdepositSyp;
+            //sumpayUsd = getTotalPayUsd(side, paysysValue);
+            //sumdepositUsd = getTotalDepositUsd(side);
+            //sumpaySyp = getTotalPaySyp(side);
+            //sumdepositSyp = getTotalDepositSyp(side);
+            totalPay = getTotalPay(side, paysysValue);
+            totalDeposit = getTotalDeposit(side);
+            //totalUsd = sumpayUsd - sumdepositUsd;
+            //totalSyp = sumpaySyp - sumdepositSyp;
+            totalResult = totalPay - totalDeposit;
 
-            txt_totalWorthy.Text = HelpClass.DecTostring(totalUsd);
-            txt_totalWorthysyp.Text = HelpClass.DecTostring(totalSyp);
+
+            txt_totalWorthy.Text = HelpClass.DecTostring(totalResult);
+            ////txt_totalWorthysyp.Text = HelpClass.DecTostring(totalSyp);
 
          
             if (btnState == "to")
             {
               
 
-                txt_totalPay.Text = HelpClass.DecTostring(sumdepositUsd);
-                txt_totalPaysyp.Text = HelpClass.DecTostring(sumdepositSyp);
+                txt_totalPay.Text = HelpClass.DecTostring(totalDeposit);
+                //txt_totalPaysyp.Text = HelpClass.DecTostring(sumdepositSyp);
                 txt_totalPayTitle.Text = MainWindow.resourcemanager.GetString("totalDeposit");
             }
             else
             {
                 //on
              
-                txt_totalPay.Text = HelpClass.DecTostring(sumpayUsd);
-                txt_totalPaysyp.Text = HelpClass.DecTostring(sumpaySyp);
+                txt_totalPay.Text = HelpClass.DecTostring(totalPay);
+                //txt_totalPaysyp.Text = HelpClass.DecTostring(sumpaySyp);
 
                 txt_totalPayTitle.Text = MainWindow.resourcemanager.GetString("totalPaid");
             }
@@ -493,103 +609,109 @@ namespace BookAccountApp.View.reports
         }
         private void totalvisiblity()
         {
-            if (totalUsd == 0)
-            {
-                txt_totalWorthy.Visibility = Visibility.Collapsed;
-                tb_moneyIconwusd.Visibility = Visibility.Collapsed;
+            //if (totalUsd == 0)
+            //{
+            //    txt_totalWorthy.Visibility = Visibility.Collapsed;
+            //    tb_moneyIconwusd.Visibility = Visibility.Collapsed;
 
-            }
-            else
-            {
-                txt_totalWorthy.Visibility = Visibility.Visible;
-                tb_moneyIconwusd.Visibility = Visibility.Visible;
+            //}
+            //else
+            //{
+            //    txt_totalWorthy.Visibility = Visibility.Visible;
+            //    tb_moneyIconwusd.Visibility = Visibility.Visible;
 
-            }
-            if (totalSyp == 0)
-            {
-                txt_totalWorthysyp.Visibility = Visibility.Collapsed;
-                tb_moneyIconwsyp.Visibility = Visibility.Collapsed;
+            //}
 
-            }
-            else
-            {
-                txt_totalWorthysyp.Visibility = Visibility.Visible;
-                tb_moneyIconwsyp.Visibility = Visibility.Visible;
-            }
-            if (totalUsd == 0 || totalSyp == 0)
-            {
-                tb_plusw.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                tb_plusw.Visibility = Visibility.Visible;
-            }
+            //
 
-            if (btnState == "to")
-            {
-                if (sumdepositUsd == 0)
-                {
-                    txt_totalPay.Visibility = Visibility.Collapsed;
-                    tb_moneyIcon.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    txt_totalPay.Visibility = Visibility.Visible;
-                    tb_moneyIcon.Visibility = Visibility.Visible;
-                }
-                if (sumdepositSyp == 0)
-                {
-                    txt_totalPaysyp.Visibility = Visibility.Collapsed;
-                    tb_moneyIconsyp.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    txt_totalPaysyp.Visibility = Visibility.Visible;
-                    tb_moneyIconsyp.Visibility = Visibility.Visible;
-                }
-                if (sumdepositUsd == 0 || sumdepositSyp == 0)
-                {
-                    tb_plus.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    tb_plus.Visibility = Visibility.Visible;
-                }
-            }
-            else
-            {
-                //on
-                if (sumpayUsd == 0)
-                {
-                    txt_totalPay.Visibility = Visibility.Collapsed;
-                    tb_moneyIcon.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    txt_totalPay.Visibility = Visibility.Visible;
-                    tb_moneyIcon.Visibility = Visibility.Visible;
-                }
-                if (sumpaySyp == 0)
-                {
-                    txt_totalPaysyp.Visibility = Visibility.Collapsed;
-                    tb_moneyIconsyp.Visibility = Visibility.Collapsed;
+            //if (totalSyp == 0)
+            //{
+            //txt_totalWorthysyp.Visibility = Visibility.Collapsed;
+            //tb_moneyIconwsyp.Visibility = Visibility.Collapsed;
 
-                }
-                else
-                {
-                    txt_totalPaysyp.Visibility = Visibility.Visible;
-                    tb_moneyIconsyp.Visibility = Visibility.Visible;
-                }
-                if (sumpayUsd == 0 || sumpaySyp == 0)
-                {
-                    tb_plus.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    tb_plus.Visibility = Visibility.Visible;
-                }
-            }
-    }
+            //}
+            //else
+            //{
+            //    txt_totalWorthysyp.Visibility = Visibility.Visible;
+            //    tb_moneyIconwsyp.Visibility = Visibility.Visible;
+            //}
+            ////
+
+            //        if (totalUsd == 0 || totalSyp == 0)
+            //        {
+            //            tb_plusw.Visibility = Visibility.Collapsed;
+            //        }
+            //        else
+            //        {
+            //            tb_plusw.Visibility = Visibility.Visible;
+            //        }
+
+            //        if (btnState == "to")
+            //        {
+            //            if (sumdepositUsd == 0)
+            //            {
+            //                txt_totalPay.Visibility = Visibility.Collapsed;
+            //                tb_moneyIcon.Visibility = Visibility.Collapsed;
+            //            }
+            //            else
+            //            {
+            //                txt_totalPay.Visibility = Visibility.Visible;
+            //                tb_moneyIcon.Visibility = Visibility.Visible;
+            //            }
+            //            if (sumdepositSyp == 0)
+            //            {
+            //                txt_totalPaysyp.Visibility = Visibility.Collapsed;
+            //                tb_moneyIconsyp.Visibility = Visibility.Collapsed;
+            //            }
+            //            else
+            //            {
+            //                txt_totalPaysyp.Visibility = Visibility.Visible;
+            //                tb_moneyIconsyp.Visibility = Visibility.Visible;
+            //            }
+            //            if (sumdepositUsd == 0 || sumdepositSyp == 0)
+            //            {
+            //                tb_plus.Visibility = Visibility.Collapsed;
+            //            }
+            //            else
+            //            {
+            //                tb_plus.Visibility = Visibility.Visible;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            //on
+            //            if (sumpayUsd == 0)
+            //            {
+            //                txt_totalPay.Visibility = Visibility.Collapsed;
+            //                tb_moneyIcon.Visibility = Visibility.Collapsed;
+            //            }
+            //            else
+            //            {
+            //                txt_totalPay.Visibility = Visibility.Visible;
+            //                tb_moneyIcon.Visibility = Visibility.Visible;
+            //            }
+            //            if (sumpaySyp == 0)
+            //            {
+            //                txt_totalPaysyp.Visibility = Visibility.Collapsed;
+            //                tb_moneyIconsyp.Visibility = Visibility.Collapsed;
+
+            //            }
+            //            else
+            //            {
+            //                txt_totalPaysyp.Visibility = Visibility.Visible;
+            //                tb_moneyIconsyp.Visibility = Visibility.Visible;
+            //            }
+            //            if (sumpayUsd == 0 || sumpaySyp == 0)
+            //            {
+            //                tb_plus.Visibility = Visibility.Collapsed;
+            //            }
+            //            else
+            //            {
+            //                tb_plus.Visibility = Visibility.Visible;
+            //            }
+            //        }
+            //}
+        }
             #endregion
             #endregion
 
@@ -601,7 +723,7 @@ namespace BookAccountApp.View.reports
             cb_side.SelectedIndex = -1;
             cb_sideValue.SelectedIndex = -1;
             brdr_name.Visibility = Visibility.Collapsed;
-           
+            cb_currency.SelectedValue = "usd";
             
             // last 
             HelpClass.clearValidate(requiredControlList, this);
@@ -1249,6 +1371,41 @@ namespace BookAccountApp.View.reports
             #endregion
             btnState = "to";
             sumAll();
+        }
+
+        private async void Cb_currency_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+
+                if (cb_currency.SelectedItem != null)
+                {
+                    currency = cb_currency.SelectedValue.ToString();
+                    //if (cb_currency.SelectedValue.ToString()=="usd")
+                    //{
+                       
+                    //}
+                    //else
+                    //{
+
+                    //}
+                       // await RefreshPaymentsStssList();
+                        await Search();
+                     
+
+                   
+                }
+                else
+                {
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }

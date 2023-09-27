@@ -1028,9 +1028,14 @@ namespace BookAccountApp.ApiClasses
                             deliverCash.deserved = 0;
 
                             entity.SaveChanges();
+                            //update main to isPaid true
+                            var delivermain = entity.payOp.Where(p => p.opType == "p" && p.serviceId == deliverCash.serviceId && p.processType == "service").FirstOrDefault();
+                            delivermain.isPaid = true;
+                            delivermain.syValue = FillCombo.exchangeValue;
+                            entity.SaveChanges();
                             //add new
 
-                                cashTr.cash = paid;
+                            cashTr.cash = paid;
                             cashTr.paid = paid;
                             cashTr.deserved = 0;
                             cashTr.sourceId = cash.payOpId;
@@ -1533,10 +1538,35 @@ namespace BookAccountApp.ApiClasses
                 payOpModel.currency = "usd";
                 payOpModel.fromSide = "";
                 payOpModel.processType = "service";
+                decimal totalsame = 0;
+                //convert total to same selected currency to compare
+                if (serviceModel.currency == "usd")
+                {
+                    totalsame = (decimal)serviceModel.total;
+                }
+                else
+                {
+                    //  currency == "syp"
+                    totalsame = HelpClass.ConvertToSYP(serviceModel.total, "usd", payOpModel.syValue);
+                }
+                if (serviceModel.paid < totalsame)
+                {
+                    //payOpModel.cash = serviceModel.paid;
+                    //payOpModel.paid = serviceModel.paid;
+                    payOpModel.isPaid = false;
+                    //payOpModel.deserved = totalsame - serviceModel.paid;
+                }
+                else
+                {//equal
+                    //payOpModel.cash = serviceModel.paid;
+                    //payOpModel.paid = serviceModel.paid;
+                    payOpModel.isPaid = true;
+                    //payOpModel.deserved = 0;
+                }
                 // payOpModel.sourceId = null,
 
                 payOpModel.paid = serviceModel.total;
-                payOpModel.isPaid = true;
+              //  payOpModel.isPaid = true;
                 payOpModel.deserved =0;
 
                 decimal res = await Save(payOpModel);
