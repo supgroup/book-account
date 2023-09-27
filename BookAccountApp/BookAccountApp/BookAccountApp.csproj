@@ -443,6 +443,9 @@
     <Compile Include="View\windows\wd_reportCopyCountSetting.xaml.cs">
       <DependentUpon>wd_reportCopyCountSetting.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_DbSetting.xaml.cs">
+      <DependentUpon>wd_DbSetting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_reportPrinterSetting.xaml.cs">
       <DependentUpon>wd_reportPrinterSetting.xaml</DependentUpon>
     </Compile>
@@ -652,6 +655,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_reportCopyCountSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_DbSetting.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
