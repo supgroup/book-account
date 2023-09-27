@@ -262,7 +262,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="CreateDate" Binding="{Binding Path=createDate,Converter={StaticResource dateFrameConverter}}" >
+                            <DataGridTextColumn Width="*"  Header="updateDate" Binding="{Binding Path=updateDate,Converter={StaticResource dateFrameConverter}}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>

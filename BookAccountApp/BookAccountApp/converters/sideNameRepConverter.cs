@@ -24,7 +24,8 @@ namespace BookAccountApp.converters
                 {
                    
                     case "passenger": name = MainWindow.resourcemanager.GetString("thePassenger")+" "+s.passenger; break;
-                    case "office": name = MainWindow.resourcemanager.GetString("trnoffice") + " " + s.officeName; break;
+                    case "office": name = (s.officeId == null ? FillCombo.companyName : (MainWindow.resourcemanager.GetString("trnoffice") + " " + s.officeName)); break;
+                    //case "office": name = MainWindow.resourcemanager.GetString("trnoffice") + " " + s.officeName; break;
                     case "system": name = s.systemName; break;
                     case "syr": name = MainWindow.resourcemanager.GetString("trnsyr"); break;
                     case "soto": name = MainWindow.resourcemanager.GetString("trnsoto"); break;

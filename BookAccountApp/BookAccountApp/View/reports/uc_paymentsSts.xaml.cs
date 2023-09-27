@@ -128,12 +128,12 @@ namespace BookAccountApp.View.reports
             //   paymentsStss            
             dg_paymentsSts.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
             dg_paymentsSts.Columns[1].Header = MainWindow.resourcemanager.GetString("sideOrResponseble");
-            dg_paymentsSts.Columns[2].Header = MainWindow.resourcemanager.GetString("recivedFrom");
-            dg_paymentsSts.Columns[3].Header = MainWindow.resourcemanager.GetString("trRecepient");
+            //dg_paymentsSts.Columns[2].Header = MainWindow.resourcemanager.GetString("recivedFrom");
+            //dg_paymentsSts.Columns[3].Header = MainWindow.resourcemanager.GetString("trRecepient");
      
-            dg_paymentsSts.Columns[4].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
-            dg_paymentsSts.Columns[5].Header = MainWindow.resourcemanager.GetString("currency");
-            dg_paymentsSts.Columns[6].Header = MainWindow.resourcemanager.GetString("payDate");
+            dg_paymentsSts.Columns[2].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
+            dg_paymentsSts.Columns[3].Header = MainWindow.resourcemanager.GetString("currency");
+            dg_paymentsSts.Columns[4].Header = MainWindow.resourcemanager.GetString("payDate");
             //dg_paymentsSts.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");

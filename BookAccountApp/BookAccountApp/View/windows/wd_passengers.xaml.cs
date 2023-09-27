@@ -336,7 +336,11 @@ namespace BookAccountApp.View.windows
                 {
                     //tb_custCode.Text = await flights.generateCodeNumber("cu");
 
-                    passengersrow.name = tb_name.Text;
+                    passengersrow.name = tb_name.Text.Trim();
+                    passengersrow.lastName =string.IsNullOrEmpty(tb_lastName.Text)?"": tb_lastName.Text.Trim();
+                    passengersrow.father = string.IsNullOrEmpty(tb_father.Text) ? "" : tb_father.Text.Trim();
+                    passengersrow.mother = string.IsNullOrEmpty(tb_mother.Text) ? "" : tb_mother.Text.Trim();
+
                     passengersrow.notes = tb_notes.Text;
                     //passengersrow.isActive = true;
                     decimal s = await passengersrow.Save(passengersrow);

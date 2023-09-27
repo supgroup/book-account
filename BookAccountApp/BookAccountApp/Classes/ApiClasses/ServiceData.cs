@@ -256,9 +256,9 @@ namespace BookAccountApp.ApiClasses
                                 systemName=SYS.name,
                                 currency=S.currency,
                             }).ToList();
-                    List = List.Where(S => ((fromDate == null && toDate == null) ? ((DateTime)S.createDate).Date == now.Date :
-                            ((fromDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date >= fromDate.Value.Date) : true)
-                            && ((toDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date <= toDate.Value.Date) : true)
+                    List = List.Where(S => ((fromDate == null && toDate == null) ? ((DateTime)S.updateDate).Date == now.Date :
+                            ((fromDate != null) ? S.updateDate == null ? false : (S.updateDate.Value.Date >= fromDate.Value.Date) : true)
+                            && ((toDate != null) ? S.updateDate == null ? false : (S.updateDate.Value.Date <= toDate.Value.Date) : true)
                            )).ToList();
                     if (List.Count > 0)
                     {

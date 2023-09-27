@@ -11,7 +11,7 @@ using System.Web;
 
 using System.Security.Claims;
 using Newtonsoft.Json.Converters;
-
+using BookAccountApp.Classes;
 namespace BookAccountApp.ApiClasses
 {
     public class BookSts 
@@ -189,7 +189,7 @@ namespace BookAccountApp.ApiClasses
                                 passengerId = S.passengerId,
                                 flightId = S.flightId,
                                 operationId = S.operationId,
-                                officeName = OFF.name,
+                                officeName =S.officeId==null?FillCombo.companyName: OFF.name,
                                 isActive = S.isActive,
                                 canDelete = false,
                                 systemType = S.systemType,
@@ -346,8 +346,9 @@ namespace BookAccountApp.ApiClasses
                               //  airline =S.processType=="book"? S.systems.name + "/" + S.flights.flightTable.name + "/" + S.paySides.sideAr : S.paySides.sideAr,
                                 airlineStr = S.processType == "book" ? S.systems.name + "/" + S.flights.flightTable.name + "/" + S.paySides.sideAr : S.paySides.sideAr,
 
-                                officeName = S.officeId==null?"":S.office.name,
-                                currency=S.currency,
+                                //officeName = S.officeId==null?"":S.office.name,
+                                officeName = S.officeId == null ? FillCombo.companyName : S.office.name,
+                                currency =S.currency,
  
                                 sideAr = S.paySides.sideAr,
                               

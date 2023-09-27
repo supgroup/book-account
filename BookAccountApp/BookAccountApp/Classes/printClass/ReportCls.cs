@@ -1416,7 +1416,8 @@ RecivedPurpose
                 {
 
                     case "passenger": name = MainWindow.resourcemanager.GetString("thePassenger") + " " + payModel.passenger; break;
-                    case "office": name = MainWindow.resourcemanager.GetString("trnoffice") + " " + payModel.officeName; break;
+                    //case "office": name = MainWindow.resourcemanager.GetString("trnoffice") + " " + payModel.officeName; break;
+                    case "office": name = (payModel.officeId == null ? FillCombo.companyName : (MainWindow.resourcemanager.GetString("trnoffice") + " " + payModel.officeName)); break;
                     case "system": name = payModel.systemName; break;
                     case "syr": name = MainWindow.resourcemanager.GetString("trnsyr"); break;
                     case "soto": name = MainWindow.resourcemanager.GetString("trnsoto"); break;
@@ -1440,7 +1441,8 @@ RecivedPurpose
                 {
 
                     case "passenger": name = MainWindow.resourcemanager.GetString("thePassenger") + " " + payModel.passenger; break;
-                    case "office": name = MainWindow.resourcemanager.GetString("trnoffice") + " " + payModel.officeName; break;
+                    //case "office": name = MainWindow.resourcemanager.GetString("trnoffice") + " " + payModel.officeName; break;
+                    case "office": name = (payModel.officeId == null ? FillCombo.companyName : (MainWindow.resourcemanager.GetString("trnoffice") + " " + payModel.officeName)); break;
                     case "system": name = payModel.systemName; break;
                     case "syr": name = MainWindow.resourcemanager.GetString("trnsyr"); break;
                     case "soto": name = MainWindow.resourcemanager.GetString("trnsoto"); break;
