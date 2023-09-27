@@ -3364,4 +3364,7 @@
   <data name="halfChoose" xml:space="preserve">
     <value>نصف اول/نصف ثاني</value>
   </data>
+  <data name="trmobilenum" xml:space="preserve">
+    <value>موبايل</value>
+  </data>
 </root>

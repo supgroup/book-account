@@ -3355,4 +3355,7 @@ Please add Email in setting</value>
   <data name="halfChoose" xml:space="preserve">
     <value>halfChoose</value>
   </data>
+  <data name="trmobilenum" xml:space="preserve">
+    <value>Mobile</value>
+  </data>
 </root>
