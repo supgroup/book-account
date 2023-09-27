@@ -321,36 +321,44 @@ namespace BookAccountApp
                 //   "sectionData","settings"};
                 
                 translate();
-
-                #region loading
-                //loadingList = new List<keyValueBool>();
-                //bool isDone = true;
-                //loadingList.Add(new keyValueBool { key = "loading_getGroupObjects", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getUserPersonalInfo", value = false });
-                
-
-              await  FillCombo.loading_getDefaultSystemInfo();
-             await FillCombo.Getprintparameter();
-                //loading_getGroupObjects();
-              // await FillCombo.RefreshCountry();
-              //  FillCombo.fillRegion();
-                await loading_getUserPersonalInfo();
+                if (HelpClass.isSupportPermision)
+                {
+                    //support
+                    Btn_settings_Click(btn_settings, null);
+                }
+                else
+                {
+                    #region loading
+                    //loadingList = new List<keyValueBool>();
+                    //bool isDone = true;
+                    //loadingList.Add(new keyValueBool { key = "loading_getGroupObjects", value = false });
+                    //loadingList.Add(new keyValueBool { key = "loading_getUserPersonalInfo", value = false });
 
 
-                #endregion
+                    await FillCombo.loading_getDefaultSystemInfo();
+                    await FillCombo.Getprintparameter();
+                    //loading_getGroupObjects();
+                    // await FillCombo.RefreshCountry();
+                    //  FillCombo.fillRegion();
+                    await loading_getUserPersonalInfo();
 
-                //if (MainWindow.userLogin.type == "ag")
-                //{
-                //    btn_applications.Visibility = Visibility.Collapsed;
-                //    btn_sectionData.Visibility = Visibility.Collapsed;
-                //    btn_settings.Visibility = Visibility.Collapsed;
 
-                //    Btn_sales_Click(btn_sales , null);
-                //}
-                //else
-                //{
-                Btn_sectionData_Click(btn_sectionData, null);
-                //}
+                    #endregion
+
+                    //if (MainWindow.userLogin.type == "ag")
+                    //{
+                    //    btn_applications.Visibility = Visibility.Collapsed;
+                    //    btn_sectionData.Visibility = Visibility.Collapsed;
+                    //    btn_settings.Visibility = Visibility.Collapsed;
+
+                    //    Btn_sales_Click(btn_sales , null);
+                    //}
+                    //else
+                    //{
+                    Btn_sectionData_Click(btn_sectionData, null);
+                    //}
+
+                }
                 if (sender != null)
                     HelpClass.EndAwait(grid_mainGrid);
             }

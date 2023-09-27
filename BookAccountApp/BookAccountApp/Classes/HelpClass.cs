@@ -19,13 +19,15 @@ using System.Windows.Resources;
 using System.Windows.Shapes;
 using Tulpep.NotificationWindow;
 using System.Configuration;
+using System.Data.SqlClient;
+
 namespace BookAccountApp.Classes
 {
     class HelpClass
     {
        static public BrushConverter brushConverter = new BrushConverter();
         public static ImageBrush imageBrush = new ImageBrush();
-
+        public static bool isSupportPermision = false;
         static Users userModel = new Users();
         //static Customers customerModel = new Customers();
         //static Packages packageModel = new Packages();
@@ -1165,7 +1167,7 @@ namespace BookAccountApp.Classes
          * */
         public static string AddNewConnectionString(string servername, string dbName = "bookdb")
         {
-            string messg = "ok";
+            string messg = "0";
 
             /* This code provides access to configuration files using OpenMappedExeConfiguration,method. You can use the OpenExeConfiguration method instead. For further informatons,consult the MSDN, it gives you more inforamtions about config files access methods*/
 
@@ -1182,7 +1184,7 @@ namespace BookAccountApp.Classes
             connstr = connstr.Replace("[[servername]]", servername);
             connstr = connstr.Replace("[[dbname]]", dbName);
             ConnectionStringSettings oConnectionSettings = new ConnectionStringSettings("bookdbEntities", connstr, "System.Data.EntityClient");
-
+           
             //Adding the connection string to the oConfiguration object
 
             oConfiguration.ConnectionStrings.ConnectionStrings.Remove(oConnectionSettings);
@@ -1192,19 +1194,51 @@ namespace BookAccountApp.Classes
 
             oConfiguration.Save(ConfigurationSaveMode.Full);
 
-            MessageBox.Show(string.Format("Connection {0} is added", oConnectionSettings.Name));
+            //MessageBox.Show(string.Format("Connection {0} is added", oConnectionSettings.Name));
 
             //Restart the application to be sure that connection is restored in the config file
-
+            messg = "1";
             // Application.st();
             return messg;
+        }
+
+        public static DbClass getConnectionString()
+        {
+            
+            DbClass dbcls = new DbClass();
+
+            ExeConfigurationFileMap oConfigFile = new ExeConfigurationFileMap();
+            string  configfile = System.IO.Directory.GetFiles(System.IO.Directory.GetCurrentDirectory(), "*.config").First();
+
+            //   oConfigFile.ExeConfigFilename = System.IO.Path.Combine(  System.IO.Directory.GetCurrentDirectory() , "BookAccountApp.exe.config");
+            oConfigFile.ExeConfigFilename = configfile;
+
+            Configuration oConfiguration = ConfigurationManager.OpenMappedExeConfiguration(oConfigFile, ConfigurationUserLevel.None);
+            
+            var connectionString = oConfiguration.ConnectionStrings.ConnectionStrings["bookdbEntities"].ConnectionString;
+            /* This code provides access to configuration files using OpenMappedExeConfiguration,method. You can use the OpenExeConfiguration method instead. For further informatons,consult the MSDN, it gives you more inforamtions about config files access methods*/
+            //var connectionString = ConfigurationManager.ConnectionStrings["bookdbEntities"].ConnectionString;
+
+            string sub1= connectionString.Substring(connectionString.IndexOf("data source"));
+            sub1 = sub1.Substring(sub1.IndexOf("data source"), sub1.IndexOf(";"));
+
+            string server = sub1.Substring(sub1.IndexOf("=")+1);
+            string sub2= connectionString.Substring(connectionString.IndexOf("initial catalog"));
+            sub2 = sub2.Substring(sub2.IndexOf("initial catalog"), sub2.IndexOf(";"));
+            string database = sub2.Substring(sub2.IndexOf("=") + 1);
+                 
+            dbcls.dbname = database;
+            dbcls.servername = server;
+            return dbcls;
         }
         public static bool checkConnectionString()
         {
             using (bookdbEntities entity = new bookdbEntities())
             {
+                string ddb = entity.Database.Connection.Database;
                 if (entity.Database.Exists())
                 {
+               
                     //MessageBox.Show("ok");
                     //string db = entity.Database.Connection.Database;
                     //string ds = entity.Database.Connection.DataSource;
@@ -1227,5 +1261,9 @@ namespace BookAccountApp.Classes
             return _random.Next(0, 9999).ToString("D4");
         }
     }
-
-}
+    class DbClass
+    {
+        public string servername { get; set; }
+        public string dbname { get; set; }
+    }
+    }

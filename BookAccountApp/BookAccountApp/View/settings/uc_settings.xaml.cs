@@ -64,9 +64,15 @@ namespace BookAccountApp.View.settings
                 //}
                 translate();
                 #endregion
-
-                Btn_commissions_Click(btn_commissions, null);
-
+                if (HelpClass.isSupportPermision)
+                {
+                    //support
+                    Btn_users_Click(btn_users, null);
+                }
+                else
+                {
+                    Btn_commissions_Click(btn_commissions, null);
+                }
                 HelpClass.EndAwait(grid_mainGrid);
             }
             catch (Exception ex)

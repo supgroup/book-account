@@ -65,7 +65,15 @@ namespace BookAccountApp.View.settings.users
 
                 translate();
                 #endregion
-
+                if (HelpClass.isSupportPermision)
+                {
+                    //support
+                    brdr_db.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    brdr_db.Visibility = Visibility.Collapsed;
+                }
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);
             }
@@ -160,14 +168,14 @@ namespace BookAccountApp.View.settings.users
         {
             try
             {
-                /*
+                 
                 HelpClass.StartAwait(grid_main);
                 Window.GetWindow(this).Opacity = 0.2;
-                wd_dataBase w = new wd_dataBase();
+                wd_DbSetting w = new wd_DbSetting();
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(grid_main);
-                */
+                
             }
             catch (Exception ex)
             {
