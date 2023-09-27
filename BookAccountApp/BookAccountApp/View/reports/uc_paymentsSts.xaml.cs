@@ -584,14 +584,12 @@ namespace BookAccountApp.View.reports
             totalResult = totalPay - totalDeposit;
 
 
-            txt_totalWorthy.Text = HelpClass.DecTostring(totalResult);
+            titleTranslate();
             ////txt_totalWorthysyp.Text = HelpClass.DecTostring(totalSyp);
 
-         
+
             if (btnState == "to")
             {
-              
-
                 txt_totalPay.Text = HelpClass.DecTostring(totalDeposit);
                 //txt_totalPaysyp.Text = HelpClass.DecTostring(sumdepositSyp);
                 txt_totalPayTitle.Text = MainWindow.resourcemanager.GetString("totalDeposit");
@@ -605,7 +603,24 @@ namespace BookAccountApp.View.reports
 
                 txt_totalPayTitle.Text = MainWindow.resourcemanager.GetString("totalPaid");
             }
-            totalvisiblity();
+            //totalvisiblity();
+            titleTranslate();
+        }
+        private void titleTranslate()
+        {
+            //+trRequired + trWorthy
+            if (totalResult>=0)
+            {
+                txt_totalWorthyTitle.Text = MainWindow.resourcemanager.GetString("trRequired");
+                txt_totalWorthy.Text = HelpClass.DecTostring(totalResult);
+            }
+            else
+            {
+                txt_totalWorthyTitle.Text = MainWindow.resourcemanager.GetString("trWorthy");
+                decimal total = totalResult * (-1);
+                txt_totalWorthy.Text = HelpClass.DecTostring(total);
+            }
+          
         }
         private void totalvisiblity()
         {
@@ -1381,17 +1396,20 @@ namespace BookAccountApp.View.reports
                 if (cb_currency.SelectedItem != null)
                 {
                     currency = cb_currency.SelectedValue.ToString();
+                    tb_moneyIcon.Text = HelpClass.currencyConverter(currency);
+                    tb_moneyIconwusd.Text = tb_moneyIcon.Text;
+                 
                     //if (cb_currency.SelectedValue.ToString()=="usd")
                     //{
-                       
+
                     //}
                     //else
                     //{
 
                     //}
-                       // await RefreshPaymentsStssList();
-                        await Search();
-                     
+                    // await RefreshPaymentsStssList();
+                    //    await Search();
+                    sumAll();
 
                    
                 }
