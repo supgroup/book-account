@@ -54,7 +54,7 @@ namespace BookAccountApp.View.windows
                 if (Properties.Settings.Default.userName != string.Empty)
                 {
                     txtUserName.Text = Properties.Settings.Default.userName;
-                    txtPassword.Password = Properties.Settings.Default.password;
+                    //txtPassword.Password = Properties.Settings.Default.password;
                     // MainWindow.lang = "en";
                     MainWindow.lang = Properties.Settings.Default.Lang;
                     //menuIsOpen = Properties.Settings.Default.menuIsOpen;

@@ -146,8 +146,8 @@ namespace BookAccountApp.View.windows
                 //  refreshWindow();
                 if(!string.IsNullOrEmpty(tb_server.Text)&& !string.IsNullOrEmpty(tb_db.Text))
                 {
-                    
-                    HelpClass.AddNewConnectionString(tb_server.Text.Trim(), tb_db.Text.Trim());
+
+                    msg= HelpClass.AddNewConnectionString(tb_server.Text.Trim(), tb_db.Text.Trim());
                 }
              
                 
