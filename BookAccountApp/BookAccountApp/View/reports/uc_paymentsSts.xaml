@@ -481,6 +481,7 @@
                                 </Grid>
                             </Border>
                             <Button Grid.Column="1"  Padding="10 5" 
+                                    materialDesign:ButtonAssist.CornerRadius="10"
                                 Background="{x:Null}" 
                                     Height="40" 
                                     BorderBrush="{StaticResource MainColor}" 
@@ -489,6 +490,7 @@
                                     Foreground="{StaticResource MainColor}" Click="Btn_to_Click" >
                             </Button>
                             <Button Grid.Column="2"  Padding="10 5" 
+                                    materialDesign:ButtonAssist.CornerRadius="10"
                         Background="{x:Null}" 
                                     Height="40" 
                         BorderBrush="{StaticResource LightGrey}" 
@@ -498,6 +500,29 @@
                         Foreground="{StaticResource LightGrey}" Click="Btn_on_Click">
                             </Button>
                         </Grid>
+                        <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"  BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                            <Grid>
+                                <ComboBox x:Name="cb_currency"  Grid.Row="1"
+               SelectedValue="{Binding currency,Mode=OneWay}"
+           Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
+           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+           materialDesign:HintAssist.Hint="currency..."  
+           Grid.Column="1" Height="40"   
+          BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+           LostFocus="validateEmpty_LostFocus"   />
+                                <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
+                   Name="p_error_currency"
+       HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
+  VerticalAlignment="Center" Width="15"  Height="15"
+       Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52
+                   6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 
+                   17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8
+                   C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12
+                   C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 
+                   L13,15 L13,17 Z"/>
+                            </Grid>
+                        </Border>
+
                     </StackPanel>
                 
                 
@@ -509,52 +534,71 @@
     Margin="10,0,15,10"
     CornerRadius="15"
     Background="White">
-                <Grid  Grid.Row="3" Margin="10"   >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-                  
-                    
-                    <TextBlock Text="totalPay" x:Name="txt_totalPayTitle" Margin="10" 
-                    FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="totalPay" x:Name="txt_totalPayTitle" Margin="10 5" 
+                    FontSize="14"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+                     Foreground="{StaticResource MainColor}"
+                    FontWeight="Bold" />
+                    <Grid  Grid.Row="3" Margin="10 0 10 10"   >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <TextBlock Text=""  Margin="10 0" 
+                    FontSize="14"      HorizontalAlignment="Left"  VerticalAlignment="Center"
                                Foreground="{StaticResource MainColor}"
                     FontWeight="Bold" />
 
-                    <TextBlock Text="0" x:Name="txt_totalPay" Margin="10" Padding="1,0,1,0" Grid.Column="1"
+                        <TextBlock Text="0" x:Name="txt_totalPay" Margin="10 0 10 0" Padding="1,0,1,0" Grid.Column="1"
                                 
-                               FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+                               FontSize="14"      HorizontalAlignment="Left"  VerticalAlignment="Center"
            Foreground="{StaticResource Grey}"
             FontWeight="Regular" />
-                    <TextBlock Grid.Row="1"   x:Name="tb_moneyIcon" Grid.Column="2" Margin="0,0,1,0"  
+                        <TextBlock Grid.Row="1"   x:Name="tb_moneyIcon" Grid.Column="2" Margin="0,0,1,0"  
                        Foreground="#4E4E4E" Text="$" 
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                                   FontWeight="Bold"  FontSize="14"/>
-                    <TextBlock Grid.Row="1"   x:Name="tb_plus" Grid.Column="3" Margin="0,0,1,0"  
+                        <TextBlock Grid.Row="1"   x:Name="tb_plus" Grid.Column="3" Margin="0,0,1,0"  
                        Foreground="#4E4E4E" Text="+" 
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                                   FontWeight="Bold"  FontSize="12"/>
-                    <TextBlock Text="0" x:Name="txt_totalPaysyp" Margin="10" Padding="1,0,1,0" Grid.Column="4"
+                        <TextBlock Text="0" x:Name="txt_totalPaysyp" Margin="10 0 10 0" Padding="1,0,1,0" Grid.Column="4"
                                 
-                               FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+                               FontSize="14"      HorizontalAlignment="Left"  VerticalAlignment="Center"
            Foreground="{StaticResource Grey}"
             FontWeight="Regular" />
-                    <TextBlock Grid.Row="1"   x:Name="tb_moneyIconsyp" Grid.Column="5" Margin="0,0,1,0"  
+                        <TextBlock Grid.Row="1"   x:Name="tb_moneyIconsyp" Grid.Column="5" Margin="0,0,1,0"  
                        Foreground="#4E4E4E" Text="SYP" 
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                                   FontWeight="Bold"  FontSize="12"/>
 
+                    </Grid>
                 </Grid>
             </Border>
             <Border Grid.Row="2"
 Margin="10,0,15,10"
 CornerRadius="15"
 Background="White">
-                <Grid  Grid.Row="3" Margin="10"   >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="totalWorthy" x:Name="txt_totalWorthyTitle" Margin="10 5" 
+                FontSize="14"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+           Foreground="{StaticResource MainColor}"
+                    FontWeight="Bold" />
+                    <Grid  Grid.Row="3" Margin="10 0 10 10"   >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
@@ -563,13 +607,13 @@ Background="White">
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="totalWorthy" x:Name="txt_totalWorthyTitle" Margin="10" 
-                FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
-                           Foreground="{StaticResource MainColor}"
-                FontWeight="Bold" />
-                    <TextBlock Text="0" x:Name="txt_totalWorthy" Margin="10" Grid.Column="1"
+                        <TextBlock Text="" Margin="10 0" 
+                             FontSize="14"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+                        Foreground="{StaticResource MainColor}"
+                                 FontWeight="Bold" />
+                        <TextBlock Text="0" x:Name="txt_totalWorthy" Margin="10 0 10 0" Grid.Column="1"
                             
-                           FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+                           FontSize="14"      HorizontalAlignment="Left"  VerticalAlignment="Center"
        Foreground="{StaticResource Grey}"
         FontWeight="Regular" />
                     <TextBlock Grid.Row="1"   x:Name="tb_moneyIconwusd" Grid.Column="2" Margin="0,0,1,0"  
@@ -580,16 +624,16 @@ Background="White">
                        Foreground="#4E4E4E" Text="+" 
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                                   FontWeight="Bold"  FontSize="12"/>
-                  
-                    <TextBlock Text="0" x:Name="txt_totalWorthysyp" Margin="10" Grid.Column="4"
+                        <TextBlock Text="0" x:Name="txt_totalWorthysyp" Margin="10 0 10 0" Grid.Column="4"
                             
-                           FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+                           FontSize="14"      HorizontalAlignment="Left"  VerticalAlignment="Center"
        Foreground="{StaticResource Grey}"
         FontWeight="Regular" />
                     <TextBlock Grid.Row="1"   x:Name="tb_moneyIconwsyp" Grid.Column="5" Margin="0,0,1,0"  
                        Foreground="#4E4E4E" Text="SYP" 
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                                   FontWeight="Bold"  FontSize="14"/>
+                </Grid>
                 </Grid>
             </Border>
             <Border Grid.Row="3"
@@ -661,6 +705,7 @@ Data="{StaticResource pdfFiles}"/>
                 </Grid>
             </Border>
             <Border Grid.Row="4"
+                    Visibility="Collapsed"
                 Margin="10,0,15,15"
                 CornerRadius="15"
                 Background="White">
