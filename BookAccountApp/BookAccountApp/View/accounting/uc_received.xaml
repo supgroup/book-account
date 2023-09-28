@@ -423,7 +423,7 @@
 
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
-                                <TextBox x:Name="tb_opName"  Text="{Binding code, Mode=OneWay}" Padding="10,0,5,0" 
+                                <TextBox x:Name="tb_opName"  Text="{Binding code, Mode=OneWay}" Padding="10,0,5,0" IsReadOnly="True"
                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                materialDesign:HintAssist.Hint="operation..." 
                Foreground="#4E4E4E"  

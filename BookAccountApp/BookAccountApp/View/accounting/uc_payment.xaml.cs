@@ -69,7 +69,7 @@ namespace BookAccountApp.View.accounting
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "opName", "side", "cash", "opDate", "currency" };
+                requiredControlList = new List<string> {  "side", "cash", "opDate", "currency" };
 
                 #region translate
                 //if (MainWindow.lang.Equals("en"))
