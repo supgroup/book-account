@@ -3056,7 +3056,7 @@
     <value>تاريخ الدفع</value>
   </data>
   <data name="addNewuser" xml:space="preserve">
-    <value>اضافة مستخدم جديد</value>
+    <value>مستخدم جديد</value>
   </data>
   <data name="addNewuserHint" xml:space="preserve">
     <value>اسم مستخدم , كلمة السر</value>

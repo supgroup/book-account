@@ -424,7 +424,7 @@
                             </Grid.RowDefinitions>
                             <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
            Width="50" Height="50" FlowDirection="LeftToRight"
-           Data="{StaticResource infoCircle}"/>
+           Data="{StaticResource commissionDiscounts}"/>
                             <TextBlock x:Name="txt_officeSystemButton"
                     Text="officeSystem"  Grid.Row="1" 
                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
