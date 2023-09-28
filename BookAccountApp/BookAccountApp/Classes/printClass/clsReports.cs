@@ -510,6 +510,7 @@ passwordSoto
                  c.sideAr = repcls.sideNameConverterRep(c);
                 c.currency = repcls.currencyConverter(c.currency);
                 c.stropDate = dateFrameConverter(c.opDate);
+                c.purpose = repcls.descRepConverter(c);
 
             }
 

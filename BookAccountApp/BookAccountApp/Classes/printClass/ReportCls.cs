@@ -1457,6 +1457,84 @@ RecivedPurpose
             }
         }
 
+        public string descRepConverter(PaymentsSts payModel)
+        {
+            try
+            {
+                //PayOp s = value as PayOp;
+                //PaymentsSts s = value as PaymentsSts;
+                //string name = "";
+                string desc = "";
+                //switch (payModel.side)
+                //{
+
+                //    //case "passenger": name = MainWindow.resourcemanager.GetString("thePassenger") + " " + payModel.passenger; break;
+                //    //case "office": name = (MainWindow.resourcemanager.GetString("trnoffice") + " " + payModel.officeName); break;
+                //    ////case "office": name = MainWindow.resourcemanager.GetString("trnoffice") + " " + payModel.officeName; break;
+                //    //case "system": name = payModel.systemName; break;
+                //    case "syr": name = MainWindow.resourcemanager.GetString("trnsyr"); break;
+                //    case "soto": name = MainWindow.resourcemanager.GetString("trnsoto"); break;
+                //    //case "other": name = MainWindow.resourcemanager.GetString("trnother"); break;
+                //    default: break;
+                //}
+                if (payModel.opType == "p" && (payModel.side == "soto" || payModel.side == "syr"))
+                {
+                    desc = "دفعة الى نظام الدفع";
+                }
+                else if (payModel.opType == "p" && payModel.side == "system" && payModel.processType == "book")
+                {
+                    desc = " سحب من " + payModel.sideAr + " مقابل الحجز في " + payModel.systemName;
+                }
+                else if (payModel.opType == "p" && payModel.side == "system" && payModel.processType == "company_commission")
+                {
+                    desc = "عمولة للشركة";
+                }
+                else if (payModel.opType == "p" && payModel.side == "office" && payModel.processType == "service")
+                {
+                    desc = " دفعة مقابل الحجز عن طريق مكتب  " + payModel.officeName;
+                }
+                else if (payModel.opType == "d" && payModel.side == "office" && payModel.processType == "cashservice")
+                {
+                    desc = " قبض من مكتب " + payModel.officeName;
+                }
+                else if (payModel.opType == "d" && payModel.side == "office" && payModel.processType == "office_commission")
+                {
+                    desc = " عمولة مكتب " + payModel.officeName;
+                }
+                else if (payModel.opType == "p" && payModel.side == "office" && payModel.processType == "cash")
+                {
+                    desc = " دفعة مقابل عمولة لمكتب " + payModel.officeName;
+                }
+
+
+                else if (payModel.opType == "p" && payModel.side == "passenger" && payModel.processType == "service")
+                {
+                    desc = " دفعة مقابل الحجز للمسافر " + payModel.passenger;
+                }
+                else if (payModel.opType == "d" && payModel.side == "passenger" && payModel.processType == "cashservice")
+                {
+                    desc = " قبض من المسافر " + payModel.passenger;
+                }
+                else if (payModel.opType == "d" && payModel.side == "passenger" && payModel.processType == "cash")
+                {
+                    desc = " قبض من المسافر " + payModel.passenger;
+                }
+                else if (payModel.opType == "p" && payModel.side == "other")
+                {
+                    desc = "دفعة";
+                }
+                else if (payModel.opType == "d" && payModel.side == "other")
+                {
+                    desc = "قبض";
+                }
+
+                return desc;
+            }
+            catch
+            {
+                return "";
+            }
+        }
         public string paySysConverter(string systemType)
         {
             try

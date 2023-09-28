@@ -21,6 +21,7 @@
             <converters:currencyConverter x:Key="currencyConverter"/> 
             <converters:sideNameConverter x:Key="sideNameConverter"/>
             <converters:sideNameRepConverter x:Key="sideNameRepConverter"/>
+            <converters:descRepConverter x:Key="descRepConverter"/> 
             <!--#region Fonts-->
             <FontFamily x:Key="Font-cairo-light" >cairo light, /BookAccountApp;component/fonts/cairo-font/#cairo light, Arial</FontFamily>
             <FontFamily x:Key="Font-cairo-bold" >cairo bold , /BookAccountApp;component/fonts/cairo-font/#cairo bold, Arial</FontFamily>
