@@ -37,7 +37,7 @@
             <Button   Grid.Column="3"
              Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
                  Content="operations" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
-                       x:Name="btn_operations" Click="Btn_operations_Click" Tag="bookSystems"/>
+                       x:Name="btn_operations" Click="Btn_operations_Click" Tag="operations"/>
             
 
         </Grid>
