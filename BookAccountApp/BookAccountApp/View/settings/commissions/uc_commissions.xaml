@@ -21,7 +21,7 @@
                           HorizontalAlignment="Center" Grid.Column="0"  
                      VerticalAlignment="Center" Height="60" Width="60"
                                FlowDirection="LeftToRight"
-                          Data="{StaticResource infoCircle}"/>
+                          Data="{StaticResource recurringSubscription}"/>
                         <StackPanel Grid.Column="1" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                             <TextBlock x:Name="txt_priceExchangeInfo" HorizontalAlignment="Right" Width="160" Foreground="#6e6e6e" FontWeight="SemiBold" Text="priceExchangeInfo" FontSize="18"></TextBlock>
                             <TextBlock x:Name="txt_priceExchangeHint" Text="" FontSize="10" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
