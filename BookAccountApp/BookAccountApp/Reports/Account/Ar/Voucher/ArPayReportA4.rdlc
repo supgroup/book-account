@@ -99,7 +99,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Parameters!currency.Value</Value>
+                    <Value>=Parameters!amount.Value</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
                       <FontWeight>Bold</FontWeight>
@@ -113,7 +113,7 @@
                     </Style>
                   </TextRun>
                   <TextRun>
-                    <Value>=Parameters!amount.Value</Value>
+                    <Value>=Parameters!currency.Value</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
                       <FontWeight>Bold</FontWeight>
@@ -143,6 +143,7 @@
               <PaddingRight>2pt</PaddingRight>
               <PaddingTop>2pt</PaddingTop>
               <PaddingBottom>2pt</PaddingBottom>
+              <Direction>RTL</Direction>
             </Style>
           </Textbox>
           <Textbox Name="Textbox6">
@@ -154,7 +155,7 @@
                   <TextRun>
                     <Value>=Parameters!title.Value</Value>
                     <Style>
-                      <FontFamily>Montserrat</FontFamily>
+                      <FontFamily>Cairo</FontFamily>
                       <FontSize>24pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>#178dd2</Color>
@@ -1020,7 +1021,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Parameters!currency.Value</Value>
+                    <Value>=Parameters!amount.Value</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
                       <FontWeight>Bold</FontWeight>
@@ -1034,7 +1035,7 @@
                     </Style>
                   </TextRun>
                   <TextRun>
-                    <Value>=Parameters!amount.Value</Value>
+                    <Value>=Parameters!currency.Value</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
                       <FontWeight>Bold</FontWeight>
@@ -1064,6 +1065,7 @@
               <PaddingRight>2pt</PaddingRight>
               <PaddingTop>2pt</PaddingTop>
               <PaddingBottom>2pt</PaddingBottom>
+              <Direction>RTL</Direction>
             </Style>
           </Textbox>
           <Textbox Name="Textbox13">
@@ -1075,7 +1077,7 @@
                   <TextRun>
                     <Value>=Parameters!title.Value</Value>
                     <Style>
-                      <FontFamily>Montserrat</FontFamily>
+                      <FontFamily>Cairo</FontFamily>
                       <FontSize>24pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>#178dd2</Color>
@@ -2617,7 +2619,6 @@
           <ReportItems>
             <Rectangle Name="Rectangle6">
               <KeepTogether>true</KeepTogether>
-              <Top>0in</Top>
               <Height>0.2cm</Height>
               <Width>21cm</Width>
               <Style>
