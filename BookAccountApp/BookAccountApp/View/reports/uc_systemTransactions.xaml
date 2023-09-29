@@ -64,7 +64,7 @@
                                         Margin="0,0,4,0" />
                         </Grid>
                     </Border>
-                    
+
 
                     <TextBlock    x:Name="txt_active" Grid.Column="4"
                                    Margin="5,0,5,0" Text="Active" Foreground="#6e6e6e"
@@ -482,12 +482,19 @@
                     FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
                                Foreground="{StaticResource MainColor}"
                     FontWeight="Bold" />
-                    <TextBlock Text="0" x:Name="txt_balance" Margin="10" 
+                    <!--<TextBlock Text="0" x:Name="txt_balance" Margin="8,0,1,0"  
                                 Grid.Column="1"
                                FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
            Foreground="{StaticResource Grey}"
-            FontWeight="Regular" />
-
+            FontWeight="Regular" />-->
+                    <TextBlock Text="0" x:Name="txt_balance"  Margin="0,0,12,0"
+                            Grid.Column="1"
+                           FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+       Foreground="{StaticResource Grey}"
+        FontWeight="Regular" />
+                    <TextBlock   x:Name="tb_moneyIconBalance" Grid.Column="1" Margin="0,0,1,0"
+                       Foreground="#4E4E4E" Text="$" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                  FontWeight="Bold"  FontSize="18"/>
                 </Grid>
             </Border>
             <Border Grid.Row="2"
@@ -503,12 +510,15 @@ Background="White">
                 FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
                            Foreground="{StaticResource MainColor}"
                 FontWeight="Bold" />
-                    <TextBlock Text="0" x:Name="txt_durationPaid" Margin="10" 
+                    <TextBlock Text="0" x:Name="txt_durationPaid" Margin="0,0,12,0"  
                             Grid.Column="1"
                            FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
        Foreground="{StaticResource Grey}"
         FontWeight="Regular" />
-
+                    <TextBlock Grid.Row="1"   x:Name="tb_moneyIconDur" Grid.Column="1" Margin="0,0,1,0"  
+                       Foreground="#4E4E4E" Text="$" 
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                                  FontWeight="Bold"  FontSize="18"/>
                 </Grid>
             </Border>
             <Border Grid.Row="3"
@@ -524,12 +534,15 @@ Background="White">
                 FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
                            Foreground="{StaticResource MainColor}"
                 FontWeight="Bold" />
-                    <TextBlock Text="0" x:Name="txt_totalPaid" Margin="10" 
+                    <TextBlock Text="0" x:Name="txt_totalPaid" Margin="0,0,12,0" 
                             Grid.Column="1"
                            FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
        Foreground="{StaticResource Grey}"
         FontWeight="Regular" />
-
+                    <TextBlock Grid.Row="1"   x:Name="tb_moneyIconTotal" Grid.Column="1" Margin="0,0,1,0"  
+                       Foreground="#4E4E4E" Text="$" 
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                                  FontWeight="Bold"  FontSize="18"/>
                 </Grid>
             </Border>
             <Border Grid.Row="4"
@@ -600,7 +613,7 @@ Data="{StaticResource pdfFiles}"/>
 
                 </Grid>
             </Border>
-          
+
         </Grid>
     </Grid>
 </UserControl>

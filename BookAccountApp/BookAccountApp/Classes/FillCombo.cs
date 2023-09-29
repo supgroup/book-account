@@ -168,16 +168,32 @@ namespace BookAccountApp.Classes
             // replangList = await setvalueModel.GetBySetName("report_lang");
 
             var CurrencyList = new[] {
-                new { Text = "SYP" , Value = "syp" },
-                new { Text ="$" , Value = "usd" },
-          
+                new { Text = "ليرة سورية" , Value = "syp" },
+                new { Text ="دولار امريكي" , Value = "usd" },
                  };
             combo.DisplayMemberPath = "Text";
             combo.SelectedValuePath = "Value";
             combo.ItemsSource = CurrencyList;
  
         }
-      
+        //static public void fillCurrencytemp(ComboBox combo)
+        //{
+
+        //    //    cb_invlang
+        //    // replangList = await setvalueModel.GetBySetName("report_lang");
+
+        //    var CurrencyList = new[] {
+        //        new { Text = "SYP" , Value = "syp" },
+        //        new { Text ="$" , Value = "usd" },
+
+        //         };
+        //    combo.DisplayMemberPath = "Text";
+        //    combo.SelectedValuePath = "Value";
+        //    combo.ItemsSource = CurrencyList;
+
+        //}
+    
+
         static public async Task fillAgent(ComboBox combo)
         {
             users = await user.GetAll();

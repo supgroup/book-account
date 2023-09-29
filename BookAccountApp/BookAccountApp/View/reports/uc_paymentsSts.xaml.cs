@@ -121,7 +121,8 @@ namespace BookAccountApp.View.reports
             //officeSysAirline totalOperations totalPaid
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_side, MainWindow.resourcemanager.GetString("officeSysAirline"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sideValue, MainWindow.resourcemanager.GetString("trCompanyName"));
-        
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_currency, MainWindow.resourcemanager.GetString("currency"));
+           
             txt_invoicePrintButton.Text = MainWindow.resourcemanager.GetString("printInvoice");
             txt_invoicePreviewButton.Text = MainWindow.resourcemanager.GetString("previewInvoice");
             txt_invoicePdfButton.Text = MainWindow.resourcemanager.GetString("electronicInvoice");

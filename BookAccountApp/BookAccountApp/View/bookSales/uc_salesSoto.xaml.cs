@@ -149,7 +149,8 @@ namespace BookAccountApp.View.bookSales
             dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("officeName");
             dg_serviceData.Columns[6].Header = MainWindow.resourcemanager.GetString("priceBeforTax");
             dg_serviceData.Columns[7].Header = MainWindow.resourcemanager.GetString("total");
-            dg_serviceData.Columns[8].Header = MainWindow.resourcemanager.GetString("trDate");
+            dg_serviceData.Columns[8].Header = MainWindow.resourcemanager.GetString("currency");
+            dg_serviceData.Columns[9].Header = MainWindow.resourcemanager.GetString("trDate");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
             tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");

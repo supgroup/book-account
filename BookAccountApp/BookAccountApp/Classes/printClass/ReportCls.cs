@@ -1392,10 +1392,10 @@ RecivedPurpose
                 switch (currency)
                 {
                     case "usd":
-                        s = "$";
+                        s = "دولار امريكي";// "$";
                         break;
                     case "syp":
-                        s = "SYP";
+                        s = "ليرة سورية"; //"SYP";
                         break;
                     default:
                         s = "";

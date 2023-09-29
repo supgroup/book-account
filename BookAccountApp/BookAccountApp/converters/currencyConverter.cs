@@ -20,10 +20,10 @@ namespace BookAccountApp.converters
                 switch (curr)
                 {
                     case "usd":
-                        s ="$";
+                        s = "دولار امريكي";
                         break;
                     case "syp":
-                        s = "SYP";
+                        s = "ليرة سورية";
                         break;
                    
                     default:

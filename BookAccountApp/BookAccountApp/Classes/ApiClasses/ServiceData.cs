@@ -76,6 +76,7 @@ namespace BookAccountApp.ApiClasses
         public string systemName { get; set; }
         public Nullable<int> paysideId { get; set; }
         public string currency { get; set; }
+        public string currencyTotal{ get; set; }
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>
@@ -253,8 +254,9 @@ namespace BookAccountApp.ApiClasses
                                 syValue = S.syValue,
                                 tax_ratio = S.tax_ratio,
                                 tax_value = S.tax_value,
-                                systemName=SYS.name,
-                                currency=S.currency,
+                                systemName = SYS.name,
+                                currency = S.currency,
+                                currencyTotal = "usd",
                             }).ToList();
                     List = List.Where(S => ((fromDate == null && toDate == null) ? ((DateTime)S.updateDate).Date == now.Date :
                             ((fromDate != null) ? S.updateDate == null ? false : (S.updateDate.Value.Date >= fromDate.Value.Date) : true)

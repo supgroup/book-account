@@ -291,11 +291,15 @@ passwordSoto
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
+            ReportCls repcls = new ReportCls();
             List<ServiceData> Query = JsonConvert.DeserializeObject<List<ServiceData>>(JsonConvert.SerializeObject(QueryList));
+
             foreach (ServiceData row in Query)
             {
-                row.strServiceDate = dateFrameConverter(row.serviceDate);
+                row.strServiceDate = dateFrameConverter(row.updateDate);
                 row.total =decimal.Parse( HelpClass .DecTostring(row.total));
+                row.priceBeforTax = decimal.Parse(HelpClass.DecTostring(row.priceBeforTax));
+                row.currencyTotal = repcls.currencyConverter(row.currencyTotal);
             }
 
             rep.DataSources.Add(new ReportDataSource("DataSet", Query));
@@ -304,12 +308,16 @@ passwordSoto
             //table columns
             paramarr.Add(new ReportParameter("trNo", MainWindow.resourcemanagerreport.GetString("trNo.")));
             paramarr.Add(new ReportParameter("passengerName", MainWindow.resourcemanagerreport.GetString("passengerName")));
+            paramarr.Add(new ReportParameter("bookSystem", MainWindow.resourcemanagerreport.GetString("bookSystem")));
             paramarr.Add(new ReportParameter("ticketNum", MainWindow.resourcemanagerreport.GetString("ticketNum")));
             paramarr.Add(new ReportParameter("airlineFlight", MainWindow.resourcemanagerreport.GetString("airlineFlight")));
             paramarr.Add(new ReportParameter("officeName", MainWindow.resourcemanagerreport.GetString("officeName")));
-            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("priceBeforTax", MainWindow.resourcemanagerreport.GetString("priceBeforTax")));
             paramarr.Add(new ReportParameter("total", MainWindow.resourcemanagerreport.GetString("total")));
-        
+            paramarr.Add(new ReportParameter("currency", MainWindow.resourcemanagerreport.GetString("currency")));
+            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
+
+  
         }
 
         public static void paymentAccReport(IEnumerable<PayOp> query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -353,6 +361,9 @@ passwordSoto
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
+            ReportCls repcls = new ReportCls();
+            
+
             List<BookSts> Query = JsonConvert.DeserializeObject<List<BookSts>>(JsonConvert.SerializeObject(QueryList));
             foreach (BookSts row in Query)
             {
@@ -360,6 +371,7 @@ passwordSoto
                 row.priceBeforTax = decimal.Parse(HelpClass.DecTostring(row.priceBeforTax));
                 row.profit = decimal.Parse(HelpClass.DecTostring(row.profit));
                 row.strCreateDate = dateFrameConverter(row.createDate);
+               row.currency= repcls.currencyConverter(row.currency);
             }
 
             rep.DataSources.Add(new ReportDataSource("DataSet", Query));
@@ -373,8 +385,8 @@ passwordSoto
             paramarr.Add(new ReportParameter("priceBeforTax", MainWindow.resourcemanagerreport.GetString("priceBeforTax")));
             paramarr.Add(new ReportParameter("profits", MainWindow.resourcemanagerreport.GetString("profits")));
             paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("currency", MainWindow.resourcemanagerreport.GetString("currency")));
 
-         
 
         }
 

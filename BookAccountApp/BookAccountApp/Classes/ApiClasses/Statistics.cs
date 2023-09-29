@@ -80,6 +80,7 @@ namespace BookAccountApp.ApiClasses
         public int year { get; set; }
 
         public string yearStr { get; set; }
+        public string currency { get; set; }
     }
     public class PaymentsSts 
     {
@@ -215,7 +216,7 @@ namespace BookAccountApp.ApiClasses
                                 tax_ratio = S.tax_ratio,
                                 tax_value = S.tax_value,//
                                 systemName = SYS.name,
-
+                                currency="usd",
                             }).ToList();
                     List = List.Where(S => ((fromDate == null && toDate == null) ? true :
                             ((fromDate != null) ? S.updateDate == null ? false : (S.updateDate.Value.Date >= fromDate.Value.Date) : true)
