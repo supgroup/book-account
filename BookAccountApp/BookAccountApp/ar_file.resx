@@ -3385,4 +3385,7 @@
   <data name="Settings" xml:space="preserve">
     <value>اعدادات</value>
   </data>
+  <data name="msgnoExchange" xml:space="preserve">
+    <value>يرجى تحديد سعر الصرف من الاعدادات</value>
+  </data>
 </root>

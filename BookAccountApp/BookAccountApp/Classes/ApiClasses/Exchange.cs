@@ -80,7 +80,41 @@ namespace BookAccountApp.ApiClasses
                 return List;
             }
         }
+        public async Task<int> check ()
+        {
+            int count = 0;
+            List<Exchange> List = new List<Exchange>();
+        
+            try
+            {
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    List = (from S in entity.exchange
+                            select new Exchange()
+                            {
+                                exchangeId = S.exchangeId,
+                             
 
+                            }).ToList();
+                    if (List!=null)
+                    {
+                        if (List.Count()>0)
+                        {
+                            count = List.Count();
+                        }
+
+                    }
+                  
+ 
+                    return count;
+                }
+
+            }
+            catch
+            {
+                return count;
+            }
+        }
         public async Task<decimal> Save(Exchange newitem)
         {
             exchange newObject = new exchange();

@@ -59,6 +59,7 @@ namespace BookAccountApp.View.accounting
         IEnumerable<PayOp> payOps;
         public List<ServiceData> serviceLst = new List<ServiceData>();
         public List<PayOp> cashesLst = new List<PayOp>();
+        Exchange ExchangeModel = new Exchange();
         byte tgl_payOpstate;
         string searchText = "";
         SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -174,10 +175,18 @@ namespace BookAccountApp.View.accounting
                 payOp = new PayOp();
                 if (HelpClass.validate(requiredControlList, this))
                 {
-                    //tb_custCode.Text = await serviceData.generateCodeNumber("cu");
-                    payOp.opName = tb_opName.Text.Trim();
+
+                    int count = await ExchangeModel.check();
+                    if (count <= 0)
+                    {
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("msgnoExchange"), animation: ToasterAnimation.FadeIn);
+                    }
+                    else
+                    {
+                        //tb_custCode.Text = await serviceData.generateCodeNumber("cu");
+                        payOp.opName = tb_opName.Text.Trim();
                     payOp.code = await payOp.generateNumber(("d" + (cb_side.SelectedValue).ToString().Substring(0, 3)).ToUpper());
-                   
+
                     payOp.cash = (tb_cash.Text == null || tb_cash.Text == "") ? 0 : Convert.ToDecimal(tb_cash.Text);
                     payOp.opType = "d";
                     payOp.side = (cb_side.SelectedValue).ToString();
@@ -243,7 +252,7 @@ namespace BookAccountApp.View.accounting
 
                     decimal s = 0;
                     int msglist = 0;
-                    if ((cb_side.SelectedValue).ToString() == "system"  )
+                    if ((cb_side.SelectedValue).ToString() == "system")
                     {
                         if (cashesLst.Count > 0)
                         {
@@ -262,7 +271,7 @@ namespace BookAccountApp.View.accounting
                     //{
                     //    s = await payOp.payCompanyCommissionByAmount((int)payOp.systemId, (decimal)payOp.cash, payOp);
                     //}
-                    else if ((cb_side.SelectedValue).ToString() == "passenger"  )
+                    else if ((cb_side.SelectedValue).ToString() == "passenger")
                     {
                         if (cashesLst.Count > 0)
                         {
@@ -281,7 +290,7 @@ namespace BookAccountApp.View.accounting
                     //{
                     //    s = await payOp.payPassengerByAmount((int)payOp.passengerId, (decimal)payOp.cash, payOp);
                     //}
-                    else if ((cb_side.SelectedValue).ToString() == "office" )
+                    else if ((cb_side.SelectedValue).ToString() == "office")
                     {
                         if (cashesLst.Count > 0)
                         {
@@ -318,6 +327,7 @@ namespace BookAccountApp.View.accounting
                         await RefreshPayOpsList();
                         await Search();
                     }
+                }
                 }
 
                 //      HelpClass.EndAwait(grid_main);

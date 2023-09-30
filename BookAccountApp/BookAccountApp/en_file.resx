@@ -3370,4 +3370,7 @@ Please add Email in setting</value>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="msgnoExchange" xml:space="preserve">
+    <value>No Exchange</value>
+  </data>
 </root>
