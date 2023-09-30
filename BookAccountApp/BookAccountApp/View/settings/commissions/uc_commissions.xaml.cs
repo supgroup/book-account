@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using netoaster;
 namespace BookAccountApp.View.settings.commissions
 {
     /// <summary>
@@ -36,7 +36,8 @@ namespace BookAccountApp.View.settings.commissions
                 return _instance;
             }
         }
-
+         SetValues accuracy = new SetValues();
+        SettingCls set = new SettingCls();
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             // Collect all generations of memory.
@@ -64,6 +65,9 @@ namespace BookAccountApp.View.settings.commissions
                 //}
 
                 translate();
+                FillCombo.fillAccuracy(cb_accuracy);
+                cb_accuracy.SelectedValue = MainWindow.accuracy;
+                getaccuracySetting();
                 #endregion
 
                 if (sender != null)
@@ -83,6 +87,8 @@ namespace BookAccountApp.View.settings.commissions
              txt_priceExchangeInfo.Text = MainWindow.resourcemanager.GetString("exchangePrice");
             txt_companyInfo.Text = MainWindow.resourcemanager.GetString("trComInfo");
             txt_companyHint.Text = MainWindow.resourcemanager.GetString("trSettingHint");
+            txt_acc.Text= MainWindow.resourcemanager.GetString("trAccuracy");
+            
             //txt_priceExchangeHint.Text = MainWindow.resourcemanager.GetString("syrSoto");
         }
 
@@ -148,5 +154,91 @@ namespace BookAccountApp.View.settings.commissions
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+      
+
+        private async void Btn_saveAccuracy_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+
+                #region validate
+                if (!cb_accuracy.Text.Equals(""))
+                {
+                    if (cb_accuracy.SelectedValue.ToString() != MainWindow.accuracy)
+                    {
+                        accuracy.value = cb_accuracy.SelectedValue.ToString();
+                        //accuracy.isSystem = 1;
+                        //accuracy.isDefault = 1;
+                        //  accuracy.settingId = nameId;
+                        // string sName = await valueModel.Save(setVName);
+                        decimal res = await accuracy.Save(accuracy);
+                        if (res > 0)
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                            await Task.Delay(500);
+
+
+                            await FillCombo.loading_getDefaultSystemInfo();
+                        }
+                        else
+                        {
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
+                        }
+                    }
+                    else
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+
+                    }
+
+                }
+
+
+
+
+
+                    //  save logo
+                    // image
+                    //  string sLogo = "";
+
+
+
+                    #endregion
+                    
+                    
+
+               
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+          
+            }
+        private void getaccuracySetting()
+        {
+            #region  get accuracy
+
+            //get company fax
+            set = FillCombo.settingsCls.Where(s => s.name == "accuracy").FirstOrDefault<SettingCls>();
+            var accuId = set.settingId;
+            accuracy = FillCombo.settingsValues.Where(i => i.settingId == accuId).FirstOrDefault();
+            //if (accuracy != null)
+            //{
+
+            //    MainWindow.accuracy = accuracy.value;
+            //}
+
+            #endregion
+        }
     }
+   
 }

@@ -2300,7 +2300,7 @@
     <value>لا يمكن ارسال مسودة فاتورة</value>
   </data>
   <data name="trAccuracy" xml:space="preserve">
-    <value>الأرقام بعد الفاصلة</value>
+    <value>الأرقام العشرية</value>
   </data>
   <data name="trErrorMaxInvToolTip" xml:space="preserve">
     <value>لا يمكن استخدام الكوبون، المجموع أكبر من الحد الأعلى المسموح</value>

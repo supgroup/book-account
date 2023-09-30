@@ -1215,5 +1215,17 @@ namespace BookAccountApp.Classes
             combo.ItemsSource = typelist;
 
         }
+        static public void fillAccuracy(ComboBox combo)
+        {
+            var list = new[] {
+                new { Text = "0"       , Value = "0" },
+                new { Text = "0.0"     , Value = "1" },
+                new { Text = "0.00"    , Value = "2" },
+                new { Text = "0.000"   , Value = "3" },
+                 };
+            combo.DisplayMemberPath = "Text";
+            combo.SelectedValuePath = "Value";
+            combo.ItemsSource = list;
+        }
     }
 }
