@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="220"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
 
             <Grid Grid.RowSpan="3" 
                 x:Name="grid"  
@@ -65,7 +65,7 @@
                              BorderThickness="1" Opacity="0.2"
                              Margin="0,0,0,25"  ></Border>
 
-                   
+
                     <Button  Width="200" Height="40" Grid.Row="2"
                              Margin="10 5"
                          HorizontalAlignment="Left"  Tag="bookSales"
@@ -75,21 +75,21 @@
                     materialDesign:ShadowAssist.ShadowDepth="Depth0"
                     Padding="0" Click="Btn_bookSales_Click" >
                         <Border x:Name="brd_bookSales" Tag="bookSales">
-                        <Grid Width="200" Height="40" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Path Fill="{StaticResource LightGrey}" x:Name="path_iconBookSales"
+                            <Grid Width="200" Height="40" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Path Fill="{StaticResource LightGrey}" x:Name="path_iconBookSales"
                                   Stretch="Fill" 
                               HorizontalAlignment="Left" Grid.Column="0"  
                          VerticalAlignment="Center" Width="30" Height="20" Tag="bookSales" 
                               Data="{StaticResource passportTicket}" 
                                   Margin="10,0,10,0"/>
-                            <TextBlock Text="book sales" Foreground="{StaticResource LightGrey}" x:Name="txt_bookSales"
+                                <TextBlock Text="book sales" Foreground="{StaticResource LightGrey}" x:Name="txt_bookSales"
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
                               Grid.Column="1"  Tag="bookSales"     Margin="10,0,0,0"/>
-                        </Grid>
+                            </Grid>
                         </Border>
                     </Button>
                     <Button  Width="200" Height="40" Grid.Row="3"
@@ -103,20 +103,20 @@
                         <Border x:Name="brd_accounting" Tag="accounting">
 
                             <Grid Width="200" Height="40" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Path Fill="{StaticResource LightGrey}" x:Name="path_iconAccounting"
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Path Fill="{StaticResource LightGrey}" x:Name="path_iconAccounting"
                                   Stretch="Fill" 
                               HorizontalAlignment="Left" Grid.Column="0"  
                          VerticalAlignment="Center" Width="20" Height="20" Tag="accounting" 
                               Data="{StaticResource accounts}" 
                                   Margin="10,0,10,0"/>
-                            <TextBlock Text="accounting" Foreground="{StaticResource LightGrey}" x:Name="txt_accounting"
+                                <TextBlock Text="accounting" Foreground="{StaticResource LightGrey}" x:Name="txt_accounting"
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
                               Grid.Column="1"  Tag="accounting"     Margin="10,0,0,0"/>
-                        </Grid>
+                            </Grid>
 
                         </Border>
                     </Button>
@@ -131,20 +131,20 @@
                         <Border x:Name="brd_reports" Tag="reports">
 
                             <Grid Width="200" Height="40" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Path Fill="{StaticResource LightGrey}" x:Name="path_iconReports"
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Path Fill="{StaticResource LightGrey}" x:Name="path_iconReports"
                                   Stretch="Fill" 
                               HorizontalAlignment="Left" Grid.Column="0"  
                          VerticalAlignment="Center" Width="20" Height="20" Tag="reports" 
                               Data="{StaticResource reports}" 
                                   Margin="10,0,10,0"/>
-                            <TextBlock Text="reports" Foreground="{StaticResource LightGrey}" x:Name="txt_reports"
+                                <TextBlock Text="reports" Foreground="{StaticResource LightGrey}" x:Name="txt_reports"
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
                               Grid.Column="1"  Tag="reports"     Margin="10,0,0,0"/>
-                        </Grid>
+                            </Grid>
 
                         </Border>
                     </Button>
@@ -159,20 +159,20 @@
                         <Border x:Name="brd_sectionData" Tag="sectionData">
 
                             <Grid Width="200" Height="40" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Path Fill="{StaticResource LightGrey}" x:Name="path_iconSectionData"
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Path Fill="{StaticResource LightGrey}" x:Name="path_iconSectionData"
                                   Stretch="Fill" 
                               HorizontalAlignment="Left" Grid.Column="0"  
                          VerticalAlignment="Center" Width="20" Height="20" Tag="sectionData" 
                               Data="{StaticResource data}" 
                                   Margin="10,0,10,0"/>
-                            <TextBlock Text="sectionData" Foreground="{StaticResource LightGrey}" x:Name="txt_sectionData"
+                                <TextBlock Text="sectionData" Foreground="{StaticResource LightGrey}" x:Name="txt_sectionData"
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
                               Grid.Column="1"  Tag="sectionData"     Margin="10,0,0,0"/>
-                        </Grid>
+                            </Grid>
 
                         </Border>
                     </Button>
@@ -203,7 +203,7 @@
                             </Grid>
                         </Border>
                     </Button>
-                    
+
                 </Grid>
             </Grid>
 
@@ -263,15 +263,15 @@
                             </MenuItem>
                         </Menu>
                     </StackPanel>
-                    
-                   
 
-                    <Ellipse Grid.Column="7" Margin="5,5,5,5" x:Name="img_userLogin"
-                HorizontalAlignment="Center" VerticalAlignment="Center"   
+
+
+                    <Ellipse Grid.Column="7" Margin="0,18,5,17" x:Name="img_userLogin"
+                HorizontalAlignment="Right" VerticalAlignment="Center"   
                              StrokeThickness="1" Stroke="{StaticResource LightGrey}"
                      Height="40" Width="40">
                         <Ellipse.Fill >
-                            <ImageBrush Stretch="UniformToFill"  x:Name="IMG_userPic" ImageSource="pic/no-image-icon-40x40.png"   />
+                            <ImageBrush Stretch="UniformToFill"  x:Name="IMG_userPic"  ImageSource="pic/user-profile.png"  />
                         </Ellipse.Fill>
                     </Ellipse>
                     <StackPanel VerticalAlignment="Center" Orientation="Vertical" Grid.Column="8" Margin="10">

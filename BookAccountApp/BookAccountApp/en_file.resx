@@ -3367,4 +3367,7 @@ Please add Email in setting</value>
   <data name="singleTrip" xml:space="preserve">
     <value>single Trip</value>
   </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
 </root>

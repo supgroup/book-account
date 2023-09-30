@@ -3382,4 +3382,7 @@
   <data name="flightTypeHint" xml:space="preserve">
     <value>نوع الرحلة ... </value>
   </data>
+  <data name="Settings" xml:space="preserve">
+    <value>اعدادات</value>
+  </data>
 </root>

@@ -1071,7 +1071,7 @@ namespace BookAccountApp.Classes
         static IEnumerable<Flights> FlightsList;
         static public async Task fillFlights(ComboBox combo)
         {
-            FlightsList = await FlightsModel.GetAll();
+            FlightsList = await FlightsModel.GetAlltoFill();
             combo.ItemsSource = FlightsList;
             combo.SelectedValuePath = "flightId";
             combo.DisplayMemberPath = "airlineflightTable";

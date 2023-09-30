@@ -49,7 +49,7 @@ namespace BookAccountApp.ApiClasses
         /// 
         public async Task<List<Flights>> GetAll()
         {
-
+            
             List<Flights> List = new List<Flights>();
             bool canDelete = false;
             try
@@ -60,7 +60,8 @@ namespace BookAccountApp.ApiClasses
                             select new Flights()
                             {
                                 flightId = S.flightId,
-                                airlineflightTable = S.systems.name + "/" + S.flightTable.name,
+                                //airlineflightTable = S.systems.name + "/" + S.flightTable.name,
+                                airlineflightTable = S.airlines.name + "/" + S.flightTable.name,
                                 //airline= S.systems.name,
                                 airline = S.airlines.name,
                                 flight = S.flightTable.name==null?"": S.flightTable.name,
@@ -341,5 +342,54 @@ namespace BookAccountApp.ApiClasses
                 return List;
             }
         }
+        public async Task<List<Flights>> GetAlltoFill()
+        {
+             
+            string  one =   MainWindow.resourcemanager.GetString("singleTrip");
+            string two = MainWindow.resourcemanager.GetString("roundTrip");
+
+            List<Flights> List = new List<Flights>();
+            bool canDelete = false;
+            try
+            {
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    List = (from S in entity.flights
+                            select new Flights()
+                            {
+                                flightId = S.flightId,
+                         
+                                airlineflightTable = S.airlines.name + "/" + S.flightTable.name + "/" +(S.type==1?one:(S.type == 2?two:"")),
+                                 
+                                //airline = S.airlines.name,
+                                //flight = S.flightTable.name == null ? "" : S.flightTable.name,
+                                //flightFrom = S.fromTable.name == null ? "" : S.fromTable.name,
+                                //flightTo = S.toTable.name,
+                                //notes = S.notes,
+                                //createDate = S.createDate,
+                                //updateDate = S.updateDate,
+                                //createUserId = S.createUserId,
+                                //updateUserId = S.updateUserId,
+                                //flightTableId = S.flightTableId == null ? 0 : S.flightTableId,
+                                //fromTableId = S.fromTableId == null ? 0 : S.fromTableId,
+                                //toTableId = S.toTableId == null ? 0 : S.toTableId,
+                                //isActive = S.isActive,
+                                //canDelete = false,
+                                //commission_ratio = S.commission_ratio,
+                                //airlineId = S.airlineId,
+                                //type = S.type,
+                            }).ToList();
+
+                   
+                    return List;
+                }
+
+            }
+            catch
+            {
+                return List;
+            }
+        }
+
     }
 }

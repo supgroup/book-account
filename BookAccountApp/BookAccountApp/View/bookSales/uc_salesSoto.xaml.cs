@@ -671,11 +671,12 @@ namespace BookAccountApp.View.bookSales
         public async Task fillcombos()
         {
             await FillCombo.fillPassengers(cb_passenger);
-          //  await FillCombo.fillFlights(cb_airline);
-            await FillCombo.fillFlightsBySysId(cb_airline, Convert.ToInt32(cb_system.SelectedValue));
+            await FillCombo.fillFlights(cb_airline);
+            //await FillCombo.fillFlightsBySysId(cb_airline, Convert.ToInt32(cb_system.SelectedValue));
             await FillCombo.fillOffice(cb_office);
-         await FillCombo.fillSystems(cb_system);
+            await FillCombo.fillSystems(cb_system);
             FillCombo.fillCurrency(cb_currency);
+
         }
 
         #endregion
@@ -1326,7 +1327,7 @@ namespace BookAccountApp.View.bookSales
 
                 if (cb_system.SelectedItem != null)
                 {
-                    await FillCombo.fillFlightsBySysId(cb_airline, Convert.ToInt32(cb_system.SelectedValue));
+                    //await FillCombo.fillFlightsBySysId(cb_airline, Convert.ToInt32(cb_system.SelectedValue));
                 }
 
             }

@@ -81,6 +81,8 @@ namespace BookAccountApp.View.settings.commissions
             //trTax exchangePrice
            //  txt_taxHint.Text = MainWindow.resourcemanager.GetString("syrSoto");          
              txt_priceExchangeInfo.Text = MainWindow.resourcemanager.GetString("exchangePrice");
+            txt_companyInfo.Text = MainWindow.resourcemanager.GetString("trComInfo");
+            txt_companyHint.Text = MainWindow.resourcemanager.GetString("trSettingHint");
             //txt_priceExchangeHint.Text = MainWindow.resourcemanager.GetString("syrSoto");
         }
 
@@ -129,6 +131,22 @@ namespace BookAccountApp.View.settings.commissions
             }
         }
 
-       
+        private void Btn_company_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_companyInfo w = new wd_companyInfo();
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

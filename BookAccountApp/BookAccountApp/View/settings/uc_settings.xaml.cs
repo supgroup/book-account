@@ -85,7 +85,7 @@ namespace BookAccountApp.View.settings
         private void translate()
         {
             //financeSetting
-            btn_commissions.Content = MainWindow.resourcemanager.GetString("financeSetting");
+            btn_commissions.Content = MainWindow.resourcemanager.GetString("generalSettings");
             btn_users.Content = MainWindow.resourcemanager.GetString("trUsers");
             btn_printerSetting.Content = MainWindow.resourcemanager.GetString("printSetting");
 

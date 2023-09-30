@@ -693,8 +693,8 @@ trTaxHint
         public async Task fillcombos()
         {
             await FillCombo.fillPassengers(cb_passenger);
-            //await FillCombo.fillFlights(cb_airline);
-            await FillCombo.fillFlightsBySysId(cb_airline, Convert.ToInt32(cb_system.SelectedValue));
+             await FillCombo.fillFlights(cb_airline);
+            //await FillCombo.fillFlightsBySysId(cb_airline, Convert.ToInt32(cb_system.SelectedValue));
             await FillCombo.fillOffice(cb_office);
             await FillCombo.fillSystems(cb_system);
             FillCombo.fillCurrency(cb_currency);
@@ -1311,23 +1311,23 @@ trTaxHint
             }
         }
 
-        private async void Cb_system_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
+        //private async void Cb_system_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    try
+        //    {
 
-                if (cb_system.SelectedItem != null)
-                {
-                    await FillCombo.fillFlightsBySysId(cb_airline, Convert.ToInt32(cb_system.SelectedValue));
-                }
+        //        if (cb_system.SelectedItem != null)
+        //        {
+        //            await FillCombo.fillFlightsBySysId(cb_airline, Convert.ToInt32(cb_system.SelectedValue));
+        //        }
 
-            }
-            catch (Exception ex)
-            {
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
 
 
     }

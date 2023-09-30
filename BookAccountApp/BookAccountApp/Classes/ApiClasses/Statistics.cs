@@ -144,6 +144,9 @@ namespace BookAccountApp.ApiClasses
             List<BookSts> List = new List<BookSts>();
             string syr = MainWindow.resourcemanager.GetString("syr");
             string soto = MainWindow.resourcemanager.GetString("soto");
+
+            string one = MainWindow.resourcemanager.GetString("singleTrip");
+            string two = MainWindow.resourcemanager.GetString("roundTrip");
             try
             {
                 DateTime now = DateTime.Now;
@@ -166,7 +169,9 @@ namespace BookAccountApp.ApiClasses
                                 type = S.type,
                                 passenger = P.name + " " + P.lastName,
                                 ticketNum = S.ticketNum,
-                                airline = SYS.name + "/" + F.flightTable.name + "/" +(S.systemType=="syr"?syr:soto),
+                                //airline = SYS.name + "/" + F.flightTable.name + "/" +(S.systemType=="syr"?syr:soto),
+                                airline = F.airlines.name + " / " + F.flightTable.name + " / " + (F.type == 1 ? one : (F.type == 2 ? two : ""))+ " / " + (S.systemType == "syr" ? syr : soto),
+
                                 officeId = S.officeId,
                                 serviceDate = S.serviceDate,
                                 pnr = S.pnr,
@@ -307,7 +312,8 @@ namespace BookAccountApp.ApiClasses
         {
 
             List<PaymentsSts> List = new List<PaymentsSts>();
-
+            string one = MainWindow.resourcemanager.GetString("singleTrip");
+            string two = MainWindow.resourcemanager.GetString("roundTrip");
             try
             {
                 using (bookdbEntities entity = new bookdbEntities())
@@ -345,7 +351,9 @@ namespace BookAccountApp.ApiClasses
                                 opName = S.opName,
                                 systemName = S.systems.name,
                               //  airline =S.processType=="book"? S.systems.name + "/" + S.flights.flightTable.name + "/" + S.paySides.sideAr : S.paySides.sideAr,
-                                airlineStr = S.processType == "book" ? S.systems.name + "/" + S.flights.flightTable.name + "/" + S.paySides.sideAr : S.paySides.sideAr,
+                                //airlineStr = S.processType == "book" ? S.systems.name + "/" + S.flights.flightTable.name + "/" + S.paySides.sideAr : S.paySides.sideAr,
+
+                                airlineStr = S.processType == "book" ? S.flights.airlines.name + " / " + S.flights.flightTable.name + " / " + (S.flights.type == 1 ? one : (S.flights.type == 2 ? two : "")) + " / "+ S.paySides.sideAr : S.paySides.sideAr,
 
                                 //officeName = S.officeId==null?"":S.office.name,
                                 officeName = S.officeId == null ? FillCombo.companyName : S.office.name,

@@ -106,7 +106,7 @@ namespace BookAccountApp
             txt_accounting.Text = resourcemanager.GetString("accounting");
             txt_reports.Text = resourcemanager.GetString("trReports");
             txt_sectionData.Text = resourcemanager.GetString("trSectionData");
-            txt_settings.Text = resourcemanager.GetString("generalSettings");
+            txt_settings.Text = resourcemanager.GetString("Settings");
 
             mi_changePassword.Header = resourcemanager.GetString("trChangePassword");
             BTN_logOut.Header = resourcemanager.GetString("trLogOut");
@@ -179,7 +179,7 @@ namespace BookAccountApp
                         txt_firstPath.Text = resourcemanager.GetString("trSectionData");
                         break;
                     case "settings":
-                        txt_firstPath.Text = resourcemanager.GetString("generalSettings");
+                        txt_firstPath.Text = resourcemanager.GetString("Settings");
                         break;
 
 
@@ -226,7 +226,7 @@ namespace BookAccountApp
                         break;
                     //setting
                     case "commissions":
-                        txt_secondPath.Text = "> " + resourcemanager.GetString("financeSetting");
+                        txt_secondPath.Text = "> " + resourcemanager.GetString("generalSettings");
                         break;
                     case "users":
                         txt_secondPath.Text = "> " + resourcemanager.GetString("trUsers");
@@ -268,7 +268,7 @@ namespace BookAccountApp
             txt_userJob.Text = job;
             try
             {
-               await getImg(userLogin.image, img_userLogin);
+               //await getImg(userLogin.image, img_userLogin);
                 //if (!string.IsNullOrEmpty(userLogin.image))
                 //{
                 //    byte[] imageBuffer = await userModel.downloadImage(userLogin.image); // read this as BLOB from your DB
