@@ -132,7 +132,7 @@
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="*"  Header="officeId" Binding="{Binding Path=officeId}">
+                            <DataGridTextColumn Width="*"  Header="officeId" Binding="{Binding Path=code}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>

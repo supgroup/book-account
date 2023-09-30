@@ -33,6 +33,7 @@ namespace BookAccountApp.ApiClasses
         public bool canDelete { get; set; }
         public Nullable<decimal> balance { get; set; }
         public Nullable<bool> isActive { get; set; }
+        public string code { get; set; }
 
         /// <summary>
         /// ///////////////////////////////////////
@@ -64,6 +65,7 @@ namespace BookAccountApp.ApiClasses
                                 fullName= S.name+" "+S.lastName,
                                 isActive = S.isActive,
                                 canDelete = false,
+                                code=S.code,
                             }).ToList();
 
                     if (List.Count > 0)
@@ -119,6 +121,7 @@ namespace BookAccountApp.ApiClasses
                         var locationEntity = entity.Set<passengers>();
                         if (newObject.passengerId == 0)
                         {
+                            newObject.code =  generateCodeNumber();
                             newObject.createDate = DateTime.Now;
                             newObject.updateDate = newObject.createDate;
                             newObject.updateUserId = newObject.createUserId;
@@ -189,7 +192,7 @@ namespace BookAccountApp.ApiClasses
                          createUserId = S.createUserId,
                          updateUserId = S.updateUserId,
                          isActive = S.isActive,
-                     
+                         code = S.code,
                      }).FirstOrDefault();
                     return row;
                 }
@@ -253,7 +256,47 @@ namespace BookAccountApp.ApiClasses
             }
 
         }
+        public string generateCodeNumber( )
+        {
+            int sequence =  GetLastNumOfCode();
+            sequence++;
+            string strSeq = sequence.ToString();
+            //if (sequence <= 999999)
+            //    strSeq = sequence.ToString().PadLeft(6, '0');
+            //string transNum = type.ToUpper() + "-" + strSeq;
+            return strSeq;
+        }
+        public int GetLastNumOfCode()
+        {
 
+            try
+            {
+                List<string> numberList;
+                int lastNum = 0;
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    numberList = entity.passengers.Select(b => b.code).ToList();
+
+                    //for (int i = 0; i < numberList.Count; i++)
+                    //{
+                    //    string code = numberList[i];
+                    //    string s = code.Substring(code.LastIndexOf("-") + 1);
+                    //    numberList[i] = s;
+                    //}
+                    if (numberList.Count > 0)
+                    {
+                        numberList.Sort();
+                        lastNum = int.Parse(numberList[numberList.Count - 1]);
+                    }
+                }
+
+                return lastNum;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
         //public async Task<string> generateCodeNumber(string type)
         //{
         //    int sequence = await GetLastNumOfCode(type);

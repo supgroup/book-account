@@ -169,7 +169,7 @@ namespace BookAccountApp.View.sectionData
                 if (HelpClass.validate(requiredControlList, this) )
                 {
                     //tb_custCode.Text = await passenger.generateCodeNumber("cu");
-          
+                   
                     passenger.name = tb_name.Text;
                     passenger.lastName = tb_lastName.Text.Trim();
                      

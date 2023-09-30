@@ -41,6 +41,7 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> airlineId { get; set; }
         public Nullable<int> type { get; set; }
         public string typeName { get; set; }
+        public string code { get; set; }
 
         /// <summary>
         /// ///////////////////////////////////////
@@ -80,7 +81,8 @@ namespace BookAccountApp.ApiClasses
                                 commission_ratio=S.commission_ratio,
                                 airlineId = S.airlineId,
                                 type=S.type,
-                }).ToList();
+                                code = S.code,
+                            }).ToList();
 
                     if (List.Count > 0)
                     {
@@ -137,6 +139,7 @@ namespace BookAccountApp.ApiClasses
                         var locationEntity = entity.Set<flights>();
                         if (newObject.flightId == 0)
                         {
+                            newObject.code = generateCodeNumber();
                             newObject.createDate = DateTime.Now;
                             newObject.updateDate = newObject.createDate;
                             newObject.updateUserId = newObject.createUserId;
@@ -220,6 +223,7 @@ namespace BookAccountApp.ApiClasses
                          commission_ratio = S.commission_ratio,
                          airlineId = S.airlineId,
                          type = S.type,
+                         code = S.code,
                      }).FirstOrDefault();
                     return row;
                 }
@@ -359,7 +363,7 @@ namespace BookAccountApp.ApiClasses
                             {
                                 flightId = S.flightId,
                          
-                                airlineflightTable = S.airlines.name + "/" + S.flightTable.name + "/" +(S.type==1?one:(S.type == 2?two:"")),
+                                airlineflightTable = S.airlines.name + (S.flightTable.name == null || S.flightTable.name == "" ? "" : (" / " + S.flightTable.name)) + (S.type == null ? "" : (" / " + (S.type == 1 ? one : (S.type == 2 ? two : "")))),
                                  
                                 //airline = S.airlines.name,
                                 //flight = S.flightTable.name == null ? "" : S.flightTable.name,
@@ -390,6 +394,46 @@ namespace BookAccountApp.ApiClasses
                 return List;
             }
         }
+        public string generateCodeNumber()
+        {
+            int sequence = GetLastNumOfCode();
+            sequence++;
+            string strSeq = sequence.ToString();
+            //if (sequence <= 999999)
+            //    strSeq = sequence.ToString().PadLeft(6, '0');
+            //string transNum = type.ToUpper() + "-" + strSeq;
+            return strSeq;
+        }
+        public int GetLastNumOfCode()
+        {
 
+            try
+            {
+                List<string> numberList;
+                int lastNum = 0;
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    numberList = entity.flights.Select(b => b.code).ToList();
+
+                    //for (int i = 0; i < numberList.Count; i++)
+                    //{
+                    //    string code = numberList[i];
+                    //    string s = code.Substring(code.LastIndexOf("-") + 1);
+                    //    numberList[i] = s;
+                    //}
+                    if (numberList.Count > 0)
+                    {
+                        numberList.Sort();
+                        lastNum = int.Parse(numberList[numberList.Count - 1]);
+                    }
+                }
+
+                return lastNum;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
     }
 }

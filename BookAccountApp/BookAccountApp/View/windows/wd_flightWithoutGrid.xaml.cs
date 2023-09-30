@@ -116,14 +116,14 @@ namespace BookAccountApp.View.windows
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightTo, MainWindow.resourcemanager.GetString("toHint"));
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_type, MainWindow.resourcemanager.GetString("flightType"));
             //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
 
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_custlevel, MainWindow.resourcemanager.GetString("trLevelHint"));
             //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
-  
+
 
 
             //dg_flights.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
@@ -237,9 +237,11 @@ namespace BookAccountApp.View.windows
         }
         public async Task fillcombos()
         {
+            await FillCombo.fillAirlines(cb_airline);
             await FillCombo.fillFlightTable(cb_flightTableId);
             await FillCombo.fillFromTable(cb_flightFrom);
             await FillCombo.fillToTable(cb_flightTo);
+            FillCombo.flightType(cb_type);
         }
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
@@ -356,11 +358,11 @@ namespace BookAccountApp.View.windows
                     //tb_custCode.Text = await flights.generateCodeNumber("cu");
                     if (Convert.ToInt32(cb_airline.SelectedValue) == 0)
                     {
-                        flights.systemId = null;
+                        flights.airlineId = null;
                     }
                     else
                     {
-                        flights.systemId = Convert.ToInt32(cb_airline.SelectedValue);
+                        flights.airlineId = Convert.ToInt32(cb_airline.SelectedValue);
                     }
                     //flights.airline = tb_airline.Text;
                     if (Convert.ToInt32(cb_flightTableId.SelectedValue) == 0)
@@ -388,6 +390,15 @@ namespace BookAccountApp.View.windows
                     else
                     {
                         flights.fromTableId = Convert.ToInt32(cb_flightFrom.SelectedValue);
+                    }
+                    //
+                    if (Convert.ToInt32(cb_type.SelectedValue) == 0)
+                    {
+                        flights.type = null;
+                    }
+                    else
+                    {
+                        flights.type = Convert.ToInt32(cb_type.SelectedValue);
                     }
                     flights.notes = tb_notes.Text;
 
@@ -429,11 +440,11 @@ namespace BookAccountApp.View.windows
 
                         if (Convert.ToInt32(cb_airline.SelectedValue) == 0)
                         {
-                            flights.systemId = null;
+                            flights.airlineId = null;
                         }
                         else
                         {
-                            flights.systemId = Convert.ToInt32(cb_airline.SelectedValue);
+                            flights.airlineId = Convert.ToInt32(cb_airline.SelectedValue);
                         }
                         //flights.airline = tb_airline.Text;
                         if (Convert.ToInt32(cb_flightTableId.SelectedValue) == 0)
@@ -462,7 +473,15 @@ namespace BookAccountApp.View.windows
                         {
                             flights.fromTableId = Convert.ToInt32(cb_flightFrom.SelectedValue);
                         }
-
+                        //
+                        if (Convert.ToInt32(cb_type.SelectedValue) == 0)
+                        {
+                            flights.type = null;
+                        }
+                        else
+                        {
+                            flights.type = Convert.ToInt32(cb_type.SelectedValue);
+                        }
                         flights.notes = tb_notes.Text;
                         decimal s = await flights.Save(flights);
                         if (s <= 0)

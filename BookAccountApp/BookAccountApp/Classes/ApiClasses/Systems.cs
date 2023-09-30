@@ -30,6 +30,7 @@ namespace BookAccountApp.ApiClasses
         public Nullable<decimal> company_commission { get; set; }
         public Nullable<decimal> balance { get; set; }
         public bool canDelete { get; set; }
+        public string code { get; set; }
 
         /// <summary>
         /// ///////////////////////////////////////
@@ -59,7 +60,7 @@ namespace BookAccountApp.ApiClasses
                                 company_commission = S.company_commission,
 
                                 canDelete = false,
-                              
+                                code = S.code,
                             }).ToList();
 
 
@@ -120,6 +121,7 @@ namespace BookAccountApp.ApiClasses
                         var locationEntity = entity.Set<systems>();
                         if (newObject.systemId == 0)
                         {
+                            newObject.code = generateCodeNumber();
                             newObject.createDate = DateTime.Now;
                             newObject.updateDate = newObject.createDate;
                             newObject.updateUserId = newObject.createUserId;
@@ -192,7 +194,7 @@ namespace BookAccountApp.ApiClasses
                          createUserId = S.createUserId,
                          updateUserId = S.updateUserId,
                          company_commission = S.company_commission,
-
+                         code = S.code,
                      }).FirstOrDefault();
                     return row;
                 }
@@ -256,7 +258,47 @@ namespace BookAccountApp.ApiClasses
             }
 
         }
+        public string generateCodeNumber()
+        {
+            int sequence = GetLastNumOfCode();
+            sequence++;
+            string strSeq = sequence.ToString();
+            //if (sequence <= 999999)
+            //    strSeq = sequence.ToString().PadLeft(6, '0');
+            //string transNum = type.ToUpper() + "-" + strSeq;
+            return strSeq;
+        }
+        public int GetLastNumOfCode()
+        {
 
+            try
+            {
+                List<string> numberList;
+                int lastNum = 0;
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    numberList = entity.systems.Select(b => b.code).ToList();
+
+                    //for (int i = 0; i < numberList.Count; i++)
+                    //{
+                    //    string code = numberList[i];
+                    //    string s = code.Substring(code.LastIndexOf("-") + 1);
+                    //    numberList[i] = s;
+                    //}
+                    if (numberList.Count > 0)
+                    {
+                        numberList.Sort();
+                        lastNum = int.Parse(numberList[numberList.Count - 1]);
+                    }
+                }
+
+                return lastNum;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
         //public async Task<string> generateCodeNumber(string type)
         //{
         //    int sequence = await GetLastNumOfCode(type);

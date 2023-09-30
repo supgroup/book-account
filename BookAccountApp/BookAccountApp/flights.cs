@@ -37,6 +37,7 @@ namespace BookAccountApp
         public Nullable<int> systemId { get; set; }
         public Nullable<int> airlineId { get; set; }
         public Nullable<int> type { get; set; }
+        public string code { get; set; }
     
         public virtual flightTable flightTable { get; set; }
         public virtual fromTable fromTable { get; set; }

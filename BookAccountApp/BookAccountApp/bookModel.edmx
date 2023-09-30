@@ -112,6 +112,7 @@
           <Property Name="systemId" Type="int" />
           <Property Name="airlineId" Type="int" />
           <Property Name="type" Type="int" />
+          <Property Name="code" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="flightTable">
           <Key>
@@ -152,6 +153,7 @@
           <Property Name="isActive" Type="bit" />
           <Property Name="balance" Type="decimal" Precision="20" Scale="3" />
           <Property Name="commission_ratio" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="code" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="officeFiles">
           <Key>
@@ -219,6 +221,7 @@
           <Property Name="updateUserId" Type="int" />
           <Property Name="isActive" Type="bit" />
           <Property Name="balance" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="code" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="payOp">
           <Key>
@@ -381,6 +384,7 @@
           <Property Name="updateUserId" Type="int" />
           <Property Name="company_commission" Type="decimal" Precision="20" Scale="3" />
           <Property Name="balance" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="code" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="toTable">
           <Key>
@@ -1261,6 +1265,7 @@
           <Property Name="airlineId" Type="Int32" />
           <NavigationProperty Name="airlines" Relationship="bookModel.FK_flights_airlines" FromRole="flights" ToRole="airlines" />
           <Property Name="type" Type="Int32" />
+          <Property Name="code" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="flightTable">
           <Key>
@@ -1309,6 +1314,7 @@
           <Property Name="balance" Type="Decimal" Precision="20" Scale="3" />
           <Property Name="commission_ratio" Type="Decimal" Precision="20" Scale="3" />
           <NavigationProperty Name="officeSystem" Relationship="bookModel.FK_officeSystem_office" FromRole="office" ToRole="officeSystem" />
+          <Property Name="code" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="operations">
           <Key>
@@ -1347,6 +1353,7 @@
           <NavigationProperty Name="serviceData" Relationship="Self.FK_serviceData_passengers" FromRole="passengers" ToRole="serviceData" />
           <NavigationProperty Name="passengerFiles" Relationship="bookModel.FK_passengerFiles_passengers" FromRole="passengers" ToRole="passengerFiles" />
           <Property Name="balance" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="code" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="payOp">
           <Key>
@@ -2268,6 +2275,7 @@
           <NavigationProperty Name="flights" Relationship="bookModel.FK_flights_systems" FromRole="systems" ToRole="flights" />
           <NavigationProperty Name="payOp" Relationship="bookModel.FK_payOp_systems" FromRole="systems" ToRole="payOp" />
           <Property Name="balance" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="code" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_officeSystem_office">
           <End Type="bookModel.office" Role="office" Multiplicity="0..1" />
@@ -2492,6 +2500,7 @@
           <EntitySetMapping Name="flights">
             <EntityTypeMapping TypeName="bookModel.flights">
               <MappingFragment StoreEntitySet="flights">
+                <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="airlineId" ColumnName="airlineId" />
                 <ScalarProperty Name="systemId" ColumnName="systemId" />
@@ -2534,6 +2543,7 @@
           <EntitySetMapping Name="office">
             <EntityTypeMapping TypeName="bookModel.office">
               <MappingFragment StoreEntitySet="office">
+                <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="commission_ratio" ColumnName="commission_ratio" />
                 <ScalarProperty Name="balance" ColumnName="balance" />
                 <ScalarProperty Name="officeId" ColumnName="officeId" />
@@ -2573,6 +2583,7 @@
           <EntitySetMapping Name="passengers">
             <EntityTypeMapping TypeName="bookModel.passengers">
               <MappingFragment StoreEntitySet="passengers">
+                <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="balance" ColumnName="balance" />
                 <ScalarProperty Name="passengerId" ColumnName="passengerId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -2853,6 +2864,7 @@
           <EntitySetMapping Name="systems">
             <EntityTypeMapping TypeName="bookModel.systems">
               <MappingFragment StoreEntitySet="systems">
+                <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="balance" ColumnName="balance" />
                 <ScalarProperty Name="company_commission" ColumnName="company_commission" />
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
