@@ -17,12 +17,12 @@ using Newtonsoft.Json.Converters;
 
 namespace BookAccountApp.ApiClasses
 {
-    public class FlightTable
+    public class Airlines
     {
-        public int flightTableId { get; set; }
+        public int airlineId { get; set; }
         public string name { get; set; }
-        public Nullable<bool> isActive { get; set; }
         public string notes { get; set; }
+        public Nullable<bool> isActive { get; set; }
         public bool canDelete { get; set; }
 
 
@@ -32,19 +32,19 @@ namespace BookAccountApp.ApiClasses
         /// </summary>
         /// <returns></returns>
         /// 
-        public async Task<List<FlightTable>> GetAll()
+        public async Task<List<Airlines>> GetAll()
         {
 
-            List<FlightTable> List = new List<FlightTable>();
+            List<Airlines> List = new List<Airlines>();
             bool canDelete = false;
             try
             {
                 using (bookdbEntities entity = new bookdbEntities())
                 {
-                    List = (from S in entity.flightTable
-                            select new FlightTable()
+                    List = (from S in entity.airlines
+                            select new Airlines()
                             {
-                                flightTableId = S.flightTableId,
+                                airlineId = S.airlineId,
                                 name = S.name,
                                 isActive = S.isActive,
                                 notes = S.notes,
@@ -78,10 +78,10 @@ namespace BookAccountApp.ApiClasses
             }
         }
 
-        public async Task<decimal> Save(FlightTable newitem)
+        public async Task<decimal> Save(Airlines newitem)
         {
-            flightTable newObject = new flightTable();
-            newObject = JsonConvert.DeserializeObject<flightTable>(JsonConvert.SerializeObject(newitem));
+            airlines newObject = new airlines();
+            newObject = JsonConvert.DeserializeObject<airlines>(JsonConvert.SerializeObject(newitem));
 
             decimal message = 0;
             if (newObject != null)
@@ -93,28 +93,30 @@ namespace BookAccountApp.ApiClasses
                 {
                     using (bookdbEntities entity = new bookdbEntities())
                     {
-                        var locationEntity = entity.Set<flightTable>();
-                        if (newObject.flightTableId == 0)
+                        var locationEntity = entity.Set<airlines>();
+                        if (newObject.airlineId == 0)
                         {
                           
 
 
                             locationEntity.Add(newObject);
                             entity.SaveChanges();
-                            message = newObject.flightTableId;
+                            message = newObject.airlineId;
                         }
                         else
                         {
-                            var tmpObject = entity.flightTable.Where(p => p.flightTableId == newObject.flightTableId).FirstOrDefault();
+                            var tmpObject = entity.airlines.Where(p => p.airlineId == newObject.airlineId).FirstOrDefault();
                            
                             tmpObject.name = newObject.name;
                             tmpObject.isActive = newObject.isActive;
                             tmpObject.notes = newObject.notes;
 
 
+
+
                             entity.SaveChanges();
 
-                            message = tmpObject.flightTableId;
+                            message = tmpObject.airlineId;
                         }
                     }
                     return message;
@@ -129,23 +131,23 @@ namespace BookAccountApp.ApiClasses
                 return 0;
             }
         }
-        public async Task<FlightTable> GetByID(int itemId)
+        public async Task<Airlines> GetByID(int itemId)
         {
 
 
-            FlightTable item = new FlightTable();
+            Airlines item = new Airlines();
            
 
-            FlightTable row = new FlightTable();
+            Airlines row = new Airlines();
             try
             {
                 using (bookdbEntities entity = new bookdbEntities())
                 {
-                    var list = entity.flightTable.ToList();
-                    row = list.Where(u => u.flightTableId == itemId)
-                     .Select(S => new FlightTable()
+                    var list = entity.airlines.ToList();
+                    row = list.Where(u => u.airlineId == itemId)
+                     .Select(S => new Airlines()
                      {
-                         flightTableId = S.flightTableId,
+                         airlineId = S.airlineId,
                          name = S.name,
                          isActive = S.isActive,
                          notes = S.notes,
@@ -157,7 +159,7 @@ namespace BookAccountApp.ApiClasses
             }
             catch (Exception ex)
             {
-                row = new FlightTable();
+                row = new Airlines();
                 //userrow.name = ex.ToString();
                 return row;
             }
@@ -172,9 +174,9 @@ namespace BookAccountApp.ApiClasses
                 {
                     using (bookdbEntities entity = new bookdbEntities())
                     {
-                        flightTable objectDelete = entity.flightTable.Find(id);
+                        airlines objectDelete = entity.airlines.Find(id);
 
-                        entity.flightTable.Remove(objectDelete);
+                        entity.airlines.Remove(objectDelete);
                         message = entity.SaveChanges();
                         return message;
 
@@ -193,7 +195,7 @@ namespace BookAccountApp.ApiClasses
             //    {
             //        using (bookdbEntities entity = new bookdbEntities())
             //        {
-            //            flightTable objectDelete = entity.flightTable.Find(userId);
+            //            airlines objectDelete = entity.airlines.Find(userId);
 
             //            objectDelete.isActive = 0;
             //            objectDelete.updateUserId = signuserId;

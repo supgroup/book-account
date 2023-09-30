@@ -38,6 +38,9 @@ namespace BookAccountApp.ApiClasses
         public Nullable<decimal> commission_ratio { get; set; }
         public string airlineflightTable { get; set; }
         public Nullable<int> systemId { get; set; }
+        public Nullable<int> airlineId { get; set; }
+        public Nullable<int> type { get; set; }
+        public string typeName { get; set; }
 
         /// <summary>
         /// ///////////////////////////////////////
@@ -58,7 +61,8 @@ namespace BookAccountApp.ApiClasses
                             {
                                 flightId = S.flightId,
                                 airlineflightTable = S.systems.name + "/" + S.flightTable.name,
-                                airline= S.systems.name,
+                                //airline= S.systems.name,
+                                airline = S.airlines.name,
                                 flight = S.flightTable.name==null?"": S.flightTable.name,
                                 flightFrom = S.fromTable.name == null ? "" : S.fromTable.name,
                                 flightTo = S.toTable.name,
@@ -73,7 +77,8 @@ namespace BookAccountApp.ApiClasses
                                isActive=S.isActive,
                                 canDelete = false,
                                 commission_ratio=S.commission_ratio,
-                                systemId = S.systemId,
+                                airlineId = S.airlineId,
+                                type=S.type,
                 }).ToList();
 
                     if (List.Count > 0)
@@ -148,7 +153,7 @@ namespace BookAccountApp.ApiClasses
 
                         //    tmpObject.flightId = newObject.flightId;
                             tmpObject.airline = newObject.airline;
-                            tmpObject.systemId = newObject.systemId;
+                            tmpObject.airlineId = newObject.airlineId;
                             tmpObject.flightTableId = newObject.flightTableId;
                             tmpObject.fromTableId = newObject.fromTableId;
                             tmpObject.toTableId = newObject.toTableId;
@@ -159,6 +164,9 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.updateUserId = newObject.updateUserId;
                            tmpObject.isActive = newObject.isActive;
                             tmpObject.commission_ratio = newObject.commission_ratio;
+                            tmpObject.commission_ratio = newObject.commission_ratio;
+                            tmpObject.type = newObject.type;
+                              
                             entity.SaveChanges();
 
                             message = tmpObject.flightId;
@@ -193,7 +201,9 @@ namespace BookAccountApp.ApiClasses
                      .Select(S => new Flights()
                      {
                          flightId = S.flightId,
-                         airline = S.systems.name,
+                         //airline = S.systems.name,
+                         airline = S.airlines.name,
+                        
                          flight = S.flightTable.name == null ? "" : S.flightTable.name,
                          flightFrom = S.fromTable.name == null ? "" : S.fromTable.name,
                          flightTo = S.toTable.name,
@@ -207,8 +217,8 @@ namespace BookAccountApp.ApiClasses
                          toTableId = S.toTableId == null ? 0 : S.toTableId,
                          isActive = S.isActive,
                          commission_ratio = S.commission_ratio,
-                         systemId = S.systemId,
-
+                         airlineId = S.airlineId,
+                         type = S.type,
                      }).FirstOrDefault();
                     return row;
                 }
@@ -285,7 +295,7 @@ namespace BookAccountApp.ApiClasses
                             {
                                 flightId = S.flightId,
                                 airlineflightTable = S.systems.name + "/" + S.flightTable.name,
-                                airline = S.systems.name,
+                                //airline = S.systems.name,
                                 flight = S.flightTable.name == null ? "" : S.flightTable.name,
                                 flightFrom = S.fromTable.name == null ? "" : S.fromTable.name,
                                 flightTo = S.toTable.name,
@@ -300,7 +310,9 @@ namespace BookAccountApp.ApiClasses
                                 isActive = S.isActive,
                                 canDelete = false,
                                 commission_ratio = S.commission_ratio,
-                                systemId = S.systemId,
+                                airlineId = S.airlineId,
+                                type = S.type,
+                                airline = S.airlines.name,
                             }).ToList();
 
                     //if (List.Count > 0)

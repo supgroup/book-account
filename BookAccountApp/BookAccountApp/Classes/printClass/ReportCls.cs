@@ -1405,6 +1405,31 @@ RecivedPurpose
             }
             else return "";
         }
+
+        public string flightTypeConverter(int? type)
+        {
+            if (type != null)
+            {
+                int intType = int.Parse(type.ToString());
+                string s = "";
+                switch (intType)
+                {
+                    case 1:
+                        s = MainWindow.resourcemanager.GetString("singleTrip");
+                        break;
+                    case 2:
+                        s = MainWindow.resourcemanager.GetString("roundTrip");
+                        break;
+
+                    default:
+                        s = "";
+                        break;
+                }
+
+                return s;
+            }
+            else return "";
+        }
         //////////
         public string sideNameConverter(PayOp payModel)
         {

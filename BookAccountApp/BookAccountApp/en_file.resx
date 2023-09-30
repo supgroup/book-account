@@ -3358,4 +3358,13 @@ Please add Email in setting</value>
   <data name="trmobilenum" xml:space="preserve">
     <value>Mobile</value>
   </data>
+  <data name="flightType" xml:space="preserve">
+    <value>flight Type</value>
+  </data>
+  <data name="roundTrip" xml:space="preserve">
+    <value>round Trip</value>
+  </data>
+  <data name="singleTrip" xml:space="preserve">
+    <value>single Trip</value>
+  </data>
 </root>

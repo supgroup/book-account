@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="bookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="airlines">
+          <Key>
+            <PropertyRef Name="airlineId" />
+          </Key>
+          <Property Name="airlineId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
         <EntityType Name="cities">
           <Key>
             <PropertyRef Name="cityId" />
@@ -101,6 +110,8 @@
           <Property Name="balance" Type="decimal" Precision="20" Scale="3" />
           <Property Name="commission_ratio" Type="decimal" Precision="20" Scale="3" />
           <Property Name="systemId" Type="int" />
+          <Property Name="airlineId" Type="int" />
+          <Property Name="type" Type="int" />
         </EntityType>
         <EntityType Name="flightTable">
           <Key>
@@ -486,6 +497,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_flights_airlines">
+          <End Role="airlines" Type="Self.airlines" Multiplicity="0..1" />
+          <End Role="flights" Type="Self.flights" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="airlines">
+              <PropertyRef Name="airlineId" />
+            </Principal>
+            <Dependent Role="flights">
+              <PropertyRef Name="airlineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_flights_flightTable">
           <End Role="flightTable" Type="Self.flightTable" Multiplicity="0..1" />
           <End Role="flights" Type="Self.flights" Multiplicity="*" />
@@ -507,18 +530,6 @@
             </Principal>
             <Dependent Role="flights">
               <PropertyRef Name="fromTableId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_flights_systems">
-          <End Role="systems" Type="Self.systems" Multiplicity="0..1" />
-          <End Role="flights" Type="Self.flights" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="systems">
-              <PropertyRef Name="systemId" />
-            </Principal>
-            <Dependent Role="flights">
-              <PropertyRef Name="systemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -943,6 +954,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="bookModelStoreContainer">
+          <EntitySet Name="airlines" EntityType="Self.airlines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cities" EntityType="Self.cities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="countriesCodes" EntityType="Self.countriesCodes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="customers" EntityType="Self.customers" Schema="dbo" store:Type="Tables" />
@@ -989,16 +1001,16 @@
             <End Role="users" EntitySet="users" />
             <End Role="error" EntitySet="error" />
           </AssociationSet>
+          <AssociationSet Name="FK_flights_airlines" Association="Self.FK_flights_airlines">
+            <End Role="airlines" EntitySet="airlines" />
+            <End Role="flights" EntitySet="flights" />
+          </AssociationSet>
           <AssociationSet Name="FK_flights_flightTable" Association="Self.FK_flights_flightTable">
             <End Role="flightTable" EntitySet="flightTable" />
             <End Role="flights" EntitySet="flights" />
           </AssociationSet>
           <AssociationSet Name="FK_flights_fromTable" Association="Self.FK_flights_fromTable">
             <End Role="fromTable" EntitySet="fromTable" />
-            <End Role="flights" EntitySet="flights" />
-          </AssociationSet>
-          <AssociationSet Name="FK_flights_systems" Association="Self.FK_flights_systems">
-            <End Role="systems" EntitySet="systems" />
             <End Role="flights" EntitySet="flights" />
           </AssociationSet>
           <AssociationSet Name="FK_flights_toTable" Association="Self.FK_flights_toTable">
@@ -1246,6 +1258,9 @@
           <Property Name="commission_ratio" Type="Decimal" Precision="20" Scale="3" />
           <Property Name="systemId" Type="Int32" />
           <NavigationProperty Name="systems" Relationship="bookModel.FK_flights_systems" FromRole="flights" ToRole="systems" />
+          <Property Name="airlineId" Type="Int32" />
+          <NavigationProperty Name="airlines" Relationship="bookModel.FK_flights_airlines" FromRole="flights" ToRole="airlines" />
+          <Property Name="type" Type="Int32" />
         </EntityType>
         <EntityType Name="flightTable">
           <Key>
@@ -2076,6 +2091,11 @@
             <End Role="payOp" EntitySet="payOp" />
             <End Role="payOp1" EntitySet="payOp" />
           </AssociationSet>
+          <EntitySet Name="airlines" EntityType="bookModel.airlines" />
+          <AssociationSet Name="FK_flights_airlines" Association="bookModel.FK_flights_airlines">
+            <End Role="airlines" EntitySet="airlines" />
+            <End Role="flights" EntitySet="flights" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="officeFiles">
           <Key>
@@ -2369,6 +2389,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="airlines">
+          <Key>
+            <PropertyRef Name="airlineId" />
+          </Key>
+          <Property Name="airlineId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="flights" Relationship="bookModel.FK_flights_airlines" FromRole="airlines" ToRole="flights" />
+        </EntityType>
+        <Association Name="FK_flights_airlines">
+          <End Type="bookModel.airlines" Role="airlines" Multiplicity="0..1" />
+          <End Type="bookModel.flights" Role="flights" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="airlines">
+              <PropertyRef Name="airlineId" />
+            </Principal>
+            <Dependent Role="flights">
+              <PropertyRef Name="airlineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2450,6 +2492,8 @@
           <EntitySetMapping Name="flights">
             <EntityTypeMapping TypeName="bookModel.flights">
               <MappingFragment StoreEntitySet="flights">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="airlineId" ColumnName="airlineId" />
                 <ScalarProperty Name="systemId" ColumnName="systemId" />
                 <ScalarProperty Name="commission_ratio" ColumnName="commission_ratio" />
                 <ScalarProperty Name="balance" ColumnName="balance" />
@@ -2819,6 +2863,16 @@
                 <ScalarProperty Name="notes" ColumnName="notes" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="systemId" ColumnName="systemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="airlines">
+            <EntityTypeMapping TypeName="bookModel.airlines">
+              <MappingFragment StoreEntitySet="airlines">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="airlineId" ColumnName="airlineId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

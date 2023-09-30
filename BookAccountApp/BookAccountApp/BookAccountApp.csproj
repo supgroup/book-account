@@ -198,6 +198,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="airlines.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="bookModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -219,6 +222,7 @@
     <Compile Include="Classes\ApiClasses\City.cs" />
     <Compile Include="Classes\ApiClasses\Country.cs" />
     <Compile Include="Classes\ApiClasses\FileClass.cs" />
+    <Compile Include="Classes\ApiClasses\Airlines.cs" />
     <Compile Include="Classes\ApiClasses\FlightTable.cs" />
     <Compile Include="Classes\ApiClasses\OfficeSystem.cs" />
     <Compile Include="Classes\ApiClasses\Exchange.cs" />
@@ -251,6 +255,7 @@
     <Compile Include="Classes\printClass\numberToWord\ToWord.cs" />
     <Compile Include="Classes\printClass\ReportCls.cs" />
     <Compile Include="Classes\printClass\rptSectionData.cs" />
+    <Compile Include="converters\flightTypeConverter.cs" />
     <Compile Include="converters\currencyConverter.cs" />
     <Compile Include="converters\accuracyConverter.cs" />
     <Compile Include="converters\agentNameConverter.cs" />
@@ -430,6 +435,9 @@
     </Compile>
     <Compile Include="View\windows\wd_files.xaml.cs">
       <DependentUpon>wd_files.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_airline.xaml.cs">
+      <DependentUpon>wd_airline.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_flight.xaml.cs">
       <DependentUpon>wd_flight.xaml</DependentUpon>
@@ -636,6 +644,10 @@
     <Page Include="View\windows\wd_files.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_airline.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_flight.xaml">
       <SubType>Designer</SubType>

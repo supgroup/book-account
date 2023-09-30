@@ -1079,6 +1079,21 @@ namespace BookAccountApp.Classes
 
 
         }
+
+        static Airlines AirlineModel = new Airlines();
+        static IEnumerable<Airlines> AirlinesList;
+        static public async Task fillAirlines(ComboBox combo)
+        {
+            AirlinesList = await AirlineModel.GetAll();
+            combo.ItemsSource = AirlinesList;
+            combo.SelectedValuePath = "airlineId";
+            combo.DisplayMemberPath = "name";
+            combo.SelectedIndex = -1;
+            
+
+
+
+        }
         static public async Task fillFlightsBySysId(ComboBox combo,int systemId)
         {
             FlightsList = await FlightsModel.GetbySysId(systemId);
@@ -1182,6 +1197,19 @@ namespace BookAccountApp.Classes
                  };
             }
 
+            combo.DisplayMemberPath = "Text";
+            combo.SelectedValuePath = "Value";
+            combo.ItemsSource = typelist;
+
+        }
+
+        static public void flightType(ComboBox combo)
+        {
+            var typelist = new[] {
+                new { Text = MainWindow.resourcemanager.GetString("singleTrip")    , Value = 1 },
+                new { Text = MainWindow.resourcemanager.GetString("roundTrip")  , Value = 2 },
+            
+                 };
             combo.DisplayMemberPath = "Text";
             combo.SelectedValuePath = "Value";
             combo.ItemsSource = typelist;

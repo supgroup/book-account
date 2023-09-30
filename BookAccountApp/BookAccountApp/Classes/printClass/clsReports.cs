@@ -216,12 +216,13 @@ passwordSoto
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
+            ReportCls repcls = new ReportCls();
             List<Flights> Query = JsonConvert.DeserializeObject<List<Flights>>(JsonConvert.SerializeObject(QueryList));
-            //foreach (Office row in Query)
-            //{
-            //    row.strjoinDate = dateFrameConverter(row.joinDate);
-
-            //}
+            foreach (Flights row in Query)
+            {
+                row.typeName = repcls.flightTypeConverter(row.type);
+                
+            }
 
             rep.DataSources.Add(new ReportDataSource("DataSet", Query));
             //title
@@ -232,8 +233,8 @@ passwordSoto
             paramarr.Add(new ReportParameter("flight", MainWindow.resourcemanagerreport.GetString("flight")));
             paramarr.Add(new ReportParameter("from", MainWindow.resourcemanagerreport.GetString("from")));
             paramarr.Add(new ReportParameter("to", MainWindow.resourcemanagerreport.GetString("to")));
-      
-         
+            paramarr.Add(new ReportParameter("type", MainWindow.resourcemanagerreport.GetString("flightType")));
+
         }
 
         public static void OperationReport(IEnumerable<Operations> QueryList, LocalReport rep, string reppath, List<ReportParameter> paramarr)

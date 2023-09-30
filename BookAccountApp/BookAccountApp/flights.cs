@@ -35,6 +35,8 @@ namespace BookAccountApp
         public Nullable<decimal> balance { get; set; }
         public Nullable<decimal> commission_ratio { get; set; }
         public Nullable<int> systemId { get; set; }
+        public Nullable<int> airlineId { get; set; }
+        public Nullable<int> type { get; set; }
     
         public virtual flightTable flightTable { get; set; }
         public virtual fromTable fromTable { get; set; }
@@ -44,5 +46,6 @@ namespace BookAccountApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<payOp> payOp { get; set; }
         public virtual systems systems { get; set; }
+        public virtual airlines airlines { get; set; }
     }
 }

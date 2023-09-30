@@ -3367,4 +3367,19 @@
   <data name="trmobilenum" xml:space="preserve">
     <value>موبايل</value>
   </data>
+  <data name="airlines" xml:space="preserve">
+    <value>شركات الطيران</value>
+  </data>
+  <data name="flightType" xml:space="preserve">
+    <value>نوع الرحلة</value>
+  </data>
+  <data name="roundTrip" xml:space="preserve">
+    <value>ذهاب و عودة</value>
+  </data>
+  <data name="singleTrip" xml:space="preserve">
+    <value>ذهاب</value>
+  </data>
+  <data name="flightTypeHint" xml:space="preserve">
+    <value>نوع الرحلة ... </value>
+  </data>
 </root>

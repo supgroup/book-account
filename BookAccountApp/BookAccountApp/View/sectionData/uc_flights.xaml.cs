@@ -115,7 +115,8 @@ namespace BookAccountApp.View.sectionData
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightTableId, MainWindow.resourcemanager.GetString("flightHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightFrom, MainWindow.resourcemanager.GetString("fromHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_flightTo, MainWindow.resourcemanager.GetString("toHint"));
-
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_type, MainWindow.resourcemanager.GetString("flightType"));
+            
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
             //txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
@@ -137,7 +138,7 @@ motherHint
             dg_flights.Columns[2].Header = MainWindow.resourcemanager.GetString("flight");
             dg_flights.Columns[3].Header = MainWindow.resourcemanager.GetString("from");
             dg_flights.Columns[4].Header = MainWindow.resourcemanager.GetString("to");
-
+            dg_flights.Columns[5].Header = MainWindow.resourcemanager.GetString("flightType");
 
             //dg_flights.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
@@ -174,11 +175,11 @@ motherHint
                     //   flights.airline = tb_airline.Text;
                     if (Convert.ToInt32(cb_airline.SelectedValue) == 0)
                     {
-                        flights.systemId = null;
+                        flights.airlineId = null;
                     }
                     else
                     {
-                        flights.systemId = Convert.ToInt32(cb_airline.SelectedValue);
+                        flights.airlineId = Convert.ToInt32(cb_airline.SelectedValue);
                     }
                     if (Convert.ToInt32(cb_flightTableId.SelectedValue) == 0)
                     {
@@ -205,6 +206,15 @@ motherHint
                     else
                     {
                         flights.fromTableId = Convert.ToInt32(cb_flightFrom.SelectedValue);
+                    }
+                    //
+                    if (Convert.ToInt32(cb_type.SelectedValue) == 0)
+                    {
+                        flights.type = null;
+                    }
+                    else
+                    {
+                        flights.type = Convert.ToInt32(cb_type.SelectedValue);
                     }
                     flights.notes = tb_notes.Text;
 
@@ -249,11 +259,11 @@ motherHint
                         //flights.airline = tb_airline.Text;
                         if (Convert.ToInt32(cb_airline.SelectedValue) == 0)
                         {
-                            flights.systemId = null;
+                            flights.airlineId = null;
                         }
                         else
                         {
-                            flights.systemId = Convert.ToInt32(cb_airline.SelectedValue);
+                            flights.airlineId = Convert.ToInt32(cb_airline.SelectedValue);
                         }
                         if (Convert.ToInt32(cb_flightTableId.SelectedValue) == 0)
                         {
@@ -281,7 +291,14 @@ motherHint
                         {
                             flights.fromTableId = Convert.ToInt32(cb_flightFrom.SelectedValue);
                         }
-
+                        if (Convert.ToInt32(cb_type.SelectedValue) == 0)
+                        {
+                            flights.type = null;
+                        }
+                        else
+                        {
+                            flights.type = Convert.ToInt32(cb_type.SelectedValue);
+                        }
                         flights.notes = tb_notes.Text;
                         decimal s = await flights.Save(flights);
                         if (s <= 0)
@@ -511,6 +528,8 @@ motherHint
                         cb_flightTableId.SelectedValue = flights.flightTableId;
                         cb_flightFrom.SelectedValue = flights.fromTableId;
                         cb_flightTo.SelectedValue = flights.toTableId;
+                        cb_airline.SelectedValue = flights.airlineId;
+                        cb_type.SelectedValue = flights.type;
                         this.DataContext = flights;
                         //await getImg();
                         #region delete
@@ -676,10 +695,13 @@ motherHint
         }
         public async Task fillcombos()
         {
-            await FillCombo.fillSystems(cb_airline);
+            //await FillCombo.fillSystems;
+            await FillCombo.fillAirlines(cb_airline);
             await FillCombo.fillFlightTable(cb_flightTableId);
             await FillCombo.fillFromTable(cb_flightFrom);
             await FillCombo.fillToTable(cb_flightTo);
+            FillCombo.flightType(cb_type);
+            
         }
         #region reports
 
@@ -961,6 +983,28 @@ motherHint
             }
         }
 
+        private async void Btn_addAirline_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_airline w = new wd_airline();
+                w.ShowDialog();
+                await FillCombo.fillAirlines(cb_airline);
+                Window.GetWindow(this).Opacity = 1;
 
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

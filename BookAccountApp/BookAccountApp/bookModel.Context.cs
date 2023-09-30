@@ -51,5 +51,6 @@ namespace BookAccountApp
         public virtual DbSet<exchange> exchange { get; set; }
         public virtual DbSet<officeSystem> officeSystem { get; set; }
         public virtual DbSet<systems> systems { get; set; }
+        public virtual DbSet<airlines> airlines { get; set; }
     }
 }
