@@ -209,7 +209,7 @@ namespace BookAccountApp.ApiClasses
                                 passenger = P.name + " " + P.lastName,
                                 ticketNum = S.ticketNum,
                                 //airline = F.systems.name + "/" + F.flightTable.name,
-                                airline =  F.airlines.name + "/" + F.flightTable.name + " / " + (F.type == 1 ? one : (F.type == 2 ? two : "")),
+                                airline =  F.airlines.name + (F.flightTable.name==null|| F.flightTable.name==""?"":(" / " + F.flightTable.name)) +(F.type==null?"":( " / " + (F.type == 1 ? one : (F.type == 2 ? two : "")))),
                                 officeId = S.officeId,
                                 serviceDate = S.serviceDate,
                                 pnr = S.pnr,
@@ -415,6 +415,8 @@ namespace BookAccountApp.ApiClasses
             ServiceData row = new ServiceData();
             try
             {
+                string one = MainWindow.resourcemanager.GetString("singleTrip");
+                string two = MainWindow.resourcemanager.GetString("roundTrip");
                 using (bookdbEntities entity = new bookdbEntities())
                 {
                     item = (from S in entity.serviceData
@@ -434,7 +436,9 @@ namespace BookAccountApp.ApiClasses
                                 type = S.type,
                                 passenger = P.name + " " + P.lastName,
                                 ticketNum = S.ticketNum,
-                                airline = F.systems.name + "/" + F.flightTable.name,
+                                //airline = F.systems.name + "/" + F.flightTable.name,
+                                airline = F.airlines.name + (F.flightTable.name == null || F.flightTable.name == "" ? "" : ("/" + F.flightTable.name)) + (F.type == null ? "" : (" / " + (F.type == 1 ? one : (F.type == 2 ? two : "")))),
+
                                 officeId = S.officeId,
                                 serviceDate = S.serviceDate,
                                 pnr = S.pnr,
