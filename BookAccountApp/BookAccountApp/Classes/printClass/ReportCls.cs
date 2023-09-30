@@ -1514,6 +1514,10 @@ RecivedPurpose
                 {
                     desc = "عمولة للشركة";
                 }
+                else if (payModel.opType == "d" && payModel.side == "system" && payModel.processType == "cash")
+                {
+                    desc = " قبض عمولة للشركة من نظام الحجز " + payModel.systemName;
+                }
                 else if (payModel.opType == "p" && payModel.side == "office" && payModel.processType == "service")
                 {
                     desc = " دفعة مقابل الحجز عن طريق مكتب  " + payModel.officeName;

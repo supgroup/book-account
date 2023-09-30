@@ -518,12 +518,12 @@ passwordSoto
             ReportCls repcls = new ReportCls();
             foreach (var c in cash)
             {
-
+                c.purpose = repcls.descRepConverter(c);
                 c.cash = decimal.Parse(HelpClass.DecTostring(c.cash));
                  c.sideAr = repcls.sideNameConverterRep(c);
                 c.currency = repcls.currencyConverter(c.currency);
                 c.stropDate = dateFrameConverter(c.opDate);
-                c.purpose = repcls.descRepConverter(c);
+             
 
             }
 

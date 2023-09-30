@@ -324,7 +324,7 @@ namespace BookAccountApp.ApiClasses
                     }
                     return message;
                 }
-                catch
+                catch(Exception ex)
                 {
                     return 0;
                 }

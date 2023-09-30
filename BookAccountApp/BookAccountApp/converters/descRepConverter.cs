@@ -45,6 +45,12 @@ namespace BookAccountApp.converters
                 {
                     desc ="عمولة للشركة";
                 }
+                else if (s.opType == "d" && s.side == "system" && s.processType == "cash")
+                {
+                    desc = " قبض عمولة للشركة من نظام الحجز "  +s.systemName;
+                }
+
+
                 else if (s.opType == "p" && s.side == "office" && s.processType == "service")
                 {
                     desc =   " دفعة مقابل الحجز عن طريق مكتب  "+ s.officeName;
