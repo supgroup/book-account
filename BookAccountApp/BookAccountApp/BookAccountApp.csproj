@@ -25,6 +25,9 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <ProductName>Jellyfish</ProductName>
+    <PublisherName>Jellyfish</PublisherName>
+    <SuiteName>Jellyfish</SuiteName>
     <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.1</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
@@ -53,7 +56,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>supcloudsLogo.ico</ApplicationIcon>
+    <ApplicationIcon>pic\favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <NoWin32Manifest>true</NoWin32Manifest>
@@ -758,6 +761,8 @@
       <DependentUpon>bookModel.edmx</DependentUpon>
       <LastGenOutput>bookModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="pic\user-profile.png" />
+    <Resource Include="pic\favicon.ico" />
     <Content Include="Reports\SectionData\Ar\ArPassenger.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
