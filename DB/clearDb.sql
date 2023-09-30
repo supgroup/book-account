@@ -1,4 +1,4 @@
-USE [bookdbempty]
+USE [bookdb]
 GO
 DELETE FROM [dbo].[payOp]
      
@@ -78,7 +78,9 @@ DELETE FROM [dbo].[users]
       WHERE AccountName<>'admin' and AccountName<>'administrator'
 GO
 
-
+DELETE FROM [dbo].[airlines]
+     
+GO
 
 
 
