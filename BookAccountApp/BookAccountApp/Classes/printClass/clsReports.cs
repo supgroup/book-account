@@ -298,8 +298,11 @@ passwordSoto
             foreach (ServiceData row in Query)
             {
                 row.strServiceDate = dateFrameConverter(row.updateDate);
-                row.total =decimal.Parse( HelpClass .DecTostring(row.total));
-                row.priceBeforTax = decimal.Parse(HelpClass.DecTostring(row.priceBeforTax));
+                //row.total =decimal.Parse( HelpClass .DecTostring(row.total));
+                //row.priceBeforTax = decimal.Parse(HelpClass.DecTostring(row.priceBeforTax));
+                row.totalSY = decimal.Parse(HelpClass.DecTostring(row.totalSY));
+                row.priceBeforTaxSY = decimal.Parse(HelpClass.DecTostring(row.priceBeforTaxSY));
+                row.syValue = decimal.Parse(HelpClass.DecTostring(row.syValue));
                 row.currencyTotal = repcls.currencyConverter(row.currencyTotal);
             }
 
@@ -317,8 +320,10 @@ passwordSoto
             paramarr.Add(new ReportParameter("total", MainWindow.resourcemanagerreport.GetString("total")));
             paramarr.Add(new ReportParameter("currency", MainWindow.resourcemanagerreport.GetString("currency")));
             paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("exchangePrice", MainWindow.resourcemanagerreport.GetString("exchangePrice")));
+            
 
-  
+
         }
 
         public static void paymentAccReport(IEnumerable<PayOp> query, LocalReport rep, string reppath, List<ReportParameter> paramarr)

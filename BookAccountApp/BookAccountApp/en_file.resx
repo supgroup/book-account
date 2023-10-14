@@ -3373,4 +3373,25 @@ Please add Email in setting</value>
   <data name="msgnoExchange" xml:space="preserve">
     <value>No Exchange</value>
   </data>
+  <data name="done" xml:space="preserve">
+    <value>done</value>
+  </data>
+  <data name="priceBeforTaxSYHint" xml:space="preserve">
+    <value>priceBeforTaxSYHint</value>
+  </data>
+  <data name="priceBeforTaxUSDHint" xml:space="preserve">
+    <value>priceBeforTaxUSDHint</value>
+  </data>
+  <data name="totalSYHint" xml:space="preserve">
+    <value>totalSYHint</value>
+  </data>
+  <data name="totalUSDHint" xml:space="preserve">
+    <value>totalUSDHint</value>
+  </data>
+  <data name="trTaxSYHint" xml:space="preserve">
+    <value>trTaxSYHint</value>
+  </data>
+  <data name="trTaxUSDHint" xml:space="preserve">
+    <value>trTaxUSDHint</value>
+  </data>
 </root>

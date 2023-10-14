@@ -3388,4 +3388,25 @@
   <data name="msgnoExchange" xml:space="preserve">
     <value>يرجى تحديد سعر الصرف من الاعدادات</value>
   </data>
+  <data name="done" xml:space="preserve">
+    <value>مرحل</value>
+  </data>
+  <data name="priceBeforTaxSYHint" xml:space="preserve">
+    <value>السعر قبل الضرائب/ليرة سورية ...</value>
+  </data>
+  <data name="priceBeforTaxUSDHint" xml:space="preserve">
+    <value>السعر قبل الضرائب/دولار امريكي ...</value>
+  </data>
+  <data name="totalSYHint" xml:space="preserve">
+    <value>الاجمالي/ليرة سورية ...</value>
+  </data>
+  <data name="totalUSDHint" xml:space="preserve">
+    <value>الاجمالي/دولار امريكي ...</value>
+  </data>
+  <data name="trTaxSYHint" xml:space="preserve">
+    <value>الضريبة/ليرة سورية ...</value>
+  </data>
+  <data name="trTaxUSDHint" xml:space="preserve">
+    <value>الضريبة/دولار امريكي ...</value>
+  </data>
 </root>

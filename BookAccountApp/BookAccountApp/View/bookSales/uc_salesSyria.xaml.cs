@@ -62,6 +62,7 @@ namespace BookAccountApp.View.sales
         PayOp payOpModel = new PayOp();
         bool first = true;
         bool tgl_serviceDatastate = true;
+        bool tb_syChange = false;
         string searchText = "";
         SaveFileDialog saveFileDialog = new SaveFileDialog();
         public static List<string> requiredControlList;
@@ -112,19 +113,24 @@ namespace BookAccountApp.View.sales
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            txt_active.Text = MainWindow.resourcemanager.GetString("trDraft");
+          //  txt_active.Text = MainWindow.resourcemanager.GetString("trDraft");
+            chk_draft.Content = MainWindow.resourcemanager.GetString("trDraft");
+            chk_confirmed.Content = MainWindow.resourcemanager.GetString("done");
             txt_title.Text = MainWindow.resourcemanager.GetString("bookInfoSyr");
             /*
-trTaxHint
+priceBeforTaxSYHint
+trTaxUSDHint
+trTaxSYHint
+totalSYHint
 * */
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_passenger, MainWindow.resourcemanager.GetString("passengerNameHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_system, MainWindow.resourcemanager.GetString("bookSystemHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_ticketNum, MainWindow.resourcemanager.GetString("ticketNumHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_airline, MainWindow.resourcemanager.GetString("airlineFlightHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_office, MainWindow.resourcemanager.GetString("officeNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_priceBeforTax, MainWindow.resourcemanager.GetString("priceBeforTaxHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_charge, MainWindow.resourcemanager.GetString("trTaxHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_total, MainWindow.resourcemanager.GetString("totalHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_priceBeforTax, MainWindow.resourcemanager.GetString("priceBeforTaxUSDHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_charge, MainWindow.resourcemanager.GetString("trTaxUSDHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_total, MainWindow.resourcemanager.GetString("totalUSDHint"));
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_fromDateSearch, MainWindow.resourcemanager.GetString("fromDate"));
@@ -140,8 +146,10 @@ trTaxHint
             dg_serviceData.Columns[5].Header = MainWindow.resourcemanager.GetString("officeName");
             dg_serviceData.Columns[6].Header = MainWindow.resourcemanager.GetString("priceBeforTax");
             dg_serviceData.Columns[7].Header = MainWindow.resourcemanager.GetString("total");
-            dg_serviceData.Columns[8].Header = MainWindow.resourcemanager.GetString("currency");
-            dg_serviceData.Columns[9].Header = MainWindow.resourcemanager.GetString("trDate");
+            dg_serviceData.Columns[8].Header = MainWindow.resourcemanager.GetString("exchangePrice");
+            dg_serviceData.Columns[9].Header = MainWindow.resourcemanager.GetString("currency");
+            dg_serviceData.Columns[10].Header = MainWindow.resourcemanager.GetString("trDate");
+
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
             tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
             tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
@@ -156,6 +164,10 @@ trTaxHint
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_currency, MainWindow.resourcemanager.GetString("currencyHint"));
 
             btn_send.Content = MainWindow.resourcemanager.GetString("send");
+            //
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_priceBeforTaxSY, MainWindow.resourcemanager.GetString("priceBeforTaxSYHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_chargeSY, MainWindow.resourcemanager.GetString("trTaxSYHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_totalSY, MainWindow.resourcemanager.GetString("totalSYHint"));
 
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
@@ -390,8 +402,11 @@ trTaxHint
 
             //serviceData.serviceDate = dp_serviceDate.SelectedDate;
             serviceData.total = (tb_total.Text == null || tb_total.Text == "") ? 0 : Convert.ToDecimal(tb_total.Text);
-
-          int cmpres=HelpClass.ComparePaid(serviceData);
+            serviceData.totalSY = (tb_totalSY.Text == null || tb_totalSY.Text == "") ? 0 : Convert.ToDecimal(tb_totalSY.Text);
+            serviceData.priceBeforTaxSY = (tb_priceBeforTaxSY.Text == null || tb_priceBeforTaxSY.Text == "") ? 0 : Convert.ToDecimal(tb_priceBeforTaxSY.Text);
+            serviceData.tax_valueSY = (tb_chargeSY.Text == null || tb_chargeSY.Text == "") ? 0 : Convert.ToDecimal(tb_chargeSY.Text);
+           
+            int cmpres=HelpClass.ComparePaid(serviceData);
             //if (serviceData.paid <= serviceData.total)
             if (cmpres == -1 || cmpres == 0)
             {
@@ -444,6 +459,7 @@ trTaxHint
                 serviceData.totalnet = serviceData.priceBeforTax - serviceData.company_commission_value - serviceData.office_commission_value;
 
                 serviceData.profit = serviceData.commitionValue;
+                serviceData.profitSY = serviceData.commitionValue * FillCombo.exchangeValue; 
                 serviceData.airlinePaid = 0;
                 serviceData.airlineUnpaid = 0;
                 serviceData.officePaid = 0;
@@ -501,58 +517,57 @@ trTaxHint
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                if (serviceDatas is null)
-                    await RefreshServiceDatasList();
-                tgl_serviceDatastate = true;
-                txt_active.Text = MainWindow.resourcemanager.GetString("trDraft");
-
+        //private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        HelpClass.StartAwait(grid_main);
              
+        //        if (serviceDatas is null)
+        //            await RefreshServiceDatasList();
+        //        tgl_serviceDatastate = true;
+        //        //txt_active.Text = MainWindow.resourcemanager.GetString("trDraft");
 
-                if (first)
-                {
-                    first = false;
-                }
-                else
-                {
-                    enableEdit();
-                    await Search();
+              
+        //        if (first)
+        //        {
+        //            first = false;
+        //        }
+        //        else
+        //        {
+        //            enableEdit();
+        //            await Search();
 
-                }
+        //        }
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                txt_active.Text = MainWindow.resourcemanager.GetString("trConfirmed");
-                disableEdit();
-                if (serviceDatas is null)
-                    await RefreshServiceDatasList();
-                tgl_serviceDatastate = false;
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
+        //        HelpClass.EndAwait(grid_main);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HelpClass.EndAwait(grid_main);
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
+        //private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        HelpClass.StartAwait(grid_main);
+        //        //txt_active.Text = MainWindow.resourcemanager.GetString("trConfirmed");
+        //        disableEdit();
+        //        if (serviceDatas is null)
+        //            await RefreshServiceDatasList();
+        //        tgl_serviceDatastate = false;
+        //        await Search();
+        //        HelpClass.EndAwait(grid_main);
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+        //        HelpClass.EndAwait(grid_main);
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -593,7 +608,11 @@ trTaxHint
                         tb_charge.Text = HelpClass.DecTostring(serviceData.tax_value);
                         tb_paid.Text = HelpClass.DecTostring(serviceData.paid);
                         this.DataContext = serviceData;
-
+                        if (tgl_serviceDatastate)
+                        {
+                            btn_send.IsEnabled = true;
+                        }
+                        
                         #region delete
                         if (serviceData.canDelete)
                             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
@@ -711,7 +730,7 @@ trTaxHint
             cb_airline.SelectedIndex = -1;
             cb_office.SelectedIndex = -1;
             cb_system.SelectedIndex = -1;
-            cb_currency.SelectedIndex = -1;
+            cb_currency.SelectedValue = "syp";
             //cb_passenger.Text ="";
             //cb_airline.Text = "";
             //cb_office.Text = "";
@@ -719,12 +738,21 @@ trTaxHint
             tb_priceBeforTax.Text = "";
             tb_charge.Text = "";
             tb_paid.Text = "";
+
+            tb_totalSY.Text = "";
+            tb_priceBeforTaxSY.Text = "";
+            tb_chargeSY.Text = "";
+            btn_send.IsEnabled = false;
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
         void disableEdit()
         {
-
+            chk_confirmed.IsEnabled = false;
+            chk_confirmed.IsChecked = true;
+            chk_draft.IsEnabled = true;
+            chk_draft.IsChecked = false;
+            //
             cb_passenger.IsEnabled = false;
             btn_addPassenger.IsEnabled = false;
             cb_system.IsEnabled = false;
@@ -746,12 +774,21 @@ trTaxHint
             btn_add.IsEnabled = false;
             btn_update.IsEnabled = false;
             btn_delete.IsEnabled = false;
+
+            tb_priceBeforTaxSY.IsEnabled = false;
+            tb_chargeSY.IsEnabled = false;
+            tb_totalSY.IsEnabled = false;
             Clear();
 
         }
         void enableEdit()
         {
 
+            chk_confirmed.IsEnabled = true;
+            chk_confirmed.IsChecked = false;
+            chk_draft.IsEnabled = false;
+            chk_draft.IsChecked = true;
+            //
             cb_passenger.IsEnabled = true;
             btn_addPassenger.IsEnabled = true;
             cb_system.IsEnabled = true;
@@ -773,6 +810,10 @@ trTaxHint
             btn_add.IsEnabled = true;
             btn_update.IsEnabled = true;
             btn_delete.IsEnabled = true;
+
+            tb_priceBeforTaxSY.IsEnabled = true;
+            tb_chargeSY.IsEnabled = true;
+            tb_totalSY.IsEnabled = true;
             Clear();
 
         }
@@ -842,7 +883,10 @@ trTaxHint
         {
             try
             {
+
                 HelpClass.validate(requiredControlList, this);
+           
+
             }
             catch (Exception ex)
             {
@@ -1310,6 +1354,308 @@ trTaxHint
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        #region events exchange
+        private async void Btn_exchange_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_rateSyrSoto w = new wd_rateSyrSoto();
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                await RefreshServiceDatasList();
+                await Search();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Tb_priceBeforTax_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+              
+                    if (tb_syChange == false)
+                    {
+
+                        //  HelpClass.validate(requiredControlList, this);
+                        decimal Taxusd = (tb_priceBeforTax.Text == null || tb_priceBeforTax.Text == "") ? 0 : Convert.ToDecimal(tb_priceBeforTax.Text);
+                    ////tb_priceBeforTaxSY.Text = HelpClass.DecTostring( Taxusd * FillCombo.exchangeValue);
+                    if (serviceData.serviceId > 0  )
+                    {
+                        tb_priceBeforTaxSY.Text = HelpClass.DecTostring(Taxusd * serviceData.syValue);
+                    }
+                    else
+                    {
+                        tb_priceBeforTaxSY.Text = HelpClass.DecTostring(Taxusd * FillCombo.exchangeValue);
+                    }
+                }
+                 
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Tb_priceBeforTaxSY_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if (tb_syChange)
+                {
+                    //   HelpClass.validate(requiredControlList, this);
+                    decimal Taxsy = (tb_priceBeforTaxSY.Text == null || tb_priceBeforTaxSY.Text == "") ? 0 : Convert.ToDecimal(tb_priceBeforTaxSY.Text);
+                    //  tb_priceBeforTax.Text = HelpClass.DecTostring(Taxsy/FillCombo.exchangeValue);
+                    if (Taxsy != 0)
+                    {
+                        if (serviceData.serviceId > 0)
+                        {
+                            tb_priceBeforTax.Text = HelpClass.DecTostring(Taxsy / serviceData.syValue);
+                        }
+                        else
+                        {
+                            tb_priceBeforTax.Text = HelpClass.DecTostring(Taxsy / FillCombo.exchangeValue);
+                        }
+                    }
+                    else
+                    {
+                        tb_priceBeforTax.Text = "0";
+                    }
+                }
+           
+               
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Tb_syp_GotFocus(object sender, RoutedEventArgs e)
+        {
+            tb_syChange=true;
+        }
+
+        private void Tb_usd_GotFocus(object sender, RoutedEventArgs e)
+        {
+            tb_syChange = false;
+        }
+
+        private void Tb_decimal_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                 HelpClass.validate(requiredControlList, this);
+
+
+                TextBox txtbox = sender as TextBox;
+                decimal decval = (txtbox.Text == null || txtbox.Text == "") ? 0 : Convert.ToDecimal(txtbox.Text);
+
+                txtbox.Text = HelpClass.DecTostring(decval);
+                var vv = txtbox.Name;
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Tb_charge_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if (tb_syChange == false)
+                {
+
+                    //  HelpClass.validate(requiredControlList, this);
+                    decimal usd = (tb_charge.Text == null || tb_charge.Text == "") ? 0 : Convert.ToDecimal(tb_charge.Text);
+                    ////tb_priceBeforTaxSY.Text = HelpClass.DecTostring( Taxusd * FillCombo.exchangeValue);
+                    if (serviceData.serviceId > 0)
+                    {
+                        tb_chargeSY.Text = HelpClass.DecTostring(usd * serviceData.syValue);
+                    }
+                    else
+                    {
+                        tb_chargeSY.Text = HelpClass.DecTostring(usd * FillCombo.exchangeValue);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Tb_chargeSY_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if (tb_syChange)
+                {
+                    //   HelpClass.validate(requiredControlList, this);
+                    decimal  sy = (tb_chargeSY.Text == null || tb_chargeSY.Text == "") ? 0 : Convert.ToDecimal(tb_chargeSY.Text);
+                    //  tb_priceBeforTax.Text = HelpClass.DecTostring(Taxsy/FillCombo.exchangeValue);
+                    if ( sy != 0)
+                    {
+                        if (serviceData.serviceId > 0)
+                        {
+                            tb_charge.Text = HelpClass.DecTostring(sy / serviceData.syValue);
+                        }
+                        else
+                        {
+                            tb_charge.Text = HelpClass.DecTostring(sy / FillCombo.exchangeValue);
+                        }
+                    }
+                    else
+                    {
+                        tb_charge.Text = "0";
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Tb_total_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if (tb_syChange == false)
+                {
+
+                    //  HelpClass.validate(requiredControlList, this);
+                    decimal usd = (tb_total.Text == null || tb_total.Text == "") ? 0 : Convert.ToDecimal(tb_total.Text);
+                    if (serviceData.serviceId > 0)
+                    {
+                        tb_totalSY.Text = HelpClass.DecTostring(usd * serviceData.syValue);
+                    }
+                    else
+                    {
+                        tb_totalSY.Text = HelpClass.DecTostring(usd * FillCombo.exchangeValue);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Tb_totalSY_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if (tb_syChange)
+                {
+                    //   HelpClass.validate(requiredControlList, this);
+                    decimal sy = (tb_totalSY.Text == null || tb_totalSY.Text == "") ? 0 : Convert.ToDecimal(tb_totalSY.Text);
+                    //  tb_priceBeforTax.Text = HelpClass.DecTostring(Taxsy/FillCombo.exchangeValue);
+                    if (sy != 0)
+                    {
+                        if (serviceData.serviceId > 0)
+                        {
+                            tb_total.Text = HelpClass.DecTostring(sy / serviceData.syValue);
+                        }
+                        else
+                        {
+                            tb_total.Text = HelpClass.DecTostring(sy / FillCombo.exchangeValue);
+                        }
+                    }
+                    else
+                    {
+                        tb_charge.Text = "0";
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void Chk_confirmed_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //txt_active.Text = MainWindow.resourcemanager.GetString("trConfirmed");
+                disableEdit();
+          
+                if (serviceDatas is null)
+                    await RefreshServiceDatasList();
+                tgl_serviceDatastate = false;
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+      
+
+
+        }
+
+        private void Chk_confirmed_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void Chk_draft_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (serviceDatas is null)
+                    await RefreshServiceDatasList();
+                tgl_serviceDatastate = true;
+                //txt_active.Text = MainWindow.resourcemanager.GetString("trDraft");
+
+
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                  
+                    enableEdit();
+                    await Search();
+
+                }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+         
+        }
+
+        private void Chk_draft_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
+#endregion
+
+
+
 
         //private async void Cb_system_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{

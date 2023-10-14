@@ -329,6 +329,10 @@
           <Property Name="tax_ratio" Type="decimal" Precision="20" Scale="3" />
           <Property Name="tax_value" Type="decimal" Precision="20" Scale="3" />
           <Property Name="currency" Type="nvarchar" MaxLength="50" />
+          <Property Name="totalSY" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="priceBeforTaxSY" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="profitSY" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="tax_valueSY" Type="decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="serviceDataFiles">
           <Key>
@@ -1472,6 +1476,10 @@
           <Property Name="tax_ratio" Type="Decimal" Precision="20" Scale="3" />
           <Property Name="tax_value" Type="Decimal" Precision="20" Scale="3" />
           <Property Name="currency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="totalSY" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="priceBeforTaxSY" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="profitSY" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="tax_valueSY" Type="Decimal" Precision="20" Scale="3" />
         </EntityType>
         <EntityType Name="setting">
           <Key>
@@ -2641,6 +2649,10 @@
           <EntitySetMapping Name="serviceData">
             <EntityTypeMapping TypeName="bookModel.serviceData">
               <MappingFragment StoreEntitySet="serviceData">
+                <ScalarProperty Name="tax_valueSY" ColumnName="tax_valueSY" />
+                <ScalarProperty Name="profitSY" ColumnName="profitSY" />
+                <ScalarProperty Name="priceBeforTaxSY" ColumnName="priceBeforTaxSY" />
+                <ScalarProperty Name="totalSY" ColumnName="totalSY" />
                 <ScalarProperty Name="currency" ColumnName="currency" />
                 <ScalarProperty Name="tax_value" ColumnName="tax_value" />
                 <ScalarProperty Name="tax_ratio" ColumnName="tax_ratio" />

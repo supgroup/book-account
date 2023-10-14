@@ -77,6 +77,11 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> paysideId { get; set; }
         public string currency { get; set; }
         public string currencyTotal{ get; set; }
+        //
+        public Nullable<decimal> totalSY { get; set; }
+        public Nullable<decimal> priceBeforTaxSY { get; set; }
+        public Nullable<decimal> profitSY { get; set; }
+        public Nullable<decimal> tax_valueSY { get; set; }
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>
@@ -254,12 +259,17 @@ namespace BookAccountApp.ApiClasses
                                 exchangeId = S.exchangeId,
                                 osId = S.osId,
                                 systemId = S.systemId,
-                                syValue = S.syValue,
+                                syValue = S.state=="draft"? FillCombo.exchangeValue: S.syValue,
                                 tax_ratio = S.tax_ratio,
                                 tax_value = S.tax_value,
                                 systemName = SYS.name,
                                 currency = S.currency,
-                                currencyTotal = "usd",
+                                currencyTotal = "syp",
+                                totalSY = S.state == "draft" ?( FillCombo.exchangeValue * S.total) : S.totalSY,
+                                priceBeforTaxSY = S.state == "draft" ? (FillCombo.exchangeValue * S.priceBeforTax) : S.priceBeforTaxSY,
+                                profitSY = S.profitSY,
+                                tax_valueSY = S.state == "draft" ? (FillCombo.exchangeValue * S.tax_value): S.tax_valueSY,
+
                             }).ToList();
                     List = List.Where(S => ((fromDate == null && toDate == null) ? ((DateTime)S.updateDate).Date == now.Date :
                             ((fromDate != null) ? S.updateDate == null ? false : (S.updateDate.Value.Date >= fromDate.Value.Date) : true)
@@ -389,6 +399,11 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.tax_ratio = newObject.tax_ratio;
                             tmpObject.tax_value = newObject.tax_value;
                             tmpObject.currency = newObject.currency;
+                            tmpObject.totalSY = newObject.totalSY;
+                            tmpObject.priceBeforTaxSY = newObject.priceBeforTaxSY;
+                            tmpObject.profitSY = newObject.profitSY;
+                            tmpObject.tax_valueSY = newObject.tax_valueSY;
+
                             entity.SaveChanges();
 
                             message = tmpObject.serviceId;
@@ -488,6 +503,11 @@ namespace BookAccountApp.ApiClasses
                                 tax_value = S.tax_value,
                                 systemName = SYS.name,
                                 currency=S.currency,
+                                totalSY = S.totalSY,
+                                priceBeforTaxSY = S.priceBeforTaxSY,
+                                profitSY = S.profitSY,
+                                tax_valueSY = S.tax_valueSY,
+
                             }).FirstOrDefault();
                     return row;
                 }

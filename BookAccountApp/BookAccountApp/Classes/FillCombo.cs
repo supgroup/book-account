@@ -174,7 +174,8 @@ namespace BookAccountApp.Classes
             combo.DisplayMemberPath = "Text";
             combo.SelectedValuePath = "Value";
             combo.ItemsSource = CurrencyList;
- 
+            combo.SelectedValue = "syp";
+
         }
         //static public void fillCurrencytemp(ComboBox combo)
         //{

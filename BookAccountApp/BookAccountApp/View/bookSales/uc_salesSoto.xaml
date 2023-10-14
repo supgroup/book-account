@@ -90,13 +90,33 @@
                     </Border>
 
 
-                    <TextBlock    x:Name="txt_active" Grid.Column="4"
+                    <!--<TextBlock    x:Name="txt_active" Grid.Column="4"
                                    Margin="5,0,5,0" Text="Active" Foreground="#6e6e6e"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"
                                    FontSize="12"/>
                     <ToggleButton Grid.Column="5"    x:Name="tgl_isActive"   Checked="Tgl_isActive_Checked" Unchecked="Tgl_isActive_Unchecked"
                              VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
-                                          Margin="0 0 10 0" Height="13" Width="28" />
+                                          Margin="0 0 10 0" Height="13" Width="28" />-->
+                    <StackPanel Margin="0 0 0 0"   Orientation="Horizontal"   Grid.Column="4" >
+                        <Border  Margin="5" Background="White" CornerRadius="10" Height="40"  >
+                            <CheckBox x:Name="chk_draft"  IsChecked="True" IsEnabled="False"   
+                          Background="{StaticResource MainColor}"
+                          Content="draft"
+                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                           Margin="0" Height="40"
+                                       Checked="Chk_draft_Checked" Unchecked="Chk_draft_Unchecked" FontSize="12"
+                           />
+                        </Border>
+                        <Border  Margin="5" Background="White" CornerRadius="10" Height="40">
+                            <CheckBox x:Name="chk_confirmed" 
+                          Background="{StaticResource MainColor}"
+                          Content="Confirmd"  Margin="0" Height="40"
+                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                          Checked="Chk_confirmed_Checked" Unchecked="Chk_confirmed_Unchecked" FontSize="12"
+                          />
+                        </Border>
+
+                    </StackPanel>
                     <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" Click="Btn_refresh_Click" 
                               Grid.Row="0" Grid.Column="6" Padding="0" 
                             materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
@@ -228,7 +248,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="priceBeforTax"  Binding="{Binding Path=priceBeforTax,Converter={StaticResource accuracyConverter}}" >
+                            <DataGridTextColumn Width="*"  Header="priceBeforTax"  Binding="{Binding Path=priceBeforTaxSY,Converter={StaticResource accuracyConverter}}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -251,7 +271,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>-->
-                             <DataGridTextColumn Width="*"  Header="total"  Binding="{Binding Path=total,Converter={StaticResource accuracyConverter}}" >
+                             <DataGridTextColumn Width="*"  Header="total"  Binding="{Binding Path=totalSY,Converter={StaticResource accuracyConverter}}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -262,7 +282,19 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="currency"  Binding="{Binding Path=currencyTotal,Converter={StaticResource currencyConverter}}">
+                            <DataGridTextColumn Width="*"  Header="exchange"  Binding="{Binding Path=syValue,Converter={StaticResource accuracyConverter}}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding isActive}" Value="0">
+                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*"  Header="currency" Binding="{Binding Path=currencyTotal,Converter={StaticResource currencyConverter}}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -641,42 +673,104 @@ Width="25" Height="27.5"
                            Data="{StaticResource addFile}" />
                             </Button>
                         </Grid>
+
+
+
+                        <Separator Background="#999999" VerticalAlignment="Center" Width="auto" Margin="10 0 10 0" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                                <Grid   >
+                                    <TextBox x:Name="tb_priceBeforTax"  Text="{Binding priceBeforTax, Mode=OneWay}" Padding="10,0,5,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="priceBeforTax..."  
+                                     Foreground="#4E4E4E"  
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"  Margin="4,0"  
+                                      TextChanged="Tb_priceBeforTax_TextChanged" PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Number_PreviewTextInput" GotFocus="Tb_usd_GotFocus" 
+                                             LostFocus="Tb_decimal_LostFocus" />
+                                    <Path x:Name="p_error_priceBeforTax"
+                                  Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                                  Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                                    </Path>
+                                </Grid>
+                            </Border>
+                            <Button Grid.Column="1"  Padding="0" 
+                                Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
+                                    x:Name="btn_exchange"  
+                                Margin="5,1" IsEnabled="True" Width="30" Click="Btn_exchange_Click">
+                                <Path Fill="{StaticResource MainColor}" Stretch="Fill"  
+                    Width="25" Height="27.5"
+                                      FlowDirection="LeftToRight"
+                           Data="{StaticResource recurringSubscription}" />
+                            </Button>
+                        </Grid>
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
-                                <TextBox x:Name="tb_priceBeforTax"  Text="{Binding priceBeforTax, Mode=OneWay}" Padding="10,0,5,0" 
-             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-             materialDesign:HintAssist.Hint="priceBeforTax..."  
-             Foreground="#4E4E4E"  
-             MaxLength="50" BorderThickness="0"
-             materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-             Height="40"  Margin="4,0"  
-             LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Number_PreviewTextInput"/>
-                                <Path x:Name="p_error_priceBeforTax"
-          Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
-          HorizontalAlignment="Right" Visibility="Collapsed"   
-          VerticalAlignment="Center" Width="15"  Height="15"
-          Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                                <TextBox x:Name="tb_priceBeforTaxSY"  Text="{Binding priceBeforTaxSY, Mode=OneWay}" Padding="10,0,5,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="priceBeforTaxSY..."  
+                                     Foreground="#4E4E4E"  
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"  Margin="4,0"  
+                                     LostFocus="Tb_decimal_LostFocus" PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Number_PreviewTextInput" TextChanged="Tb_priceBeforTaxSY_TextChanged" GotFocus="Tb_syp_GotFocus"/>
+                                <Path x:Name="p_error_priceBeforTaxSY"
+                                  Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                                  Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
                                 </Path>
                             </Grid>
                         </Border>
+
+                        <Separator Background="#999999" VerticalAlignment="Center" Width="auto" Margin="10 0 10 0" />
+
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
                                 <TextBox x:Name="tb_charge"  Text="{Binding tax_value, Mode=OneWay}" Padding="10,0,5,0" 
-             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-             materialDesign:HintAssist.Hint="charge..."  
-             Foreground="#4E4E4E"  
-             MaxLength="50" BorderThickness="0"
-             materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-             Height="40"  Margin="4,0"  
-             LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Number_PreviewTextInput"/>
+   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+   materialDesign:HintAssist.Hint="charge..."  
+   Foreground="#4E4E4E"  
+   MaxLength="50" BorderThickness="0"
+   materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+   Height="40"  Margin="4,0"  
+   LostFocus="Tb_decimal_LostFocus" TextChanged="Tb_charge_TextChanged" PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Number_PreviewTextInput" GotFocus="Tb_usd_GotFocus"/>
                                 <Path x:Name="p_error_charge"
-          Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
-          HorizontalAlignment="Right" Visibility="Collapsed"   
-          VerticalAlignment="Center" Width="15"  Height="15"
-          Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
+HorizontalAlignment="Right" Visibility="Collapsed"   
+VerticalAlignment="Center" Width="15"  Height="15"
+Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
                                 </Path>
                             </Grid>
                         </Border>
+                        <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                            <Grid   >
+                                <TextBox x:Name="tb_chargeSY"  Text="{Binding tax_valueSY, Mode=OneWay}" Padding="10,0,5,0" 
+   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+   materialDesign:HintAssist.Hint="chargeSY.."  
+   Foreground="#4E4E4E"  
+   MaxLength="50" BorderThickness="0"
+   materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+   Height="40"  Margin="4,0"  
+   LostFocus="Tb_decimal_LostFocus" TextChanged="Tb_chargeSY_TextChanged" PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Number_PreviewTextInput" GotFocus="Tb_syp_GotFocus"/>
+                                <Path x:Name="p_error_chargeSY"
+Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
+HorizontalAlignment="Right" Visibility="Collapsed"   
+VerticalAlignment="Center" Width="15"  Height="15"
+Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                                </Path>
+                            </Grid>
+                        </Border>
+
+                        <Separator Background="#999999" VerticalAlignment="Center" Width="auto" Margin="10 0 10 0" />
+
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
                                 <TextBox x:Name="tb_total"  Text="{Binding total, Mode=OneWay}" Padding="10,0,5,0" 
@@ -686,7 +780,7 @@ Width="25" Height="27.5"
                                      MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"  Margin="4,0"  
-                                     LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Number_PreviewTextInput"/>
+                                     LostFocus="Tb_decimal_LostFocus" TextChanged="Tb_total_TextChanged" PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Number_PreviewTextInput" GotFocus="Tb_usd_GotFocus"/>
                                 <Path x:Name="p_error_total"
                                   Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
                                   HorizontalAlignment="Right" Visibility="Collapsed"   
@@ -695,6 +789,30 @@ Width="25" Height="27.5"
                                 </Path>
                             </Grid>
                         </Border>
+                        <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                            <Grid   >
+                                <TextBox x:Name="tb_totalSY"  Text="{Binding totalSY, Mode=OneWay}" Padding="10,0,5,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="total..."  
+                                     Foreground="#4E4E4E"  
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"  Margin="4,0"  
+                                     LostFocus="Tb_decimal_LostFocus" TextChanged="Tb_totalSY_TextChanged" PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Number_PreviewTextInput" GotFocus="Tb_syp_GotFocus"/>
+                                <Path x:Name="p_error_totalSY"
+                                  Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" 
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                                  Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                                </Path>
+                            </Grid>
+                        </Border>
+
+                        <Separator Background="#999999" VerticalAlignment="Center" Width="auto" Margin="10 0 10 0" />
+
+
+
+
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
