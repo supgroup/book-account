@@ -148,8 +148,9 @@ namespace BookAccountApp.View.accounting
             dg_payOp.Columns[2].Header = MainWindow.resourcemanager.GetString("trRecepient");
             dg_payOp.Columns[3].Header = MainWindow.resourcemanager.GetString("recivedFrom");
             dg_payOp.Columns[4].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
-            dg_payOp.Columns[5].Header = MainWindow.resourcemanager.GetString("currency");
-            dg_payOp.Columns[6].Header = MainWindow.resourcemanager.GetString("payDate");
+            dg_payOp.Columns[5].Header = MainWindow.resourcemanager.GetString("exchangePrice");
+            dg_payOp.Columns[6].Header = MainWindow.resourcemanager.GetString("currency");
+            dg_payOp.Columns[7].Header = MainWindow.resourcemanager.GetString("payDate");
             //dg_payOp.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
@@ -194,10 +195,13 @@ namespace BookAccountApp.View.accounting
                     payOp.opStatus = "draft";
                     payOp.opDate = dp_opDate.SelectedDate;
                     payOp.notes = tb_notes.Text;
+                        payOp.paidCurrency = cb_currency.SelectedValue == null ? "syp" : cb_currency.SelectedValue.ToString();//
 
-                    //payOp.createDate = newObject.createDate;
-                    payOp.updateDate = DateTime.Now;
-                    if (cb_side.SelectedItem != null)
+                        //payOp.createDate = newObject.createDate;
+                        payOp.updateDate = DateTime.Now;
+                        decimal tbcash = (tb_cash.Text == null || tb_cash.Text == "") ? 0 : Convert.ToDecimal(tb_cash.Text);
+
+                        if (cb_side.SelectedItem != null)
                     {//passenger office soto other
                         if ((cb_side.SelectedValue).ToString() == "passenger")
                         {
@@ -226,15 +230,22 @@ namespace BookAccountApp.View.accounting
                         {
                             payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "system").FirstOrDefault().paysideId;
                             payOp.systemId = Convert.ToInt32(cb_sideValue.SelectedValue);
+                                payOp.currency = "usd";//
+                                payOp.cash = (tb_cash.Text == null || tb_cash.Text == "") ? 0 : Convert.ToDecimal(tb_cash.Text);//
 
-                        }
-                        else if ((cb_side.SelectedValue).ToString() == "other")
+
+                            }
+                            else if ((cb_side.SelectedValue).ToString() == "other")
                         {
                             //other
                             payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "other").FirstOrDefault().paysideId;
+                                payOp.currency = cb_currency.SelectedValue == null ? "syp" : cb_currency.SelectedValue.ToString();//
 
+                                payOp.syCash = HelpClass.ConvertToSYP(tbcash, payOp.paidCurrency, FillCombo.exchangeValue);
+                                payOp.cash = (tb_cash.Text == null || tb_cash.Text == "") ? 0 : Convert.ToDecimal(tb_cash.Text);//
+
+                            }
                         }
-                    }
                     else
                     {
                         payOp.paysideId = null;
@@ -455,6 +466,39 @@ namespace BookAccountApp.View.accounting
                         tb_recivedFrom.IsEnabled = false;
                         dp_opDate.IsEnabled = false;
                         cb_currency.IsEnabled = false;
+
+                        if (payOp.side == "system"|| ((payOp.side == "passenger"|| payOp.side == "office")&& payOp.processType!= "cashservice"))
+                        {
+                            cb_currency.SelectedValue = payOp.paidCurrency;
+                        }
+                        else
+                        {
+                            cb_currency.SelectedValue = payOp.currency;
+                        }
+
+                        
+                            if (payOp.side == "system")
+                            {
+                            if (payOp.paidCurrency == "syp")
+                            {
+                                tb_cash.Text = HelpClass.DecTostring(HelpClass.ConvertToSYP(payOp.cash, "usd", payOp.syValue));
+                            }
+                            //else if (payOp.side == "syr" || payOp.side == "soto")
+                            //{
+                            //    tb_cash.Text = HelpClass.DecTostring(payOp.syCash);
+                            //}
+                        }else if (payOp.side == "passenger" || payOp.side == "office")
+                        {
+                            if (payOp.paidCurrency == "syp")
+                            {
+                                tb_cash.Text = HelpClass.DecTostring(HelpClass.ConvertToSYP(payOp.dgCash, "syp", payOp.syValue));
+                            }
+                            else if (payOp.paidCurrency == "usd")
+                            {
+                                tb_cash.Text = HelpClass.DecTostring(HelpClass.ConvertToUSD(payOp.dgCash, "syp", payOp.syValue));
+
+                            }
+                        }
                         //await getImg();
                         #region delete
                         //if (payOp.canDelete)
@@ -581,6 +625,7 @@ namespace BookAccountApp.View.accounting
             dp_opDate.IsEnabled = true;
             cb_currency.SelectedIndex = -1;
             cb_currency.IsEnabled = true;
+            cb_currency.SelectedValue = "syp";
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
@@ -590,12 +635,13 @@ namespace BookAccountApp.View.accounting
             cb_sideValue.IsEnabled = false;
             tb_cash.IsEnabled = false;         
             tb_cash.IsReadOnly = true;
-            cb_currency.IsEnabled = false;
+            cb_currency.IsEnabled = true;
         }
         void disableforSystem()
-        {           
-            cb_currency.IsEnabled = false;
-            cb_currency.SelectedValue = "usd";          
+        {
+            cb_currency.IsEnabled = true;
+            //cb_currency.IsEnabled = false;
+            //cb_currency.SelectedValue = "usd";          
         }
         string input;
         decimal _decimal = 0;
@@ -1298,6 +1344,7 @@ namespace BookAccountApp.View.accounting
                         //tb_recipientText.IsEnabled = false;
                         serviceLst.AddRange(w.selectedInvoices);
                         cashesLst.AddRange(w.selectedCashtansfers);
+                      
                         if (cashesLst.Count > 0 || serviceLst.Count > 0)
                         {
                             cb_currency.SelectedValue = w.currency;
@@ -1331,6 +1378,66 @@ namespace BookAccountApp.View.accounting
             catch (Exception ex)
             {
                 Window.GetWindow(this).Opacity = 1;
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Cb_currency_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (cb_currency.SelectedItem != null && cb_side.SelectedItem != null && cb_sideValue.SelectedItem != null)
+                {
+                    if (cb_side.SelectedValue.ToString() != "other")
+                    {
+                        if (cb_currency.SelectedValue.ToString() == "syp")
+                        {
+                            if (cashesLst.Count > 0)
+                            {
+                                tb_cash.Text = HelpClass.DecTostring(cashesLst.Sum(x =>Math.Round(x.deservedSY.Value,2)));
+                            }
+                            else
+                            {
+                                tb_cash.Text = "0";
+                            }
+
+                        }
+                        else
+                        {
+                            if (cashesLst.Count > 0)
+                            {
+                                tb_cash.Text = HelpClass.DecTostring(cashesLst.Sum(x => Math.Round(x.deserved.Value, 2)));
+                            }
+                            else
+                            {
+                                tb_cash.Text = "0";
+                            }
+                        }
+                    }
+
+
+
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Cb_sideValue_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                serviceLst.Clear();
+                cashesLst.Clear();
+            }
+            catch (Exception ex)
+            {
+
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

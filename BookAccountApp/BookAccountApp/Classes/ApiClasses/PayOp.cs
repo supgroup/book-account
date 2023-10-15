@@ -48,6 +48,8 @@ namespace BookAccountApp.ApiClasses
         public Nullable<int> systemId { get; set; }
         public string systemName { get; set; }
         public string currency { get; set; }
+        public string currencySY { get; set; }
+        public string currencyUSD { get; set; }
         public Nullable<decimal> syValue { get; set; }
         public Nullable<int> exchangeId { get; set; }
         public string fromSide { get; set; }
@@ -59,10 +61,13 @@ namespace BookAccountApp.ApiClasses
         public string serviceNum { get; set; }
         public string ticketNum { get; set; }
         public Nullable<decimal> deserved { get; set; }
+        public Nullable<decimal> deservedSY { get; set; }
         public Nullable<decimal> total { get; set; }
         public string purpose { get; set; }
         public string stropDate { get; set; }
-        
+        public string paidCurrency { get; set; }
+        public Nullable<decimal> syCash { get; set; }
+        public Nullable<decimal> dgCash { get; set; }
         public bool canDelete { get; set; }
         /// <summary>
         /// ///////////////////////////////////////
@@ -120,13 +125,13 @@ namespace BookAccountApp.ApiClasses
 
             List<PayOp> List = new List<PayOp>();
             List<PayOp> GList = new List<PayOp>();
-           
+
             try
             {
                 using (bookdbEntities entity = new bookdbEntities())
                 {
                     List = (from S in entity.payOp
-                            where (S.opType == opType && S.processType!= "company_commission" && S.processType != "office_commission" && S.processType != "service")
+                            where (S.opType == opType && S.processType != "company_commission" && S.processType != "office_commission" && S.processType != "service")
 
                             select new PayOp()
                             {
@@ -167,14 +172,17 @@ namespace BookAccountApp.ApiClasses
                                 sourceId = S.sourceId,
                                 paid = S.paid,
                                 isPaid = S.isPaid,
-                                deserved=S.deserved,
+                                deserved = S.deserved,
+                                paidCurrency = S.paidCurrency,
+                                syCash = S.syCash,
+
                             }).ToList();
                     GList = List.GroupBy(x => x.code).Select(x => new PayOp
                     {
-                     
+
                         cash = x.Sum(g => g.cash),
                         payOpId = x.FirstOrDefault().payOpId,
-                        code = x.FirstOrDefault().code,                       
+                        code = x.FirstOrDefault().code,
                         opType = x.FirstOrDefault().opType,
                         side = x.FirstOrDefault().side,
                         serviceId = x.FirstOrDefault().serviceId,
@@ -206,9 +214,29 @@ namespace BookAccountApp.ApiClasses
                         fromSide = x.FirstOrDefault().fromSide,
                         processType = x.FirstOrDefault().processType,
                         sourceId = x.FirstOrDefault().sourceId,
-                        paid = x.Sum(g => g.paid==null?0: g.paid),
+                        paid = x.Sum(g => g.paid == null ? 0 : g.paid),
                         isPaid = x.FirstOrDefault().isPaid,
-                        deserved = x.Sum(g => g.deserved==null?0: g.deserved),                 
+                        deserved = x.Sum(g => g.deserved == null ? 0 : g.deserved),
+                        paidCurrency = x.FirstOrDefault().paidCurrency,
+                        syCash = x.Sum(g => g.syCash == null ? 0 : g.syCash),
+                        currencySY="syp",
+                        dgCash= x.FirstOrDefault().opType=="p"?(
+                        x.FirstOrDefault().paidCurrency == "syp"?(
+                         x.FirstOrDefault().side=="office"?
+                         HelpClass.ConvertToSYP(x.Sum(g => g.cash), "usd", x.FirstOrDefault().syValue)
+                         : ((x.FirstOrDefault().side == "syr"|| x.FirstOrDefault().side == "soto") ? x.FirstOrDefault().syCash
+                       :( x.FirstOrDefault().cash))//other
+                        ): (HelpClass.ConvertToSYP(x.Sum(g => g.cash), x.FirstOrDefault().currency, x.FirstOrDefault().syValue))//"usd"
+                        ):
+                        (x.FirstOrDefault().opType=="d"?
+                        (x.FirstOrDefault().side== "passenger"|| x.FirstOrDefault().side == "office")&& x.FirstOrDefault().processType=="cash" ?
+                        (x.Sum(g => HelpClass.ConvertToSYP( g.cash,g.currency, x.FirstOrDefault().syValue)))
+                        :((x.FirstOrDefault().side == "system"&& x.FirstOrDefault().processType == "cash")
+                        
+                        ? HelpClass.ConvertToSYP(x.Sum(g => g.cash), "usd", x.FirstOrDefault().syValue)
+
+                        : (HelpClass.ConvertToSYP(x.Sum(g => g.cash), x.FirstOrDefault().currency, x.FirstOrDefault().syValue)))
+                        : (HelpClass.ConvertToSYP(x.Sum(g => g.cash), x.FirstOrDefault().currency, x.FirstOrDefault().syValue)))//"d"
                     }).ToList();
                     return GList;
                 }
@@ -313,10 +341,11 @@ namespace BookAccountApp.ApiClasses
                             tmpObject.fromSide = newObject.fromSide;
                             tmpObject.processType = newObject.processType;
                             tmpObject.sourceId = newObject.sourceId;
-                               tmpObject. paid = newObject.paid;
-                                tmpObject.isPaid = newObject.isPaid;
+                            tmpObject.paid = newObject.paid;
+                            tmpObject.isPaid = newObject.isPaid;
                             tmpObject.deserved = newObject.deserved;
-                         
+                            tmpObject.paidCurrency = newObject.paidCurrency;
+                            tmpObject.syCash = newObject.syCash;
                             entity.SaveChanges();
 
                             message = tmpObject.payOpId;
@@ -324,7 +353,7 @@ namespace BookAccountApp.ApiClasses
                     }
                     return message;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return 0;
                 }
@@ -377,6 +406,8 @@ namespace BookAccountApp.ApiClasses
                           paid = S.paid,
                           isPaid = S.isPaid,
                           deserved = S.deserved,
+                          paidCurrency = S.paidCurrency,
+                          syCash = S.syCash,
                       }).FirstOrDefault();
                     return row;
                 }
@@ -582,10 +613,12 @@ namespace BookAccountApp.ApiClasses
                 payOpModel.syValue = serviceModel.syValue;
                 payOpModel.exchangeId = serviceModel.exchangeId;
                 // payOpModel.currency = serviceModel.currency;
-                payOpModel.currency ="usd";
+                payOpModel.currency = "usd";
                 payOpModel.fromSide = serviceModel.systemType;
                 payOpModel.processType = "book";
                 payOpModel.isPaid = true;
+                payOpModel.paidCurrency = "";
+                payOpModel.syCash = 0;
                 await Save(payOpModel);
                 return message;
             }
@@ -633,11 +666,11 @@ namespace BookAccountApp.ApiClasses
                 payOpModel.paid = 0;
                 payOpModel.isPaid = false;
                 payOpModel.deserved = payOpModel.cash;
-               
+
                 decimal res = await Save(payOpModel);
                 message = Convert.ToInt32(res);
                 return message;
-          
+
             }
             catch
             {
@@ -652,40 +685,40 @@ namespace BookAccountApp.ApiClasses
             int message = 0;
             try
             {
-                if (serviceModel.officeId>0)
+                if (serviceModel.officeId > 0)
                 {
-                payOpModel.code = await generateNumber("D" + "OC");//company_commission
-                payOpModel.cash = serviceModel.office_commission_value;
-                payOpModel.opType = "d";
-                payOpModel.side = "office";
-                payOpModel.serviceId = serviceModel.serviceId;
-                payOpModel.opStatus = "draft";
-                payOpModel.opDate = DateTime.Now;
-                payOpModel.notes = serviceModel.notes;
-                payOpModel.createUserId = serviceModel.updateUserId;
-                payOpModel.updateUserId = serviceModel.updateUserId;
-                // //payOpModel.createDate = serviceModel.createDate;
-                //  payOpModel.updateDate = DateTime.Now;
-                payOpModel.officeId = serviceModel.officeId;
-                payOpModel.passengerId = null;
-                // payOpModel.userId = serviceModel.updateUserId;
-                payOpModel.recipient = "";
-                payOpModel.recivedFrom = "";
-                payOpModel.paysideId = null;
-                payOpModel.flightId = null;
-                payOpModel.opName = "";
-                payOpModel.systemType = serviceModel.systemType;
-                payOpModel.systemId = serviceModel.systemId;
-                payOpModel.syValue = serviceModel.syValue;
-                payOpModel.exchangeId = serviceModel.exchangeId;
-                payOpModel.currency = "usd";
-                payOpModel.fromSide = serviceModel.systemType;
-                payOpModel.processType = "office_commission";
-                // payOpModel.sourceId = null,
-                payOpModel.paid = 0;
-                payOpModel.isPaid = false;
-                payOpModel.deserved = payOpModel.cash;
-                    decimal   res= await Save(payOpModel);
+                    payOpModel.code = await generateNumber("D" + "OC");//company_commission
+                    payOpModel.cash = serviceModel.office_commission_value;
+                    payOpModel.opType = "d";
+                    payOpModel.side = "office";
+                    payOpModel.serviceId = serviceModel.serviceId;
+                    payOpModel.opStatus = "draft";
+                    payOpModel.opDate = DateTime.Now;
+                    payOpModel.notes = serviceModel.notes;
+                    payOpModel.createUserId = serviceModel.updateUserId;
+                    payOpModel.updateUserId = serviceModel.updateUserId;
+                    // //payOpModel.createDate = serviceModel.createDate;
+                    //  payOpModel.updateDate = DateTime.Now;
+                    payOpModel.officeId = serviceModel.officeId;
+                    payOpModel.passengerId = null;
+                    // payOpModel.userId = serviceModel.updateUserId;
+                    payOpModel.recipient = "";
+                    payOpModel.recivedFrom = "";
+                    payOpModel.paysideId = null;
+                    payOpModel.flightId = null;
+                    payOpModel.opName = "";
+                    payOpModel.systemType = serviceModel.systemType;
+                    payOpModel.systemId = serviceModel.systemId;
+                    payOpModel.syValue = serviceModel.syValue;
+                    payOpModel.exchangeId = serviceModel.exchangeId;
+                    payOpModel.currency = "usd";
+                    payOpModel.fromSide = serviceModel.systemType;
+                    payOpModel.processType = "office_commission";
+                    // payOpModel.sourceId = null,
+                    payOpModel.paid = 0;
+                    payOpModel.isPaid = false;
+                    payOpModel.deserved = payOpModel.cash;
+                    decimal res = await Save(payOpModel);
                     message = Convert.ToInt32(res);
                 }
                 return message;
@@ -738,7 +771,7 @@ namespace BookAccountApp.ApiClasses
                 using (bookdbEntities entity = new bookdbEntities())
                 {
                     List = (from S in entity.payOp
-                          //  where (S.opType == "d" && S.side=="office" && S.processType=="office_commission" && S.officeId==officeId && isPaid==false)
+                                //  where (S.opType == "d" && S.side=="office" && S.processType=="office_commission" && S.officeId==officeId && isPaid==false)
                             where (S.opType == "d" && S.officeId == officeId && S.side == "office" && S.processType == "office_commission" && S.isPaid == false)
 
                             select new PayOp()
@@ -774,13 +807,16 @@ namespace BookAccountApp.ApiClasses
                                 syValue = S.syValue,
                                 exchangeId = S.exchangeId,
                                 currency = S.currency,
+                                currencySY = "syp",
                                 fromSide = S.fromSide,
                                 processType = S.processType,
                                 sourceId = S.sourceId,
                                 paid = S.paid,
                                 isPaid = S.isPaid,
-                                serviceNum=S.serviceData.serviceNum,
-                                deserved=S.deserved,
+                                serviceNum = S.serviceData.serviceNum,
+                                deserved = S.deserved,
+                                deservedSY = S.deserved * FillCombo.exchangeValue,
+                                currencyUSD = "usd",
                             }).ToList();
 
                     return List;
@@ -804,7 +840,7 @@ namespace BookAccountApp.ApiClasses
                 {
                     List = (from S in entity.payOp
                                 //  where (S.opType == "d" && S.side=="office" && S.processType=="office_commission" && S.officeId==officeId && isPaid==false)
-                            where (S.opType == "p" &&  S.systemId == systemId && S.side == "system" && S.processType == "company_commission" && S.isPaid == false)
+                            where (S.opType == "p" && S.systemId == systemId && S.side == "system" && S.processType == "company_commission" && S.isPaid == false)
 
                             select new PayOp()
                             {
@@ -846,6 +882,9 @@ namespace BookAccountApp.ApiClasses
                                 isPaid = S.isPaid,
                                 serviceNum = S.serviceData.serviceNum,
                                 deserved = S.deserved,
+                                currencySY = "syp",
+                                deservedSY = S.deserved * FillCombo.exchangeValue,
+                                currencyUSD = "usd",
                             }).ToList();
 
                     return List;
@@ -907,12 +946,18 @@ namespace BookAccountApp.ApiClasses
                                 fromSide = S.fromSide,
                                 processType = S.processType,
                                 sourceId = S.sourceId,
-                                total=S.serviceData.total,/////
+                                total = S.serviceData.total,/////
                                 paid = S.paid,
                                 isPaid = S.isPaid,
                                 serviceNum = S.serviceData.serviceNum,
                                 //deserved = S.currency == "syp" ? (S.deserved / S.syValue) * FillCombo.exchangeValue : S.deserved,
-                                deserved = S.currency == "syp" ? ((S.serviceData.total )* FillCombo.exchangeValue ) - S.paid : S.deserved,
+                                deserved = S.currency == "syp" ? (((S.serviceData.total) * FillCombo.exchangeValue) - S.paid) / FillCombo.exchangeValue : S.deserved,//usd
+                                currencyUSD = "usd",
+                                paidCurrency = S.paidCurrency,
+                                syCash = S.syCash,
+
+                                currencySY = "syp",
+                                deservedSY = S.currency == "syp" ? ((S.serviceData.total) * FillCombo.exchangeValue) - S.paid : S.deserved * FillCombo.exchangeValue,//syp
                             }).ToList();
 
                     return List;
@@ -978,7 +1023,15 @@ namespace BookAccountApp.ApiClasses
                                 isPaid = S.isPaid,
                                 serviceNum = S.serviceData.serviceNum,
                                 //deserved = S.deserved,
-                                deserved = S.currency == "syp" ? ((S.serviceData.total) * FillCombo.exchangeValue) - S.paid : S.deserved,
+                                //deserved = S.currency == "syp" ? ((S.serviceData.total) * FillCombo.exchangeValue) - S.paid : S.deserved,
+                                currencyUSD = "usd",
+                                //
+                                deserved = S.currency == "syp" ? (((S.serviceData.total) * FillCombo.exchangeValue) - S.paid) / FillCombo.exchangeValue : S.deserved,//usd
+                          
+                                paidCurrency = S.paidCurrency,
+                                syCash = S.syCash,
+                                currencySY = "syp",
+                                deservedSY = S.currency == "syp" ? ((S.serviceData.total) * FillCombo.exchangeValue) - S.paid : S.deserved * FillCombo.exchangeValue,//syp
 
                             }).ToList();
 
@@ -996,35 +1049,35 @@ namespace BookAccountApp.ApiClasses
         public async Task<int> payListCommissionCashes(List<PayOp> PayOpList, PayOp PayOpMain)
         {
             #region params
-            payOp cashTr = JsonConvert.DeserializeObject<payOp>(JsonConvert.SerializeObject(PayOpMain));            
+            payOp cashTr = JsonConvert.DeserializeObject<payOp>(JsonConvert.SerializeObject(PayOpMain));
             List<payOp> cashesList = JsonConvert.DeserializeObject<List<payOp>>(JsonConvert.SerializeObject(PayOpList));
             #endregion
             if (cashTr != null)
+            {
+                try
                 {
-                    try
-                    {
                     DateTime now = DateTime.Now;
-                        using (bookdbEntities entity = new bookdbEntities())
-                        {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
 
-                            foreach (var cash in cashesList)
-                            {
-                                decimal paid = 0;
+                        foreach (var cash in cashesList)
+                        {
+                            decimal paid = 0;
                             //update main
-                                var deliverCash = entity.payOp.Find(cash.payOpId);
+                            var deliverCash = entity.payOp.Find(cash.payOpId);
                             // convert to current $ value
                             //  deliverCash.paid = deliverCash.currency == "syp" ? (deliverCash.paid / deliverCash.syValue) * FillCombo.exchangeValue : deliverCash.paid;
 
                             //  deliverCash.deserved = deliverCash.currency == "syp" ? (deliverCash.deserved / deliverCash.syValue) * FillCombo.exchangeValue : deliverCash.deserved;
                             deliverCash.deserved = deliverCash.currency == "syp" ? ((deliverCash.serviceData.total) * FillCombo.exchangeValue) - deliverCash.paid : deliverCash.deserved;
 
-                            deliverCash.syValue = FillCombo.exchangeValue  ;
+                            deliverCash.syValue = FillCombo.exchangeValue;
                             //
-                            deliverCash.paid += deliverCash.deserved;                     
-                          // paid = (decimal)deliverCash.cash;
-                          paid = (decimal)deliverCash.deserved;
-                          //  deliverCash.paid = paid;
-                                deliverCash.isPaid = true;
+                            deliverCash.paid += deliverCash.deserved;
+                            // paid = (decimal)deliverCash.cash;
+                            paid = (decimal)deliverCash.deserved;
+                            //  deliverCash.paid = paid;
+                            deliverCash.isPaid = true;
                             deliverCash.deserved = 0;
 
                             entity.SaveChanges();
@@ -1034,80 +1087,84 @@ namespace BookAccountApp.ApiClasses
                             delivermain.syValue = FillCombo.exchangeValue;
                             entity.SaveChanges();
                             //add new
-
+                            if (PayOpMain.opType=="d" &&(PayOpMain.side=="passenger" || PayOpMain.side == "office"))
+                            {
+                                cashTr.currency = cash.currency;
+                            }
+                           
                             cashTr.cash = paid;
                             cashTr.paid = paid;
                             cashTr.deserved = 0;
                             cashTr.sourceId = cash.payOpId;
                             cashTr.serviceId = cash.serviceId;
                             cashTr.createDate = now;
-                                cashTr.updateDate = now;
+                            cashTr.updateDate = now;
                             cashTr.processType = "cash";
                             cashTr.isPaid = true;
                             cashTr.updateUserId = cashTr.createUserId;
-                                cashTr.code = CashNumber(cashTr.code);
-                                entity.payOp.Add(cashTr);
-                                entity.SaveChanges();
+                            cashTr.code = CashNumber(cashTr.code);
+                            entity.payOp.Add(cashTr);
+                            entity.SaveChanges();
 
-                                //entity.SaveChanges();
-                             //   decreaseUserBalance((int)deliverCash.userId, paid);
-                            }
-                        return 1;                            
+                            //entity.SaveChanges();
+                            //   decreaseUserBalance((int)deliverCash.userId, paid);
                         }
-                    }
-                    catch
-                    {
-                        return -1;
+                        return 1;
                     }
                 }
-                else
+                catch
                 {
-                    return -2;
+                    return -1;
                 }
+            }
+            else
+            {
+                return -2;
+            }
         }
 
-        public async Task<int> payCommissionCashesByAmount(int officeId,decimal amount, PayOp PayOpMain)
+        public async Task<int> payCommissionCashesByAmount(int officeId, decimal amount, PayOp PayOpMain)
         {
 
             #region params
 
             payOp cashTr = JsonConvert.DeserializeObject<payOp>(JsonConvert.SerializeObject(PayOpMain));
-       
-                #endregion
-                if (cashTr != null)
-                {
-                    try
-                    {
-                    DateTime now = DateTime.Now;
-                        using (bookdbEntities entity = new bookdbEntities())
-                        {
-                            var cashesList = entity.payOp.Where(S =>
-                            (S.opType == "d" && S.officeId == officeId && S.side == "office" && S.processType == "office_commission" && S.isPaid == false)).ToList();
-                        
 
-                            decimal basicAmount = amount;
-                            foreach (var cash in cashesList)
-                            {
-                                decimal paid = 0;
+            #endregion
+            if (cashTr != null)
+            {
+                try
+                {
+                    DateTime now = DateTime.Now;
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        var cashesList = entity.payOp.Where(S =>
+                        (S.opType == "d" && S.officeId == officeId && S.side == "office" && S.processType == "office_commission" && S.isPaid == false)).ToList();
+
+
+                        decimal basicAmount = amount;
+                        foreach (var cash in cashesList)
+                        {
+                            decimal paid = 0;
                             //update main
-                                if (amount >= cash.deserved)
-                                {
-                                    paid = (decimal)cash.deserved;
-                                    amount -= (decimal)cash.deserved;
-                                    cash.paid += cash.deserved;
-                                    cash.deserved = 0;
-                                    cash.isPaid = true;///////////////
-                                }
-                                else
-                                {
-                                    paid = amount;
-                                    cash.paid = cash.paid + amount;
-                                    cash.deserved -= amount;
-                                    amount = 0;
-                                }
-                                entity.SaveChanges();
+                            if (amount >= cash.deserved)
+                            {
+                                paid = (decimal)cash.deserved;
+                                amount -= (decimal)cash.deserved;
+                                cash.paid += cash.deserved;
+                                cash.deserved = 0;
+                                cash.isPaid = true;///////////////
+                            }
+                            else
+                            {
+                                paid = amount;
+                                cash.paid = cash.paid + amount;
+                                cash.deserved -= amount;
+                                amount = 0;
+                            }
+                            entity.SaveChanges();
                             //add new 
-                            cashTr.cash = paid;                           
+                            cashTr.cash = paid;
                             cashTr.paid = paid;
                             cashTr.deserved = 0;
                             cashTr.sourceId = cash.payOpId;
@@ -1121,53 +1178,53 @@ namespace BookAccountApp.ApiClasses
                             //here
                             entity.payOp.Add(cashTr);
 
-                                entity.SaveChanges();
+                            entity.SaveChanges();
 
-                                //increaseUserBalance(userId,paid);
-                                if (amount == 0)
-                                    break;
-                            }
+                            //increaseUserBalance(userId,paid);
+                            if (amount == 0)
+                                break;
+                        }
 
-                            if (amount > 0)
-                            {
-                                cashTr.cash = amount;
-                                cashTr.createDate = now;
-                                cashTr.updateDate = now;
-                                cashTr.updateUserId = cashTr.createUserId;
-                                cashTr.code = CashNumber(cashTr.code);
-                                cashTr.sourceId = null;
+                        if (amount > 0)
+                        {
+                            cashTr.cash = amount;
+                            cashTr.createDate = now;
+                            cashTr.updateDate = now;
+                            cashTr.updateUserId = cashTr.createUserId;
+                            cashTr.code = CashNumber(cashTr.code);
+                            cashTr.sourceId = null;
                             cashTr.serviceId = null;
                             cashTr.processType = "balance";
                             //here
 
-                                entity.payOp.Add(cashTr);
-                                entity.SaveChanges();
+                            entity.payOp.Add(cashTr);
+                            entity.SaveChanges();
                             var officemodel = entity.office.Find(officeId);
 
-                          //  decimal newb = (decimal)officemodel.balance==null + amount;
-                            decimal newb =( officemodel.balance == null ? 0 : (decimal)officemodel.balance);
+                            //  decimal newb = (decimal)officemodel.balance==null + amount;
+                            decimal newb = (officemodel.balance == null ? 0 : (decimal)officemodel.balance);
                             newb += amount;
                             officemodel.balance = newb;
-                          int res=  entity.SaveChanges();
+                            int res = entity.SaveChanges();
 
                         }
-                          //  decreaseUserBalance(userId, basicAmount);
+                        //  decreaseUserBalance(userId, basicAmount);
 
-                            return 1;
-
-                        }
+                        return 1;
 
                     }
-                    catch
-                    {
-                        return -1;
-                    }
+
                 }
-                else
+                catch
                 {
-                    return -2;
+                    return -1;
                 }
-           
+            }
+            else
+            {
+                return -2;
+            }
+
 
         }
         public async Task<int> payCompanyCommissionByAmount(int systemId, decimal amount, PayOp PayOpMain)
@@ -1513,7 +1570,7 @@ namespace BookAccountApp.ApiClasses
 
                 payOpModel.cash = serviceModel.total;
                 payOpModel.paysideId = serviceModel.paysideId;
-                
+
                 payOpModel.serviceId = serviceModel.serviceId;
                 payOpModel.opStatus = "draft";
                 payOpModel.opDate = DateTime.Now;
@@ -1522,12 +1579,12 @@ namespace BookAccountApp.ApiClasses
                 payOpModel.updateUserId = serviceModel.updateUserId;
                 // //payOpModel.createDate = serviceModel.createDate;
                 //  payOpModel.updateDate = DateTime.Now;
-               
-              
+
+
                 // payOpModel.userId = serviceModel.updateUserId;
                 payOpModel.recipient = "";
                 payOpModel.recivedFrom = "";
-            
+
                 payOpModel.flightId = null;
                 payOpModel.opName = "";
                 payOpModel.systemType = serviceModel.systemType;
@@ -1566,8 +1623,8 @@ namespace BookAccountApp.ApiClasses
                 // payOpModel.sourceId = null,
 
                 payOpModel.paid = serviceModel.total;
-              //  payOpModel.isPaid = true;
-                payOpModel.deserved =0;
+                //  payOpModel.isPaid = true;
+                payOpModel.deserved = 0;
 
                 decimal res = await Save(payOpModel);
                 message = Convert.ToInt32(res);
@@ -1600,7 +1657,7 @@ namespace BookAccountApp.ApiClasses
                     payOpModel.code = await generateNumber("D" + "PB");//passenger Book
                     payOpModel.side = "passenger";
                 }
-                payOpModel.passengerId = serviceModel.passengerId;              
+                payOpModel.passengerId = serviceModel.passengerId;
                 payOpModel.paysideId = serviceModel.paysideId;
                 payOpModel.serviceId = serviceModel.serviceId;
                 payOpModel.opStatus = "draft";
@@ -1626,7 +1683,7 @@ namespace BookAccountApp.ApiClasses
                 // payOpModel.sourceId = null,
                 decimal totalsame = 0;
                 //convert total to same selected currency to compare
-                if (payOpModel.currency=="usd")
+                if (payOpModel.currency == "usd")
                 {
                     totalsame = (decimal)serviceModel.total;
                 }
@@ -1636,19 +1693,19 @@ namespace BookAccountApp.ApiClasses
                     totalsame = HelpClass.ConvertToSYP(serviceModel.total, "usd", payOpModel.syValue);
                 }
                 if (serviceModel.paid < totalsame)
-                    {
-                        payOpModel.cash = serviceModel.paid;
-                        payOpModel.paid = serviceModel.paid;
-                        payOpModel.isPaid = false;
-                        payOpModel.deserved = totalsame - serviceModel.paid;
-                    }
-                    else
-                    {//equal
-                        payOpModel.cash = serviceModel.paid;
-                        payOpModel.paid = serviceModel.paid;
-                        payOpModel.isPaid = true;
-                        payOpModel.deserved = 0;
-                    }  
+                {
+                    payOpModel.cash = serviceModel.paid;
+                    payOpModel.paid = serviceModel.paid;
+                    payOpModel.isPaid = false;
+                    payOpModel.deserved = totalsame - serviceModel.paid;
+                }
+                else
+                {//equal
+                    payOpModel.cash = serviceModel.paid;
+                    payOpModel.paid = serviceModel.paid;
+                    payOpModel.isPaid = true;
+                    payOpModel.deserved = 0;
+                }
                 decimal res = await Save(payOpModel);
                 message = Convert.ToInt32(res);
                 return message;
@@ -1699,10 +1756,10 @@ namespace BookAccountApp.ApiClasses
             return transNum;
         }
 
-        public  PayOp GetBookByserviceId(int serviceId)
+        public PayOp GetBookByserviceId(int serviceId)
         {
 
-            PayOp  row = new  PayOp();
+            PayOp row = new PayOp();
             //List<PayOp> GList = new List<PayOp>();
 
             try
@@ -1710,50 +1767,52 @@ namespace BookAccountApp.ApiClasses
                 using (bookdbEntities entity = new bookdbEntities())
                 {
                     row = (from S in entity.payOp
-                            where (S.serviceId == serviceId && S.processType =="book" && S.side == "system")
+                           where (S.serviceId == serviceId && S.processType == "book" && S.side == "system")
 
-                            select new PayOp()
-                            {
-                                payOpId = S.payOpId,
-                                code = S.code,
-                                cash = S.cash,
-                                opType = S.opType,
-                                //  side = S.paySides.code,
-                                side = S.side,
-                                serviceId = S.serviceId,
-                                opStatus = S.opStatus,
-                                opDate = S.opDate,
-                                notes = S.notes,
-                                createUserId = S.createUserId,
-                                updateUserId = S.updateUserId,
-                                createDate = S.createDate,
-                                updateDate = S.updateDate,
-                                officeId = S.officeId,
-                                passengerId = S.passengerId,
-                                userId = S.userId,
-                                recipient = S.recipient,
-                                recivedFrom = S.recivedFrom,
-                                paysideId = S.paysideId,
-                                sideAr = S.paySides.sideAr,
-                                flightId = S.flightId,
-                                opName = S.opName,
-                                passenger = S.passengers.name + " " + S.passengers.lastName,
-                                airline = S.systems.name + "/" + S.flights.flightTable.name,
-                                officeName = S.office.name,
-                                systemType = S.systemType,
-                                systemId = S.systemId,
-                                systemName = S.systems.name,
-                                syValue = S.syValue,
-                                exchangeId = S.exchangeId,
-                                currency = S.currency,
-                                fromSide = S.fromSide,
-                                processType = S.processType,
-                                sourceId = S.sourceId,
-                                paid = S.paid,
-                                isPaid = S.isPaid,
-                                deserved = S.deserved,
-                            }).FirstOrDefault();
-                    
+                           select new PayOp()
+                           {
+                               payOpId = S.payOpId,
+                               code = S.code,
+                               cash = S.cash,
+                               opType = S.opType,
+                               //  side = S.paySides.code,
+                               side = S.side,
+                               serviceId = S.serviceId,
+                               opStatus = S.opStatus,
+                               opDate = S.opDate,
+                               notes = S.notes,
+                               createUserId = S.createUserId,
+                               updateUserId = S.updateUserId,
+                               createDate = S.createDate,
+                               updateDate = S.updateDate,
+                               officeId = S.officeId,
+                               passengerId = S.passengerId,
+                               userId = S.userId,
+                               recipient = S.recipient,
+                               recivedFrom = S.recivedFrom,
+                               paysideId = S.paysideId,
+                               sideAr = S.paySides.sideAr,
+                               flightId = S.flightId,
+                               opName = S.opName,
+                               passenger = S.passengers.name + " " + S.passengers.lastName,
+                               airline = S.systems.name + "/" + S.flights.flightTable.name,
+                               officeName = S.office.name,
+                               systemType = S.systemType,
+                               systemId = S.systemId,
+                               systemName = S.systems.name,
+                               syValue = S.syValue,
+                               exchangeId = S.exchangeId,
+                               currency = S.currency,
+                               fromSide = S.fromSide,
+                               processType = S.processType,
+                               sourceId = S.sourceId,
+                               paid = S.paid,
+                               isPaid = S.isPaid,
+                               deserved = S.deserved,
+                               paidCurrency = S.paidCurrency,
+                               syCash = S.syCash,
+                           }).FirstOrDefault();
+
                     return row;
                 }
 

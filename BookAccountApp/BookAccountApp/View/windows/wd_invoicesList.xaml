@@ -92,8 +92,10 @@
                         <DataGrid.Columns>
                             
                             <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Process Number" Binding="{Binding Path=serviceNum}" Visibility="Visible"/>
-                            <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Total" Visibility="Visible" Binding="{Binding Path =deserved,Converter={StaticResource accuracyConverter }}"/>
-                            <DataGridTextColumn Width="*"  IsReadOnly="True" Header="currency" Visibility="Visible" Binding="{Binding Path=currency,Converter={StaticResource currencyConverter}}"/>
+                            <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="TotalSY" Visibility="Visible" Binding="{Binding Path =deservedSY,Converter={StaticResource accuracyConverter }}"/>
+                            <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Total" Visibility="Collapsed" Binding="{Binding Path =deserved,Converter={StaticResource accuracyConverter }}"/>
+                            <DataGridTextColumn Width="*"  IsReadOnly="True" Header="currencySY" Visibility="Visible" Binding="{Binding Path=currencySY,Converter={StaticResource currencyConverter}}"/>
+                            <DataGridTextColumn Width="*"  IsReadOnly="True" Header="currencyUSD" Visibility="Collapsed" Binding="{Binding Path=currencyUSD,Converter={StaticResource currencyConverter}}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
@@ -184,8 +186,11 @@
                                MouseDoubleClick="Lst_selectedInvoices_MouseDoubleClick">
                         <DataGrid.Columns>
                             <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Process Number" Binding="{Binding Path=serviceNum}" Visibility="Visible"/>
-                            <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Total" Visibility="Visible" Binding="{Binding Path =deserved,Converter={StaticResource accuracyConverter }}"/>
-                            <DataGridTextColumn Width="*"  IsReadOnly="True" Header="currency" Visibility="Visible" Binding="{Binding Path=currency,Converter={StaticResource currencyConverter}}"/>
+                            <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="TotalSY" Visibility="Visible" Binding="{Binding Path =deservedSY,Converter={StaticResource accuracyConverter }}"/>
+
+                            <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Total" Visibility="Collapsed" Binding="{Binding Path =deserved,Converter={StaticResource accuracyConverter }}"/>
+                            <DataGridTextColumn Width="*"  IsReadOnly="True" Header="currencySY" Visibility="Visible" Binding="{Binding Path=currencySY,Converter={StaticResource currencyConverter}}"/>
+                            <DataGridTextColumn Width="*"  IsReadOnly="True" Header="currencyUSD" Visibility="Collapsed" Binding="{Binding Path=currencyUSD,Converter={StaticResource currencyConverter}}"/>
 
                         </DataGrid.Columns>
                     </DataGrid>

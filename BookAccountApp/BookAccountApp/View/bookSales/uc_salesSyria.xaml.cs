@@ -606,6 +606,10 @@ totalSYHint
                         tb_total.Text = HelpClass.DecTostring(serviceData.total);
                         tb_priceBeforTax.Text = HelpClass.DecTostring(serviceData.priceBeforTax);
                         tb_charge.Text = HelpClass.DecTostring(serviceData.tax_value);
+
+                        tb_totalSY.Text = HelpClass.DecTostring(serviceData.totalSY);
+                        tb_priceBeforTaxSY.Text = HelpClass.DecTostring(serviceData.priceBeforTaxSY);
+                        tb_chargeSY.Text = HelpClass.DecTostring(serviceData.tax_valueSY);
                         tb_paid.Text = HelpClass.DecTostring(serviceData.paid);
                         this.DataContext = serviceData;
                         if (tgl_serviceDatastate)

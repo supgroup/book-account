@@ -148,8 +148,9 @@ namespace BookAccountApp.View.accounting
             dg_payOp.Columns[2].Header = MainWindow.resourcemanager.GetString("trRecepient");
             dg_payOp.Columns[3].Header = MainWindow.resourcemanager.GetString("recivedFrom");
             dg_payOp.Columns[4].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
-            dg_payOp.Columns[5].Header = MainWindow.resourcemanager.GetString("currency");
-            dg_payOp.Columns[6].Header = MainWindow.resourcemanager.GetString("payDate");
+            dg_payOp.Columns[5].Header = MainWindow.resourcemanager.GetString("exchangePrice");
+            dg_payOp.Columns[6].Header = MainWindow.resourcemanager.GetString("currency");
+            dg_payOp.Columns[7].Header = MainWindow.resourcemanager.GetString("payDate");
             //dg_payOp.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
@@ -173,8 +174,8 @@ namespace BookAccountApp.View.accounting
                 payOp = new PayOp();
                 if (HelpClass.validate(requiredControlList, this))
                 {
-                   int count = await ExchangeModel.check();
-                    if (count<=0)
+                    int count = await ExchangeModel.check();
+                    if (count <= 0)
                     {
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("msgnoExchange"), animation: ToasterAnimation.FadeIn);
                     }
@@ -182,122 +183,142 @@ namespace BookAccountApp.View.accounting
                     {
                         //tb_custCode.Text = await serviceData.generateCodeNumber("cu");
                         payOp.opName = tb_opName.Text.Trim();
-                    payOp.code = await payOp.generateNumber(("p" + (cb_side.SelectedValue).ToString().Substring(0, 3)).ToUpper());
-                    payOp.cash = (tb_cash.Text == null || tb_cash.Text == "") ? 0 : Convert.ToDecimal(tb_cash.Text);//
-                    payOp.opType = "p";
-                    payOp.side = (cb_side.SelectedValue).ToString();
-                    payOp.serviceId = null;//
-                    payOp.opStatus = "draft";
-                    payOp.opDate = dp_opDate.SelectedDate;
-                    payOp.notes = tb_notes.Text;
+                        payOp.code = await payOp.generateNumber(("p" + (cb_side.SelectedValue).ToString().Substring(0, 3)).ToUpper());
 
-                    //payOp.createDate = newObject.createDate;
-                    payOp.updateDate = DateTime.Now;
-                    if (cb_side.SelectedItem != null)
-                    {//passenger office soto other
-                        if ((cb_side.SelectedValue).ToString() == "passenger")
-                        {
+                        payOp.opType = "p";
+                        payOp.side = (cb_side.SelectedValue).ToString();
+                        payOp.serviceId = null;//
+                        payOp.opStatus = "draft";
+                        payOp.opDate = dp_opDate.SelectedDate;
+                        payOp.notes = tb_notes.Text;
+                        payOp.paidCurrency = cb_currency.SelectedValue == null ? "syp" : cb_currency.SelectedValue.ToString();//
+                                                                                                                              //payOp.createDate = newObject.createDate;
+                        payOp.updateDate = DateTime.Now;
+                        decimal tbcash = (tb_cash.Text == null || tb_cash.Text == "") ? 0 : Convert.ToDecimal(tb_cash.Text);
+                        if (cb_side.SelectedItem != null)
+                        {//passenger office soto other
+                            if ((cb_side.SelectedValue).ToString() == "passenger")
+                            {
 
-                            payOp.passengerId = Convert.ToInt32(cb_sideValue.SelectedValue);
-                            payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "passenger").FirstOrDefault().paysideId;
-                        }
-                        else if ((cb_side.SelectedValue).ToString() == "office")
-                        {
-                            payOp.officeId = Convert.ToInt32(cb_sideValue.SelectedValue);
-                            payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "office").FirstOrDefault().paysideId;
+                                payOp.passengerId = Convert.ToInt32(cb_sideValue.SelectedValue);
+                                payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "passenger").FirstOrDefault().paysideId;
+                            }
+                            else if ((cb_side.SelectedValue).ToString() == "office")
+                            {
+                                payOp.officeId = Convert.ToInt32(cb_sideValue.SelectedValue);
+                                payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "office").FirstOrDefault().paysideId;
+                                payOp.currency = "usd";//
+                                payOp.cash = (tb_cash.Text == null || tb_cash.Text == "") ? 0 : Convert.ToDecimal(tb_cash.Text);//
 
-                        }
-                        else if ((cb_side.SelectedValue).ToString() == "soto")
-                        {
-                            payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "soto").FirstOrDefault().paysideId;
-                            payOp.systemType = "soto";
-                        }
-                        else if ((cb_side.SelectedValue).ToString() == "syr")
-                        {
-                            payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "syr").FirstOrDefault().paysideId;
-                            payOp.systemType = "syr";
-                        }
-                        else if ((cb_side.SelectedValue).ToString() == "system")
-                        {
-                            payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "system").FirstOrDefault().paysideId;
-                            payOp.systemId = Convert.ToInt32(cb_sideValue.SelectedValue);
-                        }
-                        else if ((cb_side.SelectedValue).ToString() == "other")
-                        {
-                            //other
-                            payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "other").FirstOrDefault().paysideId;
 
-                        }
-                    }
-                    else
-                    {
-                        payOp.paysideId = null;
-                    }
-                    payOp.userId = null;//note used
-                    payOp.recipient = tb_recipient.Text;
-                    payOp.recivedFrom = tb_recivedFrom.Text;
-                    payOp.currency = cb_currency.SelectedValue == null ? "syp" : cb_currency.SelectedValue.ToString();//
-                    payOp.syValue = FillCombo.exchangeValue;
-                    payOp.exchangeId = FillCombo.ExchangeModel.exchangeId;
-                    payOp.fromSide = "";
-                    //payOp.passengerId = Convert.ToInt32(cb_passenger.SelectedValue);
-                    //payOp.ticketNum = tb_ticketNum.Text;
-                    //payOp.flightId = Convert.ToInt32(cb_airline.SelectedValue);
-                    //payOp.officeId = Convert.ToInt32(cb_office.SelectedValue);
-                    //payOp.serviceDate = dp_serviceDate.SelectedDate;
-                    //payOp.total = (tb_total.Text == null || tb_total.Text == "") ? 0 : Convert.ToDecimal(tb_total.Text);
-                    //payOp.notes = tb_notes.Text;
-                    //payOp.systemType = "syr";
-                    payOp.createUserId = MainWindow.userLogin.userId;
-                    payOp.updateUserId = MainWindow.userLogin.userId;
-                    decimal s = 0;
-                    int msglist = 0;
-                    if ((cb_side.SelectedValue).ToString() == "office")
-                    {
-                        if (cashesLst.Count > 0)
-                        {
-                            //  tb_cash.IsReadOnly = true;
-                            //pay by list
-                            s = await payOp.payListCommissionCashes(cashesLst, payOp);
+                            }
+                            else if ((cb_side.SelectedValue).ToString() == "soto")
+                            {
+                                payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "soto").FirstOrDefault().paysideId;
+                                payOp.systemType = "soto";
+                                payOp.currency = "usd";//
+
+
+                                payOp.cash = HelpClass.ConvertToUSD(tbcash, payOp.paidCurrency, FillCombo.exchangeValue);
+                                payOp.syCash = HelpClass.ConvertToSYP(tbcash, payOp.paidCurrency, FillCombo.exchangeValue);
+                                // payOp.cash = (tb_cash.Text == null || tb_cash.Text == "") ? 0 : Convert.ToDecimal(tb_cash.Text);//
+
+                            }
+                            else if ((cb_side.SelectedValue).ToString() == "syr")
+                            {
+                                payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "syr").FirstOrDefault().paysideId;
+                                payOp.systemType = "syr";
+                                payOp.currency = "usd";//
+                                payOp.cash = HelpClass.ConvertToUSD(tbcash, payOp.paidCurrency, FillCombo.exchangeValue);
+                                payOp.syCash = HelpClass.ConvertToSYP(tbcash, payOp.paidCurrency, FillCombo.exchangeValue);
+                            }
+                            else if ((cb_side.SelectedValue).ToString() == "system")
+                            {
+                                payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "system").FirstOrDefault().paysideId;
+                                payOp.systemId = Convert.ToInt32(cb_sideValue.SelectedValue);
+                            }
+                            else if ((cb_side.SelectedValue).ToString() == "other")
+                            {
+                                //other
+                                payOp.paysideId = FillCombo.PaySidesList.Where(x => x.code == "other").FirstOrDefault().paysideId;
+                                payOp.currency = cb_currency.SelectedValue == null ? "syp" : cb_currency.SelectedValue.ToString();//
+
+                                payOp.syCash = HelpClass.ConvertToSYP(tbcash, payOp.paidCurrency, FillCombo.exchangeValue);
+                                payOp.cash = (tb_cash.Text == null || tb_cash.Text == "") ? 0 : Convert.ToDecimal(tb_cash.Text);//
+
+
+                            }
                         }
                         else
                         {
-                            msglist = 1;
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("msgEmptyList"), animation: ToasterAnimation.FadeIn);
-
+                            payOp.paysideId = null;
                         }
-                    }
-                    //else if ((cb_side.SelectedValue).ToString() == "office" && tb_cash.IsReadOnly ==false)
-                    //{
-                    //    s = await payOp.payCommissionCashesByAmount((int)payOp.officeId,(decimal)payOp.cash,payOp);
-                    //}
-                    else
-                    {
-                        s = await payOp.Save(payOp);
-                    }
+                        payOp.userId = null;//note used
+                        payOp.recipient = tb_recipient.Text;
+                        payOp.recivedFrom = tb_recivedFrom.Text;
 
 
-                    if (s <= 0 && msglist == 0)
-                    {
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-
-                    }
-                    else if (msglist == 0)
-                    {
-                        //balance
-                        if (payOp.side == "syr" || payOp.side == "soto")
+                        payOp.syValue = FillCombo.exchangeValue;
+                        payOp.exchangeId = FillCombo.ExchangeModel.exchangeId;
+                        payOp.fromSide = "";
+                        //payOp.passengerId = Convert.ToInt32(cb_passenger.SelectedValue);
+                        //payOp.ticketNum = tb_ticketNum.Text;
+                        //payOp.flightId = Convert.ToInt32(cb_airline.SelectedValue);
+                        //payOp.officeId = Convert.ToInt32(cb_office.SelectedValue);
+                        //payOp.serviceDate = dp_serviceDate.SelectedDate;
+                        //payOp.total = (tb_total.Text == null || tb_total.Text == "") ? 0 : Convert.ToDecimal(tb_total.Text);
+                        //payOp.notes = tb_notes.Text;
+                        //payOp.systemType = "syr";
+                        payOp.createUserId = MainWindow.userLogin.userId;
+                        payOp.updateUserId = MainWindow.userLogin.userId;
+                        decimal s = 0;
+                        int msglist = 0;
+                        if ((cb_side.SelectedValue).ToString() == "office")
                         {
-                            s = await payOp.updateSideBalance(payOp.side, (decimal)payOp.cash);
+                            if (cashesLst.Count > 0)
+                            {
+                                //  tb_cash.IsReadOnly = true;
+                                //pay by list
+                                s = await payOp.payListCommissionCashes(cashesLst, payOp);
+                            }
+                            else
+                            {
+                                msglist = 1;
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("msgEmptyList"), animation: ToasterAnimation.FadeIn);
+
+                            }
+                        }
+                        //else if ((cb_side.SelectedValue).ToString() == "office" && tb_cash.IsReadOnly ==false)
+                        //{
+                        //    s = await payOp.payCommissionCashesByAmount((int)payOp.officeId,(decimal)payOp.cash,payOp);
+                        //}
+                        else
+                        {
+                            s = await payOp.Save(payOp);
+                        }
+
+
+                        if (s <= 0 && msglist == 0)
+                        {
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                         }
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                        else if (msglist == 0)
+                        {
+                            //balance
+                            if (payOp.side == "syr" || payOp.side == "soto")
+                            {
+                                s = await payOp.updateSideBalance(payOp.side, (decimal)payOp.cash);
+
+                            }
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
 
-                        Clear();
-                        await RefreshPayOpsList();
-                        await Search();
-                    }
-                   
+                            Clear();
+                            await RefreshPayOpsList();
+                            await Search();
+                        }
+
 
                     }
                 }
@@ -426,7 +447,11 @@ namespace BookAccountApp.View.accounting
                             cb_sideValue.SelectedValue = payOp.systemId;
                             grid_sideValue.Visibility = Visibility.Visible;
                             btn_invoicesSide.Visibility = Visibility.Collapsed;
-
+                            cb_currency.SelectedValue = "usd";
+                        }
+                        else
+                        {
+                            cb_currency.SelectedValue = payOp.paidCurrency;
                         }
 
                         cb_sideValue.IsEnabled = false;
@@ -439,7 +464,19 @@ namespace BookAccountApp.View.accounting
                         tb_recivedFrom.IsEnabled = false;
                         dp_opDate.IsEnabled = false;
                         cb_currency.IsEnabled = false;
-                        //await getImg();
+                       
+                        if (payOp.paidCurrency == "syp")
+                        {
+                            if (payOp.side == "office")
+                            {
+                                tb_cash.Text = HelpClass.DecTostring(HelpClass.ConvertToSYP(payOp.cash, "usd", payOp.syValue));
+                            }
+                            else if (payOp.side == "syr" || payOp.side == "soto")
+                            {
+                                tb_cash.Text = HelpClass.DecTostring(payOp.syCash);
+                            }
+                        }
+                        //await getImg()
                         #region delete
                         //if (payOp.canDelete)
                         //    btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
@@ -571,7 +608,7 @@ namespace BookAccountApp.View.accounting
             tb_recipient.IsEnabled = true;
             tb_recivedFrom.IsEnabled = true;
             dp_opDate.IsEnabled = true;
-            cb_currency.SelectedIndex = -1;
+            cb_currency.SelectedValue = "syp";
             cb_currency.IsEnabled = true;
             cb_side.IsEditable = false;
             // last 
@@ -582,8 +619,10 @@ namespace BookAccountApp.View.accounting
             cb_side.IsEnabled = false;
             cb_sideValue.IsEnabled = false;
             tb_cash.IsEnabled = false;
-            cb_currency.IsEnabled = false;
-            cb_currency.SelectedValue = "usd";
+            //cb_currency.IsEnabled = false;
+            cb_currency.IsEnabled = true;
+            // cb_currency.SelectedValue = "usd";
+
             tb_cash.IsReadOnly = true;
         }
         string input;
@@ -1167,7 +1206,8 @@ namespace BookAccountApp.View.accounting
         {
             try
             {
-
+                serviceLst.Clear();
+                cashesLst.Clear();
                 if (cb_side.SelectedItem != null)
                 {//passenger office soto other
                     if ((cb_side.SelectedValue).ToString() == "passenger")
@@ -1219,7 +1259,8 @@ namespace BookAccountApp.View.accounting
                         grid_sideValue.Visibility = Visibility.Collapsed;
                         btn_invoicesSide.Visibility = Visibility.Collapsed;
                         cb_currency.SelectedValue = "usd";
-                        cb_currency.IsEnabled = false;
+                        //cb_currency.IsEnabled = false;
+                        cb_currency.IsEnabled = true;
 
                     }
                     else if ((cb_side.SelectedValue).ToString() == "syr")
@@ -1228,8 +1269,8 @@ namespace BookAccountApp.View.accounting
                         grid_sideValue.Visibility = Visibility.Collapsed;
                         btn_invoicesSide.Visibility = Visibility.Collapsed;
                         cb_currency.SelectedValue = "usd";
-                        cb_currency.IsEnabled = false;
-
+                        //cb_currency.IsEnabled = false;
+                        cb_currency.IsEnabled = true;
                     }
                     //else if ((cb_side.SelectedValue).ToString() == "syr")
                     //{
@@ -1297,6 +1338,7 @@ namespace BookAccountApp.View.accounting
                     if (w.isActive)
                     {
                         tb_cash.Text = HelpClass.DecTostring(w.sum);
+
                         //tb_cash.IsReadOnly = true;
 
                         //cb_recipientC.IsEnabled = false;
@@ -1306,8 +1348,10 @@ namespace BookAccountApp.View.accounting
                         //tb_recipientText.IsEnabled = false;
                         serviceLst.AddRange(w.selectedInvoices);
                         cashesLst.AddRange(w.selectedCashtansfers);
+                        cb_currency.SelectedValue = w.currency;
                         if (cashesLst.Count > 0 || serviceLst.Count > 0)
                         {
+
                             disableforOffice();
                         }
 
@@ -1336,6 +1380,67 @@ namespace BookAccountApp.View.accounting
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+
+        private void Cb_currency_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (cb_currency.SelectedItem != null && cb_side.SelectedItem != null && cb_sideValue.SelectedItem != null)
+                {
+                    if (cb_side.SelectedValue.ToString() == "office")
+                    {
+                        if (cb_currency.SelectedValue.ToString() == "syp")
+                        {
+                            if (cashesLst.Count > 0)
+                            {
+                                tb_cash.Text = HelpClass.DecTostring(cashesLst.Sum(x => x.deservedSY));
+                            }
+                            else
+                            {
+                                tb_cash.Text = "0";
+                            }
+
+                        }
+                        else
+                        {
+                            if (cashesLst.Count > 0)
+                            {
+                                tb_cash.Text = HelpClass.DecTostring(cashesLst.Sum(x => x.deserved));
+                            }
+                            else
+                            {
+                                tb_cash.Text = "0";
+                            }
+                        }
+                    }
+
+
+
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Cb_sideValue_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                serviceLst.Clear();
+                cashesLst.Clear();
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
         }
     }
 }

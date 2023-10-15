@@ -53,6 +53,8 @@ namespace BookAccountApp
         public Nullable<bool> isPaid { get; set; }
         public Nullable<decimal> deserved { get; set; }
         public string purpose { get; set; }
+        public string paidCurrency { get; set; }
+        public Nullable<decimal> syCash { get; set; }
     
         public virtual office office { get; set; }
         public virtual passengers passengers { get; set; }

@@ -42,6 +42,7 @@ namespace BookAccountApp.View.windows
         ServiceData invoice = new ServiceData();
 
         List<PayOp> allCashtransfersSource = new List<PayOp>();
+     
         List<PayOp> allCashtransfers = new List<PayOp>();
         List<PayOp> allCashtransfersQuery = new List<PayOp>();
         public List<PayOp> selectedCashtansfers = new List<PayOp>();
@@ -49,7 +50,7 @@ namespace BookAccountApp.View.windows
         public int selectedId = 0;
         public string opType = "";
         public string side = "";
-        public string currency = "";
+        public string currency = "syp";
         string searchText = "";
         bool firsttime = true;
         //  public int agentId = 0, userId = 0, shippingCompanyId = 0;
@@ -78,7 +79,7 @@ namespace BookAccountApp.View.windows
                 translate();
                 #endregion
                 FillCombo.fillCurrency(cb_currency);
-                cb_currency.SelectedValue = "usd";
+                //cb_currency.SelectedValue = "usd";
 
                 //if (side=="office" && opType=="p")
                 //{
@@ -224,19 +225,32 @@ namespace BookAccountApp.View.windows
 
                 lst_allInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
                 lst_allInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("theCommission");
+                lst_allInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("theCommission");
+
+
                 lst_selectedInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
-                lst_selectedInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("theCommission");             
+                lst_selectedInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("theCommission");
+                lst_selectedInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("theCommission");
             }
             else if (side == "system" && opType == "d")
             {
                 txt_selectedInvoices.Text = MainWindow.resourcemanager.GetString("selectedCommissions");
                 txt_invoice.Text = MainWindow.resourcemanager.GetString("companyCommissions");
                 txt_invoices.Text = MainWindow.resourcemanager.GetString("Commissions");
-               
+
+                //lst_allInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                //lst_allInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("theCommission");
+                //lst_selectedInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                //lst_selectedInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("theCommission");
+
                 lst_allInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
                 lst_allInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("theCommission");
+                lst_allInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("theCommission");
+
+
                 lst_selectedInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
                 lst_selectedInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("theCommission");
+                lst_selectedInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("theCommission");
             }
             else if (side == "passenger" && opType == "d")
             {
@@ -247,10 +261,21 @@ namespace BookAccountApp.View.windows
                 txt_invoice.Text = MainWindow.resourcemanager.GetString("recieveDeserved");
                 txt_invoices.Text = MainWindow.resourcemanager.GetString("books");
 
+                //lst_allInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                //lst_allInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("total");
+                //lst_selectedInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                //lst_selectedInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("total");
+                //
                 lst_allInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
                 lst_allInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("total");
+                lst_allInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("total");
+
+
                 lst_selectedInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
                 lst_selectedInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("total");
+                lst_selectedInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("total");
+
+
             }
             else if (side == "office" && opType == "d")
             {
@@ -261,13 +286,24 @@ namespace BookAccountApp.View.windows
                 txt_invoice.Text = MainWindow.resourcemanager.GetString("recieveDeserved");
                 txt_invoices.Text = MainWindow.resourcemanager.GetString("books");
 
+                //lst_allInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                //lst_allInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("total");
+                //lst_selectedInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
+                //lst_selectedInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("total");
+                //
                 lst_allInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
                 lst_allInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("total");
+                lst_allInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("total");
+
+
                 lst_selectedInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trBookNum");
                 lst_selectedInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("total");
+                lst_selectedInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("total");
             }
-            lst_allInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("currency");
-            lst_selectedInvoices.Columns[2].Header = MainWindow.resourcemanager.GetString("currency");
+            lst_allInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("currency");
+            lst_selectedInvoices.Columns[3].Header = MainWindow.resourcemanager.GetString("currency");
+            lst_allInvoices.Columns[4].Header = MainWindow.resourcemanager.GetString("currency");
+            lst_selectedInvoices.Columns[4].Header = MainWindow.resourcemanager.GetString("currency");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_currency, MainWindow.resourcemanager.GetString("currencyHint"));
             /*
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
@@ -343,7 +379,8 @@ namespace BookAccountApp.View.windows
            // currency = cb_currency.SelectedValue.ToString();
             allCashtransfersQuery = allCashtransfers.Where(x => (searchText == "" ? true : ((x.serviceNum.ToLower().Contains(searchText)) ||
                                                                      (x.cash.ToString().ToLower().Contains(searchText))))
-                                                                     && x.currency==currency).ToList();
+                                                                     //&& x.currency==currency
+                                                                     ).ToList();
 
             RefreshPayOpsView();
         }
@@ -355,26 +392,29 @@ namespace BookAccountApp.View.windows
             if (side == "office" && opType == "p")
             {
                 allCashtransfersSource = await cashTransfer.GetUnpaidOffice(selectedId);
-                cb_currency.SelectedValue = "usd";
 
-                cb_currency.IsEnabled = false;
-                currency = "usd";
+            //    cb_currency.SelectedValue = "usd";
+
+                cb_currency.IsEnabled = true;
+                currency = "syp";
             }
             else if (side == "system" && opType == "d")
             {
                 allCashtransfersSource = await cashTransfer.GetUnpaidSystem(selectedId);
-                cb_currency.SelectedValue = "usd";
-                cb_currency.IsEnabled = false;
-                currency = "usd";
+                //cb_currency.SelectedValue = "usd";
+                cb_currency.IsEnabled = true;
+                currency = "syp";
+                //currency = "usd";
             }
             else if (side == "passenger" && opType == "d")
             {
                 allCashtransfersSource = await cashTransfer.GetUnpaidPassenger(selectedId);//
-
+                currency = "syp";
             }
             else if (side == "office" && opType == "d")
             {
                 allCashtransfersSource = await cashTransfer.GetUnpaidBookOffice(selectedId);//
+                currency = "syp";
             }
         
             return allCashtransfers;
@@ -430,68 +470,35 @@ namespace BookAccountApp.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_selectedAll_Click(object sender, RoutedEventArgs e)
-        {//select all
-           
-            try
-            {
-                //if (side == "office")
-                //{
-                    int x = allCashtransfers.Count;
-                    for (int i = 0; i < x; i++)
-                    {
-                        lst_allInvoices.SelectedIndex = 0;
-                        Btn_selectedInvoice_Click(null, null);
-                    }
-                //}
-                /*
-                    if (agentId != 0 || (shippingCompanyId != 0 && invType.Equals("feed")))
-                {
-                    int x = allInvoices.Count;
-                    for (int i = 0; i < x; i++)
-                    {
-                        lst_allInvoices.SelectedIndex = 0;
-                        Btn_selectedInvoice_Click(null, null);
-                    }
-                }
-                else if (userId != 0 || (shippingCompanyId != 0 && invType.Equals("pay")))
-                {
-                    int x = allCashtransfers.Count;
-                    for (int i = 0; i < x; i++)
-                    {
-                        lst_allInvoices.SelectedIndex = 0;
-                        Btn_selectedInvoice_Click(null, null);
-                    }
-                }
-                */
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-            
-        }
         private void Btn_selectedInvoice_Click(object sender, RoutedEventArgs e)
         {//select one
             try
             {
-                 decimal x = 0;
+                decimal x = 0;
                 //if (side == "office"){
-                    cashTransfer = lst_allInvoices.SelectedItem as PayOp;
-                    if (cashTransfer != null)
+                cashTransfer = lst_allInvoices.SelectedItem as PayOp;
+                if (cashTransfer != null)
+                {
+                    allCashtransfersQuery.Remove(cashTransfer);
+
+                    selectedCashtansfers.Add(cashTransfer);
+
+                    lst_allInvoices.ItemsSource = allCashtransfersQuery;
+                    lst_selectedInvoices.ItemsSource = selectedCashtansfers;
+
+                    lst_allInvoices.Items.Refresh();
+                    lst_selectedInvoices.Items.Refresh();
+                    if (cb_currency.SelectedValue.ToString() == "syp")
                     {
-                        allCashtransfersQuery.Remove(cashTransfer);
-
-                        selectedCashtansfers.Add(cashTransfer);
-
-                        lst_allInvoices.ItemsSource = allCashtransfersQuery;
-                        lst_selectedInvoices.ItemsSource = selectedCashtansfers;
-
-                        lst_allInvoices.Items.Refresh();
-                        lst_selectedInvoices.Items.Refresh();
-
-                        x = cashTransfer.deserved.Value;
+                        x = Math.Round(cashTransfer.deservedSY.Value, 2);
                     }
+                    else
+                    {
+                        x = Math.Round(cashTransfer.deserved.Value, 2);
+                    }
+                  
+                   
+                }
                 //}
                 /*
                 if (agentId != 0 || (shippingCompanyId != 0 && invType.Equals("feed")))
@@ -535,16 +542,58 @@ namespace BookAccountApp.View.windows
 
                 tb_sum.Text = " " + HelpClass.DecTostring(sum) + " ";
 
-              
-                    
+
+
             }
             catch (Exception ex)
             {
-               
-                    
+
+
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void Btn_selectedAll_Click(object sender, RoutedEventArgs e)
+        {//select all
+           
+            try
+            {
+                //if (side == "office")
+                //{
+                    int x = allCashtransfers.Count;
+                    for (int i = 0; i < x; i++)
+                    {
+                        lst_allInvoices.SelectedIndex = 0;
+                        Btn_selectedInvoice_Click(null, null);
+                    }
+                //}
+                /*
+                    if (agentId != 0 || (shippingCompanyId != 0 && invType.Equals("feed")))
+                {
+                    int x = allInvoices.Count;
+                    for (int i = 0; i < x; i++)
+                    {
+                        lst_allInvoices.SelectedIndex = 0;
+                        Btn_selectedInvoice_Click(null, null);
+                    }
+                }
+                else if (userId != 0 || (shippingCompanyId != 0 && invType.Equals("pay")))
+                {
+                    int x = allCashtransfers.Count;
+                    for (int i = 0; i < x; i++)
+                    {
+                        lst_allInvoices.SelectedIndex = 0;
+                        Btn_selectedInvoice_Click(null, null);
+                    }
+                }
+                */
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+            
+        }
+      
         private void Btn_unSelectedInvoice_Click(object sender, RoutedEventArgs e)
         {//unselect one
           
@@ -567,8 +616,15 @@ namespace BookAccountApp.View.windows
                         lst_allInvoices.Items.Refresh();
                         lst_selectedInvoices.Items.Refresh();
 
-                        x = cashTransfer.deserved.Value;
+                    if (cb_currency.SelectedValue.ToString() == "syp")
+                    {
+                        x = Math.Round(cashTransfer.deservedSY.Value, 2);
                     }
+                    else
+                    {
+                        x = Math.Round(cashTransfer.deserved.Value, 2);
+                    }
+                }
                 //}
                 /*
                 if (agentId != 0 || (shippingCompanyId != 0 && invType.Equals("feed")))
@@ -639,6 +695,9 @@ namespace BookAccountApp.View.windows
                         lst_selectedInvoices.SelectedIndex = 0;
                         Btn_unSelectedInvoice_Click(null, null);
                     }
+                sum = 0;
+
+                tb_sum.Text = " " + HelpClass.DecTostring(sum) + " ";
 
                 //}
                 /*
@@ -676,6 +735,35 @@ namespace BookAccountApp.View.windows
             {
                 if (cb_currency.SelectedItem != null)
                 {
+                    if (cb_currency.SelectedValue.ToString() == "syp")
+                    {
+                        lst_allInvoices.Columns[1].Visibility = Visibility.Visible;
+                        lst_allInvoices.Columns[3].Visibility = Visibility.Visible;
+
+                        lst_allInvoices.Columns[2].Visibility = Visibility.Collapsed;
+                        lst_allInvoices.Columns[4].Visibility = Visibility.Collapsed;
+                        //
+                        lst_selectedInvoices.Columns[1].Visibility = Visibility.Visible;
+                        lst_selectedInvoices.Columns[3].Visibility = Visibility.Visible;
+
+                        lst_selectedInvoices.Columns[2].Visibility = Visibility.Collapsed;
+                        lst_selectedInvoices.Columns[4].Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        lst_allInvoices.Columns[1].Visibility = Visibility.Collapsed;
+                        lst_allInvoices.Columns[3].Visibility = Visibility.Collapsed;
+
+                        lst_allInvoices.Columns[2].Visibility = Visibility.Visible;
+                        lst_allInvoices.Columns[4].Visibility = Visibility.Visible;
+                        //
+                        lst_selectedInvoices.Columns[1].Visibility = Visibility.Collapsed;
+                        lst_selectedInvoices.Columns[3].Visibility = Visibility.Collapsed;
+
+                        lst_selectedInvoices.Columns[2].Visibility = Visibility.Visible;
+                        lst_selectedInvoices.Columns[4].Visibility = Visibility.Visible;
+                    }
+                    currency = cb_currency.SelectedValue.ToString();
                     Btn_unSelectedAll_Click(null, null);
                     await Search();
                     tb_moneyIcon.Text = HelpClass.currencyConverter(cb_currency.SelectedValue.ToString());

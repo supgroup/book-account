@@ -580,6 +580,10 @@ namespace BookAccountApp.View.bookSales
                         tb_priceBeforTax.Text = HelpClass.DecTostring(serviceData.priceBeforTax);
                         tb_charge.Text = HelpClass.DecTostring(serviceData.tax_value);
                         tb_paid.Text = HelpClass.DecTostring(serviceData.paid);
+
+                        tb_totalSY.Text = HelpClass.DecTostring(serviceData.totalSY);
+                        tb_priceBeforTaxSY.Text = HelpClass.DecTostring(serviceData.priceBeforTaxSY);
+                        tb_chargeSY.Text = HelpClass.DecTostring(serviceData.tax_valueSY);
                         this.DataContext = serviceData;
                         if (tgl_serviceDatastate)
                         {

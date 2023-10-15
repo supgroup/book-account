@@ -1057,7 +1057,7 @@ namespace BookAccountApp.Classes
                 }
                 else if (currency == "syp")
                 {
-                    result = dccash / operatval;
+                    result =Math.Round( dccash / operatval,2);
                 }
             }
             return result;
