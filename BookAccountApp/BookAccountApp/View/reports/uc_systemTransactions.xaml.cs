@@ -300,7 +300,9 @@ private string getBalance(string code)
         {
             string balance = "";
          decimal amount= (decimal)  FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
-            balance= HelpClass.DecTostring(amount);
+            amount = HelpClass.ConvertToSYP(amount, "usd", FillCombo.exchangeValue);
+
+           balance = HelpClass.DecTostring(amount);
             return balance;
         }
         private string getperiodPayments()
@@ -308,6 +310,7 @@ private string getBalance(string code)
             string balance = "";
             //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
             decimal amount = (decimal)paymentsQuery.Where(x => x.side == "system" && x.processType == "book").Sum(s => s.cash);
+           
             balance = HelpClass.DecTostring(amount);
             return balance;
         }
@@ -317,6 +320,7 @@ private string getBalance(string code)
             string balance = "";
             //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
             decimal amount = (decimal)paymentsList.Where(x => x.side == "system" && x.processType == "book" && x.sideStr == side).Sum(s => s.cash);
+             
             balance = HelpClass.DecTostring(amount);
             return balance;
         }
@@ -761,6 +765,8 @@ private string getBalance(string code)
                 {//passenger office soto other
                   Search();
                     txt_balance.Text = getBalance(cb_bookSales.SelectedValue.ToString());
+                    //txt_balance.Text = getBalance(cb_bookSales.SelectedValue.ToString());
+           
                 }
                 else
                 {

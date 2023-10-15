@@ -81,6 +81,13 @@ namespace BookAccountApp.ApiClasses
 
         public string yearStr { get; set; }
         public string currency { get; set; }
+
+        public string currencyTotal { get; set; }
+        //
+        public Nullable<decimal> totalSY { get; set; }
+        public Nullable<decimal> priceBeforTaxSY { get; set; }
+        public Nullable<decimal> profitSY { get; set; }
+        public Nullable<decimal> tax_valueSY { get; set; }
     }
     public class PaymentsSts 
     {
@@ -135,6 +142,14 @@ namespace BookAccountApp.ApiClasses
 
         public Nullable<decimal> priceBeforTax { get; set; }
         public Nullable<decimal> total { get; set; }
+
+        public string currencySY { get; set; }
+        public string currencyUSD { get; set; }
+        public Nullable<decimal> deservedSY { get; set; }
+        public string paidCurrency { get; set; }
+        public Nullable<decimal> syCash { get; set; }
+        public Nullable<decimal> dgCash { get; set; }
+
     }
     public class Statistics
     {
@@ -223,6 +238,14 @@ namespace BookAccountApp.ApiClasses
                                 tax_value = S.tax_value,//
                                 systemName = SYS.name,
                                 currency="usd",
+
+                                currencyTotal = "syp",
+                                totalSY =  S.totalSY,
+                                priceBeforTaxSY =   S.priceBeforTaxSY,
+                                profitSY = S.profitSY,
+                                tax_valueSY =  S.tax_valueSY,
+
+
                             }).ToList();
                     List = List.Where(S => ((fromDate == null && toDate == null) ? true :
                             ((fromDate != null) ? S.updateDate == null ? false : (S.updateDate.Value.Date >= fromDate.Value.Date) : true)
@@ -327,7 +350,7 @@ namespace BookAccountApp.ApiClasses
                                 //
                                 payOpId = S.payOpId,
                                 code = S.code,
-                                cash = S.cash,
+                                cash =S.cash,
                                 opType = S.opType,
                                 side = S.side,
                                 fromSide=S.fromSide,
@@ -359,7 +382,7 @@ namespace BookAccountApp.ApiClasses
                                 //officeName = S.officeId==null?"":S.office.name,
                                 officeName = S.officeId == null ? FillCombo.companyName : S.office.name,
                                 currency =S.currency,
- 
+                                
                                 sideAr = S.paySides.sideAr,
                               
                                 passenger = S.passengers.name + " " + S.passengers.lastName,
@@ -375,7 +398,13 @@ namespace BookAccountApp.ApiClasses
                                 paid = S.paid,
                                 isPaid = S.isPaid,
                                 deserved = S.deserved,
+
                             }).ToList();
+                    foreach (PaymentsSts row in List)
+                    {
+                        row.cash = HelpClass.ConvertToSYP(row.cash, row.currency, row.syValue);
+                        row.currency = "syp";
+                    }
                     //List = List.Where(S => ((fromDate == null && toDate == null) ? true :
                     //       ((fromDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date >= fromDate.Value.Date) : true)
                     //       && ((toDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date <= toDate.Value.Date) : true)
@@ -384,7 +413,7 @@ namespace BookAccountApp.ApiClasses
                 }
 
             }
-            catch
+            catch(Exception ex)
             {
                 return List;
             }
