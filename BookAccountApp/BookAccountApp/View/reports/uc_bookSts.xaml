@@ -219,7 +219,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                               <DataGridTextColumn Width="*"  Header="profit" Binding="{Binding Path=profit,Converter={StaticResource accuracyConverter}}" >
+                               <DataGridTextColumn Width="*"  Header="profit" Binding="{Binding Path=profitSY,Converter={StaticResource accuracyConverter}}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -507,15 +507,23 @@
                     FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
                                Foreground="{StaticResource MainColor}"
                     FontWeight="Bold" />
-                    <TextBlock Text="0" x:Name="txt_totalSale" Margin="10" 
-                                Grid.Column="1"
+
+                    <Grid    Grid.Column="1"  >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="0" x:Name="txt_totalSale" Margin="5" 
+                                
                                FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
            Foreground="{StaticResource Grey}"
             FontWeight="Regular" />
-                    <TextBlock Grid.Row="1"   x:Name="tb_moneyIconSale" Grid.Column="1" Margin="0,0,1,0"  
-                       Foreground="#4E4E4E" Text="$" 
+                        <TextBlock Grid.Row="1"   x:Name="tb_moneyIconSale" Grid.Column="1" Margin="0,0,1,0"  
+                       Foreground="#4E4E4E" Text="SYP" 
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                                   FontWeight="Bold"  FontSize="14"/>
+                    </Grid>
+
                 </Grid>
             </Border>
             <Border Grid.Row="2"
@@ -531,15 +539,22 @@ Background="White">
                 FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
                            Foreground="{StaticResource MainColor}"
                 FontWeight="Bold" />
-                    <TextBlock Text="0" x:Name="txt_totalProfit" Margin="10" 
-                            Grid.Column="1"
+                    <Grid    Grid.Column="1"  >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="0" x:Name="txt_totalProfit" Margin="5" 
+                           
                            FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
        Foreground="{StaticResource Grey}"
         FontWeight="Regular" />
-                    <TextBlock Grid.Row="1"   x:Name="tb_moneyIcon" Grid.Column="1" Margin="0,0,1,0"  
-                       Foreground="#4E4E4E" Text="$" 
+                        <TextBlock Grid.Row="1"   x:Name="tb_moneyIcon" Grid.Column="1" Margin="0,0,1,0"  
+                       Foreground="#4E4E4E" Text="SYP" 
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                                   FontWeight="Bold"  FontSize="14"/>
+                    </Grid>
+
                 </Grid>
             </Border>
             <Border Grid.Row="3"

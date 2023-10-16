@@ -341,13 +341,15 @@ namespace BookAccountApp.View.reports
 
         private decimal getsumpPrices()
         {
-          sumpPrices =  bookStssQuery.Sum(s => (decimal)s.priceBeforTax);
+            //sumpPrices = bookStssQuery.Sum(s => (decimal)s.priceBeforTax);
+            sumpPrices =  bookStssQuery.Sum(s => (decimal)s.priceBeforTaxSY);
 //string balance = HelpClass.DecTostring(sumpPrices);
             return sumpPrices;
         }
         private decimal getsumpProfits()
         {
-            sumpProfits= bookStssQuery.Sum(s => (decimal)s.profit);
+            //sumpProfits = bookStssQuery.Sum(s => (decimal)s.profit);
+            sumpProfits = bookStssQuery.Sum(s => (decimal)s.profitSY);
             //string balance = HelpClass.DecTostring(sumpPrices);
             return sumpProfits;
         }
