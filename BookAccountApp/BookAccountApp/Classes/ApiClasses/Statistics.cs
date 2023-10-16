@@ -151,7 +151,7 @@ namespace BookAccountApp.ApiClasses
         public string paidCurrency { get; set; }
         public Nullable<decimal> syCash { get; set; }
         public Nullable<decimal> dgCash { get; set; }
-
+        public Nullable<decimal> usdCash { get; set; }
     }
     public class Statistics
     {
@@ -434,12 +434,161 @@ namespace BookAccountApp.ApiClasses
                                 isPaid = S.isPaid,
                                 deserved = S.deserved,
                                 sideStr = S.side == "system" ? S.fromSide : S.side,
-
+                                paidCurrency = S.paidCurrency,
+                                syCash = S.syCash,
+                                currencySY="syp",
+                                ticketNum=(S.serviceData.ticketNum==null|| S.serviceData.ticketNum=="")?"-" : S.serviceData.ticketNum,
+                                
                             }).ToList();
                     List = List.Where(S => ((fromDate == null && toDate == null) ? true :
                            ((fromDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date >= fromDate.Value.Date) : true)
                            && ((toDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date <= toDate.Value.Date) : true)
                           )).ToList();
+
+                    foreach (PaymentsSts row in List)
+                    {
+                        if (row.side=="other")
+                        {
+                            row.dgCash = row.syCash;
+                            row.usdCash = HelpClass.ConvertToUSD(row.cash, row.currency, row.syValue);
+
+                        }
+                        else if ((row.opType == "p" && (row.side == "soto" || row.side == "syr")) )
+                             
+                        {
+                            //row.dgCash =HelpClass.ConvertToSYP( row.cash, row.paidCurrency,FillCombo.exchangeValue);
+                           // row.syValue = FillCombo.exchangeValue;
+                            row.dgCash = row.paidCurrency == "syp" ? row.syCash : HelpClass.ConvertToSYP(row.cash, row.paidCurrency, row.syValue);
+                            row.usdCash = row.cash;
+                        }
+                        else if((row.opType == "p" && row.side == "system" && row.processType == "book"))
+                        {
+                            row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, row.syValue);
+                         
+                            row.usdCash = row.cash;
+                        }
+                        else if (row.opType == "p" && row.side == "system" && row.processType == "company_commission")
+                        {
+                            //desc = "عمولة للشركة";
+                            if (row.isPaid == true)
+                            {
+                                row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, row.syValue);
+                            }
+                            else
+                            {
+                                 row.syValue = FillCombo.exchangeValue;
+                                row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, FillCombo.exchangeValue);
+                            }
+                            
+
+                            row.usdCash = row.cash;
+                        }
+                        else if (row.opType == "d" && row.side == "system" && row.processType == "cash")
+                        {
+                            //desc = " قبض عمولة للشركة من نظام الحجز " + row.systemName;
+                            row.dgCash = HelpClass.ConvertToSYP(row.cash, "usd", row.syValue);
+                            row.usdCash = row.cash;
+
+                        }
+                        else if (row.opType == "p" && row.side == "office" && row.processType == "service")
+                        {
+                            //desc = " دفعة مقابل الحجز عن طريق مكتب  " + row.officeName;
+                            //row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, row.syValue);
+                            //row.usdCash = row.cash;
+
+                            if (row.isPaid == true)
+                            {
+
+                                row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, row.syValue);
+                            }
+                            else
+                            {
+                                row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, FillCombo.exchangeValue);
+                                row.syValue = FillCombo.exchangeValue;
+                            }
+
+                            row.usdCash = row.cash;
+
+                        }
+                        else if (row.opType == "d" && row.side == "office" &&( row.processType == "cashservice"|| row.processType == "cash"))
+                        {
+                            //desc = " قبض من مكتب " + row.officeName;
+                            if (row.isPaid == true)
+                            {
+                                row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, row.syValue);
+                                row.usdCash = HelpClass.ConvertToUSD(row.cash, row.currency, row.syValue);
+                            }
+                            else
+                            {
+                                row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, FillCombo.exchangeValue);
+                                row.usdCash = HelpClass.ConvertToUSD(row.cash, row.currency, FillCombo.exchangeValue);
+                                row.syValue = FillCombo.exchangeValue;
+                            }
+
+
+                        }
+                        else if (row.opType == "d" && row.side == "office" && row.processType == "office_commission")
+                        {
+                            //desc = " عمولة مكتب " + row.officeName;
+                            if (row.isPaid == true)
+                            {
+                                row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, row.syValue);
+                            }
+                            else
+                            {
+                                row.syValue = FillCombo.exchangeValue;
+                                row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, FillCombo.exchangeValue);
+                            }
+
+
+                            row.usdCash = row.cash;
+
+                        }
+                        else if (row.opType == "p" && row.side == "office" && row.processType == "cash")
+                        {
+                            //desc = " دفعة مقابل عمولة لمكتب " + row.officeName;
+                            row.dgCash = HelpClass.ConvertToSYP(row.cash, "usd", row.syValue);
+                            row.usdCash = row.cash;
+                        }
+                        else if (row.opType == "p" && row.side == "passenger" && row.processType == "service")
+                        {
+                            //desc = " دفعة مقابل الحجز للمسافر " + row.passenger;
+                       
+
+                             if (row.isPaid == true)
+                                {
+
+                                row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, row.syValue);                          
+                            }
+                            else
+                            {
+                                row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency,FillCombo.exchangeValue);                             
+                                row.syValue = FillCombo.exchangeValue;
+                            }
+
+                            row.usdCash = row.cash;
+                        }
+                        else if (row.opType == "d" && row.side == "passenger" && (row.processType == "cashservice" || row.processType == "cash"))
+                        {
+                            //desc = " قبض من المسافر " + row.passenger;
+                       
+
+                            if (row.isPaid == true)
+                            {
+                                row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, row.syValue);
+                                row.usdCash = HelpClass.ConvertToUSD(row.cash, row.currency, row.syValue);
+                            }
+                            else
+                            {
+                                row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, FillCombo.exchangeValue);
+                                row.usdCash = HelpClass.ConvertToUSD(row.cash, row.currency, FillCombo.exchangeValue);
+                                row.syValue = FillCombo.exchangeValue;
+                            }
+
+                        }
+
+                    }
+
                     return List;
                 }
 

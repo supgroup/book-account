@@ -135,10 +135,13 @@ namespace BookAccountApp.View.reports
             dg_paymentsSts.Columns[1].Header = MainWindow.resourcemanager.GetString("sideOrResponseble");
             //dg_paymentsSts.Columns[2].Header = MainWindow.resourcemanager.GetString("recivedFrom");
              dg_paymentsSts.Columns[2].Header = MainWindow.resourcemanager.GetString("trDescription");
-     
+
             dg_paymentsSts.Columns[3].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
-            dg_paymentsSts.Columns[4].Header = MainWindow.resourcemanager.GetString("currency");
-            dg_paymentsSts.Columns[5].Header = MainWindow.resourcemanager.GetString("payDate");
+            dg_paymentsSts.Columns[4].Header = MainWindow.resourcemanager.GetString("exchangePrice");
+            dg_paymentsSts.Columns[5].Header = MainWindow.resourcemanager.GetString("currency");
+            dg_paymentsSts.Columns[6].Header = MainWindow.resourcemanager.GetString("payDate");
+
+
             //dg_paymentsSts.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
@@ -376,7 +379,7 @@ namespace BookAccountApp.View.reports
         #endregion
 
         #region sum
-        
+
 
         //private decimal getTotalPayUsd(string side,string paysys)
         //{
@@ -400,14 +403,14 @@ namespace BookAccountApp.View.reports
         //        {
 
         //        }
-            
+
         //    }
-            
+
         //   // balance = HelpClass.DecTostring(amount);
         //    return amount;
         //}
 
-       
+
         //private decimal getTotalPaySyp(string side )
         //{
         //    string balance = "";
@@ -443,97 +446,97 @@ namespace BookAccountApp.View.reports
         //    return amount;
         //}
 
-        private decimal getTotalPay(string side, string paysys)
-        {
-            //  string balance = "";
-            decimal amount = 0;
-            //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
+        //private decimal getTotalPay(string side, string paysys)
+        //{
+        //    //  string balance = "";
+        //    decimal amount = 0;
+        //    //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
 
-            if (side == "paysys")
-            {
-                if (currency == "syp")
-                {
-                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == paysys).Sum(s => (s.cash * FillCombo.exchangeValue));
-                }
-                else if (currency == "usd")
-                {
-                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == paysys).Sum(s => s.cash);
-                }
-                //amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == paysys).Sum(s => s.cash);
-            }
-            else
-            {
-                if (currency == "syp")
-                {
-                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p").Sum(s =>
-                 s.isPaid == true ? (s.currency == "syp" ? s.cash//syp paid
-                 : (s.cash * s.syValue)) //$ -> $*old xcahange paid
-                 : (s.currency == "syp" ? s.cash//syp unpaid
-                 : (s.cash * FillCombo.exchangeValue) //unpaid
-                 )
-                 );
-                }
-                else if (currency == "usd")
-                {
-                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p").Sum(s =>
-                s.isPaid == true ? (s.currency == "syp" ? (s.cash / s.syValue) //syp /old xcahange paid
-                : (s.cash)) //$ -> $*old xcahange paid
-                : (s.currency == "syp" ? (s.cash / FillCombo.exchangeValue) //syp unpaid
-                : (s.cash) //$ unpaid 
-                )
-                );
-                }
+        //    if (side == "paysys")
+        //    {
+        //        if (currency == "syp")
+        //        {
+        //            amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == paysys).Sum(s => (s.cash * FillCombo.exchangeValue));
+        //        }
+        //        else if (currency == "usd")
+        //        {
+        //            amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == paysys).Sum(s => s.cash);
+        //        }
+        //        //amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == paysys).Sum(s => s.cash);
+        //    }
+        //    else
+        //    {
+        //        if (currency == "syp")
+        //        {
+        //            amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p").Sum(s =>
+        //         s.isPaid == true ? (s.currency == "syp" ? s.cash//syp paid
+        //         : (s.cash * s.syValue)) //$ -> $*old xcahange paid
+        //         : (s.currency == "syp" ? s.cash//syp unpaid
+        //         : (s.cash * FillCombo.exchangeValue) //unpaid
+        //         )
+        //         );
+        //        }
+        //        else if (currency == "usd")
+        //        {
+        //            amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p").Sum(s =>
+        //        s.isPaid == true ? (s.currency == "syp" ? (s.cash / s.syValue) //syp /old xcahange paid
+        //        : (s.cash)) //$ -> $*old xcahange paid
+        //        : (s.currency == "syp" ? (s.cash / FillCombo.exchangeValue) //syp unpaid
+        //        : (s.cash) //$ unpaid 
+        //        )
+        //        );
+        //        }
 
-            }
+        //    }
 
-            // balance = HelpClass.DecTostring(amount);
-            return amount;
-        }
-        private decimal getTotalDeposit(string side)
-        {
-            //  string balance = "";
-            decimal amount = 0;
-            //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
-            if (side == "paysys")
-            {
-                if (currency == "syp")
-                {
-                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == "system").Sum(s => (s.cash*FillCombo.exchangeValue));
-                }
-                else if (currency == "usd")
-                {
-                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == "system").Sum(s => s.cash);
-                }
-            }
-            else
-            {
-               // amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d"  ).Sum(s => s.cash);
+        //    // balance = HelpClass.DecTostring(amount);
+        //    return amount;
+        //}
+        //private decimal getTotalDeposit(string side)
+        //{
+        //    //  string balance = "";
+        //    decimal amount = 0;
+        //    //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
+        //    if (side == "paysys")
+        //    {
+        //        if (currency == "syp")
+        //        {
+        //            amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == "system").Sum(s => (s.cash*FillCombo.exchangeValue));
+        //        }
+        //        else if (currency == "usd")
+        //        {
+        //            amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == "system").Sum(s => s.cash);
+        //        }
+        //    }
+        //    else
+        //    {
+        //       // amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d"  ).Sum(s => s.cash);
 
-                if (currency == "syp")
-                {
-                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d").Sum(s =>
-                 s.isPaid == true ? (s.currency == "syp" ? s.cash//syp paid
-                 : (s.cash * s.syValue)) //$ -> $*old xcahange paid
-                 : (s.currency == "syp" ? s.cash//syp unpaid
-                 : (s.cash * FillCombo.exchangeValue) //unpaid
-                 )
-                 );
-                }
-                else if (currency == "usd")
-                {
-                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d").Sum(s =>
-                s.isPaid == true ? (s.currency == "syp" ? (s.cash / s.syValue) //syp /old xcahange paid
-                : (s.cash)) //$ -> $*old xcahange paid
-                : (s.currency == "syp" ? (s.cash / FillCombo.exchangeValue) //syp unpaid
-                : (s.cash) //$ unpaid 
-                )
-                );
-                }
-            }
+        //        if (currency == "syp")
+        //        {
+        //            amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d").Sum(s =>
+        //         s.isPaid == true ? (s.currency == "syp" ? s.cash//syp paid
+        //         : (s.cash * s.syValue)) //$ -> $*old xcahange paid
+        //         : (s.currency == "syp" ? s.cash//syp unpaid
+        //         : (s.cash * FillCombo.exchangeValue) //unpaid
+        //         )
+        //         );
+        //        }
+        //        else if (currency == "usd")
+        //        {
+        //            amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d").Sum(s =>
+        //        s.isPaid == true ? (s.currency == "syp" ? (s.cash / s.syValue) //syp /old xcahange paid
+        //        : (s.cash)) //$ -> $*old xcahange paid
+        //        : (s.currency == "syp" ? (s.cash / FillCombo.exchangeValue) //syp unpaid
+        //        : (s.cash) //$ unpaid 
+        //        )
+        //        );
+        //        }
+        //    }
 
-            // balance = HelpClass.DecTostring(amount);
-            return amount;
-        }
+        //    // balance = HelpClass.DecTostring(amount);
+        //    return amount;
+        //}
 
         //private decimal getTotalDepositSyp(string side)
         //{
@@ -572,6 +575,73 @@ namespace BookAccountApp.View.reports
         //    amount = sumpaySyp - sumdepositSyp;
         //    return amount;
         //}
+        private decimal getTotalPay(string side, string paysys)
+        {
+            //  string balance = "";
+            decimal amount = 0;
+            //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
+
+            if (side == "paysys")
+            {
+                if (currency == "syp")
+                {
+                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == paysys).Sum(s => s.dgCash);
+                }
+                else if (currency == "usd")
+                {
+                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == paysys).Sum(s => s.usdCash);
+                }
+                //amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == paysys).Sum(s => s.cash);
+            }
+            else
+            {
+                if (currency == "syp")
+                {
+                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p").Sum(s => s.dgCash);
+                }
+                else if (currency == "usd")
+                {
+                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p").Sum(s => s.usdCash);
+                }
+
+            }
+
+            // balance = HelpClass.DecTostring(amount);
+            return amount;
+        }
+        private decimal getTotalDeposit(string side)
+        {
+            //  string balance = "";
+            decimal amount = 0;
+            //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
+            if (side == "paysys")
+            {
+                if (currency == "syp")
+                {
+                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == "system").Sum(s => s.dgCash);
+                }
+                else if (currency == "usd")
+                {
+                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "p" && x.side == "system").Sum(s => s.usdCash);
+                }
+            }
+            else
+            {
+                // amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d"  ).Sum(s => s.cash);
+
+                if (currency == "syp")
+                {
+                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d").Sum(s => s.dgCash);
+                }
+                else if (currency == "usd")
+                {
+                    amount = (decimal)paymentsStssQuery.Where(x => x.opType == "d").Sum(s => s.usdCash);
+                }
+            }
+
+            // balance = HelpClass.DecTostring(amount);
+            return amount;
+        }
         private void sumAll()
         {
             //sumpayUsd = getTotalPayUsd(side, paysysValue);

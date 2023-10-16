@@ -53,11 +53,14 @@ namespace BookAccountApp.converters
 
                 else if (s.opType == "p" && s.side == "office" && s.processType == "service")
                 {
-                    desc =   " دفعة مقابل الحجز عن طريق مكتب  "+ s.officeName;
+                   // desc =   " دفعة مقابل الحجز عن طريق مكتب  "+ s.officeName;
+                    desc = " قيمة حجز تذكرة طيران رقم: "+ s.ticketNum+" عن طريق مكتب "+s.officeName;
                 }
-                else if (s.opType == "d" && s.side == "office" && s.processType == "cashservice")
+                else if (s.opType == "d" && s.side == "office"&&(s.processType == "cashservice" || s.processType == "cash"))
                 {
-                    desc =   " قبض من مكتب " + s.officeName;
+                    //desc =   " قبض من مكتب " + s.officeName;
+                    
+                    desc = " قبض دفعة من قيمة حجز تذكرة رقم: " + s.ticketNum+" من مكتب " +s.officeName; 
                 }
                 else if (s.opType == "d" && s.side == "office" && s.processType == "office_commission")
                 {
@@ -71,16 +74,18 @@ namespace BookAccountApp.converters
 
                 else if (s.opType == "p" && s.side == "passenger" && s.processType == "service")
                 {
-                    desc =   " دفعة مقابل الحجز للمسافر "+ s.passenger;
+                    //desc =   " دفعة مقابل الحجز للمسافر "+ s.passenger;
+                    desc = " قيمة حجز تذكرة طيران رقم: " + s.ticketNum + " للمسافر " + s.passenger;
                 }
-                else if (s.opType == "d" && s.side == "passenger" && s.processType == "cashservice")
+                else if (s.opType == "d" && s.side == "passenger" && (s.processType == "cashservice" || s.processType == "cash"))
                 {
-                    desc =  " قبض من المسافر "+ s.passenger;
+                    //desc =  " قبض من المسافر "+ s.passenger;
+                    desc = " قبض دفعة من قيمة حجز تذكرة رقم: " + s.ticketNum + " من المسافر " + s.passenger;
                 }
-                else if (s.opType == "d" && s.side == "passenger" && s.processType == "cash")
-                {
-                    desc =  " قبض من المسافر " + s.passenger;
-                }
+                //else if (s.opType == "d" && s.side == "passenger" && s.processType == "cash")
+                //{
+                //    desc =  " قبض من المسافر " + s.passenger;
+                //}
                 else if (s.opType == "p" && s.side == "other"  )
                 {
                     desc =  "دفعة";

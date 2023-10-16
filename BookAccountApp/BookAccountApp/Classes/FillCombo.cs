@@ -654,20 +654,20 @@ namespace BookAccountApp.Classes
                 #region  get accuracy
 
                 //get company fax
-                set = settingsCls.Where(s => s.name == "accuracy").FirstOrDefault<SettingCls>();
-                var accuId = set.settingId;
-                setV = settingsValues.Where(i => i.settingId == accuId).FirstOrDefault();
-                if (setV != null)
-                {
+                //set = settingsCls.Where(s => s.name == "accuracy").FirstOrDefault<SettingCls>();
+                //var accuId = set.settingId;
+                //setV = settingsValues.Where(i => i.settingId == accuId).FirstOrDefault();
+                //if (setV != null)
+                //{
 
-                    MainWindow.accuracy = setV.value;
-                }
-
+                //    MainWindow.accuracy = setV.value;
+                //}
+                MainWindow.accuracy = "2";
                 #endregion
                 #region  get date
 
-                //get company fax
-                set = settingsCls.Where(s => s.name == "dateForm").FirstOrDefault<SettingCls>();
+               //get company fax
+               set = settingsCls.Where(s => s.name == "dateForm").FirstOrDefault<SettingCls>();
                 var dateId = set.settingId;
                 setV = settingsValues.Where(i => i.settingId == dateId).FirstOrDefault();
                 if (setV != null)

@@ -112,8 +112,9 @@ namespace BookAccountApp.View.reports
             dg_bookSts.Columns[2].Header = MainWindow.resourcemanager.GetString("airlineFlightSys");
             dg_bookSts.Columns[3].Header = MainWindow.resourcemanager.GetString("trOffice");
             dg_bookSts.Columns[4].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
-            dg_bookSts.Columns[5].Header = MainWindow.resourcemanager.GetString("currency");
-            dg_bookSts.Columns[6].Header = MainWindow.resourcemanager.GetString("trDate");
+            dg_bookSts.Columns[5].Header = MainWindow.resourcemanager.GetString("exchangePrice");
+            dg_bookSts.Columns[6].Header = MainWindow.resourcemanager.GetString("currency");
+            dg_bookSts.Columns[7].Header = MainWindow.resourcemanager.GetString("trDate");
 
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");

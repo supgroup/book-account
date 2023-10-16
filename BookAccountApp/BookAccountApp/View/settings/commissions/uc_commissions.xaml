@@ -81,7 +81,7 @@ l49.5-50.1L108,99.6z"/>
                     </Grid>
                 </Border>
 
-                <Border Background="White" CornerRadius="7"  Height="140"  Width="260" BorderThickness="1" BorderBrush="#178DD2" Margin="10,0,10,20">
+                <Border Background="White" CornerRadius="7"  Height="140"  Width="260" BorderThickness="1" BorderBrush="#178DD2" Margin="10,0,10,20" Visibility="Collapsed">
                     <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
