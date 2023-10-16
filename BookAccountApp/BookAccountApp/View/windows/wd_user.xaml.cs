@@ -48,6 +48,7 @@ namespace BookAccountApp.View.windows
         IEnumerable<Users> users;
         byte tgl_userState;
         string searchText = "";
+        bool isAdmin = false;
         public static List<string> requiredControlList;
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -76,7 +77,12 @@ namespace BookAccountApp.View.windows
                 //await FillCombo.fillCountries(cb_areaFax);
                 //await FillCombo.fillCountriesNames(cb_country);
                 //FillCombo.fillUserType(cb_type);
-
+                if (MainWindow.userLogin.isAdmin != true)
+                {
+                    tgl_isAdmin.IsEnabled = false;
+                    btn_delete.IsEnabled = false;
+                    btn_update.IsEnabled = false;
+                }
                 Keyboard.Focus(tb_name);
 
                 await Search();
@@ -98,14 +104,14 @@ namespace BookAccountApp.View.windows
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(pb_password, MainWindow.resourcemanager.GetString("trPasswordHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_passwordMirror, MainWindow.resourcemanager.GetString("trPasswordHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, MainWindow.resourcemanager.GetString("contactNumberHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, MainWindow.resourcemanager.GetString("contactNumberHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_AccountName, MainWindow.resourcemanager.GetString("trUserNameHint"));
-
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, MainWindow.resourcemanager.GetString("mobileNumHint"));
             dg_user.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
             dg_user.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
             dg_user.Columns[2].Header = MainWindow.resourcemanager.GetString("trUserName");
-            dg_user.Columns[3].Header = MainWindow.resourcemanager.GetString("contactNumber");
+            dg_user.Columns[3].Header = MainWindow.resourcemanager.GetString("mobileNum");
             //contactNumberHint
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
             //tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
@@ -117,6 +123,8 @@ namespace BookAccountApp.View.windows
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
             btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+
+            txt_admin.Text = MainWindow.resourcemanager.GetString("trEmployee");
             //  txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
 
 
@@ -166,7 +174,9 @@ namespace BookAccountApp.View.windows
                     //user.lastName = tb_lastName.Text;
                     //user.countryId = Convert.ToInt32(cb_country.SelectedValue);
                     user.AccountName = tb_AccountName.Text;
-                    user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password); ;
+                    user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password);
+                    user.isAdmin = isAdmin;
+
                     //user.email = tb_email.Text;
                     user.mobile = tb_mobile.Text; ;
                     //if (!tb_phone.Text.Equals(""))
@@ -222,7 +232,7 @@ namespace BookAccountApp.View.windows
                     //chk duplicate userName
                     bool duplicateUserName = false;
                     duplicateUserName = await chkIfUserNameIsExists(tb_name.Text, user.userId);
-                    if (HelpClass.validate(requiredControlList, this) && duplicateUserName && HelpClass.IsValidEmail(this))
+                    if (HelpClass.validate(requiredControlList, this) && duplicateUserName )
                     {
                         //user.code = user.code;
                         user.name = tb_name.Text;
@@ -231,7 +241,8 @@ namespace BookAccountApp.View.windows
                         user.AccountName = tb_AccountName.Text;
                         //user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password); ;
                         //user.email = tb_email.Text;
-                        user.mobile = tb_mobile.Text; ;
+                        user.mobile = tb_mobile.Text;
+                        user.isAdmin = isAdmin;
                         //if (!tb_phone.Text.Equals(""))
                         //    user.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
                         //if (!tb_fax.Text.Equals(""))
@@ -444,6 +455,7 @@ namespace BookAccountApp.View.windows
                         //tb_code.Text = user.code;
                         //cb_country.SelectedValue = user.countryId;
                         this.DataContext = user;
+                        tgl_isAdmin.IsChecked = user.isAdmin == null ? false : user.isAdmin;
                         await getImg();
                         #region delete
                         if (user.canDelete)
@@ -532,10 +544,11 @@ namespace BookAccountApp.View.windows
         void Clear()
         {
             this.DataContext = new Users();
-
+           tgl_isAdmin.IsChecked = false;
             #region password-code
             pb_password.Clear();
             tb_passwordMirror.Clear();
+
             //tb_code.Text = "";
             #endregion
             #region mobile-Phone-fax-country
@@ -1070,9 +1083,40 @@ namespace BookAccountApp.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+
         #endregion
 
+        private void Tgl_isAdmin_Checked(object sender, RoutedEventArgs e)
+        {
+        
+            //print
+            try
+            {
+                isAdmin = true;
+                txt_admin.Text = MainWindow.resourcemanager.GetString("trAdmin");
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
 
-
+        private void Tgl_isAdmin_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+              
+                
+                txt_admin.Text = MainWindow.resourcemanager.GetString("trEmployee");
+                isAdmin = false;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

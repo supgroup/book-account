@@ -70,6 +70,7 @@ namespace BookAccountApp.ApiClasses
                     using (bookdbEntities entity = new bookdbEntities())
                     {
                     List = (from S in entity.users
+                            where (S.userId!=1&& S.code!= "Us-Admin")
                             select new Users()
                             {
                                 userId = S.userId,
@@ -337,9 +338,9 @@ namespace BookAccountApp.ApiClasses
                                 tmpObject.isActive = newObject.isActive;
                                 tmpObject.isOnline = newObject.isOnline;
                                 tmpObject.countryId = newObject.countryId;
+                            tmpObject.isAdmin = newObject.isAdmin;
 
-
-                                entity.SaveChanges();
+                            entity.SaveChanges();
 
                                 message = tmpObject.userId ;
                             }

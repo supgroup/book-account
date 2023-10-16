@@ -585,7 +585,7 @@ namespace BookAccountApp.View.bookSales
                         tb_priceBeforTaxSY.Text = HelpClass.DecTostring(serviceData.priceBeforTaxSY);
                         tb_chargeSY.Text = HelpClass.DecTostring(serviceData.tax_valueSY);
                         this.DataContext = serviceData;
-                        if (tgl_serviceDatastate)
+                        if (tgl_serviceDatastate && MainWindow.userLogin.isAdmin.Value)
                         {
                             btn_send.IsEnabled = true;
                         }

@@ -612,7 +612,7 @@ totalSYHint
                         tb_chargeSY.Text = HelpClass.DecTostring(serviceData.tax_valueSY);
                         tb_paid.Text = HelpClass.DecTostring(serviceData.paid);
                         this.DataContext = serviceData;
-                        if (tgl_serviceDatastate)
+                        if (tgl_serviceDatastate && MainWindow.userLogin.isAdmin.Value)
                         {
                             btn_send.IsEnabled = true;
                         }

@@ -259,7 +259,8 @@
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
                             <Border   CornerRadius="10" Margin="0,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                 <Grid>
                                     <TextBox x:Name="tb_name"  Text="{Binding name, Mode=OneWay}" Padding="10,5,0,0" 
@@ -347,6 +348,22 @@
                                     </Path>
                                 </Grid>
                             </Border>
+                                <Grid Grid.Row="4" x:Name="grid_admin">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                      
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock    x:Name="txt_admin"  
+                                   Margin="5,0,5,0" Text="admin" Foreground="#6e6e6e"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                                   FontSize="12"/>
+                                    <ToggleButton    x:Name="tgl_isAdmin"   Grid.Column="1" 
+                             VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="False" 
+                                          Margin="0 0 10 0" Height="13" Width="28" 
+                                                     HorizontalAlignment="Left" Checked="Tgl_isAdmin_Checked" Unchecked="Tgl_isAdmin_Unchecked"/>
+
+                                </Grid>
                         </Grid>
                     </StackPanel>
                 </ScrollViewer>

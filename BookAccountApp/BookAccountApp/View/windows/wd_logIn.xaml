@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookAccountApp.View.windows"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-       Title="Increase-SCM" mc:Ignorable="d"
+       Title="Login" mc:Ignorable="d"   
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         Height="400"
         Width="700" KeyDown="HandleKeyPress"
@@ -16,7 +16,7 @@
         BorderThickness="0"
         AllowsTransparency="True"
         Background="Transparent"
-        ResizeMode="NoResize" Closing="Window_Closing">
+        ResizeMode="NoResize" Closing="Window_Closing" Icon="/BookAccountApp;component/pic/favicon.ico">
     <Window.Triggers>
         <EventTrigger RoutedEvent="Loaded">
             <BeginStoryboard>
