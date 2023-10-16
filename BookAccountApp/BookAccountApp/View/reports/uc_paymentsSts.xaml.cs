@@ -1120,7 +1120,12 @@ namespace BookAccountApp.View.reports
             rep.DataSources.Clear();
             rep.EnableExternalImages = true;
             //  servicemodel= await servicemodel.GetByID((int)payOp.serviceId);
-            paramarr = reportclass.fillPayReport(PayOpRow);
+            PayOp repPayop = PayOpRow;
+            repPayop.cash = PayOpRow.dgCash;
+            repPayop.currency = PayOpRow.currencySY;
+            paramarr = reportclass.fillPayReport(repPayop);
+
+            //paramarr = reportclass.fillPayReport(PayOpRow);
             clsReports.Header(paramarr);
             rep.SetParameters(paramarr);
             rep.Refresh();

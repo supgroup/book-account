@@ -39,7 +39,9 @@ namespace BookAccountApp.converters
                 }
                 else if (s.opType == "p" && s.side == "system" && s.processType=="book")
                 {
-                    desc =  " سحب من " + s.sideAr  + " مقابل الحجز في " + s.systemName;
+                    //desc =  " سحب من " + s.sideAr  + " مقابل الحجز في " + s.systemName;
+                    desc = " سحب من " + s.sideAr + " قيمة حجز تذكرة طيران رقم: " + s.ticketNum + " في "+ s.systemName;
+                
                 }
                 else if (s.opType == "p" && s.side == "system" && s.processType == "company_commission")
                 {

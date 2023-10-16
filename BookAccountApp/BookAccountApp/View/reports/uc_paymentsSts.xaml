@@ -222,7 +222,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*"  Header="currency"  Binding="{Binding Path=currency,Converter={StaticResource currencyConverter}}">
+                            <DataGridTextColumn Width="*"  Header="currency"  Binding="{Binding Path=currencySY,Converter={StaticResource currencyConverter}}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>

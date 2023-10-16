@@ -1490,25 +1490,15 @@ RecivedPurpose
                 //PaymentsSts s = value as PaymentsSts;
                 //string name = "";
                 string desc = "";
-                //switch (payModel.side)
-                //{
-
-                //    //case "passenger": name = MainWindow.resourcemanager.GetString("thePassenger") + " " + payModel.passenger; break;
-                //    //case "office": name = (MainWindow.resourcemanager.GetString("trnoffice") + " " + payModel.officeName); break;
-                //    ////case "office": name = MainWindow.resourcemanager.GetString("trnoffice") + " " + payModel.officeName; break;
-                //    //case "system": name = payModel.systemName; break;
-                //    case "syr": name = MainWindow.resourcemanager.GetString("trnsyr"); break;
-                //    case "soto": name = MainWindow.resourcemanager.GetString("trnsoto"); break;
-                //    //case "other": name = MainWindow.resourcemanager.GetString("trnother"); break;
-                //    default: break;
-                //}
                 if (payModel.opType == "p" && (payModel.side == "soto" || payModel.side == "syr"))
                 {
                     desc = "دفعة الى نظام الدفع";
                 }
                 else if (payModel.opType == "p" && payModel.side == "system" && payModel.processType == "book")
                 {
-                    desc = " سحب من " + payModel.sideAr + " مقابل الحجز في " + payModel.systemName;
+                
+                    desc = " سحب من " + payModel.sideAr + " قيمة حجز تذكرة طيران رقم: " + payModel.ticketNum + " في " + payModel.systemName;
+
                 }
                 else if (payModel.opType == "p" && payModel.side == "system" && payModel.processType == "company_commission")
                 {
@@ -1520,11 +1510,12 @@ RecivedPurpose
                 }
                 else if (payModel.opType == "p" && payModel.side == "office" && payModel.processType == "service")
                 {
-                    desc = " دفعة مقابل الحجز عن طريق مكتب  " + payModel.officeName;
+                  
+                    desc = " قيمة حجز تذكرة طيران رقم: " + payModel.ticketNum + " عن طريق مكتب " + payModel.officeName;
                 }
-                else if (payModel.opType == "d" && payModel.side == "office" && payModel.processType == "cashservice")
+                else if (payModel.opType == "d" && payModel.side == "office" && (payModel.processType == "cashservice" || payModel.processType == "cash"))
                 {
-                    desc = " قبض من مكتب " + payModel.officeName;
+                    desc = " قبض دفعة من قيمة حجز تذكرة رقم: " + payModel.ticketNum + " من مكتب " + payModel.officeName;
                 }
                 else if (payModel.opType == "d" && payModel.side == "office" && payModel.processType == "office_commission")
                 {
@@ -1534,20 +1525,17 @@ RecivedPurpose
                 {
                     desc = " دفعة مقابل عمولة لمكتب " + payModel.officeName;
                 }
-
-
                 else if (payModel.opType == "p" && payModel.side == "passenger" && payModel.processType == "service")
                 {
-                    desc = " دفعة مقابل الحجز للمسافر " + payModel.passenger;
+                   
+                    desc = " قيمة حجز تذكرة طيران رقم: " + payModel.ticketNum + " للمسافر " + payModel.passenger;
                 }
-                else if (payModel.opType == "d" && payModel.side == "passenger" && payModel.processType == "cashservice")
+                else if (payModel.opType == "d" && payModel.side == "passenger" && (payModel.processType == "cashservice" || payModel.processType == "cash"))
                 {
-                    desc = " قبض من المسافر " + payModel.passenger;
+                  
+                    desc = " قبض دفعة من قيمة حجز تذكرة رقم: " + payModel.ticketNum + " من المسافر " + payModel.passenger;
                 }
-                else if (payModel.opType == "d" && payModel.side == "passenger" && payModel.processType == "cash")
-                {
-                    desc = " قبض من المسافر " + payModel.passenger;
-                }
+             
                 else if (payModel.opType == "p" && payModel.side == "other")
                 {
                     desc = "دفعة";

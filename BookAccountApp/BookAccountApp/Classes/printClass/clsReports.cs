@@ -338,11 +338,11 @@ passwordSoto
             foreach (var c in cash)
             {
            
-               c.cash = decimal.Parse(HelpClass.DecTostring(c.cash));
+               c.dgCash = decimal.Parse(HelpClass.DecTostring(c.dgCash));
                 c.sideAr = repcls.sideNameConverter(c);
-                c.currency = repcls.currencyConverter(c.currency);
+                c.currencySY = repcls.currencyConverter(c.currencySY);
                 c.stropDate = dateFrameConverter(c.opDate);
-               
+                c.syValue = decimal.Parse(HelpClass.DecTostring(c.syValue));
             }
 
             paramarr.Add(new ReportParameter("trNo", MainWindow.resourcemanagerreport.GetString("trNo.")));
@@ -353,12 +353,12 @@ passwordSoto
             paramarr.Add(new ReportParameter("trCashTooltip", MainWindow.resourcemanagerreport.GetString("trCashTooltip")));
             paramarr.Add(new ReportParameter("currency", MainWindow.resourcemanagerreport.GetString("currency")));
             paramarr.Add(new ReportParameter("payDate", MainWindow.resourcemanagerreport.GetString("payDate")));
-            
-
+            paramarr.Add(new ReportParameter("exchangePrice", MainWindow.resourcemanagerreport.GetString("exchangePrice")));
+         
            // DateFormConv(paramarr);
 
 
-         
+
             rep.DataSources.Add(new ReportDataSource("DataSet", cash));
         }
 
@@ -368,16 +368,14 @@ passwordSoto
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             ReportCls repcls = new ReportCls();
-            
-
             List<BookSts> Query = JsonConvert.DeserializeObject<List<BookSts>>(JsonConvert.SerializeObject(QueryList));
             foreach (BookSts row in Query)
             {
                 row.strServiceDate = dateFrameConverter(row.createDate);
-                row.priceBeforTax = decimal.Parse(HelpClass.DecTostring(row.priceBeforTax));
-                row.profit = decimal.Parse(HelpClass.DecTostring(row.profit));
+                row.priceBeforTaxSY = decimal.Parse(HelpClass.DecTostring(row.priceBeforTaxSY));
+                row.profitSY = decimal.Parse(HelpClass.DecTostring(row.profitSY));
                 row.strCreateDate = dateFrameConverter(row.createDate);
-               row.currency= repcls.currencyConverter(row.currency);
+               row.currencyTotal = repcls.currencyConverter(row.currencyTotal);
             }
 
             rep.DataSources.Add(new ReportDataSource("DataSet", Query));
@@ -392,7 +390,6 @@ passwordSoto
             paramarr.Add(new ReportParameter("profits", MainWindow.resourcemanagerreport.GetString("profits")));
             paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
             paramarr.Add(new ReportParameter("currency", MainWindow.resourcemanagerreport.GetString("currency")));
-
 
         }
 
@@ -495,7 +492,8 @@ passwordSoto
             {
 
                 c.cash = decimal.Parse(HelpClass.DecTostring(c.cash));
-               // c.sideAr = repcls.sideNameConverter(c);
+                c.syValue = decimal.Parse(HelpClass.DecTostring(c.syValue));
+                // c.sideAr = repcls.sideNameConverter(c);
                 c.currency = repcls.currencyConverter(c.currency);
                 c.stropDate = dateFrameConverter(c.opDate);
 
@@ -524,12 +522,11 @@ passwordSoto
             foreach (var c in cash)
             {
                 c.purpose = repcls.descRepConverter(c);
-                c.cash = decimal.Parse(HelpClass.DecTostring(c.cash));
-                 c.sideAr = repcls.sideNameConverterRep(c);
-                c.currency = repcls.currencyConverter(c.currency);
+                c.dgCash = decimal.Parse(HelpClass.DecTostring(c.dgCash));
+                c.syValue = decimal.Parse(HelpClass.DecTostring(c.syValue));
+                c.sideAr = repcls.sideNameConverterRep(c);
+                c.currencySY = repcls.currencyConverter(c.currencySY);
                 c.stropDate = dateFrameConverter(c.opDate);
-             
-
             }
 
             paramarr.Add(new ReportParameter("trNo", MainWindow.resourcemanagerreport.GetString("trNo.")));
@@ -541,7 +538,7 @@ passwordSoto
             paramarr.Add(new ReportParameter("trCashTooltip", MainWindow.resourcemanagerreport.GetString("trCashTooltip")));
             paramarr.Add(new ReportParameter("currency", MainWindow.resourcemanagerreport.GetString("currency")));
             paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
-
+            paramarr.Add(new ReportParameter("exchangePrice", MainWindow.resourcemanagerreport.GetString("exchangePrice")));
             rep.DataSources.Add(new ReportDataSource("DataSet", cash));
         }
 

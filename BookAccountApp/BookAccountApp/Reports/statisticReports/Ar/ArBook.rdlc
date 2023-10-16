@@ -41,6 +41,10 @@
           <DataField>commitionValue</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
+        <Field Name="company_commission_model">
+          <DataField>company_commission_model</DataField>
+          <rd:TypeName>BookAccountApp.ApiClasses.PayOp</rd:TypeName>
+        </Field>
         <Field Name="company_commission_ratio">
           <DataField>company_commission_ratio</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
@@ -65,6 +69,10 @@
           <DataField>currency</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="currencyTotal">
+          <DataField>currencyTotal</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="exchangeId">
           <DataField>exchangeId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
@@ -80,6 +88,10 @@
         <Field Name="notes">
           <DataField>notes</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="office_commission_model">
+          <DataField>office_commission_model</DataField>
+          <rd:TypeName>BookAccountApp.ApiClasses.PayOp</rd:TypeName>
         </Field>
         <Field Name="office_commission_ratio">
           <DataField>office_commission_ratio</DataField>
@@ -141,8 +153,16 @@
           <DataField>priceBeforTax</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
+        <Field Name="priceBeforTaxSY">
+          <DataField>priceBeforTaxSY</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
         <Field Name="profit">
           <DataField>profit</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="profitSY">
+          <DataField>profitSY</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="recipient">
@@ -229,6 +249,10 @@
           <DataField>tax_value</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
+        <Field Name="tax_valueSY">
+          <DataField>tax_valueSY</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
         <Field Name="ticketNum">
           <DataField>ticketNum</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -247,6 +271,10 @@
         </Field>
         <Field Name="totalnet">
           <DataField>totalnet</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="totalSY">
+          <DataField>totalSY</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="type">
@@ -321,25 +349,25 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>2.06854cm</Width>
+                  <Width>2.54479cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.48485cm</Width>
+                  <Width>2.36781cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>4.28929cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.67708cm</Width>
+                  <Width>2.2385cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.12958cm</Width>
+                  <Width>2.20896cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.75917cm</Width>
+                  <Width>2.05021cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.65692cm</Width>
+                  <Width>1.84212cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.23542cm</Width>
@@ -379,7 +407,7 @@
                             <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingTop>3pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
@@ -415,7 +443,7 @@
                             <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingTop>3pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
@@ -451,7 +479,7 @@
                             <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingTop>3pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
@@ -487,7 +515,7 @@
                             <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingTop>3pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
@@ -523,7 +551,7 @@
                             <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingTop>3pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
@@ -559,7 +587,7 @@
                             <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingTop>3pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
@@ -595,7 +623,7 @@
                             <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingTop>3pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
@@ -631,10 +659,11 @@
                             <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingTop>3pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -654,6 +683,7 @@
                                   <Value>=Fields!serviceNum.Value</Value>
                                   <Style>
                                     <FontFamily>Cairo</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -780,14 +810,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="priceBeforTax">
+                        <Textbox Name="priceBeforTaxSY">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!priceBeforTax.Value</Value>
+                                  <Value>=Fields!priceBeforTaxSY.Value</Value>
                                   <Style>
                                     <FontFamily>Cairo</FontFamily>
                                   </Style>
@@ -798,7 +828,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>priceBeforTax</rd:DefaultName>
+                          <rd:DefaultName>priceBeforTaxSY</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -814,14 +844,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="profit">
+                        <Textbox Name="profitSY">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!profit.Value</Value>
+                                  <Value>=Fields!profitSY.Value</Value>
                                   <Style>
                                     <FontFamily>Cairo</FontFamily>
                                   </Style>
@@ -832,7 +862,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>profit</rd:DefaultName>
+                          <rd:DefaultName>profitSY</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -848,14 +878,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="currency">
+                        <Textbox Name="currencyTotal">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!currency.Value</Value>
+                                  <Value>=Fields!currencyTotal.Value</Value>
                                   <Style>
                                     <FontFamily>Cairo</FontFamily>
                                   </Style>
@@ -866,7 +896,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>currency</rd:DefaultName>
+                          <rd:DefaultName>currencyTotal</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -878,7 +908,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -946,7 +975,7 @@
             <Top>2.0641cm</Top>
             <Left>0.58325cm</Left>
             <Height>1.33229cm</Height>
-            <Width>19.30085cm</Width>
+            <Width>19.7771cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>

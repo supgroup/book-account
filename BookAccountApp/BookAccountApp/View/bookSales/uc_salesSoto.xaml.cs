@@ -901,7 +901,11 @@ namespace BookAccountApp.View.bookSales
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
             //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
             string title = MainWindow.resourcemanagerreport.GetString("book_sales") + " / " + MainWindow.resourcemanagerreport.GetString("soto");
+
             paramarr.Add(new ReportParameter("trTitle", title));
+            string reptype= tgl_serviceDatastate ? MainWindow.resourcemanager.GetString("trDraft"): MainWindow.resourcemanager.GetString("done");
+            paramarr.Add(new ReportParameter("repType", reptype));
+          
             clsReports.SaleReport(serviceDatasQuery, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);

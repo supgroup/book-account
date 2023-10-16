@@ -1124,7 +1124,7 @@
             </TablixRowHierarchy>
             <LayoutDirection>RTL</LayoutDirection>
             <DataSetName>DataSet</DataSetName>
-            <Top>2.05861cm</Top>
+            <Top>2.69361cm</Top>
             <Left>1.18768cm</Left>
             <Height>1.2cm</Height>
             <Width>26.70208cm</Width>
@@ -1172,8 +1172,44 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
+          <Textbox Name="agentTitle2">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Parameters!repType.Value</Value>
+                    <Style>
+                      <FontFamily>Cairo</FontFamily>
+                      <FontSize>16pt</FontSize>
+                      <Color>#178dd2</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>agentTitle</rd:DefaultName>
+            <Top>1.58589cm</Top>
+            <Left>1.14896cm</Left>
+            <Height>0.76065cm</Height>
+            <Width>26.70208cm</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
-        <Height>3.746cm</Height>
+        <Height>4.19579cm</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1943,6 +1979,12 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="repType">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -2133,6 +2175,11 @@
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>12</RowIndex>
           <ParameterName>exchangePrice</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>12</RowIndex>
+          <ParameterName>repType</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
