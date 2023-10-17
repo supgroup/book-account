@@ -418,7 +418,7 @@ totalSYHint
                     paysideModel = await paysideModel.GetByCode(serviceData.systemType);
                     serviceData.paysideId = paysideModel.paysideId;
 
-                    if (paysideModel.balance < serviceData.total)
+                    if (paysideModel.balance < serviceData.totalSY)
                     {
                         return -1;
                     }
@@ -478,7 +478,7 @@ totalSYHint
         private async Task<int> AddPayRecords()
         {
             int res = 0;
-            res = await payOpModel.updateSideBalance(serviceData.systemType, -(decimal)serviceData.total);
+            res = await payOpModel.updateSideBalance(serviceData.systemType, -(decimal)serviceData.totalSY);
             res = await payOpModel.AddSideRecord(serviceData, paysideModel);
             res = await payOpModel.AddCompanyCommRecord(serviceData);
             res = await payOpModel.AddServiceRecord(serviceData);
