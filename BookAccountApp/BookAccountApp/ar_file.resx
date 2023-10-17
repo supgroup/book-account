@@ -3409,4 +3409,10 @@
   <data name="trTaxUSDHint" xml:space="preserve">
     <value>الضريبة/دولار امريكي ...</value>
   </data>
+  <data name="notDone" xml:space="preserve">
+    <value>غير مرحل</value>
+  </data>
+  <data name="sending" xml:space="preserve">
+    <value>ترحيل</value>
+  </data>
 </root>

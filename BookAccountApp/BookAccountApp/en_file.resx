@@ -3394,4 +3394,10 @@ Please add Email in setting</value>
   <data name="trTaxUSDHint" xml:space="preserve">
     <value>trTaxUSDHint</value>
   </data>
+  <data name="notDone" xml:space="preserve">
+    <value>Not Done</value>
+  </data>
+  <data name="sending" xml:space="preserve">
+    <value>Sending</value>
+  </data>
 </root>
