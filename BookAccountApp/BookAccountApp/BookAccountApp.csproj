@@ -28,8 +28,8 @@
     <ProductName>Jellyfish</ProductName>
     <PublisherName>Jellyfish</PublisherName>
     <SuiteName>Jellyfish</SuiteName>
-    <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.0.0.1</ApplicationVersion>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.0.0.2</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -56,8 +56,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>pic\favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <NoWin32Manifest>true</NoWin32Manifest>
@@ -814,15 +813,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="pic\supcloudsLogo.ico" />
-    <Content Include="Reports\SectionData\En\EnAgents.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\SectionData\En\EnPassenger.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\SectionData\En\EnUsers.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Resource Include="EmailTemplates\images\bookimg.gif" />
     <Resource Include="increase-logo-01.ico" />
     <Resource Include="increaseLogo.ico" />
@@ -850,21 +840,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="Reports\Applications\En\EnPackages.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Applications\En\EnPrograms.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Applications\En\EnVersions.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\statisticReports\En\EnBook.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\statisticReports\En\EnPayments.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Resource Include="fonts\cairo-font\cairo bold.ttf" />
     <Resource Include="fonts\cairo-font\cairo-light.ttf" />
     <Resource Include="fonts\barcodeFont.ttf" />
@@ -1072,6 +1047,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reports\Applications\Ar\" />
+    <Folder Include="Reports\Applications\En\" />
+    <Folder Include="Reports\SectionData\En\" />
+    <Folder Include="Reports\statisticReports\En\" />
     <Folder Include="Thumb\customers\" />
     <Folder Include="View\settings\emailGeneral\" />
   </ItemGroup>

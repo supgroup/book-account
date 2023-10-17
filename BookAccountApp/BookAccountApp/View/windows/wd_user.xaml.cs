@@ -56,7 +56,7 @@ namespace BookAccountApp.View.windows
             {
                 HelpClass.StartAwait(grid_main);
                 //   requiredControlList = new List<string> { "name", "lastName", "AccountName",  "type", "mobile" , "country" };
-                requiredControlList = new List<string> { "name", "AccountName", "mobile" };
+                requiredControlList = new List<string> { "name", "AccountName" };
                 #region translate
                 //if (MainWindow.lang.Equals("en"))
                 //{
