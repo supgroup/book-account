@@ -117,7 +117,7 @@ namespace BookAccountApp.View.bookSales
             //txt_active.Text = MainWindow.resourcemanager.GetString("trDraft");        
             txt_title.Text = MainWindow.resourcemanager.GetString("bookInfoSoto");
 
-            chk_draft.Content = MainWindow.resourcemanager.GetString("trDraft");
+            chk_draft.Content = MainWindow.resourcemanager.GetString("notDone");
             chk_confirmed.Content = MainWindow.resourcemanager.GetString("done");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_passenger, MainWindow.resourcemanager.GetString("passengerNameHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_system, MainWindow.resourcemanager.GetString("bookSystemHint"));
@@ -159,7 +159,7 @@ namespace BookAccountApp.View.bookSales
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_paid, MainWindow.resourcemanager.GetString("PaidAmount"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_currency, MainWindow.resourcemanager.GetString("currencyHint"));
 
-            btn_send.Content = MainWindow.resourcemanager.GetString("send");
+            btn_send.Content = MainWindow.resourcemanager.GetString("sending");
             //
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_priceBeforTaxSY, MainWindow.resourcemanager.GetString("priceBeforTaxSYHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_chargeSY, MainWindow.resourcemanager.GetString("trTaxSYHint"));
@@ -903,7 +903,7 @@ namespace BookAccountApp.View.bookSales
             string title = MainWindow.resourcemanagerreport.GetString("book_sales") + " / " + MainWindow.resourcemanagerreport.GetString("soto");
 
             paramarr.Add(new ReportParameter("trTitle", title));
-            string reptype= tgl_serviceDatastate ? MainWindow.resourcemanager.GetString("trDraft"): MainWindow.resourcemanager.GetString("done");
+            string reptype= tgl_serviceDatastate ? MainWindow.resourcemanager.GetString("notDone") : MainWindow.resourcemanager.GetString("done");
             paramarr.Add(new ReportParameter("repType", reptype));
           
             clsReports.SaleReport(serviceDatasQuery, rep, reppath, paramarr);

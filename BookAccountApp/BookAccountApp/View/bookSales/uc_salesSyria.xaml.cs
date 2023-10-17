@@ -87,7 +87,9 @@ namespace BookAccountApp.View.sales
                 //}
                 translate();
                 #endregion
-
+                await Search();
+                Clear();
+                await fillcombos();
                 //await FillCombo.fillCountries(cb_areaMobile);
                 //await FillCombo.fillCountries(cb_areaPhone);
                 //await FillCombo.fillCountries(cb_areaFax);
@@ -97,9 +99,7 @@ namespace BookAccountApp.View.sales
                 // Keyboard.Focus(cb_passenger);
 
                 //await RefreshServiceDatasList();
-                await Search();
-                Clear();
-                await fillcombos();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -114,10 +114,12 @@ namespace BookAccountApp.View.sales
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
           //  txt_active.Text = MainWindow.resourcemanager.GetString("trDraft");
-            chk_draft.Content = MainWindow.resourcemanager.GetString("trDraft");
+            chk_draft.Content = MainWindow.resourcemanager.GetString("notDone");
             chk_confirmed.Content = MainWindow.resourcemanager.GetString("done");
             txt_title.Text = MainWindow.resourcemanager.GetString("bookInfoSyr");
             /*
+             * notDone
+sending
 priceBeforTaxSYHint
 trTaxUSDHint
 trTaxSYHint
@@ -163,7 +165,7 @@ totalSYHint
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_paid, MainWindow.resourcemanager.GetString("PaidAmount"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_currency, MainWindow.resourcemanager.GetString("currencyHint"));
 
-            btn_send.Content = MainWindow.resourcemanager.GetString("send");
+            btn_send.Content = MainWindow.resourcemanager.GetString("sending");
             //
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_priceBeforTaxSY, MainWindow.resourcemanager.GetString("priceBeforTaxSYHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_chargeSY, MainWindow.resourcemanager.GetString("trTaxSYHint"));
@@ -940,7 +942,7 @@ totalSYHint
             //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
             string title = MainWindow.resourcemanagerreport.GetString("book_sales") + " / " + MainWindow.resourcemanagerreport.GetString("syr");
             paramarr.Add(new ReportParameter("trTitle", title));
-            string reptype = tgl_serviceDatastate ? MainWindow.resourcemanager.GetString("trDraft") : MainWindow.resourcemanager.GetString("done");
+            string reptype = tgl_serviceDatastate ? MainWindow.resourcemanager.GetString("notDone") : MainWindow.resourcemanager.GetString("done");
             paramarr.Add(new ReportParameter("repType", reptype));
             clsReports.SaleReport(serviceDatasQuery, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
