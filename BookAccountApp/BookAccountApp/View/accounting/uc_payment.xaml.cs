@@ -308,7 +308,16 @@ namespace BookAccountApp.View.accounting
                             //balance
                             if (payOp.side == "syr" || payOp.side == "soto")
                             {
-                                s = await payOp.updateSideBalance(payOp.side, (decimal)payOp.cash);
+                                if (payOp.side == "syr")
+                                {
+                                    s = await payOp.updateSideBalance(payOp.side, (decimal)payOp.syCash);
+                                }
+                                else
+                                {
+                                    s = await payOp.updateSideBalance(payOp.side, (decimal)payOp.cash);
+                                }
+                              
+
 
                             }
                             Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
@@ -1263,7 +1272,9 @@ namespace BookAccountApp.View.accounting
                         btn_invoicesSide.Visibility = Visibility.Collapsed;
                         cb_currency.SelectedValue = "usd";
                         //cb_currency.IsEnabled = false;
-                        cb_currency.IsEnabled = true;
+                        cb_currency.IsEnabled = false;
+
+
 
                     }
                     else if ((cb_side.SelectedValue).ToString() == "syr")
@@ -1271,9 +1282,9 @@ namespace BookAccountApp.View.accounting
                         cb_sideValue.SelectedItem = null;
                         grid_sideValue.Visibility = Visibility.Collapsed;
                         btn_invoicesSide.Visibility = Visibility.Collapsed;
-                        cb_currency.SelectedValue = "usd";
+                        cb_currency.SelectedValue = "syp";
                         //cb_currency.IsEnabled = false;
-                        cb_currency.IsEnabled = true;
+                        cb_currency.IsEnabled = false;
                     }
                     //else if ((cb_side.SelectedValue).ToString() == "syr")
                     //{
@@ -1437,6 +1448,7 @@ namespace BookAccountApp.View.accounting
             {
                 serviceLst.Clear();
                 cashesLst.Clear();
+             
             }
             catch (Exception ex)
             {
