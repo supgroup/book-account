@@ -480,7 +480,7 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="balance" x:Name="txt_balanceTitle" Margin="10" 
-                    FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+                   FontSize="14"     HorizontalAlignment="Left"  VerticalAlignment="Center"
                                Foreground="{StaticResource MainColor}"
                     FontWeight="Bold" />
                     <!--<TextBlock Text="0" x:Name="txt_balance" Margin="8,0,1,0"  
@@ -495,12 +495,12 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="0" x:Name="txt_balance"  Margin="0,0,5,0"
                             
-                           FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+                          FontSize="14"    HorizontalAlignment="Left"  VerticalAlignment="Center"
        Foreground="{StaticResource Grey}"
         FontWeight="Regular" />
                     <TextBlock   x:Name="tb_moneyIconBalance" Grid.Column="1" Margin="0,0,1,0"
                        Foreground="#4E4E4E" Text="SYP" VerticalAlignment="Center" HorizontalAlignment="Right"
-                                  FontWeight="Bold"  FontSize="18"/>
+                                  FontWeight="Bold" FontSize="14"/>
                     </Grid>
                     
                 </Grid>
@@ -515,7 +515,7 @@ Background="White">
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="durationPaid" x:Name="txt_durationPaidTitle" Margin="10" 
-                FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+             FontSize="14"     HorizontalAlignment="Left"  VerticalAlignment="Center"
                            Foreground="{StaticResource MainColor}"
                 FontWeight="Bold" />
 
@@ -526,13 +526,13 @@ Background="White">
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="0" x:Name="txt_durationPaid" Margin="0,0,5,0"  
                              
-                           FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+                          FontSize="14"  HorizontalAlignment="Left"  VerticalAlignment="Center"
        Foreground="{StaticResource Grey}"
         FontWeight="Regular" />
                     <TextBlock Grid.Row="1"   x:Name="tb_moneyIconDur" Grid.Column="1" Margin="0,0,1,0"  
                        Foreground="#4E4E4E" Text="SYP" 
                         HorizontalAlignment="Right" VerticalAlignment="Center"
-                                  FontWeight="Bold"  FontSize="18"/>
+                                  FontWeight="Bold"  FontSize="14"/>
 
                     </Grid>
                 </Grid>
@@ -547,7 +547,7 @@ Background="White">
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="totalPaid" x:Name="txt_totalPaidTitle" Margin="10" 
-                FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+                FontSize="14"   HorizontalAlignment="Left"  VerticalAlignment="Center"
                            Foreground="{StaticResource MainColor}"
                 FontWeight="Bold" />
 
@@ -558,13 +558,13 @@ Background="White">
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="0" x:Name="txt_totalPaid" Margin="0,0,5,0" 
                        
-                           FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+                           FontSize="14"   HorizontalAlignment="Left"  VerticalAlignment="Center"
        Foreground="{StaticResource Grey}"
         FontWeight="Regular" />
                         <TextBlock Grid.Row="1"   x:Name="tb_moneyIconTotal" Grid.Column="1" Margin="0,0,1,0"  
                        Foreground="#4E4E4E" Text="SYP" 
                         HorizontalAlignment="Right" VerticalAlignment="Center"
-                                  FontWeight="Bold"  FontSize="18"/>
+                                  FontWeight="Bold" FontSize="14" />
                     </Grid>
 
                 </Grid>

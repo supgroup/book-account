@@ -504,7 +504,7 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="totalSale" x:Name="txt_totalSaleTitle" Margin="10" 
-                    FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+                    FontSize="14"     HorizontalAlignment="Left"  VerticalAlignment="Center"
                                Foreground="{StaticResource MainColor}"
                     FontWeight="Bold" />
 
@@ -515,7 +515,7 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="0" x:Name="txt_totalSale" Margin="5" 
                                 
-                               FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+                             FontSize="14"     HorizontalAlignment="Left"  VerticalAlignment="Center"
            Foreground="{StaticResource Grey}"
             FontWeight="Regular" />
                         <TextBlock Grid.Row="1"   x:Name="tb_moneyIconSale" Grid.Column="1" Margin="0,0,1,0"  
@@ -536,7 +536,7 @@ Background="White">
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="totalProfit" x:Name="txt_totalProfitTitle" Margin="10" 
-                FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+                FontSize="14"    HorizontalAlignment="Left"  VerticalAlignment="Center"
                            Foreground="{StaticResource MainColor}"
                 FontWeight="Bold" />
                     <Grid    Grid.Column="1"  >
@@ -546,7 +546,7 @@ Background="White">
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="0" x:Name="txt_totalProfit" Margin="5" 
                            
-                           FontSize="18"      HorizontalAlignment="Left"  VerticalAlignment="Center"
+                          FontSize="14"   HorizontalAlignment="Left"  VerticalAlignment="Center"
        Foreground="{StaticResource Grey}"
         FontWeight="Regular" />
                         <TextBlock Grid.Row="1"   x:Name="tb_moneyIcon" Grid.Column="1" Margin="0,0,1,0"  
