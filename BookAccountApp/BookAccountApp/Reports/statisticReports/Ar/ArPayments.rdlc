@@ -177,6 +177,14 @@
           <DataField>sourceId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
+        <Field Name="strCash">
+          <DataField>strCash</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="strExchange">
+          <DataField>strExchange</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="stropDate">
           <DataField>stropDate</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -805,7 +813,7 @@
             <Top>3.45561cm</Top>
             <Left>1.18768cm</Left>
             <Height>1.2cm</Height>
-            <Width>18.83447cm</Width>
+            <Width>18.83448cm</Width>
             <Style>
               <Border>
                 <Color>LightGrey</Color>

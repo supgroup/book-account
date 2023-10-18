@@ -45,11 +45,11 @@ namespace BookAccountApp.converters
                 }
                 else if (s.opType == "p" && s.side == "system" && s.processType == "company_commission")
                 {
-                    desc ="عمولة للشركة";
+                    desc ="عمولة للشركة"+" خاصة بالتذكرة رقم "+": " + s.ticketNum ;
                 }
                 else if (s.opType == "d" && s.side == "system" && s.processType == "cash")
                 {
-                    desc = " قبض عمولة للشركة من نظام الحجز "  +s.systemName;
+                    desc = " قبض عمولة للشركة من نظام الحجز "  +s.systemName + " خاصة بالتذكرة رقم " + ": " + s.ticketNum;
                 }
 
 
@@ -66,11 +66,11 @@ namespace BookAccountApp.converters
                 }
                 else if (s.opType == "d" && s.side == "office" && s.processType == "office_commission")
                 {
-                    desc =   " عمولة مكتب "+ s.officeName;
+                    desc =   " عمولة مكتب "+ s.officeName + " خاصة بالتذكرة رقم " + ": " + s.ticketNum; ;
                 }
                 else if (s.opType == "p" && s.side == "office" && s.processType == "cash")
                 {
-                    desc = " دفعة مقابل عمولة لمكتب "+ s.officeName;
+                    desc = " دفعة مقابل عمولة لمكتب "+ s.officeName+" خاصة بالتذكرة رقم "+": " + s.ticketNum ;
                 }
 
 

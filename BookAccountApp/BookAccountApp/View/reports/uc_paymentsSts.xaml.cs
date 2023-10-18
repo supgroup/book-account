@@ -292,8 +292,13 @@ namespace BookAccountApp.View.reports
             (
           (s.code == null ? false : (s.code.ToLower().Contains(searchText))) ||
            (s.sideStr == null ? false : (s.sideStr.ToLower().Contains(searchText))) ||
-             (s.recipient == null ? false : (s.recipient.ToLower().Contains(searchText))) ||
-         (s.recivedFrom == null ? false : (s.recivedFrom.ToLower().Contains(searchText)))
+             (s.ticketNum == null ? false : (s.ticketNum.ToLower().Contains(searchText))) ||
+         (s.systemName == null ? false : (s.systemName.ToLower().Contains(searchText)))
+          ||
+         (s.officeName == null ? false : (s.officeName.ToLower().Contains(searchText)))
+          ||
+         (s.passenger == null ? false : (s.passenger.ToLower().Contains(searchText)))
+          
             ))
             //&&
             //(

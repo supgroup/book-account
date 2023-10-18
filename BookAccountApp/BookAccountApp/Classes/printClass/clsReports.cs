@@ -507,7 +507,7 @@ passwordSoto
             paramarr.Add(new ReportParameter("trCashTooltip", MainWindow.resourcemanagerreport.GetString("trCashTooltip")));
             paramarr.Add(new ReportParameter("currency", MainWindow.resourcemanagerreport.GetString("currency")));
             paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
-     
+            paramarr.Add(new ReportParameter("exchangePrice", MainWindow.resourcemanagerreport.GetString("exchangePrice")));
             rep.DataSources.Add(new ReportDataSource("DataSet", cash));
         }
         public static void PaymentsChange(IEnumerable<PaymentsSts> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)

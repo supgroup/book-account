@@ -57,6 +57,7 @@ namespace BookAccountApp.View.reports
         PayOp PayOpRow = new PayOp();
         byte tgl_bookStsstate;
         string searchText = "";
+        string code = "";
         public static List<string> requiredControlList;
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -113,8 +114,8 @@ namespace BookAccountApp.View.reports
             dg_bookSts.Columns[3].Header = MainWindow.resourcemanager.GetString("trOffice");
             dg_bookSts.Columns[4].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
             dg_bookSts.Columns[5].Header = MainWindow.resourcemanager.GetString("exchangePrice");
-            dg_bookSts.Columns[6].Header = MainWindow.resourcemanager.GetString("currency");
-            dg_bookSts.Columns[7].Header = MainWindow.resourcemanager.GetString("trDate");
+            //dg_bookSts.Columns[6].Header = MainWindow.resourcemanager.GetString("currency");
+            dg_bookSts.Columns[6].Header = MainWindow.resourcemanager.GetString("trDate");
 
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
@@ -301,7 +302,8 @@ private string getBalance(string code)
         {
             string balance = "";
          decimal amount= (decimal)  FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
-            amount = HelpClass.ConvertToSYP(amount, "usd", FillCombo.exchangeValue);
+        
+            //amount = HelpClass.ConvertToSYP(amount, "usd", FillCombo.exchangeValue);
 
            balance = HelpClass.DecTostring(amount);
             return balance;
@@ -310,8 +312,16 @@ private string getBalance(string code)
         {
             string balance = "";
             //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
-            decimal amount = (decimal)paymentsQuery.Where(x => x.side == "system" && x.processType == "book").Sum(s => s.cash);
-           
+            decimal amount = 0;
+            if (code == "soto")
+            {
+                 amount = (decimal)paymentsQuery.Where(x => x.side == "system" && x.processType == "book").Sum(s => s.usdCash);
+            }
+            else
+            {
+                 amount = (decimal)paymentsQuery.Where(x => x.side == "system" && x.processType == "book").Sum(s => s.syCash);
+
+            }
             balance = HelpClass.DecTostring(amount);
             return balance;
         }
@@ -320,8 +330,16 @@ private string getBalance(string code)
         {
             string balance = "";
             //  decimal amount = (decimal)FillCombo.PaySidesSysList.Where(p => p.code == code).FirstOrDefault().balance;
-            decimal amount = (decimal)paymentsList.Where(x => x.side == "system" && x.processType == "book" && x.sideStr == side).Sum(s => s.cash);
-             
+            decimal amount = 0;
+                if (code == "soto")
+            {
+                 amount = (decimal)paymentsList.Where(x => x.side == "system" && x.processType == "book" && x.sideStr == side).Sum(s => s.usdCash);
+            }
+            else
+            {
+                 amount = (decimal)paymentsList.Where(x => x.side == "system" && x.processType == "book" && x.sideStr == side).Sum(s => s.syCash);
+
+            }
             balance = HelpClass.DecTostring(amount);
             return balance;
         }
@@ -764,10 +782,24 @@ private string getBalance(string code)
                 HelpClass.StartAwait(grid_main);
                 if (cb_bookSales.SelectedItem != null)
                 {//passenger office soto other
+                      code = cb_bookSales.SelectedValue.ToString();
                   Search();
-                    txt_balance.Text = getBalance(cb_bookSales.SelectedValue.ToString());
+                    txt_balance.Text = getBalance(code);
                     //txt_balance.Text = getBalance(cb_bookSales.SelectedValue.ToString());
-           
+                    string currency = "";
+                    if (code == "soto")
+                    {
+                         currency = "$";
+                    }
+                    else
+                    {
+                         currency = "SYP";
+                        
+                    }
+                        tb_moneyIconBalance.Text = currency;
+                        tb_moneyIconDur.Text = currency;
+                        tb_moneyIconTotal.Text = currency;                   
+
                 }
                 else
                 {

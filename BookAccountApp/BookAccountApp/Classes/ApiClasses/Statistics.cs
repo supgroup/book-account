@@ -14,7 +14,7 @@ using Newtonsoft.Json.Converters;
 using BookAccountApp.Classes;
 namespace BookAccountApp.ApiClasses
 {
-    public class BookSts 
+    public class BookSts
     {
         public int serviceId { get; set; }
         public string serviceNum { get; set; }
@@ -91,9 +91,9 @@ namespace BookAccountApp.ApiClasses
         public PayOp company_commission_model { get; set; }
         public PayOp office_commission_model { get; set; }
     }
-    public class PaymentsSts 
+    public class PaymentsSts
     {
-     
+
         public int payOpId { get; set; }
         public string code { get; set; }
         public Nullable<decimal> cash { get; set; }
@@ -115,7 +115,7 @@ namespace BookAccountApp.ApiClasses
         public string recivedFrom { get; set; }
         public Nullable<int> paysideId { get; set; }
         public string sideAr { get; set; }
-        public string  sideStr { get; set; }
+        public string sideStr { get; set; }
         public Nullable<int> flightId { get; set; }
         public string opName { get; set; }
         //    
@@ -139,7 +139,7 @@ namespace BookAccountApp.ApiClasses
         public string ticketNum { get; set; }
         public Nullable<decimal> deserved { get; set; }
         public string purpose { get; set; }
-      
+
 
 
         public Nullable<decimal> priceBeforTax { get; set; }
@@ -152,12 +152,14 @@ namespace BookAccountApp.ApiClasses
         public Nullable<decimal> syCash { get; set; }
         public Nullable<decimal> dgCash { get; set; }
         public Nullable<decimal> usdCash { get; set; }
+        public string strCash { get; set; }
+        public string strExchange { get; set; }
     }
     public class Statistics
     {
         public async Task<List<BookSts>> GetBookProfit(DateTime? fromDate, DateTime? toDate)
         {
-            
+
 
             List<BookSts> List = new List<BookSts>();
             string syr = MainWindow.resourcemanager.GetString("trnsyr");
@@ -247,7 +249,8 @@ namespace BookAccountApp.ApiClasses
                                 profitSY = S.profitSY,
                                 tax_valueSY = S.tax_valueSY,
 
-                                company_commission_model = S.payOp.Where(c => c.serviceId == S.serviceId &&c.opType=="d" && c.side=="system" &&c.processType=="cash").Select(c=>new PayOp {
+                                company_commission_model = S.payOp.Where(c => c.serviceId == S.serviceId && c.opType == "d" && c.side == "system" && c.processType == "cash").Select(c => new PayOp
+                                {
                                     payOpId = c.payOpId,
                                     code = c.code,
                                     cash = c.cash,
@@ -290,50 +293,50 @@ namespace BookAccountApp.ApiClasses
                                     syCash = c.syCash,
 
                                 }).FirstOrDefault(),
-                                  office_commission_model = S.payOp.Where(c => c.serviceId == S.serviceId && c.opType == "p" && c.side == "office" && c.processType == "cash").Select(c => new PayOp
-                                  {
-                                      payOpId = c.payOpId,
-                                      code = c.code,
-                                      cash = c.cash,
-                                      opType = c.opType,
-                                      //  side = c.paySidec.code,
-                                      side = c.side,
-                                      serviceId = c.serviceId,
-                                      opStatus = c.opStatus,
-                                      opDate = c.opDate,
-                                      notes = c.notes,
-                                      createUserId = c.createUserId,
-                                      updateUserId = c.updateUserId,
-                                      createDate = c.createDate,
-                                      updateDate = c.updateDate,
-                                      officeId = c.officeId,
-                                      passengerId = c.passengerId,
-                                      userId = c.userId,
-                                      recipient = c.recipient,
-                                      recivedFrom = c.recivedFrom,
-                                      paysideId = c.paysideId,
-                                      //sideAr = c.paySidec.sideAr,
-                                      flightId = c.flightId,
-                                      opName = c.opName,
-                                      //passenger = c.passengerc.name + " " + c.passengerc.lastName,
-                                      //airline = c.systemc.name + "/" + c.flightc.flightTable.name,
-                                      officeName = c.office.name,
-                                      systemType = c.systemType,
-                                      systemId = c.systemId,
-                                      //systemName = c.systemc.name,
-                                      syValue = c.syValue,
-                                      exchangeId = c.exchangeId,
-                                      currency = c.currency,
-                                      fromSide = c.fromSide,
-                                      processType = c.processType,
-                                      sourceId = c.sourceId,
-                                      paid = c.paid,
-                                      isPaid = c.isPaid,
-                                      deserved = c.deserved,
-                                      paidCurrency = c.paidCurrency,
-                                      syCash = c.syCash,
+                                office_commission_model = S.payOp.Where(c => c.serviceId == S.serviceId && c.opType == "p" && c.side == "office" && c.processType == "cash").Select(c => new PayOp
+                                {
+                                    payOpId = c.payOpId,
+                                    code = c.code,
+                                    cash = c.cash,
+                                    opType = c.opType,
+                                    //  side = c.paySidec.code,
+                                    side = c.side,
+                                    serviceId = c.serviceId,
+                                    opStatus = c.opStatus,
+                                    opDate = c.opDate,
+                                    notes = c.notes,
+                                    createUserId = c.createUserId,
+                                    updateUserId = c.updateUserId,
+                                    createDate = c.createDate,
+                                    updateDate = c.updateDate,
+                                    officeId = c.officeId,
+                                    passengerId = c.passengerId,
+                                    userId = c.userId,
+                                    recipient = c.recipient,
+                                    recivedFrom = c.recivedFrom,
+                                    paysideId = c.paysideId,
+                                    //sideAr = c.paySidec.sideAr,
+                                    flightId = c.flightId,
+                                    opName = c.opName,
+                                    //passenger = c.passengerc.name + " " + c.passengerc.lastName,
+                                    //airline = c.systemc.name + "/" + c.flightc.flightTable.name,
+                                    officeName = c.office.name,
+                                    systemType = c.systemType,
+                                    systemId = c.systemId,
+                                    //systemName = c.systemc.name,
+                                    syValue = c.syValue,
+                                    exchangeId = c.exchangeId,
+                                    currency = c.currency,
+                                    fromSide = c.fromSide,
+                                    processType = c.processType,
+                                    sourceId = c.sourceId,
+                                    paid = c.paid,
+                                    isPaid = c.isPaid,
+                                    deserved = c.deserved,
+                                    paidCurrency = c.paidCurrency,
+                                    syCash = c.syCash,
 
-                                  }).FirstOrDefault(),
+                                }).FirstOrDefault(),
 
                             }).ToList();
                     List = List.Where(S => ((fromDate == null && toDate == null) ? true :
@@ -353,7 +356,7 @@ namespace BookAccountApp.ApiClasses
                             compcomSyp = HelpClass.ConvertToSYP(row.company_commission_value, "usd", FillCombo.exchangeValue);
 
                         }
-                      
+
 
                         if (row.office_commission_model != null)
                         {
@@ -361,14 +364,14 @@ namespace BookAccountApp.ApiClasses
                         }
                         else
                         {
-                            if (row.officeId!=null)
+                            if (row.officeId != null)
                             {
                                 officecomSyp = HelpClass.ConvertToSYP(row.office_commission_value, "usd", FillCombo.exchangeValue);
                             }
-                           
+
 
                         }
-                        row.profitSY = compcomSyp-officecomSyp;
+                        row.profitSY = compcomSyp - officecomSyp;
                     }
                     return List;
                 }
@@ -383,13 +386,13 @@ namespace BookAccountApp.ApiClasses
         {
 
             List<PaymentsSts> List = new List<PaymentsSts>();
-            
+
             try
             {
                 using (bookdbEntities entity = new bookdbEntities())
                 {
                     List = (from S in entity.payOp
-                           // where S.opType == opType
+                                // where S.opType == opType
                             select new PaymentsSts()
                             {
 
@@ -436,9 +439,9 @@ namespace BookAccountApp.ApiClasses
                                 sideStr = S.side == "system" ? S.fromSide : S.side,
                                 paidCurrency = S.paidCurrency,
                                 syCash = S.syCash,
-                                currencySY="syp",
-                                ticketNum=(S.serviceData.ticketNum==null|| S.serviceData.ticketNum=="")?"-" : S.serviceData.ticketNum,
-                                
+                                currencySY = "syp",
+                                ticketNum = (S.serviceData.ticketNum == null || S.serviceData.ticketNum == "") ? "-" : S.serviceData.ticketNum,
+
                             }).ToList();
                     List = List.Where(S => ((fromDate == null && toDate == null) ? true :
                            ((fromDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date >= fromDate.Value.Date) : true)
@@ -447,24 +450,24 @@ namespace BookAccountApp.ApiClasses
 
                     foreach (PaymentsSts row in List)
                     {
-                        if (row.side=="other")
+                        if (row.side == "other")
                         {
                             row.dgCash = row.syCash;
                             row.usdCash = HelpClass.ConvertToUSD(row.cash, row.currency, row.syValue);
 
                         }
-                        else if ((row.opType == "p" && (row.side == "soto" || row.side == "syr")) )
-                             
+                        else if ((row.opType == "p" && (row.side == "soto" || row.side == "syr")))
+
                         {
                             //row.dgCash =HelpClass.ConvertToSYP( row.cash, row.paidCurrency,FillCombo.exchangeValue);
-                           // row.syValue = FillCombo.exchangeValue;
+                            // row.syValue = FillCombo.exchangeValue;
                             row.dgCash = row.paidCurrency == "syp" ? row.syCash : HelpClass.ConvertToSYP(row.cash, row.paidCurrency, row.syValue);
                             row.usdCash = row.cash;
                         }
-                        else if((row.opType == "p" && row.side == "system" && row.processType == "book"))
+                        else if ((row.opType == "p" && row.side == "system" && row.processType == "book"))
                         {
                             row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, row.syValue);
-                         
+
                             row.usdCash = row.cash;
                         }
                         else if (row.opType == "p" && row.side == "system" && row.processType == "company_commission")
@@ -476,10 +479,10 @@ namespace BookAccountApp.ApiClasses
                             }
                             else
                             {
-                                 row.syValue = FillCombo.exchangeValue;
+                                row.syValue = FillCombo.exchangeValue;
                                 row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, FillCombo.exchangeValue);
                             }
-                            
+
 
                             row.usdCash = row.cash;
                         }
@@ -510,7 +513,7 @@ namespace BookAccountApp.ApiClasses
                             row.usdCash = row.cash;
 
                         }
-                        else if (row.opType == "d" && row.side == "office" &&( row.processType == "cashservice"|| row.processType == "cash"))
+                        else if (row.opType == "d" && row.side == "office" && (row.processType == "cashservice" || row.processType == "cash"))
                         {
                             //desc = " قبض من مكتب " + row.officeName;
                             if (row.isPaid == true)
@@ -553,16 +556,16 @@ namespace BookAccountApp.ApiClasses
                         else if (row.opType == "p" && row.side == "passenger" && row.processType == "service")
                         {
                             //desc = " دفعة مقابل الحجز للمسافر " + row.passenger;
-                       
 
-                             if (row.isPaid == true)
-                                {
 
-                                row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, row.syValue);                          
+                            if (row.isPaid == true)
+                            {
+
+                                row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, row.syValue);
                             }
                             else
                             {
-                                row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency,FillCombo.exchangeValue);                             
+                                row.dgCash = HelpClass.ConvertToSYP(row.cash, row.currency, FillCombo.exchangeValue);
                                 row.syValue = FillCombo.exchangeValue;
                             }
 
@@ -571,7 +574,7 @@ namespace BookAccountApp.ApiClasses
                         else if (row.opType == "d" && row.side == "passenger" && (row.processType == "cashservice" || row.processType == "cash"))
                         {
                             //desc = " قبض من المسافر " + row.passenger;
-                       
+
 
                             if (row.isPaid == true)
                             {
@@ -613,15 +616,15 @@ namespace BookAccountApp.ApiClasses
                             where ((S.opType == "p" && (S.side == "soto" || S.side == "syr")) ||
                             (S.opType == "p" && S.side == "system" && (S.fromSide == "soto" || S.fromSide == "syr") && S.processType == "book"))
                             select new PaymentsSts()
-                            { 
+                            {
                                 //
                                 payOpId = S.payOpId,
                                 code = S.code,
-                                cash =S.cash,
+                                cash = S.cash,
                                 opType = S.opType,
                                 side = S.side,
-                                fromSide=S.fromSide,
-                                processType= S.processType,
+                                fromSide = S.fromSide,
+                                processType = S.processType,
                                 serviceId = S.serviceId,
                                 opStatus = S.opStatus,
                                 opDate = S.opDate,
@@ -641,36 +644,61 @@ namespace BookAccountApp.ApiClasses
                                 flightId = S.flightId,
                                 opName = S.opName,
                                 systemName = S.systems.name,
-                              //  airline =S.processType=="book"? S.systems.name + "/" + S.flights.flightTable.name + "/" + S.paySides.sideAr : S.paySides.sideAr,
+                                //  airline =S.processType=="book"? S.systems.name + "/" + S.flights.flightTable.name + "/" + S.paySides.sideAr : S.paySides.sideAr,
                                 //airlineStr = S.processType == "book" ? S.systems.name + "/" + S.flights.flightTable.name + "/" + S.paySides.sideAr : S.paySides.sideAr,
 
-                                airlineStr = S.processType == "book" ? S.flights.airlines.name + (S.flights.flightTable.name == null || S.flights.flightTable.name == "" ? "" : (" / " + S.flights.flightTable.name)) +(S.flights.type == null ? "" : (" / " + (S.flights.type == 1 ? one : (S.flights.type == 2 ? two : "")))) + " / "+ S.paySides.sideAr : S.paySides.sideAr,
+                                airlineStr = S.processType == "book" ? S.flights.airlines.name + (S.flights.flightTable.name == null || S.flights.flightTable.name == "" ? "" : (" / " + S.flights.flightTable.name)) + (S.flights.type == null ? "" : (" / " + (S.flights.type == 1 ? one : (S.flights.type == 2 ? two : "")))) + " / " + S.paySides.sideAr : S.paySides.sideAr,
 
                                 //officeName = S.officeId==null?"":S.office.name,
                                 officeName = S.officeId == null ? FillCombo.companyName : S.office.name,
-                                currency =S.currency,
-                                
+                                currency = S.currency,
+
                                 sideAr = S.paySides.sideAr,
-                              
+
                                 passenger = S.passengers.name + " " + S.passengers.lastName,
                                 airline = S.systems.name + "/" + S.flights.flightTable.name,
-                              
+
                                 systemType = S.systemType,
                                 systemId = S.systemId,
-                               
+
                                 syValue = S.syValue,
                                 exchangeId = S.exchangeId,
-                             
+
                                 sourceId = S.sourceId,
                                 paid = S.paid,
                                 isPaid = S.isPaid,
                                 deserved = S.deserved,
-
+                                syCash=S.syCash,
                             }).ToList();
                     foreach (PaymentsSts row in List)
                     {
-                        row.cash = HelpClass.ConvertToSYP(row.cash, row.currency, row.syValue);
-                        row.currency = "syp";
+                        //row.cash = HelpClass.ConvertToSYP(row.cash, row.currency, row.syValue);
+                        //row.currency = "syp";
+                        if ((  row.side == "syr"))
+                        {
+                            row.usdCash = HelpClass.ConvertToUSD(row.syCash, "syp", FillCombo.exchangeValue);
+                            row.syValue = FillCombo.exchangeValue;
+                        }
+                        else if ((  row.side == "soto"))
+                        {
+                            row.usdCash = row.cash;
+                          
+                        }
+                        else if ((  row.side == "system" && (row.fromSide == "syr") && row.processType == "book"))
+                        {
+                            row.usdCash = row.cash;
+                            row.syCash = HelpClass.ConvertToSYP(row.cash, row.currency, row.syValue);
+
+                        }
+                        else if ((  row.side == "system" && (row.fromSide == "soto") && row.processType == "book"))
+                        {
+                            row.usdCash = row.cash;
+                            row.syCash = HelpClass.ConvertToSYP(row.cash, row.currency, row.syValue);
+                        }
+                        row.strCash = HelpClass.DecTostring(row.usdCash) + " $";
+                        row.strExchange = HelpClass.DecTostring(row.syValue) + " SYP"; 
+
+
                     }
                     //List = List.Where(S => ((fromDate == null && toDate == null) ? true :
                     //       ((fromDate != null) ? S.createDate == null ? false : (S.createDate.Value.Date >= fromDate.Value.Date) : true)
@@ -680,7 +708,7 @@ namespace BookAccountApp.ApiClasses
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return List;
             }
