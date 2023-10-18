@@ -670,7 +670,10 @@ private string getBalance(string code)
             rep.DataSources.Clear();
             rep.EnableExternalImages = true;
             //  servicemodel= await servicemodel.GetByID((int)payOp.serviceId);
-            paramarr = reportclass.fillPayReport(PayOpRow);
+            PayOp repPayop = PayOpRow;
+            repPayop.cash = PayOpRow.syCash;
+            repPayop.currency = "syp";
+            paramarr = reportclass.fillPayReport(repPayop);
             clsReports.Header(paramarr);
             rep.SetParameters(paramarr);
             rep.Refresh();
