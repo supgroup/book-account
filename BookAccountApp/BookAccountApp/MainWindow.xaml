@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BookAccountApp"
         mc:Ignorable="d" Icon="pic/favicon.ico"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        Title="MOWAISHE"   Loaded="Window_Loaded"  
+        Title="MOWAISHE Travel"   Loaded="Window_Loaded"  
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowStartupLocation="CenterScreen"  WindowStyle="None"
         WindowState="Maximized" d:DesignWidth="1200" d:DesignHeight="800"   >
@@ -331,7 +331,7 @@
                              Margin="10 10 0 10"/>
                     <TextBlock Foreground="{StaticResource MainColor}"
                                FontSize="14"
-                                Text="MOWAISHE"
+                                Text="MOWAISHE Travel"
                              Margin="5 10 10 10"/>
                 </StackPanel>
             </Grid>
