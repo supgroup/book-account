@@ -275,6 +275,15 @@
           <Property Name="code" Type="nvarchar" MaxLength="100" />
           <Property Name="balance" Type="decimal" Precision="20" Scale="3" />
         </EntityType>
+        <EntityType Name="ProgramDetails">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="activateCode" Type="nvarchar(max)" />
+          <Property Name="isCurrent" Type="int" />
+          <Property Name="state" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="serviceData">
           <Key>
             <PropertyRef Name="serviceId" />
@@ -982,6 +991,7 @@
           <EntitySet Name="passengers" EntityType="Self.passengers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="payOp" EntityType="Self.payOp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="paySides" EntityType="Self.paySides" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProgramDetails" EntityType="Self.ProgramDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="serviceData" EntityType="Self.serviceData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="serviceDataFiles" EntityType="Self.serviceDataFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="setting" EntityType="Self.setting" Schema="dbo" store:Type="Tables" />
@@ -2115,6 +2125,7 @@
             <End Role="airlines" EntitySet="airlines" />
             <End Role="flights" EntitySet="flights" />
           </AssociationSet>
+          <EntitySet Name="ProgramDetails" EntityType="bookModel.ProgramDetails" />
         </EntityContainer>
         <EntityType Name="officeFiles">
           <Key>
@@ -2431,6 +2442,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ProgramDetails">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="activateCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isCurrent" Type="Int32" />
+          <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2903,6 +2923,16 @@
                 <ScalarProperty Name="notes" ColumnName="notes" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="airlineId" ColumnName="airlineId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProgramDetails">
+            <EntityTypeMapping TypeName="bookModel.ProgramDetails">
+              <MappingFragment StoreEntitySet="ProgramDetails">
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="isCurrent" ColumnName="isCurrent" />
+                <ScalarProperty Name="activateCode" ColumnName="activateCode" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -142,23 +142,9 @@ namespace BookAccountApp.View.windows
         {//log in
             try
             {
-             // AddNewConnectionString();
-               
-                //using (bookdbEntities entity = new bookdbEntities())
-                //{
-                //    if (entity.Database.Exists())
-                //    {
-                //        MessageBox.Show("ok");
-                //        //string db = entity.Database.Connection.Database;
-                //        //string ds = entity.Database.Connection.DataSource;
-                //    }
-                //    else
-                //    {
-                //        AddNewConnectionString(".\\SQLEXPRESS", "bookdb");
-                  
-                //        MessageBox.Show("not exist");
-                //    }
-                //}
+             
+         
+             
                 if (!logInProcessing)
                 {
                     logInProcessing = true;

@@ -76,6 +76,7 @@
         <AssociationConnector Association="bookModel.FK_payOp_payOp" />
         <EntityTypeShape EntityType="bookModel.airlines" Width="1.5" PointX="5.375" PointY="4.875" />
         <AssociationConnector Association="bookModel.FK_flights_airlines" />
+        <EntityTypeShape EntityType="bookModel.ProgramDetails" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -229,6 +229,7 @@
     <Compile Include="Classes\ApiClasses\FlightTable.cs" />
     <Compile Include="Classes\ApiClasses\OfficeSystem.cs" />
     <Compile Include="Classes\ApiClasses\Exchange.cs" />
+    <Compile Include="Classes\ApiClasses\ProgramDetailsCls.cs" />
     <Compile Include="Classes\ApiClasses\Systems.cs" />
     <Compile Include="Classes\ApiClasses\PaySides.cs" />
     <Compile Include="Classes\ApiClasses\FromTable.cs" />
@@ -246,6 +247,7 @@
     <Compile Include="Classes\ApiClasses\Statistics.cs" />
     <Compile Include="Classes\ApiClasses\ServiceData.cs" />
     <Compile Include="Classes\ApiClasses\Users.cs" />
+    <Compile Include="Classes\CodeCls.cs" />
     <Compile Include="Classes\DynamicallyClass.cs" />
     <Compile Include="Classes\FillCombo.cs" />
     <Compile Include="Classes\HelpClass.cs" />
@@ -258,6 +260,7 @@
     <Compile Include="Classes\printClass\numberToWord\ToWord.cs" />
     <Compile Include="Classes\printClass\ReportCls.cs" />
     <Compile Include="Classes\printClass\rptSectionData.cs" />
+    <Compile Include="Classes\setupConfiguration.cs" />
     <Compile Include="converters\flightTypeConverter.cs" />
     <Compile Include="converters\currencyConverter.cs" />
     <Compile Include="converters\accuracyConverter.cs" />
@@ -320,6 +323,9 @@
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="paySides.cs">
+      <DependentUpon>bookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProgramDetails.cs">
       <DependentUpon>bookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="serviceData.cs">
@@ -424,6 +430,9 @@
     <Compile Include="View\settings\users\uc_users.xaml.cs">
       <DependentUpon>uc_users.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\setup\uc_codeconfig.xaml.cs">
+      <DependentUpon>uc_codeconfig.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_acceptCancelPopup.xaml.cs">
       <DependentUpon>wd_acceptCancelPopup.xaml</DependentUpon>
     </Compile>
@@ -474,6 +483,9 @@
     </Compile>
     <Compile Include="View\windows\wd_reportPrinterSetting.xaml.cs">
       <DependentUpon>wd_reportPrinterSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_setupProg.xaml.cs">
+      <DependentUpon>wd_setupProg.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_systems.xaml.cs">
       <DependentUpon>wd_systems.xaml</DependentUpon>
@@ -628,6 +640,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\setup\uc_codeconfig.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\windows\wd_acceptCancelPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -693,6 +709,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_reportPrinterSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_setupProg.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -764,6 +784,7 @@
     <Resource Include="pic\user-profile.png" />
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
+    <Resource Include="pic\setup-bg.jpg" />
     <Content Include="Reports\SectionData\Ar\ArPassenger.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
