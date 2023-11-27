@@ -219,83 +219,134 @@ namespace BookAccountApp.View.windows
                         //  MessageBox.Show("ok");
                         if (activemode.expireDate.Value >= now)
                         {
-                            //   MessageBox.Show("ok");
-                            int cont = await programdetailModel.GetCountDetailList(programdetailList);
-                            if ((cont == 0 && activemode.startDate > now))
-                            {
-                                //   MessageBox.Show("تاريخ بدايةالصلاحية لم يبدا بعد");
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("notbegin"), animation: ToasterAnimation.FadeIn);
 
-                            }
-                            else
-                            {
 
-                               // MessageBox.Show("ok");
-                                if (cont == 0 && activemode.startDate <= now)
+                                if (isExtende == false)
                                 {
-                                    //save record
-                                    programdetailModel = new ProgramDetailsCls();
-                                    programdetailModel.isCurrent = 1;
-                                    programdetailModel.state = "active";
-                                    programdetailModel.activateCode = activeKey;
+                                    //from start
+                                    
+                                    int cont = await programdetailModel.GetCountDetailList(programdetailList);
+                                    if ((cont == 0 && activemode.startDate > now))
+                                    {
+                                        //   MessageBox.Show("تاريخ بدايةالصلاحية لم يبدا بعد");
+                                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("notbegin"), animation: ToasterAnimation.FadeIn);
 
-                                    decimal s = await programdetailModel.Save(programdetailModel);
-                                    if (s <= 0)
-                                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                    }
                                     else
                                     {
-                                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("activatedsucsessful"), animation: ToasterAnimation.FadeIn);
-                                        await Task.Delay(2000);
-                                        Application.Current.Shutdown();
+
+                                        // MessageBox.Show("ok");
+                                        if (cont == 0 && activemode.startDate <= now)
+                                        {
+                                            //save record
+                                            programdetailModel = new ProgramDetailsCls();
+                                            programdetailModel.isCurrent = 1;
+                                            programdetailModel.state = "active";
+                                            programdetailModel.activateCode = activeKey;
+
+                                            decimal s = await programdetailModel.Save(programdetailModel);
+                                            if (s <= 0)
+                                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                            else
+                                            {
+                                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("activatedsucsessful"), animation: ToasterAnimation.FadeIn);
+                                                await Task.Delay(2000);
+                                                Application.Current.Shutdown();
+                                            }
+                                        }
+                                        else if (cont > 0)
+                                        {
+                                            result = await programdetailModel.CheckmodelAvailable(activemode);
+                                            if (result == "notbegin")
+                                            {
+                                                // add and iscurrent=2
+
+                                                programdetailModel = new ProgramDetailsCls();
+                                                programdetailModel.isCurrent = 2;
+                                                programdetailModel.state = "active";
+                                                programdetailModel.activateCode = activeKey;
+                                                decimal s = await programdetailModel.resetallCurrent2();
+                                                s = await programdetailModel.Save(programdetailModel);
+                                                if (s <= 0)
+                                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                                else
+                                                {
+                                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("activatedsucsessful"), animation: ToasterAnimation.FadeIn);
+                                                    await Task.Delay(2000);
+                                                    Application.Current.Shutdown();
+                                                }
+                                            }
+                                            else if (result == "ok")
+                                            {
+                                                //add and is current =1 
+
+                                                programdetailModel = new ProgramDetailsCls();
+                                                programdetailModel.isCurrent = 1;
+                                                programdetailModel.state = "active";
+                                                programdetailModel.activateCode = activeKey;
+                                                decimal s = await programdetailModel.resetallCurrent();
+                                                s = await programdetailModel.Save(programdetailModel);
+                                                if (s <= 0)
+                                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                                else
+                                                {
+                                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("activatedsucsessful"), animation: ToasterAnimation.FadeIn);
+                                                    await Task.Delay(2000);
+                                                    Application.Current.Shutdown();
+                                                }
+                                            }
+                                        }
+
+                                        //save record
+                                        //   await programdetailModel.Save(programdetailModel);
+
                                     }
                                 }
-                                else if (cont > 0 )
+                                else
                                 {
-                                    result = await programdetailModel.CheckmodelAvailable(activemode);
+                                   // isExtende=true
+                                    //from setting
+                                      result = await programdetailModel.CheckmodelAvailable(activemode);
                                     if (result== "notbegin")
                                     {
-                                        // add and iscurrent=2
-
                                         programdetailModel = new ProgramDetailsCls();
                                         programdetailModel.isCurrent = 2;
                                         programdetailModel.state = "active";
                                         programdetailModel.activateCode = activeKey;
                                         decimal s = await programdetailModel.resetallCurrent2();
-                                          s = await programdetailModel.Save(programdetailModel);
+                                        s = await programdetailModel.Save(programdetailModel);
                                         if (s <= 0)
                                             Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                         else
                                         {
                                             Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("activatedsucsessful"), animation: ToasterAnimation.FadeIn);
                                             await Task.Delay(2000);
-                                            Application.Current.Shutdown();
+                                          this.Close();
                                         }
-                                    }
-                                    else if (result=="ok")
+                                    }else if (result == "ok")
                                     {
-                                        //add and is current =1 
 
                                         programdetailModel = new ProgramDetailsCls();
                                         programdetailModel.isCurrent = 1;
                                         programdetailModel.state = "active";
                                         programdetailModel.activateCode = activeKey;
-                                        decimal s=await programdetailModel.resetallCurrent();
-                                         s = await programdetailModel.Save(programdetailModel);
+                                        decimal s = await programdetailModel.resetallCurrent();
+                                        s = await programdetailModel.Save(programdetailModel);
                                         if (s <= 0)
                                             Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                         else
                                         {
                                             Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("activatedsucsessful"), animation: ToasterAnimation.FadeIn);
                                             await Task.Delay(2000);
-                                            Application.Current.Shutdown();
+                                            this.Close();
                                         }
-                                    }
-                                }
-                                
-                                //save record
-                                //   await programdetailModel.Save(programdetailModel);
 
-                            }
+                                    }
+
+                                }
+
+
+                          
                         }
                         else
                         {

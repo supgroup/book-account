@@ -11,7 +11,7 @@ using System.Web;
 using System.Security.Claims;
 using BookAccountApp.Classes;
 using Newtonsoft.Json.Converters;
- 
+
 namespace BookAccountApp.ApiClasses
 {
     public class ActivateModel
@@ -40,7 +40,7 @@ namespace BookAccountApp.ApiClasses
         public string activateCode { get; set; }
         public Nullable<int> isCurrent { get; set; }
         public string state { get; set; }
-        public  ActivateModel Activatemodel { get; set; }
+        public ActivateModel Activatemodel { get; set; }
         public string getHardCode()
         {
             string motherCode = setupConfiguration.GetMotherBoardID();
@@ -56,25 +56,25 @@ namespace BookAccountApp.ApiClasses
             string result = "";
             string Nextresult = "";
             DateTime now = DateTime.Now;
-            if (List== null|| List.Count()==0)
+            if (List == null || List.Count() == 0)
             {
-                result ="no";//1
-            } 
+                result = "no";//1
+            }
             else
             {
                 ProgramDetailsCls currentdetail = List.Where(x => x.isCurrent == 1).FirstOrDefault();
-                result= await CheckmodelAvailable(currentdetail.Activatemodel);//2
+                result = await CheckmodelAvailable(currentdetail.Activatemodel);//2
                 if (result == "expired")
                 {
                     ProgramDetailsCls NextDetail = List.Where(x => x.isCurrent == 2).FirstOrDefault();
-                    if (NextDetail!=null)
+                    if (NextDetail != null)
                     {
-                        if (NextDetail.Activatemodel!=null)
+                        if (NextDetail.Activatemodel != null)
                         {
                             //if( NextDetail.Activatemodel.startDate <= currentdetail.Activatemodel.expireDate 
                             //     && NextDetail.Activatemodel.startDate<=now)
                             result = await CheckmodelAvailable(NextDetail.Activatemodel);
-                            if(result=="ok")
+                            if (result == "ok")
                             {
                                 //update to current
                                 await updatetoCurrent(NextDetail);
@@ -90,14 +90,14 @@ namespace BookAccountApp.ApiClasses
                         result = "expired";//3
 
                     }
-                  
-                   // result = "no";
+
+                    // result = "no";
                 }
                 else
                 {
 
                 }
-                 
+
             }
             return result;
         }
@@ -108,38 +108,38 @@ namespace BookAccountApp.ApiClasses
             DateTime now = DateTime.Now;
             if (Activatemodel.customerHardCode == deviceCode)
             {
-              
+
                 if (Activatemodel.expireDate.Value >= now)
                 {
-                   
+
                     if (!(Activatemodel.startDate <= now))
                     {
-                      //  MessageBox.Show("تاريخ بدايةالصلاحية لم يبدا بعد");
+                        //  MessageBox.Show("تاريخ بدايةالصلاحية لم يبدا بعد");
                         result = "notbegin";
                     }
                     else
                     {
                         result = "ok";
                         // MessageBox.Show("ok");
-                       
+
                     }
                 }
                 else
                 {
-                  //  MessageBox.Show("النسخة منتهية");
+                    //  MessageBox.Show("النسخة منتهية");
                     result = "expired";
                 }
             }
             else
             {
-               // MessageBox.Show("الرمز غير صحيح");
+                // MessageBox.Show("الرمز غير صحيح");
                 result = "wrongcode";
             }
             return result;
         }
         public async Task<int> GetCountDetailList(List<ProgramDetailsCls> List)
         {
-           
+
             //List = await GetAll();
             int result = 0;
             if (List == null || List.Count() == 0)
@@ -151,6 +151,65 @@ namespace BookAccountApp.ApiClasses
                 result = List.Count();
             }
             return result;
+        }
+
+        public async Task<DateTime> getExpireDate()
+        {          
+            DateTime now = DateTime.Now;
+            DateTime expiredate= now.AddDays(-1);
+            try
+            {
+                List<ProgramDetailsCls> allList = await GetAll();
+                ProgramDetailsCls currentdetail = allList.Where(x => x.isCurrent == 1).FirstOrDefault();
+
+                ProgramDetailsCls NextDetail = allList.Where(x => x.isCurrent == 2).FirstOrDefault();
+                if (NextDetail != null)
+                {
+                    if (NextDetail.Activatemodel.expireDate> currentdetail.Activatemodel.expireDate)
+                    {
+                        expiredate = NextDetail.Activatemodel.expireDate.Value;
+                    }
+                    else
+                    {
+                        expiredate = currentdetail.Activatemodel.expireDate.Value;
+                    }
+                     
+                }
+                else
+                {
+                    //no 2 current
+                    expiredate = currentdetail.Activatemodel.expireDate.Value;
+                }
+                
+
+
+                return expiredate;
+            }
+            catch
+            {
+                return expiredate;
+            }
+        }
+
+        public async Task<bool> CheckRemainTen()
+        {
+            DateTime now = DateTime.Now;
+            DateTime expire = await getExpireDate();
+            TimeSpan remaintime = expire - now;
+
+            int days = remaintime.Days;
+            bool result = false;
+
+            if (days<=10)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+
         }
         public async Task<List<ProgramDetailsCls>> GetAll()
         {
@@ -172,7 +231,7 @@ namespace BookAccountApp.ApiClasses
 
 
                             }).ToList();
-                    foreach(ProgramDetailsCls row in List)
+                    foreach (ProgramDetailsCls row in List)
                     {
                         row.Activatemodel = codclass.convertToModel(row.activateCode);
 
@@ -231,7 +290,7 @@ namespace BookAccountApp.ApiClasses
                         {
                             var tmpObject = entity.ProgramDetails.Where(p => p.id == newObject.id).FirstOrDefault();
 
-                            
+
                             tmpObject.activateCode = newObject.activateCode;
                             tmpObject.isCurrent = newObject.isCurrent;
                             tmpObject.state = newObject.state;
@@ -256,7 +315,7 @@ namespace BookAccountApp.ApiClasses
         {
 
 
-           
+
 
 
             ProgramDetailsCls row = new ProgramDetailsCls();
@@ -349,7 +408,7 @@ namespace BookAccountApp.ApiClasses
                     {
                         var locationEntity = entity.Set<ProgramDetails>();
                         //locationEntity.ForEach(x =>);
-                     
+
                         if (newObject.id == 0)
                         {
 
@@ -360,8 +419,8 @@ namespace BookAccountApp.ApiClasses
                             entity.ProgramDetails.ToList().ForEach(x => x.isCurrent = 0);
                             entity.SaveChanges();
                             //update last code to current
-                            var tmpObject = entity.ProgramDetails.Where(p => p.id == newObject.id).FirstOrDefault(); 
-                            tmpObject.isCurrent = 1;                            
+                            var tmpObject = entity.ProgramDetails.Where(p => p.id == newObject.id).FirstOrDefault();
+                            tmpObject.isCurrent = 1;
                             entity.SaveChanges();
                             message = tmpObject.id;
                         }
@@ -381,8 +440,8 @@ namespace BookAccountApp.ApiClasses
         public async Task<decimal> resetallCurrent()
         {
             decimal message = 0;
-                try
-                {
+            try
+            {
                 using (bookdbEntities entity = new bookdbEntities())
                 {
                     var locationEntity = entity.Set<ProgramDetails>();
@@ -392,14 +451,14 @@ namespace BookAccountApp.ApiClasses
                     message = entity.SaveChanges();
 
                 }
-                   
-                    return message;
-                }
-                catch
-                {
-                    return 0;
-                }
+
+                return message;
             }
+            catch
+            {
+                return 0;
+            }
+        }
         public async Task<decimal> resetallCurrent2()
         {
             decimal message = 0;
@@ -410,7 +469,7 @@ namespace BookAccountApp.ApiClasses
                     var locationEntity = entity.Set<ProgramDetails>();
                     //locationEntity.ForEach(x =>);
                     //reset all to 0
-                    entity.ProgramDetails.ToList().Where(r=>r.isCurrent==2).ToList().ForEach(x => x.isCurrent = 0);
+                    entity.ProgramDetails.ToList().Where(r => r.isCurrent == 2).ToList().ForEach(x => x.isCurrent = 0);
                     message = entity.SaveChanges();
 
                 }
@@ -423,6 +482,13 @@ namespace BookAccountApp.ApiClasses
             }
         }
 
+        //ProgramDetailsCls pr = new ProgramDetailsCls();
+        //var ress1 = await pr.getExpireDate();
+        //var ress2 = await pr.CheckRemainTen();
+
+        ////   await pr.get
+        //MessageBox.Show(ress1.ToString()+" - "+ ress2.ToString());
+
     }
-  
+
 }
