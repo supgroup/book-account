@@ -1,9 +1,9 @@
 ﻿using netoaster;
 using BookAccountApp.Classes;
-using BookAccountApp.View.setup;
+ 
 using System;
 using System.Collections.Generic;
-using System.Configuration;
+ 
 using System.Linq;
 using System.Reflection;
 using System.Resources;
@@ -11,12 +11,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+
+using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
+using BookAccountApp.ApiClasses;
+using Newtonsoft.Json;
+ 
 
 namespace BookAccountApp.View.windows
 {
@@ -30,23 +32,33 @@ namespace BookAccountApp.View.windows
             InitializeComponent();
         }
         public static ResourceManager resourcemanager;
-      
-   
-        
-       
-        static public string imgFileName = "pic/no-image-icon-125x125.png";
+
+
+        public bool isActivated { get; set; }
+
+        BrushConverter bc = new BrushConverter();
+        public static List<string> requiredControlList;
+        public int isFirstActive = 0;
+        public bool isExtende = false;
+        public string reason = "";
+        string deviceCode = "";
+        ProgramDetailsCls programdetailModel = new ProgramDetailsCls();
+        List<ProgramDetailsCls> programdetailList = new List<ProgramDetailsCls>();
+        ActivateModel activeModel = new ActivateModel();
+
+
+       // static public string imgFileName = "pic/no-image-icon-125x125.png";
         static public ImageBrush brush = new ImageBrush();
 
-        uc_codeconfig selectcodeconfig;
-      
-         public static List<string> requiredControlList;
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        //uc_codeconfig selectcodeconfig;
+       
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name" };
+              //  requiredControlList = new List<string> { "name" };
                 #region translate
                 //if (AppSettings.lang.Equals("en"))
                 //{
@@ -56,19 +68,18 @@ namespace BookAccountApp.View.windows
                 //else
                 //{
                 //    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.ar_file", Assembly.GetExecutingAssembly());
-                grid_main.FlowDirection = FlowDirection.RightToLeft;
+                grid_mainWindow.FlowDirection = FlowDirection.RightToLeft;
                 //}
            translate();
-                grid_main.Children.Clear();
+                Keyboard.Focus(tb_customerCode);
 
+                //  Clear();
+                programdetailList = await programdetailModel.GetAll();
+           //     string res = await programdetailModel.CheckAvailable();
 
-                grid_main.Children.Add(uc_codeconfig.Instance);
+                deviceCode = programdetailModel.getHardCode();
+                tb_customerCode.Text = deviceCode;
                 #endregion
-
-
-
-
-
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);
             }
@@ -83,37 +94,21 @@ namespace BookAccountApp.View.windows
         private void translate()
         {
 
-            //txt_title.Text = MainWindow.resourcemanager.GetString("airlines");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("airlineHint"));
+            txt_title.Text = MainWindow.resourcemanager.GetString("activeData");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_customerCode, MainWindow.resourcemanager.GetString("deviceserialHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_activeCode, MainWindow.resourcemanager.GetString("activationCodeHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
-            //btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
-            //btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            //btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-
-
-            //dg_items.Columns[0].Header = MainWindow.resourcemanager.GetString("airline");
-            //dg_items.Columns[1].Header = MainWindow.resourcemanager.GetString("trNote");
-
-
-            //btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
-
-
-
-            //tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            ////tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            ////tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            ////tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            ////tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
-            //tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
-
+            btn_activate.Content = MainWindow.resourcemanager.GetString("confirmActivate");
+            btn_cancel.Content = MainWindow.resourcemanager.GetString("cancel");
+            txt_message.Text =reason;
         }
         private void Btn_cancel_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Application.Current.Shutdown();
+               // Application.Current.Shutdown();
+                this.Close();
             }
             catch (Exception ex)
             {
@@ -122,187 +117,126 @@ namespace BookAccountApp.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_back_Click(object sender, RoutedEventArgs e)
-        {
-            //pageIndex--;
-            //CallPage(pageIndex, (sender as Button).Tag.ToString());
-        }
-        private async void Btn_next_Click(object sender, RoutedEventArgs e)
-        {
-            //isValid = true;
-            //// uc_serverConfig
-            //if (pageIndex == 0)
-            //{
-            //    var supsublist = list.Take(2);
-            //    foreach (var item in supsublist)
-            //    {
-            //        if (item.key.Equals("serverUri"))
-            //        {
-            //            if (string.IsNullOrWhiteSpace(serverConfigInstance.serverUri))
-            //            {
-            //                item.value = "";
-            //                isValid = false;
-            //                break;
-            //            }
-            //            else
-            //            {
-            //                item.value = serverConfigInstance.serverUri;
-            //                bool validUrl = setupConfiguration.validateUrl(item.value);
-            //                if (!validUrl)
-            //                {
-            //                    Toaster.ShowWarning(this, message: "wrong Url", animation: ToasterAnimation.FadeIn);
-            //                    isValid = false;
-            //                    break;
-            //                }
-            //            }
-
-            //        }
-            //        else if (item.key.Equals("activationkey"))
-            //        {
-            //            if (string.IsNullOrWhiteSpace(serverConfigInstance.activationkey))
-            //            {
-            //                item.value = "";
-            //                isValid = false;
-            //                break;
-            //            }
-            //            else
-            //            {
-            //                item.value = serverConfigInstance.activationkey;
-            //            }
-            //        }
-            //    }
-            //}
-            //else if (pageIndex == 1)
-            //{
-            //    var supsublist = list.Skip(2).Take(2);
-            //    foreach (var item in supsublist)
-            //    {
-            //        if (item.key.Equals("posId"))
-            //        {
-            //            if (selectPosInstance.posId.Equals(0))
-            //            {
-            //                item.value = "";
-            //                isValid = false;
-            //                break;
-            //            }
-            //            else
-            //            {
-            //                item.value = selectPosInstance.posId.ToString();
-            //            }
-            //        }
-            //        else if (item.key.Equals("branchId"))
-            //        {
-            //            if (selectPosInstance.branchId.Equals(0))
-            //            {
-            //                item.value = "";
-            //                isValid = false;
-            //                break;
-            //            }
-            //            else
-            //            {
-            //                item.value = selectPosInstance.branchId.ToString();
-            //            }
-            //        }
-            //    }
-            //}
-
-            //if (isValid)
-            //{
-            //    if (pageIndex == 1)
-            //{
-            //        int res = 0;
-            //        string branchName = selectPosInstance.branchName ;
-            //        string posName = selectPosInstance.posName;
-            //        if (selectPosInstance.isActivated)
-            //        {
-            //            res = selectPosInstance.posId;
-            //        }
-            //        else
-            //        {
-            //            //server INFO
-            //            string url = serverConfigInstance.serverUri;
-            //            string activationkey = serverConfigInstance.activationkey;
-
-
-            //            //// pos INFO
-            //            int posId = selectPosInstance.posId;
-            //            string motherCode = setupConfiguration.GetMotherBoardID();
-            //            string hardCode = setupConfiguration.GetHDDSerialNo();
-            //            string deviceCode = motherCode + "-" + hardCode;
-
-            //            Global.APIUri = url + "/api/";
-            //             res = (int)await setupConfiguration.setPosConfiguration(activationkey, deviceCode, posId);
-                       
-            //        }
-
-            //        if (res > 0)
-            //        {
-            //            Properties.Settings.Default.APIUri = Global.APIUri;
-            //            Properties.Settings.Default.posId = res.ToString();
-            //            Properties.Settings.Default.BranchName = branchName;
-            //            Properties.Settings.Default.PosName = posName;
-            //            Properties.Settings.Default.Save();
-            //            System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
-            //            config.AppSettings.Settings.Add("posId", res.ToString());
-
-            //            config.Save(ConfigurationSaveMode.Modified);
-
-            //            // Force a reload of a changed section.
-            //            ConfigurationManager.RefreshSection("appSettings");
-            //            this.Close();
-            //            return;
-            //        }
-            //        else if (res == -2 || res == -3) // invalid or resrved activation key
-            //        {
-            //            //uc_serverConfig.Instance.activationkey = "";
-            //            pageIndex = 0;
-            //            CallPage(0);
-            //            Toaster.ShowWarning(Window.GetWindow(this), message: wd_setupOtherPos.resourcemanager.GetString("trErrorWrongActivation"), animation: ToasterAnimation.FadeIn);
-            //            return;
-            //        }
-            //    }
-            //if (pageIndex < 1)
-            //{
-            //    pageIndex++;
-            //    CallPage(pageIndex, (sender as Button).Tag.ToString());
-            //}
-            //}
-            //else
-            //    Toaster.ShowWarning(Window.GetWindow(this), message: "Should fill form first", animation: ToasterAnimation.FadeIn);
-
-        }
+      
+    
         private void restartApplication()
         {
             System.Diagnostics.Process.Start("pos.exe");
             Application.Current.Shutdown();
         }
-        private void HandleKeyPress(object sender, KeyEventArgs e)
+
+
+        private void Tb_customerCode_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
-                if (e.Key == Key.Return)
+                HelpClass.validate(requiredControlList, this);
+                if (!(string.IsNullOrEmpty(tb_customerCode.Text)))
                 {
-                    Btn_next_Click(btn_next, null);
+                    btn_activate.IsEnabled = true;
                 }
+                else
+                {
+                    btn_activate.IsEnabled = false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void validateEmpty_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.validate(requiredControlList, this);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Btn_activate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (!string.IsNullOrEmpty(tb_activeCode.Text))
+                {
+                    DateTime now = DateTime.Now;
+                    string activeKey = tb_activeCode.Text.Trim();
+                    string orginalkeydec = CodeCls.FinalDecode(tb_activeCode.Text);
+
+                    ActivateModel activemode = JsonConvert.DeserializeObject<ActivateModel>(orginalkeydec, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
+                    if (activemode.customerHardCode == deviceCode)
+                    {
+                        //  MessageBox.Show("ok");
+                        if (activemode.expireDate.Value >= now)
+                        {
+                            //   MessageBox.Show("ok");
+                            int cont = await programdetailModel.GetCountDetailList(programdetailList);
+                            if (!(cont == 0 && activemode.startDate <= now))
+                            {
+                                MessageBox.Show("تاريخ بدايةالصلاحية لم يبدا بعد");
+
+                            }
+                            else
+                            {
+
+                                MessageBox.Show("ok");
+                                if (cont == 0 && activemode.startDate <= now)
+                                {
+                                    //save record
+                                    programdetailModel = new ProgramDetailsCls();
+                                    programdetailModel.isCurrent = 1;
+                                    programdetailModel.state = "active";
+                                    programdetailModel.activateCode = activeKey;
+
+                                    decimal recordid = await programdetailModel.Save(programdetailModel);
+                                    if (recordid <= 0)
+                                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                    else
+                                    {
+                                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                        await Task.Delay(2000);
+                                        Application.Current.Shutdown();
+                                    }
+                                }
+                                else
+                                {
+
+                                }
+                                //save record
+                                //   await programdetailModel.Save(programdetailModel);
+
+                            }
+
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("النسخة منتهية");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("الرمز غير صحيح");
+                    }
+                }
+
+
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);
+                MessageBox.Show("الرمز غير صحيح");
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                DragMove();
-            }
-            catch //(Exception ex)
-            {
-                //SectionData.ExceptionMessage(ex, this);
-            }
-        }
+
     }
 }
