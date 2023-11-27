@@ -14,6 +14,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Resources;
+using System.Reflection;
+using BookAccountApp.ApiClasses;
+using Newtonsoft.Json;
+using netoaster;
 
 namespace BookAccountApp.View.setup
 {
@@ -44,37 +49,49 @@ namespace BookAccountApp.View.setup
  
         BrushConverter bc = new BrushConverter();
         public static List<string> requiredControlList;
-      
+      public  int isFirstActive = 0;
         string deviceCode = "";
+        ProgramDetailsCls programdetailModel=new ProgramDetailsCls();
+       List< ProgramDetailsCls> programdetailList =new List<ProgramDetailsCls>();
+        ActivateModel activeModel = new ActivateModel();
+
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "hardcode" };
+                requiredControlList = new List<string> { "activeCode" };
 
                 #region translate
-                //if (MainWindow.lang.Equals("en"))
-                //{
-                //    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.en_file", Assembly.GetExecutingAssembly());
-                //    grid_main.FlowDirection = FlowDirection.LeftToRight;
-                //}
-                //else
-                //{
-                //    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.ar_file", Assembly.GetExecutingAssembly());
-                //    grid_main.FlowDirection = FlowDirection.RightToLeft;
-                //}
+                MainWindow.lang = "ar";
+                if (MainWindow.lang.Equals("en"))
+                {
+                    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.en_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
+                 
+                }
+                else
+                {
+                    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.ar_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                 
+                }
                 translate();
 
                 #endregion
-               
-       
 
-              //  Keyboard.Focus(tb);
- 
-              //  Clear();
+                //
+           
+              //  MessageBox.Show(res);
+               Keyboard.Focus(tb_customerCode);
 
+                //  Clear();
+                programdetailList = await programdetailModel.GetAll();
+                string res = await programdetailModel.CheckAvailable();
+            
+                deviceCode = programdetailModel.getHardCode();
+                tb_customerCode.Text = deviceCode;
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -87,31 +104,22 @@ namespace BookAccountApp.View.setup
 
         private void translate()
         {
+            /*
+             activeData
+deviceserial
+activationCodeHint
+deviceserialHint
+confirmActivate
+             * */
 
-            //txt_title.Text = MainWindow.resourcemanager.GetString("airlines");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("airlineHint"));
+            txt_title.Text = MainWindow.resourcemanager.GetString("activeData");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_customerCode, MainWindow.resourcemanager.GetString("deviceserialHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_activeCode, MainWindow.resourcemanager.GetString("activationCodeHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
-            //btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
-            //btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            //btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-
-
-            //dg_items.Columns[0].Header = MainWindow.resourcemanager.GetString("airline");
-            //dg_items.Columns[1].Header = MainWindow.resourcemanager.GetString("trNote");
-
-
-            //btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
-
-
-
-            //tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            ////tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            ////tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            ////tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            ////tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
-            //tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
+            btn_activate.Content = MainWindow.resourcemanager.GetString("confirmActivate");  
+                btn_cancel.Content = MainWindow.resourcemanager.GetString("cancel");
+          
 
         }
 
@@ -127,17 +135,7 @@ namespace BookAccountApp.View.setup
             //       SectionData.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             //    }
         }
-        //private void validateEmpty(string name, object sender)
-        //{
-        //    if (name == "ComboBox")
-        //    {
-        //        if ((sender as ComboBox).Name == "cb_branch")
-        //            validateEmptyComboBox((ComboBox)sender, p_errorBranch, tt_errorBranch, "trEmptyBranchToolTip");
-        //        if ((sender as ComboBox).Name == "cb_pos")
-        //            validateEmptyComboBox((ComboBox)sender, p_errorBranch, tt_errorBranch, "trErrorEmptyPosToolTip");
-        //    }
-        //}
-
+      
 
         private void Tb_customerCode_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -146,11 +144,11 @@ namespace BookAccountApp.View.setup
                 HelpClass.validate(requiredControlList, this);
                 if (!(string.IsNullOrEmpty(tb_customerCode.Text)))
                 {
-                    btn_generatecode.IsEnabled = true;
+                    btn_activate.IsEnabled = true;
                 }
                 else
                 {
-                    btn_generatecode.IsEnabled = false;
+                    btn_activate.IsEnabled = false;
                 }
 
             }
@@ -171,6 +169,99 @@ namespace BookAccountApp.View.setup
             }
         }
 
+        private void Btn_cancel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Application.Current.Shutdown();
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
 
+        private async void Btn_activate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (!string.IsNullOrEmpty(tb_activeCode.Text))
+                {
+                    DateTime now = DateTime.Now;
+                    string activeKey = tb_activeCode.Text.Trim();
+                    string orginalkeydec =CodeCls.FinalDecode(tb_activeCode.Text);
+
+                    ActivateModel activemode = JsonConvert.DeserializeObject<ActivateModel>(orginalkeydec, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
+                    if (activemode.customerHardCode==deviceCode)
+                    {
+                      //  MessageBox.Show("ok");
+                        if (activemode.expireDate.Value>=now)
+                        {
+                         //   MessageBox.Show("ok");
+                            int cont = await programdetailModel.GetCountDetailList(programdetailList);
+                            if (!(cont==0 && activemode.startDate<=now))
+                            {
+                                MessageBox.Show("تاريخ بدايةالصلاحية لم يبدا بعد");
+                               
+                            }
+                          else
+                            {
+
+                                MessageBox.Show("ok");
+                                if (cont == 0 && activemode.startDate <= now)
+                                {
+                                    //save record
+                                    programdetailModel = new ProgramDetailsCls();
+                                    programdetailModel.isCurrent = 1;
+                                    programdetailModel.state = "active";
+                                    programdetailModel.activateCode = activeKey;
+
+                                    decimal recordid=      await programdetailModel.Save(programdetailModel);
+                                    if (recordid <= 0)
+                                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                    else
+                                    {
+                                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                        await Task.Delay(2000);
+                                        Application.Current.Shutdown();
+                                    }
+                                }
+                                else
+                                {
+
+                                }
+                                //save record
+                                //   await programdetailModel.Save(programdetailModel);
+
+                            }
+
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("النسخة منتهية");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("الرمز غير صحيح");
+                    }
+                }
+
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                MessageBox.Show("الرمز غير صحيح");
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

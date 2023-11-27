@@ -3415,4 +3415,40 @@
   <data name="sending" xml:space="preserve">
     <value>ترحيل</value>
   </data>
+  <data name="activationCodeHint" xml:space="preserve">
+    <value>رمز التفعيل ...</value>
+  </data>
+  <data name="activeData" xml:space="preserve">
+    <value>بيانات التفعيل</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>إلغاء</value>
+  </data>
+  <data name="confirmActivate" xml:space="preserve">
+    <value>تأكيد التفعيل</value>
+  </data>
+  <data name="deviceserial" xml:space="preserve">
+    <value>معرف الجهاز</value>
+  </data>
+  <data name="deviceserialHint" xml:space="preserve">
+    <value>معرف الجهاز ...</value>
+  </data>
+  <data name="activatedsucsessful" xml:space="preserve">
+    <value>تم التفعيل بنجاح</value>
+  </data>
+  <data name="codeExist" xml:space="preserve">
+    <value>الرمز مستخدم مسبقا</value>
+  </data>
+  <data name="copyActivated" xml:space="preserve">
+    <value>النسخة مفعلة</value>
+  </data>
+  <data name="expired" xml:space="preserve">
+    <value>انتهت مدة صلاحية البرنامج</value>
+  </data>
+  <data name="notbegin" xml:space="preserve">
+    <value>تاريخ بدايةالصلاحية لم يبدا بعد</value>
+  </data>
+  <data name="wrongcode" xml:space="preserve">
+    <value>الرمز غير صحيح</value>
+  </data>
 </root>

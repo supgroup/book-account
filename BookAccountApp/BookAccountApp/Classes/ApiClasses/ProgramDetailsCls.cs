@@ -11,7 +11,7 @@ using System.Web;
 using System.Security.Claims;
 using BookAccountApp.Classes;
 using Newtonsoft.Json.Converters;
-
+ 
 namespace BookAccountApp.ApiClasses
 {
     public class ActivateModel
@@ -46,14 +46,118 @@ namespace BookAccountApp.ApiClasses
             string motherCode = setupConfiguration.GetMotherBoardID();
             string hardCode = setupConfiguration.GetHDDSerialNo();
             string deviceCode = motherCode + "-" + hardCode;
+            deviceCode = Md5Encription.HashString(deviceCode);
             return deviceCode;
         }
+        public async Task<string> CheckAvailable()
+        {
+            List<ProgramDetailsCls> List = new List<ProgramDetailsCls>();
+            List = await GetAll();
+            string result = "";
+            string Nextresult = "";
+            DateTime now = DateTime.Now;
+            if (List== null|| List.Count()==0)
+            {
+                result ="no";//1
+            } 
+            else
+            {
+                ProgramDetailsCls currentdetail = List.Where(x => x.isCurrent == 1).FirstOrDefault();
+                result= await CheckmodelAvailable(currentdetail.Activatemodel);//2
+                if (result == "expired")
+                {
+                    ProgramDetailsCls NextDetail = List.Where(x => x.isCurrent == 2).FirstOrDefault();
+                    if (NextDetail!=null)
+                    {
+                        if (NextDetail.Activatemodel!=null)
+                        {
+                            //if( NextDetail.Activatemodel.startDate <= currentdetail.Activatemodel.expireDate 
+                            //     && NextDetail.Activatemodel.startDate<=now)
+                            result = await CheckmodelAvailable(NextDetail.Activatemodel);
+                            if(result=="ok")
+                            {
+                                //update to current
+                                await updatetoCurrent(NextDetail);
+                                //and ok
+                                //result = "ok";
+                            }
+                        }
 
+
+                    }
+                    else
+                    {
+                        result = "expired";//3
+
+                    }
+                  
+                   // result = "no";
+                }
+                else
+                {
+
+                }
+                 
+            }
+            return result;
+        }
+        public async Task<string> CheckmodelAvailable(ActivateModel Activatemodel)
+        {
+            string result = "";
+            string deviceCode = getHardCode();
+            DateTime now = DateTime.Now;
+            if (Activatemodel.customerHardCode == deviceCode)
+            {
+              
+                if (Activatemodel.expireDate.Value >= now)
+                {
+                   
+                    if (!(Activatemodel.startDate <= now))
+                    {
+                      //  MessageBox.Show("تاريخ بدايةالصلاحية لم يبدا بعد");
+                        result = "notbegin";
+                    }
+                    else
+                    {
+                        result = "ok";
+                        // MessageBox.Show("ok");
+                       
+                    }
+                }
+                else
+                {
+                  //  MessageBox.Show("النسخة منتهية");
+                    result = "expired";
+                }
+            }
+            else
+            {
+               // MessageBox.Show("الرمز غير صحيح");
+                result = "wrongcode";
+            }
+            return result;
+        }
+        public async Task<int> GetCountDetailList(List<ProgramDetailsCls> List)
+        {
+           
+            //List = await GetAll();
+            int result = 0;
+            if (List == null || List.Count() == 0)
+            {
+                result = 0;
+            }
+            else
+            {
+                result = List.Count();
+            }
+            return result;
+        }
         public async Task<List<ProgramDetailsCls>> GetAll()
         {
 
             List<ProgramDetailsCls> List = new List<ProgramDetailsCls>();
             bool canDelete = false;
+            CodeCls codclass = new CodeCls();
             try
             {
                 using (bookdbEntities entity = new bookdbEntities())
@@ -68,7 +172,11 @@ namespace BookAccountApp.ApiClasses
 
 
                             }).ToList();
+                    foreach(ProgramDetailsCls row in List)
+                    {
+                        row.Activatemodel = codclass.convertToModel(row.activateCode);
 
+                    }
                     //if (List.Count > 0)
                     //{
                     //    for (int i = 0; i < List.Count; i++)
@@ -227,7 +335,93 @@ namespace BookAccountApp.ApiClasses
 
         }
 
+        public async Task<decimal> updatetoCurrent(ProgramDetailsCls newitem)
+        {
+            ProgramDetails newObject = new ProgramDetails();
+            newObject = JsonConvert.DeserializeObject<ProgramDetails>(JsonConvert.SerializeObject(newitem));
 
+            decimal message = 0;
+            if (newObject != null)
+            {
+                try
+                {
+                    using (bookdbEntities entity = new bookdbEntities())
+                    {
+                        var locationEntity = entity.Set<ProgramDetails>();
+                        //locationEntity.ForEach(x =>);
+                     
+                        if (newObject.id == 0)
+                        {
+
+                        }
+                        else
+                        {
+                            //reset all to 0
+                            entity.ProgramDetails.ToList().ForEach(x => x.isCurrent = 0);
+                            entity.SaveChanges();
+                            //update last code to current
+                            var tmpObject = entity.ProgramDetails.Where(p => p.id == newObject.id).FirstOrDefault(); 
+                            tmpObject.isCurrent = 1;                            
+                            entity.SaveChanges();
+                            message = tmpObject.id;
+                        }
+                    }
+                    return message;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        public async Task<decimal> resetallCurrent()
+        {
+            decimal message = 0;
+                try
+                {
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    var locationEntity = entity.Set<ProgramDetails>();
+                    //locationEntity.ForEach(x =>);
+                    //reset all to 0
+                    entity.ProgramDetails.ToList().ForEach(x => x.isCurrent = 0);
+                    message = entity.SaveChanges();
+
+                }
+                   
+                    return message;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        public async Task<decimal> resetallCurrent2()
+        {
+            decimal message = 0;
+            try
+            {
+                using (bookdbEntities entity = new bookdbEntities())
+                {
+                    var locationEntity = entity.Set<ProgramDetails>();
+                    //locationEntity.ForEach(x =>);
+                    //reset all to 0
+                    entity.ProgramDetails.ToList().Where(r=>r.isCurrent==2).ToList().ForEach(x => x.isCurrent = 0);
+                    message = entity.SaveChanges();
+
+                }
+
+                return message;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
 
     }
   

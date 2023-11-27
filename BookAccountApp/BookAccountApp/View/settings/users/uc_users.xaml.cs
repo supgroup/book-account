@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using BookAccountApp.ApiClasses;
 namespace BookAccountApp.View.settings.users
 {
     /// <summary>
@@ -181,5 +181,45 @@ namespace BookAccountApp.View.settings.users
             }
         }
 
+        private async void Btn_extendcopy_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                try
+                {
+
+                    HelpClass.StartAwait(grid_main);
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_setupProg w = new wd_setupProg();
+                    w.isExtende = true;
+                    ProgramDetailsCls programModel = new ProgramDetailsCls();
+                    w.reason=await programModel.CheckAvailable();
+                 //   wd_DbSetting w = new wd_DbSetting();
+                    w.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                    HelpClass.EndAwait(grid_main);
+
+                }
+                catch (Exception ex)
+                {
+                    HelpClass.EndAwait(grid_main);
+                    HelpClass.ExceptionMessage(ex, this);
+                }
+
+
+
+                //HelpClass.StartAwait(grid_main);
+                //wd_setupProg setupwin = new wd_setupProg();
+                //setupwin.Show();
+                //HelpClass.EndAwait(grid_main);
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        
+        }
     }
 }

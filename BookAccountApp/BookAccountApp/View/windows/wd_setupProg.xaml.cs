@@ -45,7 +45,7 @@ namespace BookAccountApp.View.windows
         ProgramDetailsCls programdetailModel = new ProgramDetailsCls();
         List<ProgramDetailsCls> programdetailList = new List<ProgramDetailsCls>();
         ActivateModel activeModel = new ActivateModel();
-
+        CodeCls codclass = new CodeCls();
 
        // static public string imgFileName = "pic/no-image-icon-125x125.png";
         static public ImageBrush brush = new ImageBrush();
@@ -58,18 +58,26 @@ namespace BookAccountApp.View.windows
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
-              //  requiredControlList = new List<string> { "name" };
+                //  requiredControlList = new List<string> { "name" };
                 #region translate
-                //if (AppSettings.lang.Equals("en"))
-                //{
-                //    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.en_file", Assembly.GetExecutingAssembly());
-                //    grid_main.FlowDirection = FlowDirection.LeftToRight;
+                MainWindow.lang = "ar";
+                if (MainWindow.lang.Equals("en"))
+                {
+                    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.en_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
+
+                }
+                else
+                {
+                    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.ar_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+
+                }
+                // grid_mainWindow.FlowDirection = FlowDirection.RightToLeft;
                 //}
-                //else
-                //{
-                //    MainWindow.resourcemanager = new ResourceManager("BookAccountApp.ar_file", Assembly.GetExecutingAssembly());
-                grid_mainWindow.FlowDirection = FlowDirection.RightToLeft;
-                //}
+                if (reason == "ok") {
+                    txt_message.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF008F00"));
+                }
            translate();
                 Keyboard.Focus(tb_customerCode);
 
@@ -101,14 +109,47 @@ namespace BookAccountApp.View.windows
 
             btn_activate.Content = MainWindow.resourcemanager.GetString("confirmActivate");
             btn_cancel.Content = MainWindow.resourcemanager.GetString("cancel");
-            txt_message.Text =reason;
+            txt_message.Text = reasonconverter(reason);
         }
+
+        public string reasonconverter(string reason)
+        {
+            string trans = "";
+            if (reason== "notbegin")
+            {
+                trans=MainWindow.resourcemanager.GetString("notbegin");
+            }
+            else if (reason == "expired")
+            {
+                trans= MainWindow.resourcemanager.GetString("expired");
+            }
+            else if (reason == "wrongcode")
+            {
+                trans= MainWindow.resourcemanager.GetString("wrongcode");
+            }
+            else if (reason == "ok")
+            {
+                trans = MainWindow.resourcemanager.GetString("copyActivated");
+            }
+
+            return trans;
+               
+        }
+
         private void Btn_cancel_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-               // Application.Current.Shutdown();
-                this.Close();
+                if (isExtende == false)
+                {
+                    Application.Current.Shutdown();
+                }
+                else
+                {
+                    this.Close();
+                }
+               // 
+                
             }
             catch (Exception ex)
             {
@@ -162,13 +203,17 @@ namespace BookAccountApp.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
+                string result = "";
                 if (!string.IsNullOrEmpty(tb_activeCode.Text))
                 {
                     DateTime now = DateTime.Now;
                     string activeKey = tb_activeCode.Text.Trim();
-                    string orginalkeydec = CodeCls.FinalDecode(tb_activeCode.Text);
-
-                    ActivateModel activemode = JsonConvert.DeserializeObject<ActivateModel>(orginalkeydec, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
+                    // string orginalkeydec = CodeCls.FinalDecode(tb_activeCode.Text);                   
+                    //  ActivateModel activemode = JsonConvert.DeserializeObject<ActivateModel>(orginalkeydec, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
+                    List<ProgramDetailsCls> pList = programdetailList.Where(x => x.activateCode == activeKey).ToList();
+                    if (pList==null|| pList.Count()==0)
+                    {                   
+                    ActivateModel activemode = codclass.convertToModel(activeKey);
                     if (activemode.customerHardCode == deviceCode)
                     {
                         //  MessageBox.Show("ok");
@@ -176,15 +221,16 @@ namespace BookAccountApp.View.windows
                         {
                             //   MessageBox.Show("ok");
                             int cont = await programdetailModel.GetCountDetailList(programdetailList);
-                            if (!(cont == 0 && activemode.startDate <= now))
+                            if ((cont == 0 && activemode.startDate > now))
                             {
-                                MessageBox.Show("تاريخ بدايةالصلاحية لم يبدا بعد");
+                                //   MessageBox.Show("تاريخ بدايةالصلاحية لم يبدا بعد");
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("notbegin"), animation: ToasterAnimation.FadeIn);
 
                             }
                             else
                             {
 
-                                MessageBox.Show("ok");
+                               // MessageBox.Show("ok");
                                 if (cont == 0 && activemode.startDate <= now)
                                 {
                                     //save record
@@ -193,49 +239,99 @@ namespace BookAccountApp.View.windows
                                     programdetailModel.state = "active";
                                     programdetailModel.activateCode = activeKey;
 
-                                    decimal recordid = await programdetailModel.Save(programdetailModel);
-                                    if (recordid <= 0)
+                                    decimal s = await programdetailModel.Save(programdetailModel);
+                                    if (s <= 0)
                                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                     else
                                     {
-                                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("activatedsucsessful"), animation: ToasterAnimation.FadeIn);
                                         await Task.Delay(2000);
                                         Application.Current.Shutdown();
                                     }
                                 }
-                                else
+                                else if (cont > 0 )
                                 {
+                                    result = await programdetailModel.CheckmodelAvailable(activemode);
+                                    if (result== "notbegin")
+                                    {
+                                        // add and iscurrent=2
 
+                                        programdetailModel = new ProgramDetailsCls();
+                                        programdetailModel.isCurrent = 2;
+                                        programdetailModel.state = "active";
+                                        programdetailModel.activateCode = activeKey;
+                                        decimal s = await programdetailModel.resetallCurrent2();
+                                          s = await programdetailModel.Save(programdetailModel);
+                                        if (s <= 0)
+                                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                        else
+                                        {
+                                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("activatedsucsessful"), animation: ToasterAnimation.FadeIn);
+                                            await Task.Delay(2000);
+                                            Application.Current.Shutdown();
+                                        }
+                                    }
+                                    else if (result=="ok")
+                                    {
+                                        //add and is current =1 
+
+                                        programdetailModel = new ProgramDetailsCls();
+                                        programdetailModel.isCurrent = 1;
+                                        programdetailModel.state = "active";
+                                        programdetailModel.activateCode = activeKey;
+                                        decimal s=await programdetailModel.resetallCurrent();
+                                         s = await programdetailModel.Save(programdetailModel);
+                                        if (s <= 0)
+                                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                        else
+                                        {
+                                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("activatedsucsessful"), animation: ToasterAnimation.FadeIn);
+                                            await Task.Delay(2000);
+                                            Application.Current.Shutdown();
+                                        }
+                                    }
                                 }
+                                
                                 //save record
                                 //   await programdetailModel.Save(programdetailModel);
 
                             }
-
-
                         }
                         else
                         {
-                            MessageBox.Show("النسخة منتهية");
+                         //   MessageBox.Show("النسخة منتهية");
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("expired"), animation: ToasterAnimation.FadeIn);
+
                         }
                     }
                     else
                     {
-                        MessageBox.Show("الرمز غير صحيح");
+                       // MessageBox.Show("الرمز غير صحيح");
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("wrongcode"), animation: ToasterAnimation.FadeIn);
+                    }
+                    }
+                    else
+                    {
+                       
+                        //الرمز مستخدم مسبقا
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("codeExist"), animation: ToasterAnimation.FadeIn);
+
                     }
                 }
-
-
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);
-                MessageBox.Show("الرمز غير صحيح");
-                HelpClass.ExceptionMessage(ex, this);
+
+               
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("wrongcode"), animation: ToasterAnimation.FadeIn);
+
+               // MessageBox.Show("الرمز غير صحيح");
+               // HelpClass.ExceptionMessage(ex, this);
             }
+            txt_message.Text = "";
         }
 
     }

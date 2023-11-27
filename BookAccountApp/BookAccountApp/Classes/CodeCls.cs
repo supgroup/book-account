@@ -2,11 +2,36 @@
 using System.Collections;
 using System.IO;
 using System.Text;
-
+using BookAccountApp.ApiClasses;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
 namespace BookAccountApp.Classes
 {
     class CodeCls
     {
+        public ActivateModel convertToModel(string activeCode)
+        {
+            try
+            {
+            ActivateModel activemode = new ActivateModel();
+            if (!string.IsNullOrEmpty(activeCode))
+            {
+                string orginalkeydec = CodeCls.FinalDecode(activeCode.Trim());
+
+               activemode = JsonConvert.DeserializeObject<ActivateModel>(orginalkeydec, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
+                return activemode;
+            }
+            else
+            {
+                return null;
+            }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public bool encodefile(string source, string dest)
         {
             try

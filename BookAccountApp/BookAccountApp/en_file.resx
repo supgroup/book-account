@@ -3400,4 +3400,40 @@ Please add Email in setting</value>
   <data name="sending" xml:space="preserve">
     <value>Sending</value>
   </data>
+  <data name="activationCodeHint" xml:space="preserve">
+    <value>activationCodeHint</value>
+  </data>
+  <data name="activeData" xml:space="preserve">
+    <value>activeData</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>cancel</value>
+  </data>
+  <data name="confirmActivate" xml:space="preserve">
+    <value>confirmActivate</value>
+  </data>
+  <data name="deviceserial" xml:space="preserve">
+    <value>deviceserial</value>
+  </data>
+  <data name="deviceserialHint" xml:space="preserve">
+    <value>deviceserial</value>
+  </data>
+  <data name="activatedsucsessful" xml:space="preserve">
+    <value>activatedsucsessful</value>
+  </data>
+  <data name="expired" xml:space="preserve">
+    <value>expired</value>
+  </data>
+  <data name="notbegin" xml:space="preserve">
+    <value>notbegin</value>
+  </data>
+  <data name="wrongcode" xml:space="preserve">
+    <value>wrongcode</value>
+  </data>
+  <data name="codeExist" xml:space="preserve">
+    <value>codeExist</value>
+  </data>
+  <data name="copyActivated" xml:space="preserve">
+    <value>copyActivated</value>
+  </data>
 </root>

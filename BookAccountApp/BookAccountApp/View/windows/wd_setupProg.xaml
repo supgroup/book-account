@@ -85,7 +85,7 @@
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Button   x:Name="btn_activate"   
-        materialDesign:ButtonAssist.CornerRadius="10" Background="{StaticResource MainColor}" BorderBrush="{x:Null}"  
+        materialDesign:ButtonAssist.CornerRadius="10" Background="{StaticResource MainColor}" BorderBrush="#FF008F00"  
          Content="Activate" Click="Btn_activate_Click" />
                             <Button   x:Name="btn_cancel"   Grid.Column="1" Margin="5,0,0,0"
         materialDesign:ButtonAssist.CornerRadius="10" Background="{StaticResource MainColorGrey}" BorderBrush="{x:Null}"  
