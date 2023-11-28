@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using netoaster;
+using BookAccountApp.ApiClasses;
 namespace BookAccountApp.View.settings.commissions
 {
     /// <summary>
@@ -36,15 +37,18 @@ namespace BookAccountApp.View.settings.commissions
                 return _instance;
             }
         }
-         SetValues accuracy = new SetValues();
+        SetValues accuracy = new SetValues();
         SettingCls set = new SettingCls();
+        ProgramDetailsCls programModel = new ProgramDetailsCls();
+        DateTime expiredate;
+        bool isRemain;
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             // Collect all generations of memory.
             GC.Collect();
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {
@@ -60,11 +64,12 @@ namespace BookAccountApp.View.settings.commissions
                 //}
                 //else
                 //{
-                    //MainWindow.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
-                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                //MainWindow.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
+                grid_main.FlowDirection = FlowDirection.RightToLeft;
                 //}
 
                 translate();
+                await setExpirestyle();
                 FillCombo.fillAccuracy(cb_accuracy);
                 cb_accuracy.SelectedValue = MainWindow.accuracy;
                 getaccuracySetting();
@@ -83,15 +88,30 @@ namespace BookAccountApp.View.settings.commissions
         private void translate()
         {
             //trTax exchangePrice
-           //  txt_taxHint.Text = MainWindow.resourcemanager.GetString("syrSoto");          
-             txt_priceExchangeInfo.Text = MainWindow.resourcemanager.GetString("exchangePrice");
+            //  txt_taxHint.Text = MainWindow.resourcemanager.GetString("syrSoto");          
+            txt_priceExchangeInfo.Text = MainWindow.resourcemanager.GetString("exchangePrice");
             txt_companyInfo.Text = MainWindow.resourcemanager.GetString("trComInfo");
             txt_companyHint.Text = MainWindow.resourcemanager.GetString("trSettingHint");
-            txt_acc.Text= MainWindow.resourcemanager.GetString("trAccuracy");
-            
+            txt_acc.Text = MainWindow.resourcemanager.GetString("trAccuracy");
+            txt_expiretitle.Text = MainWindow.resourcemanager.GetString("trExpirationDate");
+
             //txt_priceExchangeHint.Text = MainWindow.resourcemanager.GetString("syrSoto");
         }
-
+        private async Task setExpirestyle()
+        {
+            expiredate = await programModel.getExpireDate();
+            isRemain = await programModel.CheckRemainDays();
+            txt_expiredate.Text = clsReports.dateFrameConverter(expiredate);
+            if (isRemain)
+            {
+                txt_expiredate.Foreground = Application.Current.Resources["MainColorRed"] as SolidColorBrush;
+            }
+            else
+            {
+                txt_expiredate.Foreground = Application.Current.Resources["ColorlightGrey"] as SolidColorBrush;
+                btn_extendcopy.IsEnabled = false;
+            }
+        }
 
         //private void Btn_tax_Click(object sender, RoutedEventArgs e)
         //{
@@ -155,7 +175,7 @@ namespace BookAccountApp.View.settings.commissions
             }
         }
 
-      
+
 
         private async void Btn_saveAccuracy_Click(object sender, RoutedEventArgs e)
         {
@@ -201,17 +221,17 @@ namespace BookAccountApp.View.settings.commissions
 
 
 
-                    //  save logo
-                    // image
-                    //  string sLogo = "";
+                //  save logo
+                // image
+                //  string sLogo = "";
 
 
 
-                    #endregion
-                    
-                    
+                #endregion
 
-               
+
+
+
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);
             }
@@ -221,8 +241,8 @@ namespace BookAccountApp.View.settings.commissions
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-          
-            }
+
+        }
         private void getaccuracySetting()
         {
             #region  get accuracy
@@ -239,6 +259,48 @@ namespace BookAccountApp.View.settings.commissions
 
             #endregion
         }
+
+        private async void Btn_extendcopy_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                try
+                {
+
+                    HelpClass.StartAwait(grid_main);
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_setupProg w = new wd_setupProg();
+                    w.isExtende = true;
+
+                    w.reason = await programModel.CheckAvailable();
+                    //   wd_DbSetting w = new wd_DbSetting();
+                    w.ShowDialog();
+                    await setExpirestyle();
+                    Window.GetWindow(this).Opacity = 1;
+                    HelpClass.EndAwait(grid_main);
+
+                }
+                catch (Exception ex)
+                {
+                    HelpClass.EndAwait(grid_main);
+                    HelpClass.ExceptionMessage(ex, this);
+                }
+
+
+
+                //HelpClass.StartAwait(grid_main);
+                //wd_setupProg setupwin = new wd_setupProg();
+                //setupwin.Show();
+                //HelpClass.EndAwait(grid_main);
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
     }
-   
+
 }

@@ -93,10 +93,7 @@ namespace BookAccountApp.ApiClasses
 
                     // result = "no";
                 }
-                else
-                {
-
-                }
+                
 
             }
             return result;
@@ -191,7 +188,7 @@ namespace BookAccountApp.ApiClasses
             }
         }
 
-        public async Task<bool> CheckRemainTen()
+        public async Task<bool> CheckRemainDays()
         {
             DateTime now = DateTime.Now;
             DateTime expire = await getExpireDate();
@@ -200,7 +197,7 @@ namespace BookAccountApp.ApiClasses
             int days = remaintime.Days;
             bool result = false;
 
-            if (days<=10)
+            if (days<=15)
             {
                 result = true;
             }

@@ -3436,4 +3436,7 @@ Please add Email in setting</value>
   <data name="copyActivated" xml:space="preserve">
     <value>copyActivated</value>
   </data>
+  <data name="extendActivation" xml:space="preserve">
+    <value>extendActivation</value>
+  </data>
 </root>

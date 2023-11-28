@@ -142,9 +142,7 @@ namespace BookAccountApp.View.windows
         {//log in
             try
             {
-             
-         
-             
+
                 if (!logInProcessing)
                 {
                     logInProcessing = true;

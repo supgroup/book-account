@@ -3451,4 +3451,7 @@
   <data name="wrongcode" xml:space="preserve">
     <value>الرمز غير صحيح</value>
   </data>
+  <data name="extendActivation" xml:space="preserve">
+    <value>تمديد التفعيل</value>
+  </data>
 </root>

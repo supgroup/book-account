@@ -73,20 +73,23 @@ namespace BookAccountApp.View.windows
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
 
                 }
-                // grid_mainWindow.FlowDirection = FlowDirection.RightToLeft;
+                
+                //if (reason == "ok") {
+                //  txt_message.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF008F00"));
                 //}
-                if (reason == "ok") {
-                    txt_message.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF008F00"));
-                }
            translate();
                 Keyboard.Focus(tb_customerCode);
-
-                //  Clear();
+                 
                 programdetailList = await programdetailModel.GetAll();
-           //     string res = await programdetailModel.CheckAvailable();
+          
 
                 deviceCode = programdetailModel.getHardCode();
                 tb_customerCode.Text = deviceCode;
+                if (isExtende == true)
+                {
+                    tb_customerCode.IsEnabled=false;
+
+                }
                 #endregion
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);
@@ -106,8 +109,16 @@ namespace BookAccountApp.View.windows
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_customerCode, MainWindow.resourcemanager.GetString("deviceserialHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_activeCode, MainWindow.resourcemanager.GetString("activationCodeHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-
-            btn_activate.Content = MainWindow.resourcemanager.GetString("confirmActivate");
+            if (reason=="no")
+            {
+                btn_activate.Content = MainWindow.resourcemanager.GetString("confirmActivate");
+            }
+            else if(isExtende==true)
+            {
+                btn_activate.Content = MainWindow.resourcemanager.GetString("extendActivation");
+                
+            }
+       
             btn_cancel.Content = MainWindow.resourcemanager.GetString("cancel");
             txt_message.Text = reasonconverter(reason);
         }
@@ -130,6 +141,7 @@ namespace BookAccountApp.View.windows
             else if (reason == "ok")
             {
                 trans = MainWindow.resourcemanager.GetString("copyActivated");
+                trans = "";
             }
 
             return trans;
