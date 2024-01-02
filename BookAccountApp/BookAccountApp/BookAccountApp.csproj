@@ -28,8 +28,8 @@
     <ProductName>MOWAISHE</ProductName>
     <PublisherName>MOWAISHE</PublisherName>
     <SuiteName>MOWAISHE</SuiteName>
-    <ApplicationRevision>3</ApplicationRevision>
-    <ApplicationVersion>1.0.0.3</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.1</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>

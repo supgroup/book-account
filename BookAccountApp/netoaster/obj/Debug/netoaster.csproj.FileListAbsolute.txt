@@ -264,7 +264,6 @@ D:\Github\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.dll
 D:\Github\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.pdb
 D:\Github\book-account\BookAccountApp\netoaster\bin\Debug\netoaster.dll
 D:\Github\book-account\BookAccountApp\netoaster\bin\Debug\netoaster.pdb
-D:\Github\book-account\BookAccountApp\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache
 D:\Github\book-account\BookAccountApp\netoaster\obj\Debug\ToasterWindow.g.cs
 D:\Github\book-account\BookAccountApp\netoaster\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\Github\book-account\BookAccountApp\netoaster\obj\Debug\netoaster_MarkupCompile.cache
@@ -277,3 +276,4 @@ D:\Github\book-account\BookAccountApp\netoaster\obj\Debug\netoaster.csproj.Gener
 D:\Github\book-account\BookAccountApp\netoaster\obj\Debug\netoaster.csproj.CoreCompileInputs.cache
 D:\Github\book-account\BookAccountApp\netoaster\obj\Debug\netoaster.dll
 D:\Github\book-account\BookAccountApp\netoaster\obj\Debug\netoaster.pdb
+D:\Github\book-account\BookAccountApp\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache
