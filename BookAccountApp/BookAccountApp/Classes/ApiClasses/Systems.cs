@@ -268,27 +268,29 @@ namespace BookAccountApp.ApiClasses
             //string transNum = type.ToUpper() + "-" + strSeq;
             return strSeq;
         }
+    
         public int GetLastNumOfCode()
         {
 
             try
             {
-                List<string> numberList;
+                List<string> numberLists;
+                List<int> numberList = new List<int>();
                 int lastNum = 0;
                 using (bookdbEntities entity = new bookdbEntities())
                 {
-                    numberList = entity.systems.Select(b => b.code).ToList();
+                    numberLists = entity.systems.Select(b => b.code).ToList();
+                    foreach (string x in numberLists)
+                    {
+                        int i = int.Parse(x == null ? "0" : x);
+                        numberList.Add(i);
+                    }
 
-                    //for (int i = 0; i < numberList.Count; i++)
-                    //{
-                    //    string code = numberList[i];
-                    //    string s = code.Substring(code.LastIndexOf("-") + 1);
-                    //    numberList[i] = s;
-                    //}
                     if (numberList.Count > 0)
                     {
-                        numberList.Sort();
-                        lastNum = int.Parse(numberList[numberList.Count - 1]);
+                        // numberList.Sort();
+                        //   lastNum =  numberList[numberList.Count - 1] ;
+                        lastNum = numberList.Max();
                     }
                 }
 

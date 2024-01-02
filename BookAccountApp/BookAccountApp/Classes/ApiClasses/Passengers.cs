@@ -47,6 +47,7 @@ namespace BookAccountApp.ApiClasses
             bool canDelete = false;
             try
             {
+               
                 using (bookdbEntities entity = new bookdbEntities())
                 {
                     List = (from S in entity.passengers
@@ -65,13 +66,14 @@ namespace BookAccountApp.ApiClasses
                                 fullName= S.name+" "+S.lastName,
                                 isActive = S.isActive,
                                 canDelete = false,
-                                code=S.code,
+                                code=S.code, 
                             }).ToList();
 
                     if (List.Count > 0)
                     {
                         for (int i = 0; i < List.Count; i++)
                         {
+                          //  List[i].code =( i++).ToString();
                             if (List[i].isActive == true)
                             {
                                 int itemId = (int)List[i].passengerId;
@@ -266,27 +268,29 @@ namespace BookAccountApp.ApiClasses
             //string transNum = type.ToUpper() + "-" + strSeq;
             return strSeq;
         }
+     
         public int GetLastNumOfCode()
         {
 
             try
             {
-                List<string> numberList;
+                List<string> numberLists;
+                List<int> numberList = new List<int>();
                 int lastNum = 0;
                 using (bookdbEntities entity = new bookdbEntities())
                 {
-                    numberList = entity.passengers.Select(b => b.code).ToList();
+                    numberLists = entity.passengers.Select(b => b.code).ToList();
+                    foreach (string x in numberLists)
+                    {
+                        int i = int.Parse(x == null ? "0" : x);
+                        numberList.Add(i);
+                    }
 
-                    //for (int i = 0; i < numberList.Count; i++)
-                    //{
-                    //    string code = numberList[i];
-                    //    string s = code.Substring(code.LastIndexOf("-") + 1);
-                    //    numberList[i] = s;
-                    //}
                     if (numberList.Count > 0)
                     {
-                        numberList.Sort();
-                        lastNum = int.Parse(numberList[numberList.Count - 1]);
+                        // numberList.Sort();
+                        //   lastNum =  numberList[numberList.Count - 1] ;
+                        lastNum = numberList.Max();
                     }
                 }
 
@@ -297,6 +301,7 @@ namespace BookAccountApp.ApiClasses
                 return 0;
             }
         }
+
         //public async Task<string> generateCodeNumber(string type)
         //{
         //    int sequence = await GetLastNumOfCode(type);

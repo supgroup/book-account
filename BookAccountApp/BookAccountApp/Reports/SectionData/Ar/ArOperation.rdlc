@@ -33,6 +33,14 @@
           <DataField>duration</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="durationId">
+          <DataField>durationId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="isActive">
+          <DataField>isActive</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
         <Field Name="notes">
           <DataField>notes</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -48,6 +56,10 @@
         <Field Name="opStatement">
           <DataField>opStatement</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="opStatementId">
+          <DataField>opStatementId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="updateDate">
           <DataField>updateDate</DataField>
@@ -270,6 +282,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>

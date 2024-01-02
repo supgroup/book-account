@@ -3454,4 +3454,16 @@
   <data name="extendActivation" xml:space="preserve">
     <value>تمديد التفعيل</value>
   </data>
+  <data name="UserNameSoto" xml:space="preserve">
+    <value>اسم المستخدم / سوتو</value>
+  </data>
+  <data name="UserNameSotoHint" xml:space="preserve">
+    <value>اسم المستخدم / سوتو ...</value>
+  </data>
+  <data name="UserNameSyr" xml:space="preserve">
+    <value>اسم المستخدم / سوري</value>
+  </data>
+  <data name="UserNameSyrHint" xml:space="preserve">
+    <value>اسم المستخدم / سوري...</value>
+  </data>
 </root>

@@ -475,7 +475,12 @@ namespace BookAccountApp.View.sectionData
             ) && s.isActive == tgl_operationsstate);
             //&& s.isActive == tgl_operationsstate
             //);
-            
+           
+                int i = 1;
+            foreach (Systems row in SystemsQuery)
+            {
+                row.code = (i++).ToString();
+            }
             RefreshOperationssView();
         }
         async Task<IEnumerable<Systems>> RefreshOperationssList()

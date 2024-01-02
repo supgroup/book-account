@@ -81,6 +81,7 @@ namespace BookAccountApp.ApiClasses
                     {
                         for (int i = 0; i < List.Count; i++)
                         {
+                         //   List[i].code = (i++).ToString();
                             if (List[i].isActive == true)
                             {
                                 int itemId = (int)List[i].officeId;
@@ -346,28 +347,29 @@ namespace BookAccountApp.ApiClasses
 
             try
             {
-                List<string> numberList;
+                List<string> numberLists;
+                List<int> numberList=new List<int>();
                 int lastNum = 0;
                 using (bookdbEntities entity = new bookdbEntities())
                 {
-                    numberList = entity.office.Select(b => b.code).ToList();
-
-                    //for (int i = 0; i < numberList.Count; i++)
-                    //{
-                    //    string code = numberList[i];
-                    //    string s = code.Substring(code.LastIndexOf("-") + 1);
-                    //    numberList[i] = s;
-                    //}
+                    numberLists = entity.office.Select(b => b.code ).ToList();
+                    foreach (string x in numberLists)
+                    {
+                        int i = int.Parse(x == null ? "0" : x);
+                        numberList.Add(i);
+                    }
+                 
                     if (numberList.Count > 0)
                     {
-                        numberList.Sort();
-                        lastNum = int.Parse(numberList[numberList.Count - 1]);
+                       // numberList.Sort();
+                     //   lastNum =  numberList[numberList.Count - 1] ;
+                        lastNum = numberList.Max();
                     }
                 }
 
                 return lastNum;
             }
-            catch
+            catch 
             {
                 return 0;
             }

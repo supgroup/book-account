@@ -54,8 +54,9 @@ namespace BookAccountApp.View.sectionData
         }
         bool first = true;
         Flights flights = new Flights();
-        IEnumerable<Flights> flightssQuery;
+       
         IEnumerable<Flights> flightss;
+        List<Flights> flightssQuery =new List<Flights>() ;
         bool tgl_flightsstate = true;
         string searchText = "";
         SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -592,10 +593,23 @@ motherHint
             s.flightFrom.ToLower().Contains(searchText)
             ||
             s.flightTo.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_flightsstate);
+               
+            
+            ) && s.isActive == tgl_flightsstate).ToList();
             //&& s.isActive == tgl_flightsstate
             //);
+           
+                int i = 1;
+                if (flightssQuery != null)
+                {
+                    foreach (var row in flightssQuery)
+                    {
+                        row.code = (i++).ToString();
+                    }
+                }
 
+             
+           
             RefreshFlightssView();
         }
         async Task<IEnumerable<Flights>> RefreshFlightssList()
@@ -605,7 +619,7 @@ motherHint
         }
         void RefreshFlightssView()
         {
-            dg_flights.ItemsSource = flightssQuery.ToList();
+            dg_flights.ItemsSource = flightssQuery;
             //txt_count.Text = flightssQuery.Count().ToString();
         }
         #endregion

@@ -161,7 +161,7 @@ namespace BookAccountApp.Classes
             foreach (Office row in Query)
             {
                 row.strjoinDate = dateFrameConverter(row.joinDate);
-                
+
             }
 
             rep.DataSources.Add(new ReportDataSource("DataSet", Query));
@@ -172,9 +172,10 @@ namespace BookAccountApp.Classes
             paramarr.Add(new ReportParameter("officeName", MainWindow.resourcemanagerreport.GetString("officeName")));
             paramarr.Add(new ReportParameter("joinDate", MainWindow.resourcemanagerreport.GetString("joinDate")));
             paramarr.Add(new ReportParameter("mobileNum", MainWindow.resourcemanagerreport.GetString("mobileNum")));
-            paramarr.Add(new ReportParameter("trUserName", MainWindow.resourcemanagerreport.GetString("trUserName")));
+            paramarr.Add(new ReportParameter("trUserName", MainWindow.resourcemanagerreport.GetString("UserNameSyr")));
             paramarr.Add(new ReportParameter("passwordSyr", MainWindow.resourcemanagerreport.GetString("passwordSyr")));
             paramarr.Add(new ReportParameter("passwordSoto", MainWindow.resourcemanagerreport.GetString("passwordSoto")));
+            paramarr.Add(new ReportParameter("UserNameSoto", MainWindow.resourcemanagerreport.GetString("UserNameSoto")));
 
             /*
              * joinDate
@@ -186,6 +187,7 @@ passwordSoto
              * */
             //DateFormConv(paramarr);
         }
+
 
 
         public static string dateFrameConverter(DateTime? date)

@@ -118,11 +118,15 @@ namespace BookAccountApp.View.sectionData
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("officeNameHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_joinDate, MainWindow.resourcemanager.GetString("joinDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, MainWindow.resourcemanager.GetString("mobileNumHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_userName, MainWindow.resourcemanager.GetString("trUserNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_userName, MainWindow.resourcemanager.GetString("UserNameSyrHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_userNamesoto, MainWindow.resourcemanager.GetString("UserNameSotoHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_passwordSY, MainWindow.resourcemanager.GetString("passwordSyrHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_PasswordSoto, MainWindow.resourcemanager.GetString("passwordSotoHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-       
+            
+     
+ 
+//UserNameSoto
             //docUpload docExport
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_lastName, MainWindow.resourcemanager.GetString("trLastNameHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_father, MainWindow.resourcemanager.GetString("fatherHint"));
@@ -142,14 +146,16 @@ mother
 motherHint  
 */
             //   offices
-            
+
             dg_office.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
             dg_office.Columns[1].Header = MainWindow.resourcemanager.GetString("officeName");
             dg_office.Columns[2].Header = MainWindow.resourcemanager.GetString("joinDate");
             dg_office.Columns[3].Header = MainWindow.resourcemanager.GetString("mobileNum");
-            dg_office.Columns[4].Header = MainWindow.resourcemanager.GetString("trUserName");
+            dg_office.Columns[4].Header = MainWindow.resourcemanager.GetString("UserNameSyr");
+       
             dg_office.Columns[5].Header = MainWindow.resourcemanager.GetString("passwordSyr");
-            dg_office.Columns[6].Header = MainWindow.resourcemanager.GetString("passwordSoto");
+            dg_office.Columns[6].Header = MainWindow.resourcemanager.GetString("UserNameSoto");
+            dg_office.Columns[7].Header = MainWindow.resourcemanager.GetString("passwordSoto");
 
 
             //dg_office.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
@@ -184,6 +190,7 @@ motherHint
                     office.joinDate = dp_joinDate.SelectedDate;
                     office.mobile =tb_mobile.Text.Trim();
                     office.userName = tb_userName.Text;
+                    office.agentName = tb_userNamesoto.Text;
                     office.passwordSY = tb_passwordSY.Text;
                     office.PasswordSoto = tb_PasswordSoto.Text;
                     office.notes = tb_notes.Text;
@@ -229,6 +236,7 @@ motherHint
                         office.joinDate = dp_joinDate.SelectedDate;
                         office.mobile = tb_mobile.Text.Trim();
                         office.userName = tb_userName.Text;
+                        office.agentName = tb_userNamesoto.Text;
                         office.passwordSY = tb_passwordSY.Text;
                         office.PasswordSoto = tb_PasswordSoto.Text;
                         office.notes = tb_notes.Text;
@@ -517,7 +525,11 @@ motherHint
             ) && s.isActive == tgl_officestate);
             //&& s.isActive == tgl_officestate
             //);
-            
+            int i = 1;
+            foreach (Office row in officesQuery)
+            {
+                row.code = (i++).ToString();
+            }
             RefreshOfficesView();
         }
         async Task<IEnumerable<Office>> RefreshOfficesList()

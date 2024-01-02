@@ -507,6 +507,11 @@ namespace BookAccountApp.View.sectionData
             ) && s.isActive == tgl_passengerstate);
             //&& s.isActive == tgl_passengerstate
             //);
+            int i = 1;
+            foreach (Passengers row in passengersQuery)
+            {
+                row.code = (i++).ToString();
+            }
 
             RefreshPassengersView();
         }
